@@ -19,13 +19,15 @@ class StateObject implements IStateObject {
             }
         );
 
-        this._secondObject.setCallback( 
+        this._secondObject.setCallback(
             () => {
                 if (this._firstObject.getOutput() === this._secondObject.getOutput())
                     return;
                 this._firstObject.setInput(this._secondObject.getOutput());
             }
         );
+
+        setInterval(() => this._firstObject.setInput(this._firstObject.getOutput() + 1), 2000);
     }
 }
 
