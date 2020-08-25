@@ -23,16 +23,21 @@ const instance: IFirstObject = FirstObject.getInstance();
 //     );
 // }
 
+const onClick: React.MouseEventHandler = () => {
+    instance.setInput(instance.getOutput() + 1);
+};
+
 function FirstComponent() {
+    
     const setState = useState({})[1];
 
     useState(() =>
         instance.setCallback(() => setState({}))
     );
 
-    const onClick: React.MouseEventHandler = useCallback(() => {
-        instance.setInput(instance.getOutput() + 1);
-    }, []);
+    // const onClick: React.MouseEventHandler = useCallback(() => {
+    //     instance.setInput(instance.getOutput() + 1);
+    // }, []);
 
     return (
         <div onClick={onClick}>

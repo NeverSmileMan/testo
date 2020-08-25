@@ -11,9 +11,19 @@ class StateObject implements IStateObject {
         this._firstObject = FirstObject.getInstance();
         this._secondObject = SecondObject.getInstance();
 
-        this._firstObject.setCallback( 
+        this._firstObject.setCallback(
             () => {
+                if (this._firstObject.getOutput() === this._secondObject.getOutput())
+                    return;
                 this._secondObject.setInput(this._firstObject.getOutput());
+            }
+        );
+
+        this._secondObject.setCallback( 
+            () => {
+                if (this._firstObject.getOutput() === this._secondObject.getOutput())
+                    return;
+                this._firstObject.setInput(this._secondObject.getOutput());
             }
         );
     }
