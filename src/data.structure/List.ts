@@ -2,29 +2,30 @@ import { IGood } from './Good';
 
 export interface IList {
     getGoods: (filter: string) => void;
+    setCallback: (callback: (good: IGood) => void) => void;
     selectGood: (value: IGood) => void;
     showList: () => boolean;
 }
 
 export class List implements IList {
-    private _callback: (value: IGood) => void;
+    private _callback?: (good: IGood) => void;
     private _goods: IGood[] | null = null;
-
-    constructor(callback: (value: IGood) => void) {
-        this._callback = callback;
-    }
     
     getGoods(filter: string) {
         if (!filter) {
             this._goods = null;
         } else {
-            this._goods = [] as IGood[]
+            this._goods = [] as IGood[]; //request
         }
         return this._goods;
     }
 
-    selectGood(value: IGood) {
-        this._callback(value);
+    selectGood(good: IGood) {
+        if (this._callback) this._callback(good);
+    }
+
+    setCallback(callback: (good: IGood) => void) {
+        this._callback = callback;
     }
 
     showList() {

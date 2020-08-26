@@ -28,12 +28,13 @@ class AppState {
         this._config = config;
         this.readEnv();
         this._weights = new Weights();
-        this._tara = new Tara(this._weights);
-        this._keyboard = new Keyboard(this.readKey);
+        this._tara = new Tara(this._weights);   
         this._close = new Close(this.closeTab.bind(this));
         this._print = new Print();
-        this._list = new List(this._activeTab!.addGood);
+        this._list = new List();
         this._input = new Input(this._list.getGoods);
+        this._keyboard = new Keyboard();
+        this._keyboard.setActiveInput(this._input);
         this._tabs = new Map();
         this._tabsNums = Array(this._config.maxTabCount).fill(true);
         const tab = this.createTab();
@@ -59,9 +60,10 @@ class AppState {
             this._activeTab = this._tabs.get(firstNumber) as ITab;
         } else {
             this.createTab();
-            return;    
+            return;  
         }
 
+        this._list.setCallback(this._activeTab!.addGood);
         this._weights.setTara(this._activeTab.tara);
         this._close.setActive(true);
     }
@@ -83,19 +85,6 @@ class AppState {
         this._env = {
             displayWidth: elem.clientWidth,
             displayHeight: elem.clientHeight,
-        }
-    }
-
-    readKey(keyCode: number, language: Languages) {
-        switch(keyCode) {
-            case 0:
-                this._input.addSymbol('some symbol');
-                break;
-            case 1:
-                this._input.clearValue();
-                break;
-            default:
-                //...
         }
     }
 }
