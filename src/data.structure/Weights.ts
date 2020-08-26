@@ -18,11 +18,11 @@ export interface IWeights {
 }
 
 export class Weights implements IWeights{
-    private _isStable: boolean;
-    private _sum: number;
-    private _tara: number;
-    private _price: number;
-    private _weight: number;
+    private _isStable: boolean = false;
+    private _sum: number = 0;
+    private _tara: number = 0;
+    private _price: number = 0;
+    private _weight: number = 0;
 
     /* Характеристики вагів: */
     public readonly minWeight: number = 0.04;

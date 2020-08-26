@@ -12,7 +12,7 @@ export interface ITara {
 export class Tara implements ITara {
 
     private _weights: IWeights;
-    private _tara: number;
+    private _tara: number = 0;
     private _mode: Mode = Mode.BUTTON;
 
     constructor(weights: IWeights) {
@@ -22,7 +22,7 @@ export class Tara implements ITara {
     setMode(mode?: Mode) {
         if (mode) this._mode = mode;
         else if (this._mode = Mode.BUTTON) this._mode = Mode.MODAL;
-        this._mode = Mode.BUTTON;
+        else this._mode = Mode.BUTTON;
     }
 
     setTara(value: number) {

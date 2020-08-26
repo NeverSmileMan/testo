@@ -20,9 +20,9 @@ class AppState {
     private _list: IList;
     private _tabs: Map<number, ITab>;
     private _tabsNums: boolean[];
-    private _activeTab: ITab;
+    private _activeTab: ITab | null= null;
     private _config: IConfig;
-    private _env: IEnv;
+    private _env: IEnv = {} as IEnv;
 
     constructor() {
         this._config = config;
@@ -32,8 +32,8 @@ class AppState {
         this._keyboard = new Keyboard(this.readKey);
         this._close = new Close(this.closeTab.bind(this));
         this._print = new Print();
-        this._input = new Input(this.showGoods);
-        this._list = new List(this._activeTab.addGood);
+        this._list = new List(this._activeTab!.addGood);
+        this._input = new Input(this._list.getGoods);
         this._tabs = new Map();
         this._tabsNums = Array(this._config.maxTabCount).fill(true);
         const tab = this.createTab();
@@ -43,7 +43,7 @@ class AppState {
     createTab() {
         if (this._tabs.size >= this._config.maxTabCount) return;
         const tabNumber = this._tabsNums.findIndex(item => item);
-        const tab: ITab = new Tab(this._weights, tabNumber);
+        const tab: ITab = new Tab(this._weights, this._input, tabNumber);
         this._tabs.set(tabNumber, tab);
         this._tabsNums[tabNumber] = false;
         return tab;
@@ -51,7 +51,7 @@ class AppState {
 
     changeTab(tab?: ITab) {
         
-        this._activeTab.tara = this._weights.getTara();
+        this._activeTab!.tara = this._weights.getTara();
 
         if (tab) this._activeTab = tab;
         else if (this._tabs.size) {
@@ -67,12 +67,12 @@ class AppState {
     }
 
     printGoods() {
-        this._print.doPrint(this._activeTab.getGoods());
+        this._print.doPrint(this._activeTab!.getGoods());
         this._close.doClose();
     }
 
     closeTab() {
-        const tabNumber = this._activeTab.tabNumber;
+        const tabNumber = this._activeTab!.tabNumber;
         this._tabs.delete(tabNumber);
         this._tabsNums[tabNumber] = true;
         this.changeTab();
@@ -97,16 +97,6 @@ class AppState {
             default:
                 //...
         }
-    }
-
-    showGoods(value: string) {
-        if (!value) {
-            this._list.showList(false);
-            return;
-        }
-
-        this._list.showList(true);
-        this._list.getGoods(value);
     }
 }
 
