@@ -1,6 +1,5 @@
 import { IItem, IItemAmount, ItemAmount } from './Item';
 import Weights, { IWeights } from './Weights';
-import ActiveInputService from './ActiveInputService';
 import { IInput, Input } from './Input';
 import { IOrder } from './Order';
 import { Message, MessageType } from './Message';
@@ -29,8 +28,8 @@ class TabControl implements ITabControl {
 
     constructor() {
         this._weights = Weights.getInstance();
-        this._input = new Input();
-        ActiveInputService.getInstance().setActiveInput(this._input);
+        this._input = new Input({ tabIndex: 0 });
+        this._input.setFocus();
         this._input.setCallbackOnSelect(this._addItem.bind(this));
     }
 

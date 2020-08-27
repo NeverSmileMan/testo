@@ -1,26 +1,44 @@
 import { IList, List } from "./List";
 import { IItem } from './Item';
+import ActiveInputService, { IActiveInputService } from "./ActiveInputService";
 
 export interface IInput {
     pressKey: (key: string) => void;
     clearValue: () => void;
+    getValue: () => any;
+    setFocus: () => void;
+    delFocus: () => void;
+    setCallbackOnChange: (callback: (value: string) => void) => void;
+    setCallbackOnSelect: (callback: (value: any) => void) => void;
+}
+
+export interface IInputNumber extends IInput {
+    getValue: () => number;
+    setCallbackOnSelect: (callback: (value: number) => void) => void;
+}
+
+export interface IInputList extends IInput {
+    getValue: () => string;
     setCallbackOnSelect: (callback: (item: IItem) => void) => void;
 }
 
 export class Input implements IInput {
-    private _value: string = '';
-    private _list: IList;
-
-    constructor() {
-        this._list = new List();
-    }
+    private _keyboard: IActiveInputService;
+    protected _value: string = '';
+    protected _callbackOnChange?: (value: string) => void;
+    protected _callbackOnSelect?: (value: any) => void;
     
-    private _addSymbol(value: string) {
+    constructor(private _tabIndex: number | null = null) {
+        this._keyboard = ActiveInputService.getInstance();
+        if (this._tabIndex === 0) this._keyboard.setActiveInput(this);
+    }
+
+    protected _addSymbol(value: string) {
         this._value += value;
         this._onChange();
     }
 
-    private _delSymbol() {
+    protected _delSymbol() {
         this._value.substring(0, -1);
         this._onChange();
     }
@@ -30,12 +48,32 @@ export class Input implements IInput {
         this._onChange();
     }
 
-    private _onChange() {
-        this._list.setFilter(this._value);
+    getValue() {
+        return this._value as any;
     }
 
-    setCallbackOnSelect(callback: (item: IItem) => void) {
-        this._list.setCallbackOnSelect(callback);
+    setFocus() {
+        this._keyboard.setActiveInput(this);
+    }
+
+    delFocus() {
+        this._keyboard.delActiveInput(this);
+    }
+
+    protected _onChange() {
+        if (this._callbackOnChange) this._callbackOnChange(this._value);
+    }
+
+    protected _onSelect() {
+        if (this._callbackOnSelect) this._callbackOnSelect(this._value);
+    }
+
+    setCallbackOnChange(callback: (value: string) => void) {
+        this._callbackOnSelect = callback;
+    }
+
+    setCallbackOnSelect(callback: (value: any) => void) {
+        this._callbackOnSelect = callback;
     }
 
     pressKey(key: string) {
@@ -46,8 +84,53 @@ export class Input implements IInput {
             case "CLEAR":
                 this.clearValue();
                 break;
+            case "ENTER":
+                this._onSelect();
+                break;                
             default:
                 this._addSymbol(key);
         }
+    }
+}
+
+export class InputList extends Input implements IInputList {
+    private _list: IList;
+
+    constructor() {
+        super();
+        this._list = new List();
+    }
+
+    protected _onChange() {
+        this._list.setFilter(this._value);
+    }
+
+    setCallbackOnSelect(callback: (item: IItem) => void) {
+        this._list.setCallbackOnSelect(callback);
+    }
+
+    getValue() {
+        return this._value;
+    }
+}
+
+export class InputNumber extends Input implements IInputNumber {
+
+    protected _onChange() {
+        if (String(this.getValue()) === this._value)
+            super._onChange();
+        else this._delSymbol();
+    }
+
+    protected _onSelect() {
+        if (this._callbackOnSelect) this._callbackOnSelect(this.getValue());
+    }
+
+    setCallbackOnSelect(callback: (value: number) => void) {
+        this._callbackOnSelect = callback;
+    }
+
+    getValue() {
+        return Number(this._value) / 1000;
     }
 }

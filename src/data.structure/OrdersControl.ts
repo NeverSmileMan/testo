@@ -41,7 +41,7 @@ export class OrdersControl implements IOrdersControl {
     }
 
     createOrder() {
-        if (!this.canCreateOrder) return;
+        if (!this.canCreateOrder()) return;
         const orderNumber = this._ordersFreeNums.findIndex(item => item === true);
         this._ordersFreeNums[orderNumber] = false;
         const order: IOrder = new Order(orderNumber);

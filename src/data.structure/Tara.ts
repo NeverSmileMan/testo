@@ -1,10 +1,10 @@
 import Weights, { IWeights } from './Weights';
 import { Mode } from './types';
+import { IInputNumber, InputNumber } from './Input';
 
 export interface ITara {
     doTara: () => void;
     setMode: (mode?: Mode) => void;
-    setAdditionalTara: (value: number) => void;
     isActive: () => boolean;
 }
 
@@ -14,10 +14,13 @@ export class Tara implements ITara {
     private _callback?: () => void;
     private _tara: number = 0;
     private _mode: Mode = Mode.BUTTON;
+    private _input: IInputNumber;
 
     constructor(weights: IWeights) {
         this._weights = Weights.getInstance();
-        this._weights.setCallback(this.weightsStateChanged);
+        this._weights.setCallback(this.weightsStateChanged.bind(this));
+        this._input = new InputNumber();
+        this._input.setCallbackOnSelect(this._setAdditionalTara.bind(this))
     }
 
     weightsStateChanged() {
@@ -39,7 +42,7 @@ export class Tara implements ITara {
         this._weights.setTara(currentTara + value);
     }
 
-    setAdditionalTara(value: number) {
+    private _setAdditionalTara(value: number) {
         if (!value) {
             this._tara = 0;
             return;
@@ -56,6 +59,7 @@ export class Tara implements ITara {
         if (Mode.MODAL) {
             this._setTara(this._tara);
             this.setMode(Mode.BUTTON);
+            this._input.delFocus();
             return;
         }
 
@@ -70,6 +74,7 @@ export class Tara implements ITara {
 
         if (Mode.BUTTON) {
             this.setMode(Mode.MODAL);
+            this._input.setFocus();
             return;
         }
     }

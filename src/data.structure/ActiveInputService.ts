@@ -1,20 +1,33 @@
 import { IKeyboard, Keyboard } from './Keyboard';
 import { IInput } from './Input';
 
-export interface ISetActiveInputService {
-    
+export interface IActiveInputService {
+    setActiveInput: (input: IInput | null) => void;
+    delActiveInput: (input: IInput) => void;
 }
 
-export class ActiveInputService {
+class ActiveInputService {
 
     private _keyboard: IKeyboard;
+    private _activeInput: IInput | null = null;
+    private _defaultInput: IInput | null = null;
 
     constructor() {
         this._keyboard = new Keyboard();
     }
 
     setActiveInput(input: IInput | null) {
+        this._activeInput = input;
         this._keyboard.setActiveInput(input);
+    }
+
+    delActiveInput(input: IInput) {
+        if (this._activeInput !== input) return;
+        this.setActiveInput(this._defaultInput);
+    }
+
+    setDefaultInput(input: IInput) {
+        this._defaultInput = input;
     }
 }
 

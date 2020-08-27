@@ -5,8 +5,8 @@ class AppState {
 
     private _config: IConfig;
     private _env: IEnv = {} as IEnv;
-
     private _ordersControl: IOrdersControl;
+    
     constructor() {
         this._config = config;
         this._ordersControl = new OrdersControl(config.maxOrdersCount);
