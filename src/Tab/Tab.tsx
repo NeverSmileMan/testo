@@ -1,11 +1,29 @@
-import React, {useState} from "react";
+import React, {FC, useState} from "react";
 
 
-interface Item {
-
+enum ItemType {
+	WEIGHT,
+	PIECE,
 }
 
-export default function Tab() {
+export interface Item {
+	plu: number;
+	name: string;
+	price: number;
+	type: ItemType;
+}
+
+export interface ITab {
+
+	tabNumber: number;
+	tara: number;
+	addItem: (value: Item) => void;
+	deleteItem: (value: Item) => void;
+	getTotal: () => number;
+	getTara: () => number;
+}
+
+const Tab: FC<ITab> = () => {
 
 	const [number, setNumber] = useState(0)
 	const [tara, setTara] = useState(0)
@@ -31,3 +49,4 @@ export default function Tab() {
 		<div>TAB</div>
 	)
 }
+export default Tab;
