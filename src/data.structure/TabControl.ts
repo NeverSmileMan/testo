@@ -1,5 +1,6 @@
-import { IGood, IGoodAmount, GoodAmount } from './Good';
+import { IItem, IItemAmount, ItemAmount } from './Item';
 import Weights, { IWeights } from './Weights';
+import ActiveInputService from './ActiveInputService';
 import { IInput, Input } from './Input';
 import { IOrder } from './Order';
 import { Message, MessageType } from './Message';
@@ -8,7 +9,8 @@ export interface ITabControl {
     order?: IOrder;
     setOrder: (order: IOrder) => void;
     delItem: (index: number) => void;
-    getItems: () => IGood[];
+    getOrder: () => IOrder;
+    getItems: () => IItemAmount[];
     getItemsCount: () => number;
     getOrderNumber: () => number;
     getTotal: () => number;
@@ -28,6 +30,7 @@ class TabControl implements ITabControl {
     constructor() {
         this._weights = Weights.getInstance();
         this._input = new Input();
+        ActiveInputService.getInstance().setActiveInput(this._input);
         this._input.setCallbackOnSelect(this._addItem.bind(this));
     }
 
@@ -45,19 +48,21 @@ class TabControl implements ITabControl {
         return this._selectedItemIndex && true || false;
     }
 
-    private _addItem(item: IGood) {
+    private _addItem(item: IItem) {
         if (!this._weights.isStable()) {
             this._message = new Message('Вага не стабільна!', MessageType.WARNING);
+            this._stateChanged();
             return;
         }
 
         if (this._weights.getWeight() === 0) {
             this._message = new Message('Поставте товар на ваги!', MessageType.WARNING);
+            this._stateChanged();
             return;
         }
 
         this._weights.setPrice(item.price);
-        const newItem: IGoodAmount = new GoodAmount(item, this._weights.getSum());
+        const newItem: IItemAmount = new ItemAmount(item, this._weights.getSum());
         this._order!.items.push(newItem);
         this._setTotal(newItem.sum);
         this.selectItem(null);
@@ -70,8 +75,12 @@ class TabControl implements ITabControl {
         this._order!.items.splice(this._selectedItemIndex!, 1);
     }
 
-    getItems(): IGood[] {
+    getItems(): IItemAmount[] {
         return this._order!.items;
+    }
+
+    getOrder(): IOrder {
+        return this._order!;
     }
 
     getItemsCount(): number {
@@ -90,9 +99,8 @@ class TabControl implements ITabControl {
         return this._order!.orderNumber;
     }
 
-    stateChanged() {
-        if (this._callback)
-            this._callback();
+    private _stateChanged() {
+        if (this._callback) this._callback();
     }
 
     setCallback(callback: () => void) {

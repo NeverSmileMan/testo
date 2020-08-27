@@ -1,22 +1,31 @@
-import { IWeights } from './Weights';
+import Weights, { IWeights } from './Weights';
 import { Mode } from './types';
 
 export interface ITara {
     doTara: () => void;
     setMode: (mode?: Mode) => void;
-    setTara: (value: number) => void;
     setAdditionalTara: (value: number) => void;
-    isBlock: () => boolean;
+    isActive: () => boolean;
 }
 
 export class Tara implements ITara {
 
     private _weights: IWeights;
+    private _callback?: () => void;
     private _tara: number = 0;
     private _mode: Mode = Mode.BUTTON;
 
     constructor(weights: IWeights) {
-        this._weights = weights;
+        this._weights = Weights.getInstance();
+        this._weights.setCallback(this.weightsStateChanged);
+    }
+
+    weightsStateChanged() {
+        if (this._callback) this._callback();
+    }
+
+    setCallback(callback: () => void) {
+        this._callback = callback;
     }
 
     setMode(mode?: Mode) {
@@ -25,27 +34,28 @@ export class Tara implements ITara {
         else this._mode = Mode.BUTTON;
     }
 
-    setTara(value: number) {
-        let tara = this._weights.getTara();
-        if (value) {
-            tara += value;
-        } else {
-            tara = tara + this._weights.getWeight();
-        }
-        this._weights.setTara(tara);
+    private _setTara(value: number) {
+        const currentTara = this._weights.getTara();
+        this._weights.setTara(currentTara + value);
     }
 
     setAdditionalTara(value: number) {
+        if (!value) {
+            this._tara = 0;
+            return;
+        }
         this._tara = value;
+        this.doTara();
     }
 
-    isBlock() {
-        return !this._weights.isStable();
+    isActive() {
+        return this._weights.isStable();
     }    
 
     doTara() {
         if (Mode.MODAL) {
-            this.setTara(this._tara);
+            this._setTara(this._tara);
+            this.setMode(Mode.BUTTON);
             return;
         }
 
@@ -53,8 +63,8 @@ export class Tara implements ITara {
             return;
         }
 
-        if (this._weights.getWeight() === 0) {
-            this.setTara(0);
+        if (this._weights.getWeight() !== 0) {
+            this._setTara(this._weights.getWeight());
             return;
         }
 

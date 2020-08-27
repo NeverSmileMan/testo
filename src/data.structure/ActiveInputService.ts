@@ -1,20 +1,29 @@
-import { IKeyboard, Keyboard, Languages } from './Keyboard';
-import { IInput, Input } from './Input';
+import { IKeyboard, Keyboard } from './Keyboard';
+import { IInput } from './Input';
 
 export interface ISetActiveInputService {
     
 }
 
-export class setActiveInputService {
+export class ActiveInputService {
 
     private _keyboard: IKeyboard;
-    private _input: IInput;
 
     constructor() {
         this._keyboard = new Keyboard();
-        this._input = new Input();        
-        this._keyboard.setActiveInput(this._input);
+    }
+
+    setActiveInput(input: IInput | null) {
+        this._keyboard.setActiveInput(input);
     }
 }
 
-export default Select;
+let instance: ActiveInputService;
+
+export function getInstance() {
+    if (!instance)
+        instance = new ActiveInputService();
+    return instance;
+}
+
+export default { getInstance };

@@ -1,37 +1,37 @@
-enum GoodType {
+enum ItemType {
     WEIGHT,
     PIECE,
 }
 
-export interface IGood {
+export interface IItem {
     plu: number;
     name: string;
     price: number;
-    type: GoodType;
+    type: ItemType;
 }
 
-export class Good implements IGood {
+export class Item implements IItem {
 
     constructor(
         public plu: number = 0,
         public name: string = '',
         public price: number = 0,
-        public type: GoodType = GoodType.WEIGHT) {
+        public type: ItemType = ItemType.WEIGHT) {
     }
 }
 
-export interface IGoodAmount extends IGood {
+export interface IItemAmount extends IItem {
     weights?: number;
     quantity?: number;
     sum: number;
 }
 
-export class GoodAmount extends Good implements IGoodAmount{
+export class ItemAmount extends Item implements IItemAmount{
     weights?: number;
     quantity?: number;
 
     constructor(
-        public item: IGood,
+        public item: IItem,
         public sum: number = 0,
         amount: number = 0,
         ) {
@@ -43,7 +43,7 @@ export class GoodAmount extends Good implements IGoodAmount{
             item.type,
         );
 
-        if (item.type === GoodType.WEIGHT)
+        if (item.type === ItemType.WEIGHT)
             this.weights = amount;
         else this.quantity = amount;
     }

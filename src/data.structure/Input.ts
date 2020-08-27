@@ -1,10 +1,10 @@
 import { IList, List } from "./List";
-import { IGood } from './Good';
+import { IItem } from './Item';
 
 export interface IInput {
     pressKey: (key: string) => void;
     clearValue: () => void;
-    setCallbackOnSelect: (callback: (item: IGood) => void) => void;
+    setCallbackOnSelect: (callback: (item: IItem) => void) => void;
 }
 
 export class Input implements IInput {
@@ -34,7 +34,7 @@ export class Input implements IInput {
         this._list.setFilter(this._value);
     }
 
-    setCallbackOnSelect(callback: (item: IGood) => void) {
+    setCallbackOnSelect(callback: (item: IItem) => void) {
         this._list.setCallbackOnSelect(callback);
     }
 

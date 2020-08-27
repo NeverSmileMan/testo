@@ -1,34 +1,34 @@
-import { IGood } from './Good';
+import { IItem } from './Item';
 
 export interface IList {
-    setCallbackOnSelect: (callback: (item: IGood) => void) => void;
+    setCallbackOnSelect: (callback: (item: IItem) => void) => void;
     setCallbackOnUpdate: (callback: () => void) => void;
     selectItem: (index: number) => void;
-    getItems: () => IGood[] | null;
+    getItems: () => IItem[] | null;
     setFilter: (filter: string) => void;
 }
 
 export class List implements IList {
-    private _callbackOnSelect?: (item: IGood) => void;
+    private _callbackOnSelect?: (item: IItem) => void;
     private _callbackOnUpdate?: () => void;
-    private _goods: IGood[] | null = null;
+    private _Items: IItem[] | null = null;
     
     setFilter(filter: string) {
-        if (!filter) this._goods = null;
-        else this._goods = [] as IGood[];
+        if (!filter) this._Items = null;
+        else this._Items = [] as IItem[];
         if (this._callbackOnUpdate) this._callbackOnUpdate();
     }
     
     getItems() {
-        return this._goods;
+        return this._Items;
     }
 
     selectItem(index: number) {
         if (this._callbackOnSelect)
-            this._callbackOnSelect(this._goods![index]);
+            this._callbackOnSelect(this._Items![index]);
     }
 
-    setCallbackOnSelect(callback: (item: IGood) => void) {
+    setCallbackOnSelect(callback: (item: IItem) => void) {
         this._callbackOnSelect = callback;
     }
 

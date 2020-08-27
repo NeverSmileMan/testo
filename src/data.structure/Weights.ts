@@ -13,6 +13,7 @@ export interface IWeights {
     getTara: () => number;
     setPrice: (value: number) => void;
     getWeight: () => number;
+    setCallback: (callback: () => void) => void;
 }
 
 export class Weights implements IWeights{
@@ -54,7 +55,7 @@ export class Weights implements IWeights{
         return this._weight;
     }
 
-    setCallback(callback: (isStable: boolean) => void) {
+    setCallback(callback: () => void) {
         this._callback = callback;
     }
 

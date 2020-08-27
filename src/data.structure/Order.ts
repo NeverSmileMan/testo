@@ -1,9 +1,9 @@
-import { IGood } from './Good';
+import { IItemAmount } from './Item';
 
 export interface IOrder {
     orderNumber: number;
     tara: number;
-    items: IGood[];
+    items: IItemAmount[];
     total: number;
 }
 
@@ -11,7 +11,7 @@ export class Order implements IOrder {
 
     public orderNumber: number;
     public tara: number = 0;
-    public items: IGood[] = [];
+    public items: IItemAmount[] = [];
     public total: number = 0;
 
     constructor(number: number) {

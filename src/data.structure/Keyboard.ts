@@ -3,7 +3,7 @@ import { IInput } from './Input';
 export interface IKeyboard {
     getLanguage: () => Languages;
     setLanguage: (value: Languages) => void;
-    setActiveInput: (input: IInput) => void;
+    setActiveInput: (input: IInput | null) => void;
 }
 
 export enum Languages {
@@ -15,7 +15,7 @@ export enum Languages {
 export class Keyboard implements IKeyboard {
 
     private _language: Languages = Languages.UA;
-    private _input?: IInput;
+    private _input?: IInput | null;
 
     getLanguage() {
         return this._language;
@@ -29,7 +29,7 @@ export class Keyboard implements IKeyboard {
         if (this._input) this._input.pressKey(key);
     }
 
-    setActiveInput(input: IInput) {
+    setActiveInput(input: IInput | null) {
         this._input = input;
     }
 }

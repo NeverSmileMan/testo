@@ -57,7 +57,7 @@ export class OrdersControl implements IOrdersControl {
     }
 
     private printOrder() {
-        this._print.doPrint(this._orderControl.getGoods());
+        this._print.doPrint(this._orderControl.getOrder());
         this._close.doClose();
     }
 
