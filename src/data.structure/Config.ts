@@ -1,9 +1,9 @@
 export interface IConfig {
-    maxTabCount: number;
+    maxOrdersCount: number;
 }
 
 export const config = {
-    maxTabCount: 6,
+    maxOrdersCount: 6,
 }
 
 export interface IEnv {

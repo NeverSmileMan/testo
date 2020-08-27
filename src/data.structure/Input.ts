@@ -1,35 +1,53 @@
+import { IList, List } from "./List";
+import { IGood } from './Good';
+
 export interface IInput {
-    addSymbol: (value: string) => void;
-    delSymbol: () => void;
+    pressKey: (key: string) => void;
     clearValue: () => void;
-    onChange: () => void;
+    setCallbackOnSelect: (callback: (item: IGood) => void) => void;
 }
 
 export class Input implements IInput {
     private _value: string = '';
-    private _callback: (value: string) => void;
+    private _list: IList;
 
-    constructor(callback: (value: string) => void) {
-        this._callback = callback;
+    constructor() {
+        this._list = new List();
     }
-
-    addSymbol(value: string) {
+    
+    private _addSymbol(value: string) {
         this._value += value;
-        this.onChange();
+        this._onChange();
     }
 
-    delSymbol() {
+    private _delSymbol() {
         this._value.substring(0, -1);
-        this.onChange();
+        this._onChange();
     }
 
     clearValue() {
         this._value = '';
-        this.onChange();
+        this._onChange();
     }
 
-    onChange() {
-        this._callback(this._value);
+    private _onChange() {
+        this._list.setFilter(this._value);
     }
 
+    setCallbackOnSelect(callback: (item: IGood) => void) {
+        this._list.setCallbackOnSelect(callback);
+    }
+
+    pressKey(key: string) {
+        switch(key) {
+            case "BACKSPACE":
+                this._delSymbol();
+                break;
+            case "CLEAR":
+                this.clearValue();
+                break;
+            default:
+                this._addSymbol(key);
+        }
+    }
 }

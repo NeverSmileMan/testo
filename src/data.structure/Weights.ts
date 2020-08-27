@@ -1,5 +1,3 @@
-/* Якщо вага менше minWeight ? */
-
 export interface IWeights {
 
     readonly minWeight: number;
@@ -19,10 +17,10 @@ export interface IWeights {
 
 export class Weights implements IWeights{
     private _isStable: boolean = false;
-    private _sum: number = 0;
     private _tara: number = 0;
     private _price: number = 0;
     private _weight: number = 0;
+    private _callback?: (isStable: boolean) => void;
 
     /* Характеристики вагів: */
     public readonly minWeight: number = 0.04;
@@ -36,8 +34,8 @@ export class Weights implements IWeights{
         return this._isStable;
     }
 
-    getSum(): number { // вартість = _price * _weight;
-        return this._sum;
+    getSum(): number {
+        return this._weight * this._price;
     }
 
     setTara(value: number) {
@@ -55,6 +53,23 @@ export class Weights implements IWeights{
     getWeight(): number {
         return this._weight;
     }
+
+    setCallback(callback: (isStable: boolean) => void) {
+        this._callback = callback;
+    }
+
+    private setStable(isStable: boolean) {
+        this._isStable = isStable;
+        if (this._callback) this._callback(isStable);
+    }
 }
 
-export default Weights;
+let instance: IWeights;
+
+export function getInstance() {
+    if (!instance)
+        instance = new Weights();
+    return instance;
+}
+
+export default { getInstance };

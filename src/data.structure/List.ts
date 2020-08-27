@@ -1,34 +1,39 @@
 import { IGood } from './Good';
 
 export interface IList {
-    getGoods: (filter: string) => void;
-    setCallback: (callback: (good: IGood) => void) => void;
-    selectGood: (value: IGood) => void;
-    showList: () => boolean;
+    setCallbackOnSelect: (callback: (item: IGood) => void) => void;
+    setCallbackOnUpdate: (callback: () => void) => void;
+    selectItem: (index: number) => void;
+    getItems: () => IGood[] | null;
+    setFilter: (filter: string) => void;
 }
 
 export class List implements IList {
-    private _callback?: (good: IGood) => void;
+    private _callbackOnSelect?: (item: IGood) => void;
+    private _callbackOnUpdate?: () => void;
     private _goods: IGood[] | null = null;
     
-    getGoods(filter: string) {
-        if (!filter) {
-            this._goods = null;
-        } else {
-            this._goods = [] as IGood[]; //request
-        }
+    setFilter(filter: string) {
+        if (!filter) this._goods = null;
+        else this._goods = [] as IGood[];
+        if (this._callbackOnUpdate) this._callbackOnUpdate();
+    }
+    
+    getItems() {
         return this._goods;
     }
 
-    selectGood(good: IGood) {
-        if (this._callback) this._callback(good);
+    selectItem(index: number) {
+        if (this._callbackOnSelect)
+            this._callbackOnSelect(this._goods![index]);
     }
 
-    setCallback(callback: (good: IGood) => void) {
-        this._callback = callback;
+    setCallbackOnSelect(callback: (item: IGood) => void) {
+        this._callbackOnSelect = callback;
     }
 
-    showList() {
-        return this._goods && true || false;
+    setCallbackOnUpdate(callback: () => void) {
+        this._callbackOnUpdate = callback;
     }
+
 }

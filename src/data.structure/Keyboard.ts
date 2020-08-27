@@ -26,17 +26,7 @@ export class Keyboard implements IKeyboard {
     }
 
     onClick(key: string) {
-        if (!this._input) return;
-        switch(key) {
-            case "BACKSPACE":
-                this._input.delSymbol();
-                break;
-            case "CLEAR":
-                this._input.clearValue();
-                break;
-            default:
-                this._input.addSymbol(key);
-        }
+        if (this._input) this._input.pressKey(key);
     }
 
     setActiveInput(input: IInput) {

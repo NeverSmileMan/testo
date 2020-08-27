@@ -11,12 +11,40 @@ export interface IGood {
 }
 
 export class Good implements IGood {
-    plu: number = 0;
-    name: string = '';
-    price: number = 0;
-    type: GoodType = GoodType.WEIGHT;
 
-    constructor() {
-        
+    constructor(
+        public plu: number = 0,
+        public name: string = '',
+        public price: number = 0,
+        public type: GoodType = GoodType.WEIGHT) {
+    }
+}
+
+export interface IGoodAmount extends IGood {
+    weights?: number;
+    quantity?: number;
+    sum: number;
+}
+
+export class GoodAmount extends Good implements IGoodAmount{
+    weights?: number;
+    quantity?: number;
+
+    constructor(
+        public item: IGood,
+        public sum: number = 0,
+        amount: number = 0,
+        ) {
+
+        super(
+            item.plu,
+            item.name,
+            item.price,
+            item.type,
+        );
+
+        if (item.type === GoodType.WEIGHT)
+            this.weights = amount;
+        else this.quantity = amount;
     }
 }
