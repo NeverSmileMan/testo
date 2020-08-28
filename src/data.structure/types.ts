@@ -9,3 +9,9 @@ export enum State {
     PENDING,
     READY,
 }
+
+export enum AppStateTypes {
+    INIT,
+    RUN,
+    STOP,
+}

@@ -106,7 +106,7 @@ export class Input implements IInput {
 export class InputList extends Input implements IInputList {
     private _list: IList;
 
-    constructor(options: IInputOptions) {
+    constructor(options?: IInputOptions) {
         super(options);
         this._list = new List();
     }
@@ -126,7 +126,7 @@ export class InputList extends Input implements IInputList {
 
 export class InputNumber extends Input implements IInputNumber {
 
-    constructor(options: IInputOptions) {
+    constructor(options?: IInputOptions) {
         super(options);
     }
 

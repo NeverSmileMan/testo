@@ -21,14 +21,15 @@ export class OrdersControl implements IOrdersControl {
         this._orderControl = TabControl.getInstance();
         this._ordersFreeNums = Array(maxOrdersCount).fill(true);
         this._print = new Print();
-        this._close = new Close(this.closeOrder.bind(this));
+        this._close = new Close();
+        this._close.onStateChange(this.closeOrder.bind(this));
         this.createOrder();
     }
 
     private setCurrentOrder(order?: IOrder) {
         if (order) this._orderControl.setOrder(order);
         else if (this._orders.size) {
-            const [firstOrderNumber] = this._orders.keys();
+            const { value: firstOrderNumber } = this._orders.keys().next();
             this._orderControl.setOrder(this._orders.get(firstOrderNumber) as IOrder);
         } else {
             this.createOrder();
