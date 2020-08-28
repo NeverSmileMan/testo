@@ -12,6 +12,10 @@ export interface IInput {
     setCallbackOnSelect: (callback: (value: any) => void) => void;
 }
 
+export interface IInputOptions {
+    tabIndex?: number;
+}
+
 export interface IInputNumber extends IInput {
     getValue: () => number;
     setCallbackOnSelect: (callback: (value: number) => void) => void;
@@ -28,9 +32,9 @@ export class Input implements IInput {
     protected _callbackOnChange?: (value: string) => void;
     protected _callbackOnSelect?: (value: any) => void;
     
-    constructor(private _tabIndex: number | null = null) {
+    constructor(options?: IInputOptions) {
         this._keyboard = ActiveInputService.getInstance();
-        if (this._tabIndex === 0) this._keyboard.setActiveInput(this);
+        if (options?.tabIndex === 0) this._keyboard.setActiveInput(this);
     }
 
     protected _addSymbol(value: string) {
@@ -77,18 +81,24 @@ export class Input implements IInput {
     }
 
     pressKey(key: string) {
-        switch(key) {
-            case "BACKSPACE":
-                this._delSymbol();
-                break;
-            case "CLEAR":
-                this.clearValue();
-                break;
-            case "ENTER":
-                this._onSelect();
-                break;                
-            default:
-                this._addSymbol(key);
+        const currentValue = this._value;
+        try {
+            switch(key) {
+                case "BACKSPACE":
+                    this._delSymbol();
+                    break;
+                case "CLEAR":
+                    this.clearValue();
+                    break;
+                case "ENTER":
+                    this._onSelect();
+                    break;                
+                default:
+                    this._addSymbol(key);
+            }
+        } catch(e) {
+            this._value = currentValue;
+            //throw e;
         }
     }
 }
@@ -96,8 +106,8 @@ export class Input implements IInput {
 export class InputList extends Input implements IInputList {
     private _list: IList;
 
-    constructor() {
-        super();
+    constructor(options: IInputOptions) {
+        super(options);
         this._list = new List();
     }
 
@@ -116,10 +126,14 @@ export class InputList extends Input implements IInputList {
 
 export class InputNumber extends Input implements IInputNumber {
 
+    constructor(options: IInputOptions) {
+        super(options);
+    }
+
     protected _onChange() {
         if (String(this.getValue()) === this._value)
             super._onChange();
-        else this._delSymbol();
+        else throw new Error('Недопустимий символ');
     }
 
     protected _onSelect() {
@@ -131,6 +145,6 @@ export class InputNumber extends Input implements IInputNumber {
     }
 
     getValue() {
-        return Number(this._value) / 1000;
+        return Number(this._value);
     }
 }

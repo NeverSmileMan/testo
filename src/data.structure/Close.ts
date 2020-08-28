@@ -1,38 +1,45 @@
 import { Mode, State } from './types';
 
 export interface IClose {
+    onClose: (callback: () => void) => void;
+    onStateChange: (callback: () => void) => void;
     setActive: (value: boolean) => void;
     doClose: (confirm?: boolean) => void;
-    setMode: (mode: Mode) => void;
 }
 
 export class Close implements IClose {
-    private _active: boolean = false;
     private _mode: Mode = Mode.BUTTON;
     private _state: State = State.DISABLED;
-    private _callback: Function;
+    private _callbackOnClose?: () => void;
+    private _callbackOnStateChange?: () => void;
 
-    constructor(callback: Function) {
-        this._callback = callback;
+    onClose(callback: () => void) {
+        this._callbackOnClose = callback;
     }
 
     setActive(value: boolean) {
-        if (this._state === State.PENDING) return; //?
+        if (this._state === State.PENDING) return;
         if (value) this._state = State.ENABLED;
         else this._state = State.DISABLED;
+        if (this._callbackOnStateChange) this._callbackOnStateChange();
+    }
+
+    onStateChange(callback: () => void) {
+        this._callbackOnStateChange = callback;
     }
 
     doClose(confirm?: boolean) {
         if (this._mode === Mode.MODAL) {
-            if (confirm) this._callback();
-            else this._state = State.ENABLED;
+            this._mode = Mode.BUTTON;
+            this._state = State.ENABLED;
+            if (this._callbackOnStateChange) this._callbackOnStateChange();
+            if (!confirm) return;
+            if (this._callbackOnClose) this._callbackOnClose();
+            return;
         }
-        
-        this._state = State.PENDING;
-        this.setMode(Mode.MODAL);
-    }
 
-    setMode(mode: Mode) {
-        this._mode = mode;
+        this._mode = Mode.MODAL;      
+        this._state = State.PENDING;
+        if (this._callbackOnStateChange) this._callbackOnStateChange();
     }
 }
