@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import CloseObject from '../data.structure/Close';
+import Close from '../data.structure/Close';
 
-const close = CloseObject.getInstance();
+const close = Close.getInstance();
 
 const style: React.CSSProperties = {
     position: 'absolute',
