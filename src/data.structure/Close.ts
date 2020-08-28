@@ -11,7 +11,7 @@ export interface IClose {
 
 export class Close implements IClose {
     private _mode: Mode = Mode.BUTTON;
-    private _state: State = State.DISABLED;
+    private _state: State = State.ENABLED; //State = State.DISABLED;
     private _callbackOnClose?: () => void;
     private _callbackOnStateChange?: () => void;
 
@@ -57,7 +57,9 @@ export class Close implements IClose {
     }
 
     _onStateChange() {
-        if (this._callbackOnStateChange) this._callbackOnStateChange();
+        if (this._callbackOnStateChange) {
+            this._callbackOnStateChange();
+        }
     }
 }
 

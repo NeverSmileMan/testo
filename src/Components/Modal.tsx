@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Close from '../data.structure/Close';
 import Print from '../data.structure/Print';
 import { Mode } from '../data.structure/types';
@@ -6,34 +6,41 @@ import CloseModal from './CloseModal';
 import PrintModal from './PrintModal';
 
 const close = Close.getInstance();
-const tara = Print.getInstance();
+const print = Print.getInstance();
 
 function Modal() {
     const [modal, setModal] = useState('none');
 
     useState(() => {
         close.onStateChange(() => {
-            if (close.getMode() === Mode.MODAL) {
-                setModal('close');
-                return;
-            }
+            console.log("CLOSE CALLBACK");
+            setModal((modal: string) => {
+                if (close.getMode() === Mode.MODAL) {
+                    return 'close';
+                } else if (modal === 'close') {
+                    return 'none';
+                }
+                return modal;                
+            });
         });
-        tara.onStateChange(() => {
-            if (close.getMode() === Mode.MODAL) {
-                setModal('tara');
-                return;
-            }
-        })
+        print.onStateChange(() => {
+            console.log("PRINT CALLBACK");
+            setModal((modal: string) => {
+                if (print.getMode() === Mode.MODAL) {
+                    return 'print';
+                } else if (modal === 'print') {
+                    return 'none';
+                }
+                return modal;                
+            });
+        });
     });
-    useEffect(() => {
-        setTimeout(() => close.doClose(), 5000);
-    }, []);
 
     console.log("MODAL", modal);
 
     return (
         modal === 'close' ? <CloseModal /> :
-        modal === 'tara' ? <PrintModal /> :
+        modal === 'print' ? <PrintModal /> :
         null
     );
 

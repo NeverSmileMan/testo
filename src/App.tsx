@@ -3,6 +3,7 @@ import AppObject from './data.structure/App';
 import { AppStateTypes } from './data.structure/types';
 import SetEnv from './Components/SetEnv';
 import Modal from './Components/Modal';
+import Main from './Components/Main';
 
 const app = AppObject.getInstance();
 
@@ -20,7 +21,7 @@ function App() {
         init ?
             <SetEnv /> :
             (<>
-                <div style={{height: '100vh', background: 'yellow'}}>{JSON.stringify(app.getEnv())}</div>
+                <Main />
                 <Modal />
             </>)
     );
