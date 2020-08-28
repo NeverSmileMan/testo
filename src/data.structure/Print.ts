@@ -55,11 +55,11 @@ export class Print implements IPrint {
         return this._mode;
     }
 
-    _onPrint() {
+    private _onPrint() {
         if (this._callbackOnPrint) this._callbackOnPrint();
     }
 
-    _onStateChange() {
+    private _onStateChange() {
         if (this._callbackOnStateChange) this._callbackOnStateChange();
     }
 }

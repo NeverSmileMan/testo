@@ -5,7 +5,7 @@ import ActiveInputService, { IActiveInputService } from "./ActiveInputService";
 export interface IInput {
     pressKey: (key: string) => void;
     clearValue: () => void;
-    getValue: () => any;
+    getValue: () => string | number;
     setFocus: () => void;
     delFocus: () => void;
     setCallbackOnChange: (callback: (value: string) => void) => void;

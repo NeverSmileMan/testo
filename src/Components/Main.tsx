@@ -9,12 +9,18 @@ import AppState from '../data.structure/App';
 
 const app = AppState.getInstance();
 
+const style: React.CSSProperties = {
+    height: '100vh',
+    background: 'yellow',
+    textAlign: 'center',
+};
+
 function Main() {
 
     console.log("MAIN");
 
     return (
-        <div style={{height: '100vh', background: 'yellow'}}>{JSON.stringify(app.getEnv())}
+        <div style={style}>{JSON.stringify(app.getEnv())}
             {/* <Weights />
             <Tabs />
             <Tara />

@@ -52,11 +52,11 @@ export class Close implements IClose {
         return this._mode;
     }
 
-    _onClose() {
+    private _onClose() {
         if (this._callbackOnClose) this._callbackOnClose();
     }
 
-    _onStateChange() {
+    private _onStateChange() {
         if (this._callbackOnStateChange) {
             this._callbackOnStateChange();
         }

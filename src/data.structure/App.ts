@@ -1,5 +1,5 @@
 import { IConfig, config, IEnv } from './Config';
-//import { IOrdersControl, OrdersControl } from './OrdersControl';
+import { IOrdersControl, OrdersControl } from './OrdersControl';
 import { AppStateTypes } from './types';
 
 export interface IAppState {
@@ -9,27 +9,20 @@ export interface IAppState {
     getStateType: () => AppStateTypes;
 }
 
-
 class AppState implements IAppState {
 
     private _state: AppStateTypes = AppStateTypes.INIT;
     private _config: IConfig = config;
     private _env: IEnv = {} as IEnv;
-    //private _ordersControl: IOrdersControl;
+    private _ordersControl: IOrdersControl;
     private _callbackOnStateChange?: () => void;
 
     constructor() {
-        //this._ordersControl = new OrdersControl(config.maxOrdersCount);
+        this._ordersControl = new OrdersControl(config.maxOrdersCount);
     }
 
     onStateChange(callback: () => void) {
         this._callbackOnStateChange = callback;
-    }
-
-    _onStateChange() {
-        if (this._callbackOnStateChange) {
-            setTimeout(() => this._callbackOnStateChange!(), 3000);
-        }
     }
 
     setEnv(rect: DOMRect) {
@@ -47,6 +40,12 @@ class AppState implements IAppState {
 
     getStateType() {
         return this._state;
+    }
+
+    private _onStateChange() {
+        if (this._callbackOnStateChange) {
+            setTimeout(() => this._callbackOnStateChange!(), 3000);
+        }
     }
 }
 
