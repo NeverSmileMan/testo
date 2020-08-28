@@ -2,6 +2,7 @@ import TabControl, { ITabControl } from './TabControl';
 import { IOrder, Order } from './Order';
 import { IClose, Close } from './Close';
 import { IPrint, Print } from './Print';
+import { Printer } from './Printer';
 
 export interface IOrdersControl {
     canCreateOrder: () => boolean;
@@ -21,8 +22,9 @@ export class OrdersControl implements IOrdersControl {
         this._orderControl = TabControl.getInstance();
         this._ordersFreeNums = Array(maxOrdersCount).fill(true);
         this._print = new Print();
+        this._print.onPrint(this._printOrder.bind(this));        
         this._close = new Close();
-        this._close.onStateChange(this.closeOrder.bind(this));
+        this._close.onClose(this._closeOrder.bind(this));
         this.createOrder();
     }
 
@@ -50,15 +52,15 @@ export class OrdersControl implements IOrdersControl {
         this.setCurrentOrder(order);
     }
 
-    private closeOrder() {
+    private _closeOrder() {
         const orderNumber = this._orderControl.getOrderNumber();
         this._orders.delete(orderNumber);
         this._ordersFreeNums[orderNumber] = true;
         this.setCurrentOrder();
     }
 
-    private printOrder() {
-        this._print.doPrint(this._orderControl.getOrder());
+    private _printOrder() {
+        new Printer(this._orderControl.getOrder());
         this._close.doClose();
     }
 

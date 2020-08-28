@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import AppObject from './data.structure/App';
 import { AppStateTypes } from './data.structure/types';
+import SetEnv from './Components/SetEnv';
+import Modal from './Components/Modal';
 
 const app = AppObject.getInstance();
 
@@ -17,23 +19,10 @@ function App() {
     return (
         init ?
             <SetEnv /> :
-            <div style={{height: '100vh', background: 'yellow'}}>{JSON.stringify(app.getEnv())}</div>
-    );
-}
-
-
-function SetEnv(): React.ReactElement {
-    const ref: React.RefObject<HTMLDivElement> = React.useRef(null);
-
-    React.useLayoutEffect(
-        () => {
-            const elem: HTMLDivElement = ref.current!;
-            const rect: DOMRect = elem.getBoundingClientRect();
-            app.setEnv(rect);
-    }, []);
-
-    return (
-        <div ref={ref} style={{height: '100vh', background: 'green'}}>INIT APP</div>
+            (<>
+                <div style={{height: '100vh', background: 'yellow'}}>{JSON.stringify(app.getEnv())}</div>
+                <Modal />
+            </>)
     );
 }
 

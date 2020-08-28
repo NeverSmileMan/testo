@@ -1,38 +1,75 @@
-import { State } from './types';
+import { State, Mode } from './types';
 import { IOrder } from './Order';
 
 export interface IPrint {
-    setState: (state: State) => void;
-    getState: () => State;
-    doPrint: (data: IOrder) => void;
-    setCallback: (callback: () => void) => void;
+    onPrint: (callback: () => void) => void;
+    onStateChange: (callback: () => void) => void;
+    setActive: (value: boolean) => void;
+    isActive: () => boolean;
+    doPrint: (confirm?: boolean) => void;
+    getMode: () => Mode;
 }
 
 export class Print implements IPrint {
+    private _mode: Mode = Mode.BUTTON;
     private _state: State = State.DISABLED;
-    private _callback?: () => void;
+    private _callbackOnPrint?: () => void;
+    private _callbackOnStateChange?: () => void;
 
-    setState(state: State) {
-        this._state = state;
+    onPrint(callback: () => void) {
+        this._callbackOnPrint = callback;
     }
 
-    getState() {
-        return this._state;
+    onStateChange(callback: () => void) {
+        this._callbackOnStateChange = callback;
     }
 
-    doPrint(data: Object) {
-        if (this._state === State.DISABLED) return false;
-        new Printer(data);
-        if (this._callback) this._callback();
+    setActive(value: boolean) {
+        if (this._state === State.PENDING) return;
+        if (value) this._state = State.ENABLED;
+        else this._state = State.DISABLED;
+        this._onStateChange();
     }
 
-    setCallback(callback: () => void) {
-        this._callback = callback;
+    isActive() {
+        return this._state === State.ENABLED || false;
+    }
+
+    doPrint(confirm?: boolean) {
+        if (this._state !== State.ENABLED) return false;
+
+        if (this._mode === Mode.MODAL) {
+            this._mode = Mode.BUTTON;
+            if (confirm) this._onPrint();
+            this._state = State.ENABLED;
+            this._onStateChange();
+            return;
+        }
+    
+            this._mode = Mode.MODAL;      
+            this._state = State.PENDING;
+            this._onStateChange();
+    }
+
+    getMode() {
+        return this._mode;
+    }
+
+    _onPrint() {
+        if (this._callbackOnPrint) this._callbackOnPrint();
+    }
+
+    _onStateChange() {
+        if (this._callbackOnStateChange) this._callbackOnStateChange();
     }
 }
 
-class Printer {
-    constructor(data: Object) {
-        console.log(data);
-    }
+let instance: Print;
+
+export function getInstance() {
+    if (!instance)
+        instance = new Print();
+    return instance;
 }
+
+export default { getInstance };
