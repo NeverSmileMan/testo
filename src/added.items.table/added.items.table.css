@@ -14,26 +14,9 @@
   background: #f2f2f2;
   display: flex;
 }
-.body-item-code {
-  padding-left: 0.8em;
-}
-.body-item-name {
-  width: 93%;
-  text-align: start;
+.body-item span {
   padding-left: .4em;
-}
-.body-item-amount {
-  width: 6em;
-  padding-right: 8em;
-  text-align: right;
-}
-.body-item-amount span {
-  padding-left: .2em;
-}
-.body-item-cost {
-  width: 6em;
-  padding-right: 2em;
-  text-align: right;
+  display: inline-block;
 }
 .body-item-font {
   font-family: Arial\ \41E\431\44B\447\43D\44B\439,Arial;

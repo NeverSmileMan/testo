@@ -1,0 +1,138 @@
+.keyboard {
+  height: 31%;
+  width: 100%;
+  padding: 0.3em;  
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #fff;
+  box-sizing: border-box;
+  align-content: stretch;
+  justify-content: space-between;
+}
+.keyboard-spacer {
+  width: 100%;
+  height: 1px;
+}
+.keyboard-alphabet {
+  height: 100%;
+  width: 70%;
+  display: flex;
+  box-sizing: border-box;
+}
+.keyboard-numeric {
+  height: 100%;
+  width: 20%;
+  box-sizing: border-box;
+
+
+}
+.keyboard-special {
+  height: 100%;
+  width: 8%;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-around;
+  box-sizing: border-box;
+}
+
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: .15rem;
+  font-size: 1.1em;
+  background:#e4e4e4; 
+  overflow: hidden;
+  padding: .15em;
+  box-sizing: border-box;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.btn-numeric {
+  background: #c9c9c9; 
+
+}
+.btn-special {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  /* border-radius: .15rem; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* margin: 0.1em; */
+  /* font-size: 1.1em; */
+  /* background: #c9c9c9;  */
+  /* overflow: hidden; */
+  /* padding: .15em; */
+  /* box-sizing: border-box; */
+  /* font-weight: 400; */
+  /* flex-shrink: 0; */
+}
+
+.keyboard-numeric-grid {
+  display: grid;
+  /* grid-template-columns: 1fr 1fr 1fr; соотношение ширины столбцов */
+  grid-gap: 0.4em;
+  /* grid-auto-rows: minmax(auto, auto); */
+}
+.keyboard-numeric-grid .key-1 {
+  grid-column: 1;
+  grid-row: 3;
+}
+.keyboard-numeric-grid .key-2 {
+  grid-column: 2;
+  grid-row: 3;
+}
+.keyboard-numeric-grid .key-3 {
+  grid-column: 3;
+  grid-row: 3;
+}
+.keyboard-numeric-grid.key-4 {
+  grid-column: 1;
+  grid-row: 2;
+}
+.keyboard-numeric-grid.key-5 {
+  grid-column: 2;
+  grid-row: 2;
+}
+.keyboard-numeric-grid.key-6 {
+  grid-column: 3;
+  grid-row: 2;
+}
+.keyboard-numeric-grid .key-7 {
+  grid-column: 1;
+  grid-row: 1;
+}
+.keyboard-numeric-grid .key-8 {
+  grid-column: 2;
+  grid-row: 1;
+}
+.keyboard-numeric-grid .key-9 {
+  grid-column: 3;
+  grid-row: 1;
+}
+.keyboard-numeric-grid .key-0 {
+  grid-column: 1 / 4;
+  grid-row: 4;
+}
+
+
+
+.keyboard-special-grid {
+  display: grid;
+  grid-gap: 0.4em;
+  grid-template-columns: repeat(1, 1fr);
+}
+.keyboard-special-grid .skey-0 {
+  grid-column: 1;
+  grid-row: 1;
+}
+.keyboard-special-grid .skey-1 {
+  grid-column: 1;
+  grid-row: 2;
+}
+.keyboard-special-grid .skey-2 {
+  grid-column: 1;
+  grid-row: 3;
+}
