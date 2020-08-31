@@ -1,5 +1,5 @@
 import React, {FC, useState} from "react";
-
+import "./Tab.css"
 
 enum ItemType {
 	WEIGHT,
@@ -16,19 +16,32 @@ export interface Item {
 export interface ITab {
 
 	tabNumber: number;
-	tara: number;
-	addItem: (value: Item) => void;
-	deleteItem: (value: Item) => void;
-	getTotal: () => number;
-	getTara: () => number;
+	tara?: number;
+	addItem?: (value: Item) => void;
+	deleteItem?: (value: Item) => void;
+	getTotal?: () => number;
+	getTara?: () => number;
 }
 
-const Tab: FC<ITab> = () => {
+const styleTab = {
+	borderTopLeftRadius: '10px',
+	borderTopRightRadius: '10px',
+	padding: '10px',
+	background: 'aqua',
+	width: '50px',
+	height: '40px',
+	fontSize: '25px'
+}
 
-	const [number, setNumber] = useState(0)
+const Tab: FC<ITab> = (...props) => {
+
+
+	console.log(props)
+
+	const [number, setNumber] = useState(1)
 	const [tara, setTara] = useState(0)
-	const [items, setItems] = useState([{}])
-	const [selectedItem, setSelectedItem] = useState({})
+	const [items, setItems] = useState([{}]) // список товарів
+	const [selectedItem, setSelectedItem] = useState({}) //вибраний товар
 
 
 	const addItem = (item: Item) => {
@@ -44,9 +57,7 @@ const Tab: FC<ITab> = () => {
 	const getTara = () => {
 	}
 
+	return <button style={styleTab}>{number}</button>
 
-	return (
-		<div>TAB</div>
-	)
 }
 export default Tab;
