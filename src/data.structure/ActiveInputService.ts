@@ -1,4 +1,4 @@
-import { IKeyboard, Keyboard } from './Keyboard';
+import Keyboard, { IKeyboard } from './Keyboard';
 import { IInput } from './Input';
 
 export interface IActiveInputService {
@@ -13,7 +13,7 @@ class ActiveInputService {
     private _defaultInput: IInput | null = null;
 
     constructor() {
-        this._keyboard = new Keyboard();
+        this._keyboard = Keyboard.getInstance();
     }
 
     setActiveInput(input: IInput | null) {
@@ -34,8 +34,10 @@ class ActiveInputService {
 let instance: ActiveInputService;
 
 export function getInstance() {
-    if (!instance)
+    if (!instance) {
+        console.log("NEW SERVICE");
         instance = new ActiveInputService();
+    }
     return instance;
 }
 

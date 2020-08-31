@@ -9,8 +9,7 @@ const close = Close.getInstance();
 const print = Print.getInstance();
 
 function changeState(setModal: React.Dispatch<(modal: string) => string>) {
-    close.onStateChange(() => {
-        console.log("CLOSE CALLBACK");
+    close.on('stateChange', () => {
         setModal((modal: string) => {
             if (close.getMode() === Mode.MODAL) {
                 return 'close';
@@ -20,8 +19,7 @@ function changeState(setModal: React.Dispatch<(modal: string) => string>) {
             return modal;                
         });
     });
-    print.onStateChange(() => {
-        console.log("PRINT CALLBACK");
+    print.on('stateChange', () => {
         setModal((modal: string) => {
             if (print.getMode() === Mode.MODAL) {
                 return 'print';

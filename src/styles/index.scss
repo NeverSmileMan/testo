@@ -1,0 +1,112 @@
+$border-color: #1c9149;
+
+@mixin block{
+    position: absolute;
+    border-style: solid;
+    border-color: $border-color;
+    border-width: 2px;
+    background-color: rgb(255, 255 , 255);
+    //margin: 1px;
+    //padding: 1px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.main {
+    position: relative;
+    height: 100vh;
+    background: rgb(210, 216, 126);
+    text-align: center,
+}
+
+.weights {
+    @include block;
+}
+
+.orders-window {
+    @include block;
+}
+
+.tabs-nav {
+    @include block;
+}
+
+.message {
+    @include block;
+}
+
+.order-control {
+    @include block;
+}
+
+.controls {
+    @include block;
+}
+
+.keyboard {
+    @include block;
+}
+
+.order-info {
+    @include block;
+}
+
+.input {
+    @include block;
+}
+
+.tara {
+    &.btn {
+        @include block;
+    }
+    &.disabled {
+        background-color: black;
+    }
+    &.modal {
+        height: 100%;
+        width: 100%;
+        z-index: 9999;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.5);
+        left: 0;
+        top: 0;
+    }
+}
+
+.print {
+    &.btn {
+        @include block;
+    }
+    &.disabled {
+        background-color: black;
+    }
+    &.modal {
+        height: 100%;
+        width: 100%;
+        z-index: 9999;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.5);
+        left: 0;
+        top: 0;
+    }
+}
+
+.close {
+    &.btn {
+        @include block;
+    }
+    &.disabled {
+        background-color: black;
+    }
+    &.modal {
+        height: 100%;
+        width: 100%;
+        z-index: 9999;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.5);
+        left: 0;
+        top: 0;
+    }
+}

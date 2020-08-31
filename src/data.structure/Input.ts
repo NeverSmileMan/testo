@@ -8,7 +8,7 @@ export interface IInput {
     getValue: () => string | number;
     setFocus: () => void;
     delFocus: () => void;
-    setCallbackOnChange: (callback: (value: string) => void) => void;
+    onChange: (callback: (value: string) => void) => void;
     setCallbackOnSelect: (callback: (value: any) => void) => void;
 }
 
@@ -65,15 +65,19 @@ export class Input implements IInput {
     }
 
     protected _onChange() {
-        if (this._callbackOnChange) this._callbackOnChange(this._value);
+        
+        if (this._callbackOnChange) {
+            this._callbackOnChange(this._value);
+            
+        }
     }
 
     protected _onSelect() {
         if (this._callbackOnSelect) this._callbackOnSelect(this._value);
     }
 
-    setCallbackOnChange(callback: (value: string) => void) {
-        this._callbackOnSelect = callback;
+    onChange(callback: (value: string) => void) {
+        this._callbackOnChange = callback;
     }
 
     setCallbackOnSelect(callback: (value: any) => void) {
@@ -112,6 +116,7 @@ export class InputList extends Input implements IInputList {
     }
 
     protected _onChange() {
+        super._onChange();
         this._list.setFilter(this._value);
     }
 
@@ -148,3 +153,15 @@ export class InputNumber extends Input implements IInputNumber {
         return Number(this._value);
     }
 }
+
+let instance: InputList;
+
+export function getInstance(options?: IInputOptions) {
+    if (!instance) {
+        console.log("NEW INPUT");
+        instance = new InputList(options);
+    }
+    return instance;
+}
+
+export default { getInstance };

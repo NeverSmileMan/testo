@@ -1,27 +1,38 @@
 import { State, Mode } from './types';
-import { IOrder } from './Order';
+import EventEmitter from 'events';
 
 export interface IPrint {
     onPrint: (callback: () => void) => void;
-    onStateChange: (callback: () => void) => void;
+    on: (event: PrintEvents, callback: () => void) => void;
+    off: (event: string, callback: () => void) => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     doPrint: (confirm?: boolean) => void;
     getMode: () => Mode;
 }
 
+type PrintEvents = 'stateChange';
+
 export class Print implements IPrint {
+    private _emitter: EventEmitter;
     private _mode: Mode = Mode.BUTTON;
-    private _state: State = State.DISABLED;
+    private _state: State = State.ENABLED; //State.DISABLED;
     private _callbackOnPrint?: () => void;
-    private _callbackOnStateChange?: () => void;
+
+    constructor() {
+        this._emitter = new EventEmitter();
+    }
 
     onPrint(callback: () => void) {
         this._callbackOnPrint = callback;
     }
 
-    onStateChange(callback: () => void) {
-        this._callbackOnStateChange = callback;
+    on(event: PrintEvents, callback: () => void) {
+        this._emitter.on(event, callback);
+    }
+
+    off(event: string, callback: () => void) {
+        this._emitter.off(event, callback);
     }
 
     setActive(value: boolean) {
@@ -36,19 +47,22 @@ export class Print implements IPrint {
     }
 
     doPrint(confirm?: boolean) {
-        if (this._state !== State.ENABLED) return false;
-
         if (this._mode === Mode.MODAL) {
+            if (confirm) {
+                this._onPrint();
+                this._state = State.DISABLED;
+            } else {
+                this._state = State.ENABLED;
+            }
             this._mode = Mode.BUTTON;
-            if (confirm) this._onPrint();
-            this._state = State.ENABLED;
             this._onStateChange();
             return;
         }
-    
-            this._mode = Mode.MODAL;      
-            this._state = State.PENDING;
-            this._onStateChange();
+
+        if (!this.isActive()) return;
+        this._mode = Mode.MODAL;      
+        this._state = State.PENDING;
+        this._onStateChange();
     }
 
     getMode() {
@@ -60,7 +74,7 @@ export class Print implements IPrint {
     }
 
     private _onStateChange() {
-        if (this._callbackOnStateChange) this._callbackOnStateChange();
+        this._emitter.emit('stateChange');
     }
 }
 

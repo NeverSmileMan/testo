@@ -1,11 +1,27 @@
-import List from './List';
+import React, { useState } from 'react';
+import InputList from '../data.structure/Input';
 
-import React from 'react';
+const input = InputList.getInstance();
+
+const style: React.CSSProperties = {
+    top: '0px',
+    left: '0px',
+    height: '50px',
+    width: '546px',
+}
 
 function Input() {
+    const [, setState] = useState({});
+
+    useState(() => {
+        input.onChange(() => {
+            setState({});
+        });
+    });
+
     return (
-        <div>
-            <List />
+        <div className='input' style={style}>
+            {input.getValue()}
         </div>
     );
 }

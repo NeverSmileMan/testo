@@ -12,7 +12,7 @@ export enum Languages {
     EN,
 }
 
-export class Keyboard implements IKeyboard {
+class Keyboard implements IKeyboard {
 
     private _language: Languages = Languages.UA;
     private _input?: IInput | null;
@@ -26,10 +26,24 @@ export class Keyboard implements IKeyboard {
     }
 
     onClick(key: string) {
-        if (this._input) this._input.pressKey(key);
+        if (this._input) {
+            this._input.pressKey(key);
+        }
     }
 
     setActiveInput(input: IInput | null) {
         this._input = input;
     }
 }
+
+let instance: Keyboard;
+
+export function getInstance() {
+    if (!instance) {
+        console.log("NEW KEYBOARD");
+        instance = new Keyboard();
+    }
+    return instance;
+}
+
+export default { getInstance };

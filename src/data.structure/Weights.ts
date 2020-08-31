@@ -1,3 +1,5 @@
+import EventEmitter from 'events';
+
 export interface IWeights {
 
     readonly minWeight: number;
@@ -13,15 +15,20 @@ export interface IWeights {
     getTara: () => number;
     setPrice: (value: number) => void;
     getWeight: () => number;
-    setCallback: (callback: () => void) => void;
+    on: (event: WeightsEvents, callback: () => void) => void;
+    off: (event: WeightsEvents, callback: () => void) => void;
+    __setWeight: (value: number) => void;
 }
 
+type WeightsEvents = 'stateChange';
+
 export class Weights implements IWeights{
+    private _emitter: EventEmitter;
     private _isStable: boolean = false;
     private _tara: number = 0;
     private _price: number = 0;
     private _weight: number = 0;
-    private _callback?: (isStable: boolean) => void;
+    private _callbackOnStateChange?: () => void;
 
     /* Характеристики вагів: */
     public readonly minWeight: number = 0.04;
@@ -30,6 +37,10 @@ export class Weights implements IWeights{
     public readonly maxTara: number = 6;
     public readonly minWeightResolution: number = 0.002;
     public readonly maxWeightResolution: number = 0.005;
+
+    constructor() {
+        this._emitter = new EventEmitter();
+    }
 
     isStable(): boolean {
         return this._isStable;
@@ -55,13 +66,25 @@ export class Weights implements IWeights{
         return this._weight;
     }
 
-    setCallback(callback: () => void) {
-        this._callback = callback;
+    on(event: WeightsEvents, callback: () => void) {
+        this._emitter.on(event, callback);
+    }
+
+    off(event: WeightsEvents, callback: () => void) {
+        this._emitter.on(event, callback);
     }
 
     private setStable(isStable: boolean) {
         this._isStable = isStable;
-        if (this._callback) this._callback(isStable);
+        this._onStateChange();
+    }
+    private _onStateChange() {
+        this._emitter.emit('stateChange');
+    }
+
+    __setWeight(value: number) {
+        this._weight = value;
+        this._onStateChange();
     }
 }
 

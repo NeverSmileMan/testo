@@ -4,18 +4,10 @@ import Close from '../data.structure/Close';
 const close = Close.getInstance();
 
 const style: React.CSSProperties = {
-    position: 'absolute',
-    top: '100px',
-    left: '100px',
-    height: '100px',
-    width: '100px',
-    borderStyle: 'solid',
-    borderColor: 'blue',
-    borderWidth: '2px', 
-}
-
-const styleDisabled: React.CSSProperties = {
-    backgroundColor: 'black',
+    top: '280px',
+    left: '0px',
+    height: '140px',
+    width: '142px',
 }
 
 const onClick = () => {
@@ -26,14 +18,18 @@ function CloseButton() {
     const [, setState] = useState({});
 
     useState(() => {
-        close.onStateChange(() =>
-            setState({}))
+        close.on('stateChange', () => {
+            setState({}); 
+        });
     });
 
     const isActive = close.isActive();
 
     return (
-        <div style={isActive ? style : {...style, ...styleDisabled}} onClick={onClick}>
+        <div
+            className={`close btn ${isActive || 'disabled'}`}
+            style={style}
+            onClick={onClick}>
             <div>CLOSE</div>
         </div>
     );

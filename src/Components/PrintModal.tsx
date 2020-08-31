@@ -1,9 +1,18 @@
 import React from 'react';
+import PrintObject from '../data.structure/Print';
+
+const print = PrintObject.getInstance();
+
+const onClick = () => {
+    print.doPrint(true);
+};
 
 function PrintModal() {
     return (
-        <div style={{ height: '100vh', zIndex: 9999}}>
-            Print
+        <div
+            className='print modal'
+            onClick={onClick}>
+            PRINT MODAL
         </div>
     );
 }

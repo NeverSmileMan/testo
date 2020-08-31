@@ -1,26 +1,38 @@
 import { Mode, State } from './types';
+import EventEmitter from 'events';
 
 export interface IClose {
     onClose: (callback: () => void) => void;
-    onStateChange: (callback: () => void) => void;
+    on: (event: CloseEvents, callback: () => void) => void;
+    off: (event: string, callback: () => void) => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     doClose: (confirm?: boolean) => void;
     getMode: () => Mode;
 }
 
+type CloseEvents = 'stateChange';
+
 export class Close implements IClose {
+    private _emitter: EventEmitter;
     private _mode: Mode = Mode.BUTTON;
     private _state: State = State.ENABLED; //State = State.DISABLED;
     private _callbackOnClose?: () => void;
-    private _callbackOnStateChange?: () => void;
 
+    constructor() {
+        this._emitter = new EventEmitter();
+    }
+    
     onClose(callback: () => void) {
         this._callbackOnClose = callback;
     }
 
-    onStateChange(callback: () => void) {
-        this._callbackOnStateChange = callback;
+    on(event: CloseEvents, callback: () => void) {
+        this._emitter.on(event, callback);
+    }
+
+    off(event: string, callback: () => void) {
+        this._emitter.off(event, callback);
     }
 
     setActive(value: boolean) {
@@ -36,14 +48,19 @@ export class Close implements IClose {
 
     doClose(confirm?: boolean) {
         if (this._mode === Mode.MODAL) {
+            if (confirm) {
+                this._onClose();
+                this._state = State.DISABLED;
+            } else {
+                this._state = State.ENABLED;
+            }
             this._mode = Mode.BUTTON;
-            if (confirm) this._onClose();
-            this._state = State.ENABLED;
             this._onStateChange();
             return;
         }
 
-        this._mode = Mode.MODAL;      
+        if (!this.isActive()) return;
+        this._mode = Mode.MODAL;
         this._state = State.PENDING;
         this._onStateChange();
     }
@@ -57,9 +74,7 @@ export class Close implements IClose {
     }
 
     private _onStateChange() {
-        if (this._callbackOnStateChange) {
-            this._callbackOnStateChange();
-        }
+        this._emitter.emit('stateChange');
     }
 }
 
