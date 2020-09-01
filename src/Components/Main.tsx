@@ -7,17 +7,12 @@ import Modal from './Modal';
 
 const app = AppState.getInstance();
 
-const style: React.CSSProperties = {
-    height: '848px',
-    width: '1020px',
-}
-
 function Main() {
 
     console.log("MAIN");
 
     return (
-        <div className='main' style={style}>
+        <div className='main'>
             <Weights />
             <Orders />
             <Keyboard />

@@ -4,6 +4,7 @@ import { AppStateTypes } from './data.structure/types';
 import SetEnv from './Components/SetEnv';
 import Main from './Components/Main';
 import './styles/index.scss';
+import './styles/map.scss';
 import './data.structure/RikApp.js';
 
 const app = AppState.getInstance();

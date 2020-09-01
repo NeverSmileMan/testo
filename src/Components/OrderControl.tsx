@@ -6,18 +6,11 @@ import TabControl from '../data.structure/TabControl';
 
 const tabControl = TabControl.getInstance();
 
-const style: React.CSSProperties = {
-    top: '80px',
-    left: '0px',
-    height: '424px',
-    width: '850px',
-}
-
 function OrderControl() {
     return (
-        <div className='order-control' style={style}>
-            <OrderInfo />
+        <div className='order-control'>
             <Input />
+            <OrderInfo />
             <OrderItems />
         </div>
     );

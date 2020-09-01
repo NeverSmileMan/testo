@@ -1,0 +1,82 @@
+.main {
+    height: 848px;
+    width: 1020px;
+    .weights {
+        top: 10px;
+        left: 10px;
+        height: 100px;
+        width: 1000px;
+    }
+    .orders {
+        top: 120px;
+        left: 10px;
+        height: 508px;
+        width: 1000px;
+        .tabs-nav {
+            top: 30px;
+            left: 0px;
+            height: 50px;
+            width: 600px;
+        }
+        .message {
+            top: 30px;
+            left: 600px;
+            height: 50px;
+            width: 396px;
+        }
+        .order-control {
+            top: 80px;
+            left: 0px;
+            height: 424px;
+            width: 850px;
+            .input {
+                top: 0px;
+                left: 0px;
+                height: 50px;
+                width: 546px;
+            }
+            .order-info {
+                top: 0px;
+                left: 546px;
+                height: 50px;
+                width: 300px;
+            }
+            .order-items {
+                top: 50px;
+                left: 0px;
+                height: 370px;
+                width: 846px;
+            }
+        }
+        .controls {
+            top: 80px;
+            left: 850px;
+            height: 424px;
+            width: 146px;
+            .tara.btn {
+                top: 0px;
+                left: 0px;
+                height: 140px;
+                width: 142px;
+            }
+            .print.btn {
+                top: 140px;
+                left: 0px;
+                height: 140px;
+                width: 142px;
+            }
+            .close.btn {
+                top: 280px;
+                left: 0px;
+                height: 140px;
+                width: 142px;
+            }
+        }
+    }
+    .keyboard {
+        top: 638px;
+        left: 10px;
+        height: 200px;
+        width: 1000px;
+    }
+}

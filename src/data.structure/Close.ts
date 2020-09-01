@@ -50,7 +50,7 @@ export class Close implements IClose {
         if (this._mode === Mode.MODAL) {
             if (confirm) {
                 this._onClose();
-                this._state = State.DISABLED;
+                this._state = State.ENABLED;
             } else {
                 this._state = State.ENABLED;
             }

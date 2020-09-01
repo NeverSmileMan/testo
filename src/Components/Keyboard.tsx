@@ -1,28 +1,60 @@
-import React from 'react';
+import React, { useState } from 'react';
 import KeyboardObject from '../data.structure/Keyboard';
+import KeyboardLayoutUA from './KeyboardLayoutUA';
+import KeyboardLayoutEN from './KeyboardLayoutEN';
+import KeyboardLayoutNUMS from './KeyboardLayoutNUMS';
 
 const keyboard = KeyboardObject.getInstance();
 
-const style: React.CSSProperties = {
-    top: '638px',
-    left: '10px',
-    height: '200px',
-    width: '1000px',
-}
+const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement;
+    const keyElem: HTMLElement | null = target.closest('[data-key]');
+    const key = keyElem?.dataset['key'];
+    key && keyboard.onClick(key);
+};
 
-const onClick = () => {
-    keyboard.onClick('A');
+const getLangHandler = (setLang: React.Dispatch<(lang: string) => string>) =>
+    (event: React.MouseEvent<HTMLDivElement>) => {
+        const target = event.target as HTMLDivElement;
+        const nextLang = target.dataset['nextLang'];
+        setLang((lang) => nextLang || lang);
 };
 
 function Keyboard() {
+    const [lang, setLang] = useState('UA');
+    const [changeLang] = useState(() => getLangHandler(setLang));
+
+    const nextLang = lang === 'UA' ? 'EN' : 'UA';
+ 
     return (
-        <div className='keyboard' style={style} onClick={onClick}>
-            KEYBOARD
-            {/* <div>Symbol</div>
-            <div>BACKSPACE</div>
-            <div>CLEAR</div> */}
+        <div className='keyboard' onClick={onClick}>
+            <div>KEYBOARD</div>
+            {lang === 'UA' && <KeyboardLayoutUA />}
+            {lang === 'EN' && <KeyboardLayoutEN />}
+            <KeyboardLayoutNUMS />
+            <div className='key'
+                onClick={changeLang}
+                data-next-lang={nextLang}>
+                {nextLang}
+            </div>
         </div>
     );
 }
 
 export default Keyboard;
+
+// const getSet = (setName: string): (React.FunctionComponent[] | undefined) => {
+//     return keyboard.getSet(setName)?.map(
+//         (key, i) =>
+//             ({ children }) =>
+//                 <div className='key' key={i} data-key={key}>{children ? children : key}</div>
+//     );
+// }
+
+// const getAllSets = (setNames: string[]) => {
+//     let sets = {} as {[key: string]: FunctionComponent[] | undefined};
+//     setNames.forEach(setName => sets[setName] = getSet(setName));
+//     return sets;
+// };
+
+// const [allSets] = useState(() => getAllSets(['UA', 'EN', 'NUMS']));

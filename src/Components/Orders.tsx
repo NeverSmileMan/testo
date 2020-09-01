@@ -4,16 +4,9 @@ import Message from './Message';
 import OrderControl from './OrderControl';
 import Controls from './Controls';
 
-const style: React.CSSProperties = {
-    top: '120px',
-    left: '10px',
-    height: '508px',
-    width: '1000px',
-}
-
-function Weights() {
+function Orders() {
     return (
-        <div className='weights' style={style}>
+        <div className='orders'>
             ORDERS
             <TabsNav />
             <Message />
@@ -23,4 +16,4 @@ function Weights() {
     );
 }
 
-export default Weights;
+export default Orders;
