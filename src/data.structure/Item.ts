@@ -1,4 +1,4 @@
-enum ItemType {
+export enum ItemType {
     WEIGHT,
     PIECE,
 }

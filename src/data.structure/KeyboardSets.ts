@@ -9,7 +9,7 @@ interface IKeyboardSet {
 
 const keyboardSetUA: IKeyboardSet = {
     setName: 'UA',
-    setKeys: ['А', 'Б', 'В', 'Г', 'Д'],
+    setKeys: ['А', 'Б', 'В', 'Г', 'Д', 'Т'],
 };
 
 const keyboardSetEN: IKeyboardSet = {
@@ -22,10 +22,16 @@ const keyboardSetNUMS: IKeyboardSet = {
     setKeys: ['0', '1', '2', '3', '4'],
 };
 
+const keyboardSetFUNC: IKeyboardSet = {
+    setName: 'FUNC',
+    setKeys: ['CLEAR', 'BACKSPACE'],
+};
+
 const KeyboardSets: IKeyboardSets = {
     keyboardSetUA,
     keyboardSetEN,
     keyboardSetNUMS,
+    keyboardSetFUNC,
 }
 
 export default KeyboardSets;

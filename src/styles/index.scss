@@ -6,8 +6,6 @@ $border-color: #1c9149;
     border-color: $border-color;
     border-width: 2px;
     background-color: rgb(255, 255 , 255);
-    //margin: 1px;
-    //padding: 1px;
 }
 
 * {
@@ -45,21 +43,50 @@ $border-color: #1c9149;
     @include block;
 }
 
+.order-info {
+    @include block;
+}
+
+.order-items {
+    @include block;
+    .selected {
+        background-color: rgb(110, 156, 199);
+    }
+}
+
 .keyboard {
     @include block;
     .key {
         display: inline-block;
-        width: 30px;
+        min-width: 30px;
         border: solid 1px;
         margin: 5px;
     }
 }
 
-.order-info {
-    @include block;
+
+
+@keyframes caret-animation {
+    0%  { background-color:transparent; }
+    50% { background-color: black; }
 }
 
 .input {
+    @include block;
+    line-height: 3em;
+    vertical-align: middle;
+    &:after {
+        content: "";
+        display: inline;
+        padding-left: 2px;
+        animation-name: caret-animation;
+        animation-duration: 1s;
+        animation-delay: 0s;
+        animation-iteration-count: infinite;
+    }
+}
+
+.list {
     @include block;
 }
 
@@ -116,3 +143,82 @@ $border-color: #1c9149;
         top: 0;
     }
 }
+
+/*
+.input-wrapper {
+    background-color: white;
+    padding: 0 .5rem;
+    width: calc(100% - 1rem);
+
+    display: -ms-flexbox;
+
+    display: flex;
+    -ms-flex-direction: column;
+        flex-direction: column;
+    -ms-flex-pack: center;
+        justify-content: center;
+    white-space: nowrap;
+}
+
+.customer-input{
+    display: inline-block;
+    width: 100%;
+    height: 2.5rem;
+    font-size: 1.5rem;
+
+    vertical-align: middle;
+
+    outline: none;
+    height: auto;
+    max-width: 100%;
+    white-space: nowrap;
+    -o-text-overflow: clip;
+       text-overflow: clip;
+    caret-color: transparent;
+    text-transform: uppercase;
+    overflow: hidden;
+    text-align: center;
+}
+
+@-webkit-keyframes caret-animation {
+    0%  { background-color: black; }
+    49%  { background-color: black; }
+    50% { background-color: transparent; }
+    99% { background-color: transparent; }
+    100% { background-color: black; }
+}
+
+@keyframes caret-animation {
+    0%  { background-color: black; }
+    49%  { background-color: black; }
+    50% { background-color: transparent; }
+    99% { background-color: transparent; }
+    100% { background-color: black; }
+}
+
+.customer-input::before {
+    white-space: nowrap;
+}
+
+.customer-input::after {
+    content: '';
+    display: inline;
+    padding-left: .15rem;
+    height: 2.5rem;
+    background-color: black;
+    -webkit-animation-name: caret-animation;
+            animation-name: caret-animation;
+    -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+    -webkit-animation-delay: 0s;
+            animation-delay: 0s;
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+}
+
+
+
+
+// WEBPACK FOOTER //
+// ./src/components
+*/

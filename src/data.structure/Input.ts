@@ -23,6 +23,7 @@ export interface IInputNumber extends IInput {
 
 export interface IInputList extends IInput {
     getValue: () => string;
+    getListInstance: () => IList;
     setCallbackOnSelect: (callback: (item: IItem) => void) => void;
 }
 
@@ -43,7 +44,7 @@ export class Input implements IInput {
     }
 
     protected _delSymbol() {
-        this._value.substring(0, -1);
+        this._value = this._value.substring(0, this._value.length - 1);
         this._onChange();
     }
 
@@ -65,14 +66,12 @@ export class Input implements IInput {
     }
 
     protected _onChange() {
-        
         if (this._callbackOnChange) {
             this._callbackOnChange(this._value);
-            
         }
     }
 
-    protected _onSelect() {
+    protected _onSelect(value?: any) {
         if (this._callbackOnSelect) this._callbackOnSelect(this._value);
     }
 
@@ -89,6 +88,7 @@ export class Input implements IInput {
         try {
             switch(key) {
                 case "BACKSPACE":
+                    console.log('BACKSPACE');
                     this._delSymbol();
                     break;
                 case "CLEAR":
@@ -113,19 +113,24 @@ export class InputList extends Input implements IInputList {
     constructor(options?: IInputOptions) {
         super(options);
         this._list = new List();
+        this._list.onSelect(this._onSelect.bind(this));
     }
 
     protected _onChange() {
-        super._onChange();
         this._list.setFilter(this._value);
+        super._onChange(); 
     }
 
-    setCallbackOnSelect(callback: (item: IItem) => void) {
-        this._list.setCallbackOnSelect(callback);
+    protected _onSelect(item: IItem){
+        if (this._callbackOnSelect) this._callbackOnSelect(item);
     }
 
     getValue() {
         return this._value;
+    }
+
+    getListInstance() {
+        return this._list;
     }
 }
 

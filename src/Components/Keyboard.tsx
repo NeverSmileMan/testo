@@ -3,6 +3,7 @@ import KeyboardObject from '../data.structure/Keyboard';
 import KeyboardLayoutUA from './KeyboardLayoutUA';
 import KeyboardLayoutEN from './KeyboardLayoutEN';
 import KeyboardLayoutNUMS from './KeyboardLayoutNUMS';
+import KeyboardLayoutFUNC from './KeyboardLayoutFUNC';
 
 const keyboard = KeyboardObject.getInstance();
 
@@ -32,6 +33,7 @@ function Keyboard() {
             {lang === 'UA' && <KeyboardLayoutUA />}
             {lang === 'EN' && <KeyboardLayoutEN />}
             <KeyboardLayoutNUMS />
+            <KeyboardLayoutFUNC />
             <div className='key'
                 onClick={changeLang}
                 data-next-lang={nextLang}>

@@ -4,12 +4,58 @@ export enum MessageType {
     ERROR,
 }
 
-export class Message {
-    public text: string;
-    public type: MessageType;
-
-    constructor(text: string, type: MessageType) {
-        this.text = text;
-        this.type = type
-    }
+export enum MessageCode {
+    WEIGHTS_IS_EMPTY,
+    WEIGHTS_NOT_STABLE,
 }
+
+export interface IMessageInfo {
+    type: MessageType,
+    text: string,
+}
+
+const messagesInfo: { [key in MessageCode]: IMessageInfo } = {
+    [MessageCode.WEIGHTS_IS_EMPTY]: { type: MessageType.WARNING, text: 'Поставте товар на ваги!' },
+    [MessageCode.WEIGHTS_NOT_STABLE]: { type: MessageType.WARNING, text: 'Вага не стабільна!' },
+};
+
+export interface IMessage {
+    sendMessage: (code: MessageCode | null) => void;
+    onMessage: (callback: () => void) => void;
+    getMessage: () => IMessageInfo | null;
+}
+
+export class Message implements IMessage {
+    private _code: MessageCode | null = null;
+    private _callbackOnMessage?: () => void;
+
+    sendMessage(code: MessageCode | null) {
+        this._code = code;
+        this._onMessage();
+    }
+
+    onMessage(callback: () => void) {
+        this._callbackOnMessage = callback;
+    }
+
+    private _onMessage() {
+        if (this._callbackOnMessage) this._callbackOnMessage();
+    }
+
+    getMessage() {
+        if (this._code === null) return null
+        return messagesInfo[this._code];
+    }
+
+}
+
+let instance: IMessage;
+
+export function getInstance() {
+    if (!instance) {
+        instance = new Message();
+    }
+    return instance;
+}
+
+export default { getInstance };

@@ -2,7 +2,8 @@ import { IItem, IItemAmount, ItemAmount } from './Item';
 import Weights, { IWeights } from './Weights';
 import InputList, { IInput } from './Input';
 import { IOrder } from './Order';
-import { Message, MessageType } from './Message';
+import Message, { IMessage, MessageCode } from './Message';
+import EventEmitter from 'events';
 
 export interface ITabControl {
     order?: IOrder;
@@ -13,24 +14,32 @@ export interface ITabControl {
     getItemsCount: () => number;
     getOrderNumber: () => number;
     getTotal: () => number;
+    // getMessage: () => IMessage | null;
+    selectItem: (index: number) => void;
     isSelected: () => boolean;
-    setCallback: (callback: () => void) => void;
+    getSelectedItemIndex: () => number | null;
+    on: (event: TabControlEvents, callback: () => void) => void;
+    off: (event: TabControlEvents, callback: () => void) => void;
 }
 
-class TabControl implements ITabControl {
+type TabControlEvents = 'stateChange';
 
+class TabControl implements ITabControl {
     private _weights: IWeights;
-    private _message: Message | null = null;
+    private _message: IMessage;
     private _selectedItemIndex: number | null = null;
     private _input: IInput;
     private _order?: IOrder;
-    private _callback?: () => void;
+    private _emitter: EventEmitter;
 
     constructor() {
+        this._message = Message.getInstance();
         this._weights = Weights.getInstance();
+        this._weights.on('stateChange', this._onWeightsChange.bind(this));
         this._input = InputList.getInstance({ tabIndex: 0 });
         this._input.setFocus();
         this._input.setCallbackOnSelect(this._addItem.bind(this));
+        this._emitter = new EventEmitter();
     }
 
     setOrder(order: IOrder) {
@@ -40,32 +49,45 @@ class TabControl implements ITabControl {
     }
 
     selectItem(index: number | null) {
-        this._selectedItemIndex = index || null;
+        if (this._selectedItemIndex !== index)
+            this._selectedItemIndex = index;
+        else this._selectedItemIndex = null;
+        this._onChange();
     }
 
     isSelected() {
-        return this._selectedItemIndex && true || false;
+        return !(this._selectedItemIndex === null) && true || false;
+    }
+
+    getSelectedItemIndex() {
+        return this._selectedItemIndex;
     }
 
     private _addItem(item: IItem) {
-        if (!this._weights.isStable()) {
-            this._message = new Message('Вага не стабільна!', MessageType.WARNING);
-            this._stateChanged();
-            return;
-        }
+        // if (!this._weights.isStable()) {
+        //     this._message = new Message('Вага не стабільна!', MessageType.WARNING);
+        //     this._onChange();
+        //     return;
+        // }
 
         if (this._weights.getWeight() === 0) {
-            this._message = new Message('Поставте товар на ваги!', MessageType.WARNING);
-            this._stateChanged();
+            this._throwMessage(MessageCode.WEIGHTS_IS_EMPTY);
             return;
         }
 
         this._weights.setPrice(item.price);
-        const newItem: IItemAmount = new ItemAmount(item, this._weights.getSum());
+        //const newItem: IItemAmount = new ItemAmount(item, this._weights.getSum());
+        const newItem: IItemAmount = new ItemAmount(item, 10);
         this._order!.items.push(newItem);
         this._setTotal(newItem.sum);
         this.selectItem(null);
         this._input.clearValue();
+        this._onChange();
+    }
+
+    private _throwMessage(code: MessageCode | null) {
+        this._message.sendMessage(code);
+        this._onChange();
     }
 
     delItem() {
@@ -90,6 +112,10 @@ class TabControl implements ITabControl {
         return this._order!.total;
     }
 
+    getMessage() {
+        return this._message;
+    }
+
     private _setTotal(value: number) {
         this._order!.total += value;
     }
@@ -98,12 +124,20 @@ class TabControl implements ITabControl {
         return this._order!.orderNumber;
     }
 
-    private _stateChanged() {
-        if (this._callback) this._callback();
+    on(event: TabControlEvents, callback: () => void) {
+        this._emitter.on(event, callback);
     }
 
-    setCallback(callback: () => void) {
-        this._callback = callback;
+    off(event: TabControlEvents, callback: () => void) {
+        this._emitter.on(event, callback);
+    }
+
+    private _onChange() {
+        this._emitter.emit('stateChange');
+    }
+
+    private _onWeightsChange() {
+        this._throwMessage(null);
     }
 }
 
