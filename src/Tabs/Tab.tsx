@@ -1,5 +1,4 @@
-import React, {FC, useState} from "react";
-import "./Tab.css"
+import React, {FC, useCallback, useState} from "react";
 
 enum ItemType {
 	WEIGHT,
@@ -14,7 +13,6 @@ export interface Item {
 }
 
 export interface ITab {
-
 	tabNumber: number;
 	tara?: number;
 	addItem?: (value: Item) => void;
@@ -23,26 +21,19 @@ export interface ITab {
 	getTara?: () => number;
 }
 
-const styleTab = {
-	borderTopLeftRadius: '10px',
-	borderTopRightRadius: '10px',
-	padding: '10px',
-	background: 'aqua',
-	width: '50px',
-	height: '40px',
-	fontSize: '25px'
-}
-
-const Tab: FC<ITab> = (...props) => {
+const Tab: FC = ({children}) => {
 
 
-	console.log(props)
-
-	const [number, setNumber] = useState(1)
+	const [number, setNumber] = useState(children)
 	const [tara, setTara] = useState(0)
 	const [items, setItems] = useState([{}]) // список товарів
 	const [selectedItem, setSelectedItem] = useState({}) //вибраний товар
 
+	const setActive = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+		// setActiveTab(activeTab)
+		// Input.clear()
+		console.log(e.target)
+	}, [])
 
 	const addItem = (item: Item) => {
 	}
@@ -57,7 +48,7 @@ const Tab: FC<ITab> = (...props) => {
 	const getTara = () => {
 	}
 
-	return <button style={styleTab}>{number}</button>
+	return <button onClick={setActive} className='tab'>{number}</button>
 
 }
 export default Tab;
