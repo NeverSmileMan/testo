@@ -42,19 +42,3 @@ function Keyboard() {
 }
 
 export default Keyboard;
-
-// const getSet = (setName: string): (React.FunctionComponent[] | undefined) => {
-//     return keyboard.getSet(setName)?.map(
-//         (key, i) =>
-//             ({ children }) =>
-//                 <div className='key' key={i} data-key={key}>{children ? children : key}</div>
-//     );
-// }
-
-// const getAllSets = (setNames: string[]) => {
-//     let sets = {} as {[key: string]: FunctionComponent[] | undefined};
-//     setNames.forEach(setName => sets[setName] = getSet(setName));
-//     return sets;
-// };
-
-// const [allSets] = useState(() => getAllSets(['UA', 'EN', 'NUMS']));
