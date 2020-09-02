@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import MessageObject, { IMessageInfo } from '../data.structure/Message';
+import MessageObject from '../data.structure/Message';
+import { IMessageInfo } from '../data.structure/data/messagesInfo';
 
 const message = MessageObject.getInstance();
 

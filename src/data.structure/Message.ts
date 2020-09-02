@@ -1,3 +1,5 @@
+import messagesInfo from './data/messagesInfo';
+
 export enum MessageType {
     INFO,
     WARNING,
@@ -13,11 +15,6 @@ export interface IMessageInfo {
     type: MessageType,
     text: string,
 }
-
-const messagesInfo: { [key in MessageCode]: IMessageInfo } = {
-    [MessageCode.WEIGHTS_IS_EMPTY]: { type: MessageType.WARNING, text: 'Поставте товар на ваги!' },
-    [MessageCode.WEIGHTS_NOT_STABLE]: { type: MessageType.WARNING, text: 'Вага не стабільна!' },
-};
 
 export interface IMessage {
     sendMessage: (code: MessageCode | null) => void;
@@ -46,7 +43,6 @@ export class Message implements IMessage {
         if (this._code === null) return null
         return messagesInfo[this._code];
     }
-
 }
 
 let instance: IMessage;

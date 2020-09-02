@@ -1,5 +1,5 @@
 import { IInput } from './Input';
-import KeyboardSets from '../data.structure/KeyboardSets';
+import * as KeyboardSets from './data/keyboardSets';
 
 export interface IKeyboard {
     addSet: (setName: string, set: string[]) => void;
@@ -46,8 +46,8 @@ export function getInstance() {
     if (!instance) {
         console.log("NEW KEYBOARD");
         instance = new Keyboard();
-        Object.keys(KeyboardSets).forEach(set => {
-            instance.addSet(KeyboardSets[set].setName, KeyboardSets[set].setKeys);
+        Object.values(KeyboardSets).forEach((set) => {
+            instance.addSet(set.setName, set.setKeys);
         });
     }
     return instance;

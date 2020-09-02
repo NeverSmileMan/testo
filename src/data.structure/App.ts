@@ -1,4 +1,4 @@
-import { IConfig, config, IEnv } from './Config';
+import { IConfig, config, IEnv } from './data/config';
 import { IOrdersControl, OrdersControl } from './OrdersControl';
 import { AppStateTypes } from './types';
 
