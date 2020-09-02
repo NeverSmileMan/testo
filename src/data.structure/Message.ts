@@ -1,20 +1,4 @@
-import messagesInfo from './data/messagesInfo';
-
-export enum MessageType {
-    INFO,
-    WARNING,
-    ERROR,
-}
-
-export enum MessageCode {
-    WEIGHTS_IS_EMPTY,
-    WEIGHTS_NOT_STABLE,
-}
-
-export interface IMessageInfo {
-    type: MessageType,
-    text: string,
-}
+import messagesInfo, { IMessageInfo, MessageCode, MessageType } from './data/messagesInfo';
 
 export interface IMessage {
     sendMessage: (code: MessageCode | null) => void;

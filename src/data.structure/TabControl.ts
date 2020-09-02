@@ -2,7 +2,9 @@ import { IItem, IItemAmount, ItemAmount } from './Item';
 import Weights, { IWeights } from './Weights';
 import InputList, { IInput } from './Input';
 import { IOrder } from './Order';
-import Message, { IMessage, MessageCode } from './Message';
+import Message, { IMessage } from './Message';
+import { MessageCode } from './data/messagesInfo';
+
 import EventEmitter from 'events';
 
 export interface ITabControl {
