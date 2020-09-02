@@ -31,7 +31,13 @@ const Tabs: FC = () => {
 
 	return (
 		<div className="tabs">
-			{numbers.map((tab, index) => <Tab {...tab} key={index}/>)}
+			{numbers.map((tab, index) => {
+				if (numbers.length >= 6) {
+					return setNumber([{tabNumber: activeTab} as ITab])
+				} else {
+					return <Tab {...tab} key={index}/>
+				}
+			})}
 
 			<button className="tab" onClick={addTab}>+</button>
 		</div>
