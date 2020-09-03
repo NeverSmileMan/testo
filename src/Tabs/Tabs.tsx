@@ -52,9 +52,9 @@ const Tabs: FC = () => {
 				                                  tab={tab}
 				                                  key={index + 1}/>
 				)}
-				<button className="tab"
+				<button className={numbers.length === NUMBER_OF_TABS ? 'none' : 'tab'}
 				        disabled={numbers.length + 1 > NUMBER_OF_TABS}
-				        onClick={addTab}>{numbers.length === NUMBER_OF_TABS ? '' : '+'}
+				        onClick={addTab}>+
 				</button>
 			</div>
 
