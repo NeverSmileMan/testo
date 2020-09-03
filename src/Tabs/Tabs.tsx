@@ -5,13 +5,7 @@ import "./Tabs.css"
 
 const Tabs: FC = () => {
 	const NUMBER_OF_TABS = 6;
-	const tabsArr = [1, 2, 3, 4, 5, 6]
-	const [numbers, setNumbers] = useState([
-		{
-			tabNumber: 1,
-			tara: 0,
-			active: true
-		} as ITab])
+	const [numbers, setNumbers] = useState([{tabNumber: 1, active: true} as ITab])
 	const [activeTab, setActiveTab] = useState(1)
 	const [showCloseModal, setShowCloseModal] = useState(false)
 	const [isPrintDisabled, setIsPrintDisabled] = useState(false)
@@ -29,22 +23,26 @@ const Tabs: FC = () => {
 	// }, [])
 
 	const setActive = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+		numbers.forEach((value) => value.active = false)
+		const activeEl = +(e.target as Element).id
+		numbers[activeEl - 1].active = true
+		setActiveTab(activeEl);
+
+	}, [numbers])
 
 
-		setActiveTab(numbers.slice(-1)[0].tabNumber)
-		// setActiveTab(activeTab)
-		// Input.clear()
-		console.log(e.target)
-	}, [])
+	useEffect(() => {
+		console.log(`activeTab change = ${activeTab}`)
+	}, [activeTab])
+
 
 	const addTab = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-
+		numbers.forEach((value, index) => {
+			value.active = false;
+		})
 		const nextTab = numbers.slice(-1)[0].tabNumber + 1;
 		setActiveTab(nextTab)
-
-		console.log(activeTab)
-
-		setNumbers((prevState) => [...prevState, {tabNumber: nextTab}])
+		setNumbers((prevState) => [...prevState, {tabNumber: nextTab, active: true}])
 	}, [numbers])
 
 	return (
@@ -52,7 +50,7 @@ const Tabs: FC = () => {
 			<div className="tabs">
 				{numbers.map((tab, index) => <Tab setActive={setActive}
 				                                  tab={tab}
-				                                  key={index}/>
+				                                  key={index + 1}/>
 				)}
 				<button className="tab"
 				        disabled={numbers.length + 1 > NUMBER_OF_TABS}

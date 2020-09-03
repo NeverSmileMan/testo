@@ -54,7 +54,7 @@ const Tab: FC<PropsTab> = ({tab, setActive}) => {
 
 	return <button id={tab.tabNumber.toString()}
 	               onClick={setActive}
-	               className='tab tab_active'>
+	               className={tab.active ? 'tab_active tab': 'tab'}>
 				{number}
 			</button>
 
