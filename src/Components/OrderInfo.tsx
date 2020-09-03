@@ -20,7 +20,6 @@ function OrderInfo() {
 
     return (
         <div className='order-info'>
-            ORDER INFO
             {isSelected ? <div onClick={onClick}>DEL</div> : total}
         </div>
     );

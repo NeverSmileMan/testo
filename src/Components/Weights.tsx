@@ -13,7 +13,7 @@ function Weights() {
 
     return (
         <div className='weights'>
-            <div>WEIGHTS</div>
+            <div className='title'>WEIGHTS</div>
             <div><span>Weight: </span>{weights.getWeight()}</div> 
             <div><span>Tara: </span>{weights.getTara()}</div>
             <div><span>Sum: </span>{weights.getSum()}</div>

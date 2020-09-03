@@ -1,54 +1,59 @@
-$border-color: #1c9149;
+@import 'map';
 
-@mixin block{
-    position: absolute;
-    border-style: solid;
-    border-color: $border-color;
-    border-width: 2px;
-    background-color: rgb(255, 255 , 255);
-}
+$color_back: rgb(110, 156, 199);
+$color_select: rgb(224, 21, 116);
 
 * {
     box-sizing: border-box;
 }
 
-.main {
-    position: relative;
+.title {
+    font-weight: bold;
+    color: rgb(224, 21, 116);
+}
+
+.app-init {
     height: 100vh;
-    background: rgb(210, 216, 126);
+    background: rgb(248, 190, 81);
+}
+
+.main {
+    background: rgba(187, 187, 202, 0.411);
     text-align: center,
 }
 
 .weights {
-    @include block;
+    background-color: rgb(255, 255 , 255);
 }
 
 .orders {
-    @include block;
+    background-color: rgb(255, 255 , 255);
 }
 
 .tabs-nav {
-    @include block;
+    text-align: left;
     .tab {
+        text-align: center;
         cursor: pointer;
         display: inline-block;
-        width: 30px;
-        background-color: blue;
+        width: 60px;
+        height: 100%;
+        background-color: $color_back;
         color: white;
-        margin: 5px;
+        margin-right: 1px;
         &.active {
-            background-color: green;
+            background-color: $color_select;
         }
     }
 }
 
-.message {
-    @include block;
-}
+// .message {
 
-.order-control {
-    @include block;
-}
+// }
+
+// .order-control {
+
+// }
 
 @keyframes caret-animation {
     0%  { background-color:transparent; }
@@ -56,7 +61,6 @@ $border-color: #1c9149;
 }
 
 .input {
-    @include block;
     line-height: 3em;
     vertical-align: middle;
     &:after {
@@ -71,22 +75,22 @@ $border-color: #1c9149;
 }
 
 .list {
-    @include block;
+    background-color: $color_back;
+    opacity: 85%;
 }
 
-.order-info {
-    @include block;
-}
+// .order-info {
+
+// }
 
 .order-items {
-    @include block;
     .selected {
-        background-color: rgb(110, 156, 199);
+        background-color: $color_select;
     }
 }
 
 .keyboard {
-    @include block;
+    background-color: rgb(255, 255 , 255);
     .key {
         display: inline-block;
         min-width: 30px;
@@ -96,10 +100,6 @@ $border-color: #1c9149;
 }
 
 .controls {
-    @include block;
-    .btn {
-        @include block;
-    }
     .disabled {
         background-color: rgb(100, 100, 100);
     }

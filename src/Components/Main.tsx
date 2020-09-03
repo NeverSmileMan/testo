@@ -9,8 +9,6 @@ const app = AppState.getInstance();
 
 function Main() {
 
-    console.log("MAIN");
-
     return (
         <div className='main'>
             <Weights />

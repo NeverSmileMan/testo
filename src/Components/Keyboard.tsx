@@ -29,7 +29,7 @@ function Keyboard() {
  
     return (
         <div className='keyboard' onClick={onClick}>
-            <div>KEYBOARD</div>
+            <div className='title'>KEYBOARD</div>
             {lang === 'UA' && <KeyboardLayoutUA />}
             {lang === 'EN' && <KeyboardLayoutEN />}
             <KeyboardLayoutNUMS />

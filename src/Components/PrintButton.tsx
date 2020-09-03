@@ -21,7 +21,7 @@ function PrintButton() {
         <div
             className={`print btn ${isActive ? '' : 'disabled'}`}
             onClick={onClick}>
-            <div>PRINT</div>
+            <div className='title'>PRINT</div>
         </div>
     );
 }

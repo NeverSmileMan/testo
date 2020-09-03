@@ -24,7 +24,6 @@ function OrderItems() {
 
     return (
         <div className='order-items' onClick={onClick}>
-            ORDER ITEMS
             {items}
         </div>
     );

@@ -1,78 +1,110 @@
+$border-color: #242724;
+
+@mixin block{
+    position: absolute;
+    border-style: solid;
+    border-color: $border-color;
+    border-width: 2px;
+}
+
 .main {
+    position: relative;
     height: 848px;
     width: 1020px;
     .weights {
+        @include block;
         top: 10px;
         left: 10px;
         height: 100px;
         width: 1000px;
     }
     .orders {
+        @include block;
         top: 120px;
         left: 10px;
-        height: 508px;
+        height: 507px;
         width: 1000px;
+        .head {
+            @include block;
+            top: 1px;
+            left: 1px;
+            height: 30px;
+            width: 994px;
+        }        
         .tabs-nav {
-            top: 30px;
-            left: 0px;
+            @include block;
+            top: 32px;
+            left: 1px;
             height: 50px;
-            width: 600px;
+            width: 599px;
         }
         .message {
-            top: 30px;
-            left: 600px;
+            @include block;
+            top: 32px;
+            left: 601px;
             height: 50px;
-            width: 396px;
+            width: 394px;
         }
         .order-control {
-            top: 80px;
+            @include block;
+            border: none;
+            top: 82px;
             left: 0px;
-            height: 424px;
-            width: 850px;
+            height: 420px;
+            width: 852px;
             .input {
-                top: 0px;
-                left: 0px;
+                @include block;
+                top: 1px;
+                left: 1px;
                 height: 50px;
-                width: 546px;
+                width: 554px;
             }
             .list {
-                top: 48px;
-                left: 0px;
-                width: 846px;
-                background-color: rgb(231, 230, 130);
+                @include block;
+                top: 52px;
+                left: 1px;
+                width: 851px;
+                height: 368px;
                 z-index: 1;
             }
             .order-info {
-                top: 0px;
-                left: 546px;
+                @include block;
+                top: 1px;
+                left: 556px;
                 height: 50px;
-                width: 300px;
+                width: 296px;
             }
             .order-items {
-                top: 50px;
-                left: 0px;
-                height: 370px;
-                width: 846px;
+                @include block;
+                top: 52px;
+                left: 1px;
+                height: 368px;
+                width: 851px;
             }
         }
         .controls {
-            top: 80px;
-            left: 850px;
-            height: 424px;
-            width: 146px;
+            @include block;
+            border: none;
+            top: 82px;
+            left: 853px;
+            height: 420px;
+            width: 144px;
             .tara.btn {
+                @include block;
                 top: 0px;
                 left: 0px;
                 height: 140px;
                 width: 142px;
             }
             .print.btn {
+                @include block;
                 top: 140px;
                 left: 0px;
                 height: 140px;
                 width: 142px;
             }
             .close.btn {
+                @include block;
                 top: 280px;
                 left: 0px;
                 height: 140px;
@@ -81,9 +113,10 @@
         }
     }
     .keyboard {
-        top: 638px;
+        @include block;
+        top: 634px;
         left: 10px;
-        height: 200px;
+        height: 204px;
         width: 1000px;
     }
 }

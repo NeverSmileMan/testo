@@ -7,7 +7,7 @@ import Controls from './Controls';
 function Orders() {
     return (
         <div className='orders'>
-            ORDERS
+            <div className='head title'>ORDERS</div>
             <TabsNav />
             <Message />
             <OrderControl />

@@ -3,11 +3,6 @@ import AppState from '../data.structure/App';
 
 const app = AppState.getInstance();
 
-const style: React.CSSProperties = {
-    height: '100vh',
-    background: 'green',
-};
-
 function SetEnv(): React.ReactElement {
     const ref: React.RefObject<HTMLDivElement> = React.useRef(null);
 
@@ -19,7 +14,7 @@ function SetEnv(): React.ReactElement {
     }, []);
 
     return (
-        <div ref={ref} style={style}>INIT APP</div>
+        <div ref={ref} className='app-init'>INIT APP</div>
     );
 }
 

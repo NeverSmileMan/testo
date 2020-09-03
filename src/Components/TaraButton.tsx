@@ -21,7 +21,7 @@ function TaraButton() {
         <div
             className={`tara btn ${isActive ? '' : 'disabled'}`}
             onClick={onClick}>
-            <div>Tara</div>
+            <div className='title'>TARA</div>
         </div>
     );
 }
