@@ -20,5 +20,5 @@ export const keyboardSetNUMS: IKeyboardSet = {
 
 export const keyboardSetFUNC: IKeyboardSet = {
     setName: 'FUNC',
-    setKeys: ['CLEAR', 'BACKSPACE'],
+    setKeys: ['CLEAR', 'BACKSPACE', 'ENTER'],
 };

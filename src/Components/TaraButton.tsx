@@ -11,7 +11,7 @@ function TaraButton() {
     const [, setState] = useState({});
 
     useState(() => {
-        tara.onStateChange(() =>
+        tara.on('stateChange', () =>
             setState({}))
     });
 

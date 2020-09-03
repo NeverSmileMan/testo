@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import InputList from '../data.structure/Input';
+import InputObject from '../data.structure/Input';
 
-const list = InputList.getInstance().getListInstance();
+const list = InputObject.getInputListInstance().getListInstance();
 
 const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;

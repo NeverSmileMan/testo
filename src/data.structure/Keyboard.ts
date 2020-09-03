@@ -44,7 +44,6 @@ let instance: Keyboard;
 
 export function getInstance() {
     if (!instance) {
-        console.log("NEW KEYBOARD");
         instance = new Keyboard();
         Object.values(KeyboardSets).forEach((set) => {
             instance.addSet(set.setName, set.setKeys);

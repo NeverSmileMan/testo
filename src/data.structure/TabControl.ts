@@ -1,6 +1,6 @@
 import { IItem, IItemAmount, ItemAmount } from './Item';
 import Weights, { IWeights } from './Weights';
-import InputList, { IInput } from './Input';
+import InputObject, { IInput } from './Input';
 import { IOrder } from './Order';
 import Message, { IMessage } from './Message';
 import { MessageCode } from './data/messagesInfo';
@@ -37,7 +37,7 @@ class TabControl implements ITabControl {
         this._message = Message.getInstance();
         this._weights = Weights.getInstance();
         this._weights.on('stateChange', this._onWeightsChange.bind(this));
-        this._input = InputList.getInstance({ tabIndex: 0 });
+        this._input = InputObject.getInputListInstance({ tabIndex: 0 });
         this._input.setFocus();
         this._input.setCallbackOnSelect(this._addItem.bind(this));
         this._emitter = new EventEmitter();
@@ -147,7 +147,6 @@ let instance: ITabControl;
 
 export function getInstance() {
     if (!instance) {
-        console.log("NEW TAB CONTROL");
         instance = new TabControl();
     }
     return instance;

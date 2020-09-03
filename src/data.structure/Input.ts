@@ -35,7 +35,7 @@ export class Input implements IInput {
     
     constructor(options?: IInputOptions) {
         this._keyboard = ActiveInputService.getInstance();
-        if (options?.tabIndex === 0) this._keyboard.setActiveInput(this);
+        if (options?.tabIndex === 0) this._keyboard.setDefaultInput(this);
     }
 
     protected _addSymbol(value: string) {
@@ -66,9 +66,7 @@ export class Input implements IInput {
     }
 
     protected _onChange() {
-        if (this._callbackOnChange) {
-            this._callbackOnChange(this._value);
-        }
+        if (this._callbackOnChange) this._callbackOnChange(this._value);
     }
 
     protected _onSelect(value?: any) {
@@ -88,16 +86,19 @@ export class Input implements IInput {
         try {
             switch(key) {
                 case "BACKSPACE":
-                    console.log('BACKSPACE');
+                    //console.log('BACKSPACE');
                     this._delSymbol();
                     break;
                 case "CLEAR":
+                    //console.log('CLEAR');
                     this.clearValue();
                     break;
                 case "ENTER":
+                    //console.log('ENTER');
                     this._onSelect();
-                    break;                
+                    break;             
                 default:
+                    //console.log(key);
                     this._addSymbol(key);
             }
         } catch(e) {
@@ -122,6 +123,7 @@ export class InputList extends Input implements IInputList {
     }
 
     protected _onSelect(item: IItem){
+        if (!item) return; //ENTER
         if (this._callbackOnSelect) this._callbackOnSelect(item);
     }
 
@@ -138,11 +140,14 @@ export class InputNumber extends Input implements IInputNumber {
 
     constructor(options?: IInputOptions) {
         super(options);
+        this._value = '100';
     }
 
     protected _onChange() {
-        if (String(this.getValue()) === this._value)
+        if (!this._value || String(this.getValue()) === this._value) {
             super._onChange();
+            return;
+        }
         else throw new Error('Недопустимий символ');
     }
 
@@ -159,14 +164,21 @@ export class InputNumber extends Input implements IInputNumber {
     }
 }
 
-let instance: InputList;
+let inputList: InputList;
+let inputNumber: InputNumber;
 
-export function getInstance(options?: IInputOptions) {
-    if (!instance) {
-        console.log("NEW INPUT");
-        instance = new InputList(options);
+function getInputListInstance(options?: IInputOptions) {
+    if (!inputList) {
+        inputList = new InputList(options);
     }
-    return instance;
+    return inputList;
 }
 
-export default { getInstance };
+function getInputNumberInstance(options?: IInputOptions) {
+    if (!inputNumber) {
+        inputNumber = new InputNumber(options);
+    }
+    return inputNumber;
+}
+
+export default { getInputListInstance, getInputNumberInstance };

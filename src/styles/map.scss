@@ -120,3 +120,26 @@ $border-color: #242724;
         width: 1000px;
     }
 }
+
+.modal {
+    .set-tara {
+        position: relative; //why???
+        height: 300px;
+        width: 300px;
+        background-color: white;
+        .input {
+            @include block;
+            left: 10px;
+            top: 30px;
+            height: 30px;
+            width: 280px;
+        }
+        .keyboard {
+            @include block;
+            left: 10px;
+            top: 70px;
+            height: 215px;
+            width: 280px;
+        }
+    }
+}

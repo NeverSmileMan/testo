@@ -34,7 +34,6 @@ export class OrdersControl implements IOrdersControl {
     }
 
     selectOrder(orderNumber: number) {
-        console.log('SELECT');
         this._setCurrentOrder(this._orders.get(orderNumber));
     }
 

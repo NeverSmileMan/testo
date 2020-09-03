@@ -70,10 +70,7 @@ export class Close implements IClose {
     }
 
     private _onClose() {
-        if (this._callbackOnClose) {
-            this._callbackOnClose();
-            console.log('CLOSE');
-        }
+        if (this._callbackOnClose) this._callbackOnClose();
     }
 
     private _onStateChange() {

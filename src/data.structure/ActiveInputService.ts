@@ -4,6 +4,7 @@ import { IInput } from './Input';
 export interface IActiveInputService {
     setActiveInput: (input: IInput | null) => void;
     delActiveInput: (input: IInput) => void;
+    setDefaultInput: (input: IInput) => void;
 }
 
 class ActiveInputService {
@@ -35,7 +36,6 @@ let instance: ActiveInputService;
 
 export function getInstance() {
     if (!instance) {
-        console.log("NEW SERVICE");
         instance = new ActiveInputService();
     }
     return instance;

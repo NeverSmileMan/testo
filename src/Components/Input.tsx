@@ -1,8 +1,8 @@
 import React, { PropsWithChildren, useState } from 'react';
-import InputList from '../data.structure/Input';
+import InputObject from '../data.structure/Input';
 import List from './List';
 
-const input = InputList.getInstance();
+const input = InputObject.getInputListInstance();
 
 function Input() {
     const [, setState] = useState({});

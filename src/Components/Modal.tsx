@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
-import Close from '../data.structure/Close';
-import Print from '../data.structure/Print';
 import { Mode } from '../data.structure/types';
-import CloseModal from './CloseModal';
+import Tara from '../data.structure/Tara';
+import Print from '../data.structure/Print';
+import Close from '../data.structure/Close';
+import TaraModal from './TaraModal';
 import PrintModal from './PrintModal';
+import CloseModal from './CloseModal';
 
-const close = Close.getInstance();
+const tara = Tara.getInstance();
 const print = Print.getInstance();
+const close = Close.getInstance();
 
 function changeState(setModal: React.Dispatch<(modal: string) => string>) {
+    tara.on('stateChange', () => {
+        setModal((modal: string) => {
+            if (tara.getMode() === Mode.MODAL) {
+                return 'tara';
+            } else if (modal === 'tara') {
+                return 'none';
+            }
+            return modal;                
+        });
+    });
     close.on('stateChange', () => {
         setModal((modal: string) => {
             if (close.getMode() === Mode.MODAL) {
@@ -36,11 +49,10 @@ function Modal() {
 
     useState(() => changeState(setModal));
 
-    console.log("MODAL", modal);
-
     return (
-        modal === 'close' ? <CloseModal /> :
+        modal === 'tara' ? <TaraModal /> :
         modal === 'print' ? <PrintModal /> :
+        modal === 'close' ? <CloseModal /> :
         null
     );
 

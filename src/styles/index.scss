@@ -2,6 +2,7 @@
 
 $color_back: rgb(110, 156, 199);
 $color_select: rgb(224, 21, 116);
+$color_background: rgba(187, 187, 202, 0.411);
 
 * {
     box-sizing: border-box;
@@ -14,20 +15,20 @@ $color_select: rgb(224, 21, 116);
 
 .app-init {
     height: 100vh;
-    background: rgb(248, 190, 81);
+    background: $color_background;
 }
 
 .main {
-    background: rgba(187, 187, 202, 0.411);
+    background: $color_background;
     text-align: center,
 }
 
 .weights {
-    background-color: rgb(255, 255 , 255);
+    background-color: white;
 }
 
 .orders {
-    background-color: rgb(255, 255 , 255);
+    background-color: white;
 }
 
 .tabs-nav {
@@ -74,6 +75,12 @@ $color_select: rgb(224, 21, 116);
     }
 }
 
+.set-tara{
+    .input {
+        line-height: 1.8em;
+    }
+}
+
 .list {
     background-color: $color_back;
     opacity: 85%;
@@ -90,7 +97,7 @@ $color_select: rgb(224, 21, 116);
 }
 
 .keyboard {
-    background-color: rgb(255, 255 , 255);
+    background-color: white;
     .key {
         display: inline-block;
         min-width: 30px;
@@ -106,6 +113,9 @@ $color_select: rgb(224, 21, 116);
 }
 
 .modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 100%;
     width: 100%;
     z-index: 9999;

@@ -1,29 +1,41 @@
 import Weights, { IWeights } from './Weights';
 import { Mode, State } from './types';
-import { IInputNumber, InputNumber } from './Input';
+import Input, { IInputNumber } from './Input';
+import EventEmitter from 'events';
 
 export interface ITara {
     doTara: () => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     getMode: () => Mode;
-    onStateChange: (callback: () => void) => void;
+    on: (event: TaraEvents, callback: () => void) => void;
+    off: (event: TaraEvents, callback: () => void) => void;
 }
 
-export class Tara implements ITara {
+type TaraEvents = 'stateChange';
 
+export class Tara implements ITara {
+    private _emitter: EventEmitter;
     private _weights: IWeights;
-    private _callbackOnStateChange?: () => void;
     private _tara: number = 0;
     private _mode: Mode = Mode.BUTTON;
     private _state: State = State.ENABLED; //State = State.DISABLED;
     private _input: IInputNumber;
 
     constructor() {
+        this._emitter = new EventEmitter();
         this._weights = Weights.getInstance();
         this._weights.on('stateChange', this._onWeightsStateChange.bind(this));
-        this._input = new InputNumber();
-        this._input.setCallbackOnSelect(this._setAdditionalTara.bind(this))
+        this._input = Input.getInputNumberInstance();
+        this._input.setCallbackOnSelect(this._setAdditionalTara.bind(this));
+    }
+
+    on(event: TaraEvents, callback: () => void) {
+        this._emitter.on(event, callback);
+    }
+
+    off(event: TaraEvents, callback: () => void) {
+        this._emitter.off(event, callback);
     }
 
     private _onWeightsStateChange() {
@@ -36,15 +48,11 @@ export class Tara implements ITara {
         this._onStateChange();
     }
 
-    onStateChange(callback: () => void) {
-        this._callbackOnStateChange = callback;
-    }
-
-    private _setMode(mode?: Mode) {
-        if (mode) this._mode = mode;
-        else if (this._mode = Mode.BUTTON) this._mode = Mode.MODAL;
-        else this._mode = Mode.BUTTON;
-    }
+    // private _setMode(mode?: Mode) {
+    //     if (mode) this._mode = mode;
+    //     else if (this._mode = Mode.BUTTON) this._mode = Mode.MODAL;
+    //     else this._mode = Mode.BUTTON;
+    // }
 
     private _setTara(value: number) {
         const currentTara = this._weights.getTara();
@@ -57,11 +65,12 @@ export class Tara implements ITara {
             return;
         }
         this._tara = value;
+        this._input.clearValue();
         this.doTara();
     }
 
     isActive() {
-        return this._weights.isStable();
+        return this._state === State.ENABLED || false; //this._weights.isStable();
     }
 
     setActive(value: boolean) {
@@ -72,10 +81,12 @@ export class Tara implements ITara {
     }
 
     doTara() {
-        if (Mode.MODAL) {
-            this._setTara(this._tara);
-            this._setMode(Mode.BUTTON);
+        if (this._mode === Mode.MODAL) {
+            this._state = State.ENABLED;
+            this._mode = Mode.BUTTON;
             this._input.delFocus();
+            this._onStateChange();                                    
+            this._setTara(this._tara);
             return;
         }
 
@@ -88,11 +99,13 @@ export class Tara implements ITara {
             return;
         }
 
-        if (Mode.BUTTON) {
-            this._setMode(Mode.MODAL);
-            this._input.setFocus();
-            return;
-        }
+        if (!this.isActive()) return;
+        //this._input.clearValue(); 
+        this._mode = Mode.MODAL;
+        this._state = State.PENDING;
+        this._onStateChange();
+        this._input.setFocus();
+        return;
     }
 
     getMode() {
@@ -100,7 +113,7 @@ export class Tara implements ITara {
     }
 
     private _onStateChange() {
-        if (this._callbackOnStateChange) this._callbackOnStateChange();
+        this._emitter.emit('stateChange');
     }
 }
 

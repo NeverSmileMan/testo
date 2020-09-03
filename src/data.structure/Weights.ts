@@ -52,6 +52,7 @@ export class Weights implements IWeights{
 
     setTara(value: number) {
         this._tara = value;
+        this._onStateChange();
     }
 
     getTara(): number {
@@ -63,7 +64,7 @@ export class Weights implements IWeights{
     }
 
     getWeight(): number {
-        return this._weight;
+        return this._weight - this._tara;
     }
 
     on(event: WeightsEvents, callback: () => void) {
