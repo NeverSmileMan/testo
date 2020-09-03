@@ -13,8 +13,6 @@ const Tabs: FC = () => {
 	//     Tab.setSelectedItem()
 	//     ScaleService.setTara()
 
-	const deleteTab = useCallback((number: number) => {
-	}, [])
 
 	// const close = () => useCallback(() => deleteTab(activeTab), [])
 	// const print = () => useCallback(() => {
@@ -45,6 +43,14 @@ const Tabs: FC = () => {
 		setNumbers((prevState) => [...prevState, {tabNumber: nextTab, active: true}])
 	}, [numbers])
 
+	const deleteTab = useCallback(() => {
+		console.log(numbers)
+
+		// numbers.filter(((value) => value.tabNumber !== 2))
+		delete numbers[1]
+		console.log(numbers)
+	}, [numbers])
+
 	return (
 		<div className='header'>
 			<div className="tabs">
@@ -66,9 +72,8 @@ const Tabs: FC = () => {
 			</div>
 			<div className="home">
 				<button>home</button>
+				<button onClick={deleteTab}>deleteTAb</button>
 			</div>
-
-
 		</div>
 	)
 }
