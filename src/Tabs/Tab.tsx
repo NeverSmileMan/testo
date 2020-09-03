@@ -19,21 +19,23 @@ export interface ITab {
 	deleteItem?: (value: Item) => void;
 	getTotal?: () => number;
 	getTara?: () => number;
+	active?: boolean
 }
 
-const Tab: FC = ({children}) => {
+
+interface PropsTab {
+	tab: ITab;
+	setActive?: (e: any) => void;
+	key?: number
+}
 
 
-	const [number, setNumber] = useState(children)
+const Tab: FC<PropsTab> = ({tab, setActive}) => {
+
+	const [number, setNumber] = useState(tab.tabNumber)
 	const [tara, setTara] = useState(0)
 	const [items, setItems] = useState([{}]) // список товарів
 	const [selectedItem, setSelectedItem] = useState({}) //вибраний товар
-
-	const setActive = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-		// setActiveTab(activeTab)
-		// Input.clear()
-		console.log(e.target)
-	}, [])
 
 	const addItem = (item: Item) => {
 	}
@@ -44,11 +46,17 @@ const Tab: FC = ({children}) => {
 	const createOrderNumber = () => {
 	}
 	const closeOrder = () => {
+
 	}
 	const getTara = () => {
 	}
 
-	return <button onClick={setActive} className='tab'>{number}</button>
+
+	return <button id={tab.tabNumber.toString()}
+	               onClick={setActive}
+	               className='tab tab_active'>
+				{number}
+			</button>
 
 }
 export default Tab;
