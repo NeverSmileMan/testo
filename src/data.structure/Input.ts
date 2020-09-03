@@ -140,7 +140,7 @@ export class InputNumber extends Input implements IInputNumber {
 
     constructor(options?: IInputOptions) {
         super(options);
-        this._value = '100';
+        //this._value = '100';
     }
 
     protected _onChange() {

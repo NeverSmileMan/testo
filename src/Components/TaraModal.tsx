@@ -5,13 +5,6 @@ import KeyboardTara from './KeyboardTara';
 
 const close = TaraObject.getInstance();
 const input = InputObject.getInputNumberInstance();
-console.log(input.getValue());
-
-// const onClick = () => {
-//     close.doTara();
-// };
-
-            // onClick={onClick}>
 
 function TaraModal() {
     const [, setState] = useState({});
