@@ -49,8 +49,8 @@ export class Close implements IClose {
     doClose(confirm?: boolean) {
         if (this._mode === Mode.MODAL) {
             if (confirm) {
+                this._state = State.DISABLED;
                 this._onClose();
-                this._state = State.ENABLED;
             } else {
                 this._state = State.ENABLED;
             }
@@ -70,7 +70,10 @@ export class Close implements IClose {
     }
 
     private _onClose() {
-        if (this._callbackOnClose) this._callbackOnClose();
+        if (this._callbackOnClose) {
+            this._callbackOnClose();
+            console.log('CLOSE');
+        }
     }
 
     private _onStateChange() {

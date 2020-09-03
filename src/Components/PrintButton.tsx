@@ -19,7 +19,7 @@ function PrintButton() {
 
     return (
         <div
-            className={`print btn ${isActive || 'disabled'}`}
+            className={`print btn ${isActive ? '' : 'disabled'}`}
             onClick={onClick}>
             <div>PRINT</div>
         </div>

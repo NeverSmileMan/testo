@@ -16,7 +16,7 @@ type PrintEvents = 'stateChange';
 export class Print implements IPrint {
     private _emitter: EventEmitter;
     private _mode: Mode = Mode.BUTTON;
-    private _state: State = State.ENABLED; //State.DISABLED;
+    private _state: State = State.DISABLED;
     private _callbackOnPrint?: () => void;
 
     constructor() {
@@ -48,14 +48,10 @@ export class Print implements IPrint {
 
     doPrint(confirm?: boolean) {
         if (this._mode === Mode.MODAL) {
-            if (confirm) {
-                this._onPrint();
-                this._state = State.DISABLED;
-            } else {
-                this._state = State.ENABLED;
-            }
             this._mode = Mode.BUTTON;
+            this._state = State.ENABLED;
             this._onStateChange();
+            if (confirm) this._onPrint();
             return;
         }
 

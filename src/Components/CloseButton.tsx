@@ -20,7 +20,7 @@ function CloseButton() {
 
     return (
         <div
-            className={`close btn ${isActive || 'disabled'}`}
+            className={`close btn ${isActive ? '' : 'disabled'}`}
             onClick={onClick}>
             <div>CLOSE</div>
         </div>

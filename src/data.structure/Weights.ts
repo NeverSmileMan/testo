@@ -24,7 +24,7 @@ type WeightsEvents = 'stateChange';
 
 export class Weights implements IWeights{
     private _emitter: EventEmitter;
-    private _isStable: boolean = false;
+    private _isStable: boolean = true; //false
     private _tara: number = 0;
     private _price: number = 0;
     private _weight: number = 0;

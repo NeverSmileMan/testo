@@ -10,13 +10,12 @@ import EventEmitter from 'events';
 export interface ITabControl {
     order?: IOrder;
     setOrder: (order: IOrder) => void;
-    delItem: (index: number) => void;
+    delItem: () => void;
     getOrder: () => IOrder;
     getItems: () => IItemAmount[];
     getItemsCount: () => number;
     getOrderNumber: () => number;
     getTotal: () => number;
-    // getMessage: () => IMessage | null;
     selectItem: (index: number) => void;
     isSelected: () => boolean;
     getSelectedItemIndex: () => number | null;
@@ -48,6 +47,7 @@ class TabControl implements ITabControl {
         if (this._order) this._order.tara = this._weights.getTara();
         this._order = order;
         this._weights.setTara(this._order.tara);
+        this.selectItem(null);
     }
 
     selectItem(index: number | null) {
@@ -66,11 +66,10 @@ class TabControl implements ITabControl {
     }
 
     private _addItem(item: IItem) {
-        // if (!this._weights.isStable()) {
-        //     this._message = new Message('Вага не стабільна!', MessageType.WARNING);
-        //     this._onChange();
-        //     return;
-        // }
+        if (!this._weights.isStable()) {
+            this._throwMessage(MessageCode.WEIGHTS_NOT_STABLE);
+            return;
+        }
 
         if (this._weights.getWeight() === 0) {
             this._throwMessage(MessageCode.WEIGHTS_IS_EMPTY);
@@ -94,8 +93,9 @@ class TabControl implements ITabControl {
 
     delItem() {
         if (!this.isSelected()) return;
-        this._setTotal(-this._order!.items[this._selectedItemIndex!].price); //!
+        this._setTotal(-this._order!.items[this._selectedItemIndex!].sum);
         this._order!.items.splice(this._selectedItemIndex!, 1);
+        this.selectItem(null);
     }
 
     getItems(): IItemAmount[] {

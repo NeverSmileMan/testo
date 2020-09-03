@@ -29,6 +29,17 @@ $border-color: #1c9149;
 
 .tabs-nav {
     @include block;
+    .tab {
+        cursor: pointer;
+        display: inline-block;
+        width: 30px;
+        background-color: blue;
+        color: white;
+        margin: 5px;
+        &.active {
+            background-color: green;
+        }
+    }
 }
 
 .message {
@@ -38,33 +49,6 @@ $border-color: #1c9149;
 .order-control {
     @include block;
 }
-
-.controls {
-    @include block;
-}
-
-.order-info {
-    @include block;
-}
-
-.order-items {
-    @include block;
-    .selected {
-        background-color: rgb(110, 156, 199);
-    }
-}
-
-.keyboard {
-    @include block;
-    .key {
-        display: inline-block;
-        min-width: 30px;
-        border: solid 1px;
-        margin: 5px;
-    }
-}
-
-
 
 @keyframes caret-animation {
     0%  { background-color:transparent; }
@@ -90,58 +74,45 @@ $border-color: #1c9149;
     @include block;
 }
 
-.tara {
-    &.btn {
-        @include block;
-    }
-    &.disabled {
-        background-color: black;
-    }
-    &.modal {
-        height: 100%;
-        width: 100%;
-        z-index: 9999;
-        position: absolute;
-        background: rgba(0, 0, 0, 0.5);
-        left: 0;
-        top: 0;
+.order-info {
+    @include block;
+}
+
+.order-items {
+    @include block;
+    .selected {
+        background-color: rgb(110, 156, 199);
     }
 }
 
-.print {
-    &.btn {
-        @include block;
-    }
-    &.disabled {
-        background-color: black;
-    }
-    &.modal {
-        height: 100%;
-        width: 100%;
-        z-index: 9999;
-        position: absolute;
-        background: rgba(0, 0, 0, 0.5);
-        left: 0;
-        top: 0;
+.keyboard {
+    @include block;
+    .key {
+        display: inline-block;
+        min-width: 30px;
+        border: solid 1px;
+        margin: 5px;
     }
 }
 
-.close {
-    &.btn {
+.controls {
+    @include block;
+    .btn {
         @include block;
     }
-    &.disabled {
-        background-color: black;
+    .disabled {
+        background-color: rgb(100, 100, 100);
     }
-    &.modal {
-        height: 100%;
-        width: 100%;
-        z-index: 9999;
-        position: absolute;
-        background: rgba(0, 0, 0, 0.5);
-        left: 0;
-        top: 0;
-    }
+}
+
+.modal {
+    height: 100%;
+    width: 100%;
+    z-index: 9999;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+    left: 0;
+    top: 0;
 }
 
 /*
@@ -215,9 +186,6 @@ $border-color: #1c9149;
     -webkit-animation-iteration-count: infinite;
             animation-iteration-count: infinite;
 }
-
-
-
 
 // WEBPACK FOOTER //
 // ./src/components

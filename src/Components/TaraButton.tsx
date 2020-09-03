@@ -19,7 +19,7 @@ function TaraButton() {
 
     return (
         <div
-            className={`tara btn ${isActive || 'disabled'}`}
+            className={`tara btn ${isActive ? '' : 'disabled'}`}
             onClick={onClick}>
             <div>Tara</div>
         </div>

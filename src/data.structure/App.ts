@@ -7,6 +7,7 @@ export interface IAppState {
     setEnv: (rect: DOMRect) => void;
     getEnv: () => IEnv;
     getStateType: () => AppStateTypes;
+    getOrdersControlInstance: () => IOrdersControl;
 }
 
 class AppState implements IAppState {
@@ -44,8 +45,12 @@ class AppState implements IAppState {
 
     private _onStateChange() {
         if (this._callbackOnStateChange) {
-            setTimeout(() => this._callbackOnStateChange!(), 3000);
+            setTimeout(() => this._callbackOnStateChange!(), 1000);
         }
+    }
+
+    getOrdersControlInstance() {
+        return this._ordersControl;
     }
 }
 

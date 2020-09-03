@@ -3,6 +3,10 @@ import TabControl from '../data.structure/TabControl';
 
 const tabControl = TabControl.getInstance();
 
+const onClick = () => {
+    tabControl.delItem();
+};
+
 function OrderInfo() {
     const [, setState] = useState({});
 
@@ -17,7 +21,7 @@ function OrderInfo() {
     return (
         <div className='order-info'>
             ORDER INFO
-            {isSelected ? <div>DEL</div> : total}
+            {isSelected ? <div onClick={onClick}>DEL</div> : total}
         </div>
     );
 }
