@@ -34,55 +34,61 @@ export class OrdersControl implements IOrdersControl {
     }
 
     selectOrder(orderNumber: number) {
-        this._setCurrentOrder(this._orders.get(orderNumber));
+        this._setCurrentOrder(orderNumber);
     }
 
-    private _onOrderChange() {
-        if (this._orderControl.getItemsCount() === 1) {
+    private _onOrderChange(init?: boolean) {
+        const itemsCount = this._orderControl.getItemsCount();
+
+        if ((init && itemsCount > 0) || itemsCount === 1) {
             this._print.setActive(true);
-            if (!this._close.isActive()) this._close.setActive(true);
+            this._close.setActive(true);
+            return;
         }
-        if (this._orderControl.getItemsCount() === 0) {
+
+        if (itemsCount === 0) {
             this._print.setActive(false);
-            if (this._orders.size === 1 
-                && this._orderControl.getOrderNumber() === 1
-                && this._close.isActive()) {
+            const ordersCount = this._orders.size;
+            const orderNumber = this._orderControl.getOrderNumber();
+            if (ordersCount === 1 && orderNumber === 1) {
                 this._close.setActive(false);
+            } else this._close.setActive(true);
+        }
+
+    }
+
+    private _setCurrentOrder(orderNumber?: number) {
+        
+        if (orderNumber) {
+            const order = this._orders.get(orderNumber);
+            if (order) {
+                this._orderControl.setOrder(order);
+                this._onOrderChange(true);
+                this._onChange();
+                return;
             }
         }
-    }
 
-    private _setCurrentOrder(order?: IOrder) {
-        if (order) this._orderControl.setOrder(order);
-        else if (this._orders.size) {
-            const { value: firstOrderNumber } = this._orders.keys().next();
-            this._orderControl.setOrder(this._orders.get(firstOrderNumber) as IOrder);
-        } else {
+        if (!this._orders.size) {
             this.createOrder();
             return;
         }
 
-        if (this._orderControl.getItemsCount() > 0)
-            this._print.setActive(true);
-        else this._print.setActive(false);
+        const { value: firstOrderNumber } = this._orders.keys().next();
+        this._setCurrentOrder(firstOrderNumber);
+    }
 
-        if (this._orders.size === 1 
-            && this._orderControl.getItemsCount() === 0
-            && this._orderControl.getOrderNumber() === 1) {
-            this._close.setActive(false);
-        }
-        else this._close.setActive(true);
-
-        this._onChange();
+    canCreateOrder() {
+        return this._orders.size < this._maxOrdersCount;
     }
 
     createOrder() {
         if (!this.canCreateOrder()) return;
-        const orderNumber = this._ordersFreeNums.findIndex(item => item === true) + 1;
+        const orderNumber = this._ordersFreeNums.findIndex(item => item) + 1;
         this._ordersFreeNums[orderNumber - 1] = false;
         const order: IOrder = new Order(orderNumber);
         this._orders.set(orderNumber, order);
-        this._setCurrentOrder(order);
+        this._setCurrentOrder(orderNumber);
     }
 
     private _closeOrder() {
@@ -95,10 +101,6 @@ export class OrdersControl implements IOrdersControl {
     private _printOrder() {
         new Printer(this._orderControl.getOrder());
         this._close.doClose();
-    }
-
-    canCreateOrder() {
-        return this._orders.size < this._maxOrdersCount;
     }
 
     getOrders() {
