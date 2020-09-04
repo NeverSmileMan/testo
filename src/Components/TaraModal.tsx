@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import TaraObject from '../data.structure/Tara';
+import React, { useState, useEffect } from 'react';
 import InputObject from '../data.structure/Input';
 import KeyboardTara from './KeyboardTara';
+import ActiveInputService from '../data.structure/ActiveInputService';
 
-const close = TaraObject.getInstance();
 const input = InputObject.getInputNumberInstance();
+const activeInputService = ActiveInputService.getInstance();
 
 function TaraModal() {
     const [, setState] = useState({});
@@ -14,11 +14,17 @@ function TaraModal() {
             setState({}))
     });
 
+    const isFocus = activeInputService.ifActiveInput(input);
+
+    useEffect(() => () => activeInputService.delActiveInput(input), []);
+
     return (
         <div className='tara modal'>
             <div className='set-tara'>    
                 SET TARA
-                <div className='input'>{input.getValue()}</div>
+                <div className={`input ${isFocus ? 'focus' : ''}`}>
+                    {input.getValue()}
+                </div>
                 <KeyboardTara />
             </div>
         </div>

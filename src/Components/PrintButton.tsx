@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Print from '../data.structure/Print';
+import { Mode } from '../data.structure/types';
+import ModalService from '../data.structure/ModalService';
+import PrintModal from './PrintModal';
 
 const print = Print.getInstance();
+const modalService = ModalService.getInstance();
 
 const onClick = () => {
     print.doPrint();
 }
 
-function PrintButton() {
-    const [, setState] = useState({});
+function changeState(setState: React.Dispatch<() => { mode: Mode}>) {
+    print.on('stateChange', () =>
+        setState(() => ({ mode: print.getMode() }))
+    );
+}
 
-    useState(() => {
-        print.on('stateChange', () =>
-            setState({}))
-    });
+function showModal(mode: Mode) {
+    if (mode === Mode.MODAL)
+        modalService.showModal(<PrintModal />);
+    else modalService.showModal(null);
+}
+
+function PrintButton() {
+    const [{ mode }, setState] = useState({ mode: Mode.BUTTON });
+
+    useEffect(() => changeState(setState), []);
+
+    useEffect(() => showModal(mode), [mode]);
 
     const isActive = print.isActive();
 

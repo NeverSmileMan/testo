@@ -7,9 +7,10 @@ export interface IInput {
     clearValue: () => void;
     getValue: () => string | number;
     setFocus: () => void;
-    delFocus: () => void;
+    blurFocus: () => void;
     onChange: (callback: (value: string) => void) => void;
-    setCallbackOnSelect: (callback: (value: any) => void) => void;
+    onSelect: (callback: (value: any) => void) => void;
+    onFocusChange: (callback: () => void) => void;
 }
 
 export interface IInputOptions {
@@ -18,24 +19,25 @@ export interface IInputOptions {
 
 export interface IInputNumber extends IInput {
     getValue: () => number;
-    setCallbackOnSelect: (callback: (value: number) => void) => void;
+    onSelect: (callback: (value: number) => void) => void;
 }
 
 export interface IInputList extends IInput {
     getValue: () => string;
     getListInstance: () => IList;
-    setCallbackOnSelect: (callback: (item: IItem) => void) => void;
+    onSelect: (callback: (item: IItem) => void) => void;
 }
 
 export class Input implements IInput {
     private _keyboard: IActiveInputService;
+    private _focus: boolean = false;
     protected _value: string = '';
+    private _callbackOnFocusChange?: () => void;
     protected _callbackOnChange?: (value: string) => void;
     protected _callbackOnSelect?: (value: any) => void;
     
     constructor(options?: IInputOptions) {
         this._keyboard = ActiveInputService.getInstance();
-        if (options?.tabIndex === 0) this._keyboard.setDefaultInput(this);
     }
 
     protected _addSymbol(value: string) {
@@ -58,11 +60,24 @@ export class Input implements IInput {
     }
 
     setFocus() {
-        this._keyboard.setActiveInput(this);
+        //this._keyboard.setActiveInput(this);
+        //this._focus = true;
+        console.log('SET FOCUS', this);
+        this._onFocusChange();
     }
 
-    delFocus() {
-        this._keyboard.delActiveInput(this);
+    blurFocus() {
+        //this._focus = false;
+        this._onFocusChange();
+        //this._keyboard.delActiveInput(this);
+    }
+
+    onFocusChange(callback: () => void) {
+        return this._callbackOnFocusChange = callback;
+    }
+
+    private _onFocusChange() {
+        if (this._callbackOnFocusChange) this._callbackOnFocusChange();
     }
 
     protected _onChange() {
@@ -77,7 +92,7 @@ export class Input implements IInput {
         this._callbackOnChange = callback;
     }
 
-    setCallbackOnSelect(callback: (value: any) => void) {
+    onSelect(callback: (value: any) => void) {
         this._callbackOnSelect = callback;
     }
 
@@ -155,7 +170,7 @@ export class InputNumber extends Input implements IInputNumber {
         if (this._callbackOnSelect) this._callbackOnSelect(this.getValue());
     }
 
-    setCallbackOnSelect(callback: (value: number) => void) {
+    onSelect(callback: (value: number) => void) {
         this._callbackOnSelect = callback;
     }
 

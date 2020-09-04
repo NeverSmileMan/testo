@@ -38,10 +38,18 @@ export class OrdersControl implements IOrdersControl {
     }
 
     private _onOrderChange() {
-        if (this._orderControl.getItemsCount() === 1)
+        if (this._orderControl.getItemsCount() === 1) {
             this._print.setActive(true);
-        if (this._orderControl.getItemsCount() === 0)
+            if (!this._close.isActive()) this._close.setActive(true);
+        }
+        if (this._orderControl.getItemsCount() === 0) {
             this._print.setActive(false);
+            if (this._orders.size === 1 
+                && this._orderControl.getOrderNumber() === 1
+                && this._close.isActive()) {
+                this._close.setActive(false);
+            }
+        }
     }
 
     private _setCurrentOrder(order?: IOrder) {
@@ -86,7 +94,6 @@ export class OrdersControl implements IOrdersControl {
 
     private _printOrder() {
         new Printer(this._orderControl.getOrder());
-
         this._close.doClose();
     }
 

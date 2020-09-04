@@ -1,19 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Tara from '../data.structure/Tara';
+import { Mode } from '../data.structure/types';
+import ModalService from '../data.structure/ModalService';
+import TaraModal from './TaraModal';
 
 const tara = Tara.getInstance();
+const modalService = ModalService.getInstance();
 
 const onClick = () => {
     tara.doTara();
 }
 
-function TaraButton() {
-    const [, setState] = useState({});
+function changeState(setState: React.Dispatch<() => { mode: Mode}>) {
+    tara.on('stateChange', () =>
+        setState(() => ({ mode: tara.getMode() }))
+    );
+}
 
-    useState(() => {
-        tara.on('stateChange', () =>
-            setState({}))
-    });
+function showModal(mode: Mode) {
+    if (mode === Mode.MODAL)
+        modalService.showModal(<TaraModal />);
+    else modalService.showModal(null);
+}
+
+function TaraButton() {
+    const [{ mode }, setState] = useState({ mode: Mode.BUTTON });
+
+    useEffect(() => changeState(setState), []);
+
+    useEffect(() => showModal(mode), [mode]);
 
     const isActive = tara.isActive(); 
 
