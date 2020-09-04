@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import KeyboardObject from '../data.structure/Keyboard';
 import KeyboardLayoutNUMS from './KeyboardLayoutNUMS';
 import KeyboardLayoutFUNC from './KeyboardLayoutFUNC';

@@ -13,9 +13,9 @@ export interface IInput {
     onFocusChange: (callback: () => void) => void;
 }
 
-export interface IInputOptions {
-    tabIndex?: number;
-}
+// export interface IInputOptions {
+//     tabIndex?: number;
+// }
 
 export interface IInputNumber extends IInput {
     getValue: () => number;
@@ -30,13 +30,13 @@ export interface IInputList extends IInput {
 
 export class Input implements IInput {
     private _keyboard: IActiveInputService;
-    private _focus: boolean = false;
+    //private _focus: boolean = false;
     protected _value: string = '';
     private _callbackOnFocusChange?: () => void;
     protected _callbackOnChange?: (value: string) => void;
     protected _callbackOnSelect?: (value: any) => void;
     
-    constructor(options?: IInputOptions) {
+    constructor() {
         this._keyboard = ActiveInputService.getInstance();
     }
 
@@ -60,16 +60,11 @@ export class Input implements IInput {
     }
 
     setFocus() {
-        //this._keyboard.setActiveInput(this);
-        //this._focus = true;
-        console.log('SET FOCUS', this);
         this._onFocusChange();
     }
 
     blurFocus() {
-        //this._focus = false;
         this._onFocusChange();
-        //this._keyboard.delActiveInput(this);
     }
 
     onFocusChange(callback: () => void) {
@@ -101,19 +96,15 @@ export class Input implements IInput {
         try {
             switch(key) {
                 case "BACKSPACE":
-                    //console.log('BACKSPACE');
                     this._delSymbol();
                     break;
                 case "CLEAR":
-                    //console.log('CLEAR');
                     this.clearValue();
                     break;
                 case "ENTER":
-                    //console.log('ENTER');
                     this._onSelect();
                     break;             
                 default:
-                    //console.log(key);
                     this._addSymbol(key);
             }
         } catch(e) {
@@ -126,8 +117,8 @@ export class Input implements IInput {
 export class InputList extends Input implements IInputList {
     private _list: IList;
 
-    constructor(options?: IInputOptions) {
-        super(options);
+    constructor() {
+        super();
         this._list = new List();
         this._list.onSelect(this._onSelect.bind(this));
     }
@@ -153,11 +144,6 @@ export class InputList extends Input implements IInputList {
 
 export class InputNumber extends Input implements IInputNumber {
 
-    constructor(options?: IInputOptions) {
-        super(options);
-        //this._value = '100';
-    }
-
     protected _onChange() {
         if (!this._value || String(this.getValue()) === this._value) {
             super._onChange();
@@ -182,16 +168,16 @@ export class InputNumber extends Input implements IInputNumber {
 let inputList: InputList;
 let inputNumber: InputNumber;
 
-function getInputListInstance(options?: IInputOptions) {
+function getInputListInstance() {
     if (!inputList) {
-        inputList = new InputList(options);
+        inputList = new InputList();
     }
     return inputList;
 }
 
-function getInputNumberInstance(options?: IInputOptions) {
+function getInputNumberInstance() {
     if (!inputNumber) {
-        inputNumber = new InputNumber(options);
+        inputNumber = new InputNumber();
     }
     return inputNumber;
 }

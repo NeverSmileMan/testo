@@ -11,36 +11,30 @@ class ActiveInputService {
 
     private _keyboard: IKeyboard;
     private _activeInput: IInput | null = null;
-    private _inputs: IInput[] = [];
+    private _inputs: Set<IInput> = new Set();
 
     constructor() {
         this._keyboard = Keyboard.getInstance();
     }
 
     setActiveInput(input: IInput | null) {
-        if (input) {
-            const index = this._inputs.findIndex(i => i === input);
-            if (index === -1) this._inputs.push(input);
-            console.log(input);
-        }
+        if (input) this._inputs.add(input);
         const currentInput = this._activeInput;
-        this._activeInput = input;        
+        this._activeInput = input;       
         currentInput?.blurFocus();
         this._keyboard.setActiveInput(input);
         this._activeInput?.setFocus();
     }
 
     delActiveInput(input: IInput) {
-        const index = this._inputs.findIndex(i => i === input);
-        if (index > -1) this._inputs.splice(index, 1);
-        const nextInput = this._inputs[0] || null;
+        this._inputs.delete(input);
+        const nextInput = this._inputs.values().next().value || null;
         this.setActiveInput(nextInput);
     }
 
     ifActiveInput(input: IInput) {
         return this._activeInput === input;
     }
-
 }
 
 let instance: ActiveInputService;

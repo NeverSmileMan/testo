@@ -7,6 +7,7 @@ import { MessageCode } from './data/messagesInfo';
 import ActiveInputService, { IActiveInputService } from './ActiveInputService';
 
 import EventEmitter from 'events';
+import { State, Mode } from './types';
 
 export interface ITabControl {
     order?: IOrder;
@@ -22,6 +23,7 @@ export interface ITabControl {
     getSelectedItemIndex: () => number | null;
     on: (event: TabControlEvents, callback: () => void) => void;
     off: (event: TabControlEvents, callback: () => void) => void;
+    getMode: () => Mode | null;
 }
 
 type TabControlEvents = 'stateChange';
@@ -34,13 +36,14 @@ class TabControl implements ITabControl {
     private _order?: IOrder;
     private _emitter: EventEmitter;
     private _keyboard: IActiveInputService;
+    private _state: State = State.ENABLED;
 
     constructor() {
         this._message = Message.getInstance();
         this._weights = Weights.getInstance();
         this._weights.on('stateChange', this._onWeightsChange.bind(this));
         this._keyboard = ActiveInputService.getInstance();
-        this._input = InputObject.getInputListInstance({ tabIndex: 0 });
+        this._input = InputObject.getInputListInstance();
         this._keyboard.setActiveInput(this._input);
         this._input.onSelect(this._addItem.bind(this));
         this._emitter = new EventEmitter();
@@ -74,18 +77,19 @@ class TabControl implements ITabControl {
             return;
         }
 
-        if (this._weights.getWeight() === 0) {
+        if (this._weights.getWeight() <= 0) {
             this._throwMessage(MessageCode.WEIGHTS_IS_EMPTY);
             return;
         }
 
         this._weights.setPrice(item.price);
-        //const newItem: IItemAmount = new ItemAmount(item, this._weights.getSum());
-        const newItem: IItemAmount = new ItemAmount(item, 10);
+        const newItem: IItemAmount = new ItemAmount(item, this._weights.getSum());
+        //const newItem: IItemAmount = new ItemAmount(item, 10);
         this._order!.items.push(newItem);
         this._setTotal(newItem.sum);
         this.selectItem(null);
         this._input.clearValue();
+        this._state = State.PENDING;
         this._onChange();
     }
 
@@ -142,7 +146,20 @@ class TabControl implements ITabControl {
     }
 
     private _onWeightsChange() {
+        if (this._state === State.PENDING) {
+            if (this._weights.getWeight() <= 0) {
+                this._state = State.ENABLED;
+                this._onChange();
+            }
+            return;
+        }
+        
         this._throwMessage(null);
+    }
+
+    getMode() {
+        if (this._state === State.PENDING) return Mode.MODAL;
+        return null;
     }
 }
 
