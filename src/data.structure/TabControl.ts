@@ -64,7 +64,7 @@ class TabControl implements ITabControl {
     }
 
     isSelected() {
-        return !(this._selectedItemIndex === null) && true || false;
+        return (!(this._selectedItemIndex === null) && true) || false;
     }
 
     getSelectedItemIndex() {

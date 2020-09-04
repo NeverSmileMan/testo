@@ -12,7 +12,6 @@ function changeState(setState: React.Dispatch<(state: { isFocus: boolean}) => { 
         setState(state => ({ ...state }));
     });
     input.onFocusChange(() => {
-        const isFocus = activeInputService.ifActiveInput(input);
         setState(ifFocus);
     });
     return () => activeInputService.delActiveInput(input);

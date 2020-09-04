@@ -30,7 +30,7 @@ function TabsNav() {
 
     const tabs = Array.from(orders.keys()).map(orderNumber =>
         <div 
-            className={`tab ${orderNumber === currentOrderNumber && 'active' || ''}`}
+            className={`tab ${(orderNumber === currentOrderNumber && 'active') || ''}`}
             key={orderNumber}
             data-order-number={orderNumber}
             onClick={selectOrder}>

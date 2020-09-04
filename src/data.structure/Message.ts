@@ -1,4 +1,4 @@
-import messagesInfo, { IMessageInfo, MessageCode, MessageType } from './data/messagesInfo';
+import messagesInfo, { IMessageInfo, MessageCode } from './data/messagesInfo';
 
 export interface IMessage {
     sendMessage: (code: MessageCode | null) => void;

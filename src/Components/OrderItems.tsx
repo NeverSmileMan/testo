@@ -20,7 +20,7 @@ function OrderItems() {
 
     const selectedItemIndex = tabControl.getSelectedItemIndex();
     const items = tabControl.getItems().map((item, i) =>
-        <div key={i} data-item-index={i} className={selectedItemIndex === i && 'selected' || ''}>{item.name}</div>);
+        <div key={i} data-item-index={i} className={(selectedItemIndex === i && 'selected') || ''}>{item.name}</div>);
 
     return (
         <div className='order-items' onClick={onClick}>

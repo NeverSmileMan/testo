@@ -5,7 +5,7 @@ import Keyboard from './Keyboard';
 import AppState from '../data.structure/App';
 import Modal from './Modal';
 
-const app = AppState.getInstance();
+AppState.getInstance();
 
 function Main() {
 
