@@ -4,7 +4,8 @@ import Keyboard, { keyBoard } from '../keyboard/keyboard';
 import { ActiveInputServise } from '../services/ActiveInputServise';
 import { makeStyles } from '@material-ui/styles';
 import SearchInput from '../search.input/search.input';
-
+import GroupBtn from '../functional-buttons/groupBtn'
+// import {flexbox} from '@material-ui/system'
 //----------------------------------------------
 type ItemType = 'ваговий' | 'штучний'; // заменить
 
@@ -55,22 +56,40 @@ const useStyles = makeStyles({
 		height: '17%',
 	},
 	test0: {
-		height: '60%',
+		width:'90%',
 	},
+	btns: {
+		width: '15%',
+		display: 'flex',
+	},
+	mainMenu: {
+		display: 'flex',
+		flexDirection: 'row',
+		width: '100%',
+		flexGrow: 1,
+	},
+	screen: {
+		display: 'flex',
+		flexDirection: 'column',
+		height: '100%',
+	}
 });
 
 export default function Test(): React.ReactElement {
 	const classes = useStyles();
 
 	return (
-		<>
-			<div className={classes.test0}>
-				<div className={classes.test}>
-					<SearchInput />
+		<div className={classes.screen}>
+			<div className={classes.mainMenu}>
+				<div className={classes.test0}>
+					<div className={classes.test}>
+						<SearchInput />
+					</div>
+					<AddedItemsTable values={values} onClick={'onClick' as any} active={null} />
 				</div>
-				<AddedItemsTable values={values} onClick={'onClick' as any} active={null} />
+				<GroupBtn />
 			</div>
 			<Keyboard service={ActiveInputServise} keyboardLayout={keyBoard} options={{}} />
-		</>
+		</div>
 	);
 }
