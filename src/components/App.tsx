@@ -4,6 +4,7 @@ import Tabs from "./header/Tabs";
 import Hints from "./header/Hints";
 import HomeButton from "./header/HomeButton";
 import {ITab} from "./header/Tab";
+import Keyboard from "./Keyboard/Keyboard";
 
 
 export const DataContext = createContext({})
@@ -85,7 +86,9 @@ function App() {
 						</div>
 						<div className={group_buttons}></div>
 					</div>
-					<div className={keyboard}>keyboard component</div>
+					<div className={keyboard}>
+						<Keyboard />
+					</div>
 				</div>
 			</DataContext.Provider>
 		</>
