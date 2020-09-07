@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {makeStyles} from "@material-ui/styles";
-import {NUMBER_OF_TABS} from "./Tabs";
+import {MAX_NUMBER_OF_TABS} from "./Tabs";
 
 interface OwnProps {
 }
