@@ -4,7 +4,7 @@ import Tabs from "./header/Tabs";
 import Hints from "./header/Hints";
 import HomeButton from "./header/HomeButton";
 import {ITab} from "./header/Tab";
-import Keyboard from "./Keyboard/Keyboard";
+import Keyboard from "./keyboard/Keyboard";
 
 
 export const DataContext = createContext({})
