@@ -3,6 +3,27 @@ import Tara from '../data.structure/Tara';
 import { Mode } from '../data.structure/types';
 import ModalService from '../data.structure/ModalService';
 import TaraModal from './TaraModal';
+import { makeStyles } from '@material-ui/styles';
+import Speed from '@material-ui/icons/Speed';
+
+const useStyles = makeStyles({
+    btn: {
+        height: '33.33%',
+        borderRadius: '0 .4em .4em 0',
+        color: '#fff',
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        backgroundColor: 'rgb(0, 153, 255)',
+        '&:first-child': {
+            borderBottom: '2px solid #fff',
+        },
+        '&:last-child ': {
+            borderTop:'2px solid #fff'
+        },
+    },
+});
 
 const tara = Tara.getInstance();
 const modalService = ModalService.getInstance();
@@ -24,6 +45,7 @@ function showModal(mode: Mode) {
 }
 
 function TaraButton() {
+    const classes = useStyles();
     const [{ mode }, setState] = useState({ mode: Mode.BUTTON });
 
     useEffect(() => changeState(setState), []);
@@ -34,11 +56,23 @@ function TaraButton() {
 
     return (
         <div
-            className={`tara btn ${isActive ? '' : 'disabled'}`}
+            className={classes.btn}
             onClick={onClick}>
-            <div className='title'>TARA</div>
+            <Speed />
+            <div>тара</div>
         </div>
     );
 }
 
 export default TaraButton;
+
+// return (
+//     <div
+//         {/* className={`tara btn ${isActive ? '' : 'disabled'}`} */}
+//         className={classes.btn}
+//         onClick={onClick}>
+//         {/* <div className='title'>TARA</div> */}
+//         <Speed />
+//         <div>тара</div>
+//     </div>
+// );

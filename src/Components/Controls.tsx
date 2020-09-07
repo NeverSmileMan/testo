@@ -2,10 +2,21 @@ import React from 'react';
 import TaraButton from './TaraButton';
 import PrintButton from './PrintButton';
 import CloseButton from './CloseButton';
+import { makeStyles } from '@material-ui/styles';
 
-function Controls() { 
+const useStyles = makeStyles({
+    controls: {
+        flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column',
+    },
+});
+
+function Controls() {
+    const classes = useStyles();
+
     return (
-        <div className='controls'>
+        <div className={`${classes.controls} controls`}>
             <TaraButton />
             <PrintButton />
             <CloseButton />
