@@ -3,6 +3,27 @@ import Close from '../data.structure/Close';
 import { Mode } from '../data.structure/types';
 import ModalService from '../data.structure/ModalService';
 import CloseModal from './CloseModal';
+import { makeStyles } from '@material-ui/styles';
+import CloseIcon from '@material-ui/icons/CheckCircle';
+
+const useStyles = makeStyles({
+    btn: {
+        height: '33.33%',
+        borderRadius: '0 .4em .4em 0',
+        color: '#fff',
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        backgroundColor: 'rgb(0, 153, 255)',
+        // '&:first-child': {
+        //     borderBottom: '2px solid #fff',
+        // },
+        // '&:last-child ': {
+            borderTop:'2px solid #fff'
+        // },
+    },
+});
 
 const close = Close.getInstance();
 const modalService = ModalService.getInstance();
@@ -24,6 +45,7 @@ function showModal(mode: Mode) {
 }
 
 function CloseButton() {
+    const classes = useStyles();
     const [{ mode }, setState] = useState({ mode: Mode.BUTTON });
 
     useEffect(() => changeState(setState), []);
@@ -34,9 +56,10 @@ function CloseButton() {
 
     return (
         <div
-            className={`close btn ${isActive ? '' : 'disabled'}`}
+            className={classes.btn}
             onClick={onClick}>
-            <div className='title'>CLOSE</div>
+            <CloseIcon />
+            <div>тара</div>
         </div>
     );
 }

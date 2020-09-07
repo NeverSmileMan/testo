@@ -4,7 +4,7 @@ import { Mode } from '../data.structure/types';
 import ModalService from '../data.structure/ModalService';
 import TaraModal from './TaraModal';
 import { makeStyles } from '@material-ui/styles';
-import Speed from '@material-ui/icons/Speed';
+import TaraIcon from '@material-ui/icons/Speed';
 
 const useStyles = makeStyles({
     btn: {
@@ -16,12 +16,12 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         flexDirection: 'column',
         backgroundColor: 'rgb(0, 153, 255)',
-        '&:first-child': {
+        // '&:first-child': {
             borderBottom: '2px solid #fff',
-        },
-        '&:last-child ': {
-            borderTop:'2px solid #fff'
-        },
+        // },
+        // '&:last-child ': {
+        //     borderTop:'2px solid #fff'
+        // },
     },
 });
 
@@ -58,7 +58,7 @@ function TaraButton() {
         <div
             className={classes.btn}
             onClick={onClick}>
-            <Speed />
+            <TaraIcon />
             <div>тара</div>
         </div>
     );
@@ -68,11 +68,8 @@ export default TaraButton;
 
 // return (
 //     <div
-//         {/* className={`tara btn ${isActive ? '' : 'disabled'}`} */}
-//         className={classes.btn}
+//         className={`tara btn ${isActive ? '' : 'disabled'}`}
 //         onClick={onClick}>
-//         {/* <div className='title'>TARA</div> */}
-//         <Speed />
-//         <div>тара</div>
+//         <div className='title'>TARA</div>
 //     </div>
 // );

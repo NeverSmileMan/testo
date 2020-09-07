@@ -88,7 +88,8 @@ $border-color: #242724;
             top: 82px;
             left: 853px;
             height: 424px;
-            width: 144px;
+            width: 143px;
+            padding: 2px;
             .tara.btn {
                 @include block;
                 top: 1px;

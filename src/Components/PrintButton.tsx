@@ -3,6 +3,27 @@ import Print from '../data.structure/Print';
 import { Mode } from '../data.structure/types';
 import ModalService from '../data.structure/ModalService';
 import PrintModal from './PrintModal';
+import { makeStyles } from '@material-ui/styles';
+import PrintIcon from '@material-ui/icons/Print';
+
+const useStyles = makeStyles({
+    btn: {
+        height: '33.33%',
+        borderRadius: '0 .4em .4em 0',
+        color: '#fff',
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        backgroundColor: 'rgb(0, 153, 255)',
+        // '&:first-child': {
+        //     borderBottom: '2px solid #fff',
+        // },
+        // '&:last-child ': {
+        //     borderTop:'2px solid #fff'
+        // },
+    },
+});
 
 const print = Print.getInstance();
 const modalService = ModalService.getInstance();
@@ -24,6 +45,7 @@ function showModal(mode: Mode) {
 }
 
 function PrintButton() {
+    const classes = useStyles();
     const [{ mode }, setState] = useState({ mode: Mode.BUTTON });
 
     useEffect(() => changeState(setState), []);
@@ -34,9 +56,10 @@ function PrintButton() {
 
     return (
         <div
-            className={`print btn ${isActive ? '' : 'disabled'}`}
+            className={classes.btn}
             onClick={onClick}>
-            <div className='title'>PRINT</div>
+            <PrintIcon />
+            <div>тара</div>
         </div>
     );
 }
