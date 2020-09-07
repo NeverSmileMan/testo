@@ -1,4 +1,5 @@
 import React, {FC, useCallback, useState} from "react";
+import {makeStyles} from "@material-ui/styles";
 
 enum ItemType {
 	WEIGHT,
@@ -51,12 +52,35 @@ const Tab: FC<PropsTab> = ({tab, setActive}) => {
 	const getTara = () => {
 	}
 
+	const styles = makeStyles({
+		tab_style: {
+			marginRight: '.2rem',
+			width: 'calc((100% - 1.6rem) / 8)',
+			height: '100%',
+			borderRadius: '.3rem .3rem 0 0',
+			fontSize: '1.3em',
+			fontWeight: 'bolder',
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+			backgroundColor: '#e4e4e4',
+			color: '#333',
+			border: 'none',
+			padding: '.5rem 0',
+		},
+		tab_active: {
+			backgroundColor: '#09f',
+			color: '#fff'
+		}
+	})
+
+	const {tab_style, tab_active} = styles()
 
 	return <button id={tab.tabNumber.toString()}
 	               onClick={setActive}
-	               className={tab.active ? 'tab_active tab': 'tab'}>
-				{number}
-			</button>
+	               className={tab.active ? tab_active : tab_style}>
+		{number}
+	</button>
 
 }
 export default Tab;
