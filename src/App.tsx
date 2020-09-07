@@ -1,5 +1,8 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/styles";
+import Tabs from "./Tabs";
+import Hints from "./Hints";
+import HomeButton from "./HomeButton";
 
 
 function App() {
@@ -25,7 +28,7 @@ function App() {
 			justifyContent: 'space-between',
 			flexDirection: 'row',
 			alignItems: 'flex-end',
-			height: '9%',
+			height: '50px',
 			outline: 'none'
 		},
 		main: {
@@ -62,9 +65,9 @@ function App() {
 			</div>
 			<div className={app}>
 				<div className={header}>
-					<div className="tabs"></div>
-					<div className="hints"></div>
-					<div className="home"></div>
+					<Tabs />
+					<Hints/>
+					<HomeButton/>
 				</div>
 				<div className={main}>
 					<div className={main_window}>
