@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
+import itemsData from './items';
 
 const useStyles = makeStyles({
     'list': {
@@ -42,7 +43,7 @@ function List() {
     const classes = useStyles();
     const [, setState] = useState({});
 
-    const itemsArray = [] as { plu: string, name: string }[];
+    const itemsArray = itemsData as any as { plu: string, name: string }[];
 
     if (!itemsArray) return null;
     

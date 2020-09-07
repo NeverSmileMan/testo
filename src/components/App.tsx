@@ -6,6 +6,7 @@ import HomeButton from "./header/HomeButton";
 import {ITab} from "./header/Tab";
 import Keyboard from "./keyboard/Keyboard";
 import Search from './search/Search';
+import TabInfo from './tabInfo/TabInfo';
 
 export const DataContext = createContext({})
 
@@ -80,7 +81,7 @@ function App() {
 						<div className={main_window}>
 							<div className={search_panel}>
 								<Search />
-								<div className="total_price"></div>
+								<TabInfo />
 							</div>
 							<div className="list_order"></div>
 						</div>
