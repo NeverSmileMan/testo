@@ -1,26 +1,85 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {makeStyles} from "@material-ui/styles";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+	const styles = makeStyles({
+		scale: {
+			height: '15%',
+			width: '100%',
+		},
+		scale2: {
+			height: '100%',
+			width: '100%',
+			backgroundColor: 'gray'
+		},
+		app: {
+			height: '85%',
+			width: '100%',
+			display: 'flex',
+			flexDirection: 'column',
+		},
+		header: {
+			display: 'flex',
+			justifyContent: 'space-between',
+			flexDirection: 'row',
+			alignItems: 'flex-end',
+			height: '9%',
+			outline: 'none'
+		},
+		main: {
+			background: '#0099ff',
+			flexGrow: 1,
+			display: 'flex',
+		},
+		main_window: {
+			display: 'flex',
+			flexDirection: 'column',
+			height: '100%',
+			border: '1px solid',
+			flexGrow: 1
+		},
+		group_buttons: {
+			width: '150px',
+			border: '1px solid',
+		},
+		serch_panel: {
+			height: '50px',
+			border: '1px solid',
+		},
+		keyboard: {
+			height: '200px',
+
+		}
+	})
+	const {scale, scale2, app, main, header, main_window, group_buttons, serch_panel, keyboard} = styles()
+
+	return (
+		<>
+			<div className={scale}>
+				<div className={scale2}>scale</div>
+			</div>
+			<div className={app}>
+				<div className={header}>
+					<div className="tabs"></div>
+					<div className="hints"></div>
+					<div className="home"></div>
+				</div>
+				<div className={main}>
+					<div className={main_window}>
+						<div className={serch_panel}>
+							<div className="search_input"></div>
+							<div className="total_price"></div>
+						</div>
+						<div className="list_order"></div>
+					</div>
+					<div className={group_buttons}></div>
+				</div>
+				<div className={keyboard}>keyboard component</div>
+			</div>
+		</>
+	);
 }
 
 export default App;
