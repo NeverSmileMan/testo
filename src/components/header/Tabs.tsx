@@ -6,7 +6,7 @@ export const MAX_NUMBER_OF_TABS = 6;
 
 const Tabs: FC = () => {
 
-	const [tabsArray, setTabsArr] = useState([1, 2, 3, 4, 5, 6])
+	const [tabsArray, setTabsArr] = useState(Array(MAX_NUMBER_OF_TABS).fill(0).map((e: number, i) => i + 1))
 	const [numbers, setNumbers] = useState([{tabNumber: tabsArray[0], active: true} as ITab])
 	const [activeTab, setActiveTab] = useState(tabsArray[0])
 	const [showCloseModal, setShowCloseModal] = useState(false)
@@ -25,7 +25,7 @@ const Tabs: FC = () => {
 	// =====================================================================================
 	const order: Map<number, ITab> = new Map()
 	const [ordersFreeNums, setOrdersFreeNums] = useState(Array(MAX_NUMBER_OF_TABS).fill(true))
-// =====================================================================================git add
+// ========================================================================================
 
 	//видаляєм активні таби
 	const removeActiveTabs = (arr: Array<ITab>) => arr.forEach((value: ITab) => value.active = false)
