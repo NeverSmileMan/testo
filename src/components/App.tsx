@@ -1,8 +1,8 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/styles";
-import Tabs from "./Tabs";
-import Hints from "./Hints";
-import HomeButton from "./HomeButton";
+import Tabs from "./header/Tabs";
+import Hints from "./header/Hints";
+import HomeButton from "./header/HomeButton";
 
 
 function App() {
