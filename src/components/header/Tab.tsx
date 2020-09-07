@@ -1,7 +1,7 @@
 import React, {FC, useContext, useState} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {MAX_NUMBER_OF_TABS} from "./Tabs";
-import {DataContext} from "../App";
+import {TabsContext} from "../Tabs-context";
 
 enum ItemType {
 	WEIGHT,
@@ -32,10 +32,9 @@ interface PropsTab {
 	key?: number
 }
 
-
 const Tab: FC<PropsTab> = ({tab, setActive}) => {
 
-	const data = useContext(DataContext)
+	const data = useContext(TabsContext)
 	console.log(data)
 
 	const [number, setNumber] = useState(tab.tabNumber)

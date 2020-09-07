@@ -5,14 +5,10 @@ import Hints from "./header/Hints";
 import HomeButton from "./header/HomeButton";
 import {ITab} from "./header/Tab";
 import Keyboard from "./keyboard/Keyboard";
-
-
-export const DataContext = createContext({})
+import TabsProvider from "./Tabs-context";
 
 
 function App() {
-
-	const [tabs, setTabs] = useState([{active: true, tabNumber: 1, tara: 0} as ITab])
 
 	const styles = makeStyles({
 		scale: {
@@ -69,7 +65,7 @@ function App() {
 			<div className={scale}>
 				<div className={scale2}>scale</div>
 			</div>
-			<DataContext.Provider value={tabs}>
+			<TabsProvider>
 				<div className={app}>
 					<div className={header}>
 						<Tabs/>
@@ -87,10 +83,10 @@ function App() {
 						<div className={group_buttons}></div>
 					</div>
 					<div className={keyboard}>
-						<Keyboard />
+						<Keyboard/>
 					</div>
 				</div>
-			</DataContext.Provider>
+			</TabsProvider>
 		</>
 	);
 }
