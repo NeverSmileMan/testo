@@ -2,12 +2,13 @@ import React, {FC, useCallback, useEffect, useState} from "react";
 import Tab, {ITab} from "./Tab";
 import {makeStyles} from "@material-ui/styles";
 
-export const NUMBER_OF_TABS = 6;
+export const MAX_NUMBER_OF_TABS = 6;
 
 const Tabs: FC = () => {
 
-	const [numbers, setNumbers] = useState([{tabNumber: 1, active: true} as ITab])
-	const [activeTab, setActiveTab] = useState(1)
+	const [tabsArray, setTabsArr] = useState([1, 2, 3, 4, 5, 6])
+	const [numbers, setNumbers] = useState([{tabNumber: tabsArray[0], active: true} as ITab])
+	const [activeTab, setActiveTab] = useState(tabsArray[0])
 	const [showCloseModal, setShowCloseModal] = useState(false)
 	const [isPrintDisabled, setIsPrintDisabled] = useState(false)
 
@@ -21,36 +22,51 @@ const Tabs: FC = () => {
 	// 	close();
 	// }, [])
 
+	// =====================================================================================
+	const order: Map<number, ITab> = new Map()
+	const [ordersFreeNums, setOrdersFreeNums] = useState(Array(MAX_NUMBER_OF_TABS).fill(true))
+// =====================================================================================git add
+
+	//видаляєм активні таби
+	const removeActiveTabs = (arr: Array<ITab>) => arr.forEach((value: ITab) => value.active = false)
+
 	const setActive = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-		numbers.forEach((value) => value.active = false)
+		removeActiveTabs(numbers)
 		const activeEl = +(e.target as Element).id
 		numbers[activeEl - 1].active = true
 		setActiveTab(activeEl);
+	}, [numbers, activeTab])
 
-	}, [numbers])
-
-
-	useEffect(() => {
-		console.log(`activeTab change = ${activeTab}`)
-	}, [activeTab])
-
+	// useEffect(() => {
+	// 	console.log(`activeTab change = ${activeTab}`)
+	// }, [numbers, activeTab])
 
 	const addTab = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-		numbers.forEach((value) => {
-			value.active = false;
-		})
-		const nextTab = numbers.slice(-1)[0].tabNumber + 1;
+// =====================================================================================
+		const orderNumber = ordersFreeNums.findIndex(item => item) + 1;
+		console.log(ordersFreeNums[orderNumber], orderNumber)
+		setOrdersFreeNums([...ordersFreeNums, ordersFreeNums[orderNumber] = false])
+		console.log(ordersFreeNums)
+		// ordersFreeNums[orderNumber - 1] = false
+		// console.log(orderNumber)
+// =====================================================================================
+
+
+		removeActiveTabs(numbers)
+		// filter
+		const nextTab = numbers.slice(-1)[0].tabNumber + 1
+		if (numbers.length === tabsArray.length) return
 		setActiveTab(nextTab)
 		setNumbers((prevState) => [...prevState, {tabNumber: nextTab, active: true}])
-	}, [numbers])
+
+	}, [numbers, activeTab, ordersFreeNums])
 
 	const deleteTab = useCallback(() => {
-		console.log(numbers)
-
-		numbers.filter(((value) => value.tabNumber !== activeTab))
-
-		console.log(numbers)
-	}, [numbers, activeTab])
+		if (numbers.length > 1) {
+			setNumbers(numbers.filter(((value) => value.tabNumber !== activeTab)))
+			setActiveTab(activeTab - 1)
+		}
+	}, [numbers])
 
 	const styles = makeStyles({
 		tabs: {
@@ -61,7 +77,7 @@ const Tabs: FC = () => {
 		},
 		tab: {
 			marginRight: '.2rem',
-			width: `calc((100% - 1.6rem) / ${NUMBER_OF_TABS})`,
+			width: `calc((100% - 1.6rem) / ${MAX_NUMBER_OF_TABS})`,
 			height: '100%',
 			borderRadius: '.3rem .3rem 0 0',
 			fontSize: '1.3em',
@@ -87,8 +103,8 @@ const Tabs: FC = () => {
 			                                  tab={tab}
 			                                  key={index + 1}/>
 			)}
-			<button className={numbers.length === NUMBER_OF_TABS ? none : tab}
-			        disabled={numbers.length + 1 > NUMBER_OF_TABS}
+			<button className={numbers.length === MAX_NUMBER_OF_TABS ? none : tab}
+			        disabled={numbers.length + 1 > MAX_NUMBER_OF_TABS}
 			        onClick={addTab}>+
 			</button>
 		</div>
