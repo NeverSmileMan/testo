@@ -52,23 +52,32 @@ $border-color: #242724;
             left: 0px;
             height: 424px;
             width: 852px;
-            .input {
+            .input-list{
                 @include block;
+                border: none;
                 top: 1px;
                 left: 1px;
                 height: 50px;
-                width: 554px;
-            }
-            .list {
-                @include block;
-                top: 52px;
-                left: 1px;
-                width: 851px;
-                height: 371px;
-                z-index: 1;
+                width: 554px;  
+                // .input {
+                    //@include block;
+                    // top: 1px;
+                    // left: 1px;
+                    // height: 50px;
+                    // width: 554px;
+                // }
+                .list {
+                    @include block;
+                    top: 51px;
+                    left: 0px;
+                    width: 851px;
+                    height: 371px;
+                    z-index: 1;
+                }             
             }
             .order-info {
                 @include block;
+                border: none;
                 top: 1px;
                 left: 556px;
                 height: 50px;

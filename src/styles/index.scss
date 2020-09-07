@@ -57,23 +57,23 @@ $color_background: rgba(187, 187, 202, 0.411);
 // }
 
 @keyframes caret-animation {
-    0%  { background-color:transparent; }
+    0%  { background-color: transparent; }
     50% { background-color: black; }
 }
 
-.input {
-    line-height: 3em;
-    vertical-align: middle;
-    &.focus:after {
-        content: "";
-        display: inline;
-        padding-left: 2px;
-        animation-name: caret-animation;
-        animation-duration: 1s;
-        animation-delay: 0s;
-        animation-iteration-count: infinite;
-    }
-}
+// .input {
+    // line-height: 3em;
+    // vertical-align: middle;
+    // &.focus:after {
+        // content: "";
+        // display: inline;
+        // padding-left: 2px;
+        // animation-name: caretAnimation;
+        // animation-duration: 1s;
+        // animation-delay: 0s;
+        // animation-iteration-count: infinite;
+    // }
+// }
 
 .set-tara{
     .input {
