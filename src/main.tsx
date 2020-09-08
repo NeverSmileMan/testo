@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     borderBottom: `2px ${theme.palette.primary.main} solid`,
     borderLeft: `2px ${theme.palette.primary.main} solid`,
     boxSizing: 'border-box',
+    overflow: 'hidden',
   },
 	sideButtons: {
     width: '8%',

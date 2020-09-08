@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 		textAlign: 'start',
 		height: '83%',
 		overflowY: 'auto',
-		borderRadius: '0 0 0 .4em',
 		padding: '0px',
 		margin: '0',
 		display: 'flex',
