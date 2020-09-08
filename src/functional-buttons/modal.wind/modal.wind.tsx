@@ -16,6 +16,8 @@ const useStyles = makeStyles({
     height: '100%',
     width: '100%',
     position: 'absolute',
+    left: '0',
+    top: '0'
   }
 })
 interface Prop {

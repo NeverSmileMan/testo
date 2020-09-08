@@ -1,27 +1,36 @@
 import React from 'react';
-import { } from '@material-ui/styles';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
-    btn: {
-        display:'flex',
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor: '#e4e4e4',
-        border: '1px solid rgb(0, 153, 255)',
+    btn: ({ borderColor, colorBtn, textColor}: StyleProp) => ({
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colorBtn,
+        border: `2px solid ${borderColor}`,
         borderRadius: '10px',
-        color:'#000',
-        fontSize: '20px'
-        
-    }
+        color: textColor,
+        fontSize: '35px'
+    }),
+    btn0: {
+        gridColumnStart: '1',
+        gridColumnEnd: '3',
+    },
 })
-interface Prop {
-    btnName: number;
+interface StyleProp {
+    borderColor?: string;
+    colorBtn?: string;
+    nameClass?: string;
+    textColor?: string;
 }
-const WeightBtn = ({ btnName }: Prop) => {
-    const cls = useStyles();
+interface Prop extends StyleProp {
+    btnName?: string | any;
+}
+const WeightBtn = ({ btnName, borderColor = 'none', textColor='#000', colorBtn = '#e4e4e4', nameClass }: Prop) => {
+    const { btn, btn0 } = useStyles({ borderColor, colorBtn, textColor});
+    const namedClass = nameClass === 'btn0' ? `${btn} ${btn0}` : `${btn}`
     return (
-        <div className={cls.btn}>{btnName} гр.</div>
+        <div className={namedClass}>{btnName}</div>
     )
 }
 
