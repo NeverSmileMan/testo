@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import List from './List';
-import './caret.css';
 
 const useStyles = makeStyles({
     input: {
@@ -16,16 +15,17 @@ const useStyles = makeStyles({
             content: "''",
             display: 'inline',
             paddingLeft: '2px',
-            animation: '$cursor 800ms infinite',
+            animation: '$cursor 1100ms infinite',
             width: '2px',
             height: '100%',
             background: 'black',
-            opacity: 0
+            opacity: 0,
         }
     },
     '@keyframes cursor': {
         '0%': {opacity: 0},
-        '100%': {opacity: 1},
+        '50%': {opacity: 1},
+        '100%': {opacity: 0},
     },
 });
 
