@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 		fontSize: '24px',
 		flexDirection: 'column',
 		flexGrow: 1,
-		backgroundColor: theme.palette.primary.main,
+		backgroundColor: theme.palette.grey[500],
 	},
 	'@global': {
     '::-webkit-scrollbar': {
