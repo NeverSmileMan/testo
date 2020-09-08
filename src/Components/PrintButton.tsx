@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Print from '../data.structure/Print';
-import { Mode } from '../data.structure/types';
+import { Mode, State } from '../data.structure/types';
 import ModalService from '../data.structure/ModalService';
 import PrintModal from './PrintModal';
 import { makeStyles } from '@material-ui/styles';
@@ -34,7 +34,7 @@ const onClick = () => {
 
 function changeState(setState: React.Dispatch<() => { mode: Mode}>) {
     print.on('stateChange', () =>
-        setState(() => ({ mode: print.getMode() }))
+        setState(() => ({ mode: print.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON }))
     );
 }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Tara from '../data.structure/Tara';
-import { Mode } from '../data.structure/types';
+import { Mode, State } from '../data.structure/types';
 import ModalService from '../data.structure/ModalService';
 import TaraModal from './TaraModal';
 import { makeStyles } from '@material-ui/styles';
@@ -34,7 +34,7 @@ const onClick = () => {
 
 function changeState(setState: React.Dispatch<() => { mode: Mode}>) {
     tara.on('stateChange', () =>
-        setState(() => ({ mode: tara.getMode() }))
+        setState(() => ({ mode: tara.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON }))
     );
 }
 

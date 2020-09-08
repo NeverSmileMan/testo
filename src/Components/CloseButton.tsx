@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Close from '../data.structure/Close';
-import { Mode } from '../data.structure/types';
+import { Mode, State } from '../data.structure/types';
 import ModalService from '../data.structure/ModalService';
 import CloseModal from './CloseModal';
 import { makeStyles } from '@material-ui/styles';
@@ -34,7 +34,7 @@ const onClick = () => {
 
 function changeState(setState: React.Dispatch<() => { mode: Mode}>) {
     close.on('stateChange', () =>
-        setState(() => ({ mode: close.getMode() }))
+        setState(() => ({ mode: close.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON }))
     );
 }
 

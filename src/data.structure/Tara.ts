@@ -1,5 +1,5 @@
 import Weights, { IWeights } from './Weights';
-import { Mode, State } from './types';
+import { State } from './types';
 import Input, { IInputNumber } from './Input';
 import EventEmitter from 'events';
 import ActiveInputService, { IActiveInputService } from './ActiveInputService';
@@ -8,7 +8,7 @@ export interface ITara {
     doTara: () => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
-    getMode: () => Mode;
+    getState: () => State;
     on: (event: TaraEvents, callback: () => void) => void;
     off: (event: TaraEvents, callback: () => void) => void;
 }
@@ -19,8 +19,7 @@ export class Tara implements ITara {
     private _emitter: EventEmitter;
     private _weights: IWeights;
     private _tara: number = 0;
-    private _mode: Mode = Mode.BUTTON;
-    private _state: State = State.ENABLED; //State = State.DISABLED;
+    private _state: State = State.DISABLED;
     private _input: IInputNumber;
     private _keyboard: IActiveInputService;
 
@@ -42,7 +41,7 @@ export class Tara implements ITara {
     }
 
     private _onWeightsStateChange() {
-        if (this._mode !== Mode.BUTTON) return;
+        if (this._state !== State.ENABLED) return;
         if (this._weights.isStable()) {
             this._state = State.ENABLED;
         } else {
@@ -78,10 +77,8 @@ export class Tara implements ITara {
     }
 
     doTara() {
-        if (this._mode === Mode.MODAL) {
+        if (this._state === State.PENDING) {
             this._state = State.ENABLED;
-            this._mode = Mode.BUTTON;
-            //this._input.delFocus();
             this._onStateChange();                                    
             this._setTara(this._tara);
             return;
@@ -97,16 +94,14 @@ export class Tara implements ITara {
         }
 
         if (!this.isActive()) return;
-        //this._input.clearValue();
-        this._mode = Mode.MODAL;
         this._state = State.PENDING;
         this._keyboard.setActiveInput(this._input);
         this._onStateChange();
         return;
     }
 
-    getMode() {
-        return this._mode;
+    getState() {
+        return this._state;
     }
 
     private _onStateChange() {

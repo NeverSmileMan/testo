@@ -1,22 +1,21 @@
-import { Mode, State } from './types';
+import { State } from './types';
 import EventEmitter from 'events';
 
 export interface IClose {
     onClose: (callback: () => void) => void;
     on: (event: CloseEvents, callback: () => void) => void;
-    off: (event: string, callback: () => void) => void;
+    off: (event: CloseEvents, callback: () => void) => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     doClose: (confirm?: boolean) => void;
-    getMode: () => Mode;
+    getState: () => State;
 }
 
 type CloseEvents = 'stateChange';
 
 export class Close implements IClose {
     private _emitter: EventEmitter;
-    private _mode: Mode = Mode.BUTTON;
-    private _state: State = State.ENABLED; //State = State.DISABLED;
+    private _state: State = State.DISABLED;
     private _callbackOnClose?: () => void;
 
     constructor() {
@@ -31,7 +30,7 @@ export class Close implements IClose {
         this._emitter.on(event, callback);
     }
 
-    off(event: string, callback: () => void) {
+    off(event: CloseEvents, callback: () => void) {
         this._emitter.off(event, callback);
     }
 
@@ -47,26 +46,24 @@ export class Close implements IClose {
     }
 
     doClose(confirm?: boolean) {
-        if (this._mode === Mode.MODAL) {
+        if (this._state === State.PENDING) {
             if (confirm) {
                 this._state = State.DISABLED;
                 this._onClose();
             } else {
                 this._state = State.ENABLED;
             }
-            this._mode = Mode.BUTTON;
             this._onStateChange();
             return;
         }
 
         if (!this.isActive()) return;
-        this._mode = Mode.MODAL;
         this._state = State.PENDING;
         this._onStateChange();
     }
 
-    getMode() {
-        return this._mode;
+    getState() {
+        return this._state;
     }
 
     private _onClose() {
