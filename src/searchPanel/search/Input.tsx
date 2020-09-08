@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import List from './List';
 
 const useStyles = makeStyles({
-    'input': {
+    input: {
         fontWeight: 'bold',
         verticalAlign: 'middle',
         backgroundColor: 'white',
@@ -15,11 +15,16 @@ const useStyles = makeStyles({
             content: "''",
             display: 'inline',
             paddingLeft: '2px',
-            animationName: 'caret-animation',
-            animationDuration: '1s',
-            animationDelay: '0s',
-            animationIterationCount: 'infinite',
-        },
+            animation: '$cursor 800ms infinite',
+            width: '2px',
+            height: '100%',
+            background: 'black',
+            opacity: 0
+        }
+    },
+    '@keyframes cursor': {
+        '0%': {opacity: 0},
+        '100%': {opacity: 1},
     },
 });
 
@@ -29,7 +34,7 @@ function InputList() {
     return (
         <>
             <div className={classes.input} onClick={() => setState(state => !state)}>
-                {'input'}
+                {/*{'input'}*/}
             </div>
             {state ? <List /> : null}
         </>
