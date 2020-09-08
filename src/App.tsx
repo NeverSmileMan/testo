@@ -1,5 +1,5 @@
-import React from 'react';
-import { useTheme, makeStyles  } from '@material-ui/core/styles';
+import React, {useState} from 'react';
+import { useTheme, makeStyles, ThemeProvider, createMuiTheme  } from '@material-ui/core/styles';
 import {ActiveInputServise} from './services/ActiveInputServise';
 import KeyboardGrid from './keyboard/keyboard';
 import {keyBoard} from './keyboard/settings';
@@ -53,25 +53,66 @@ const useStyles = makeStyles({
     },
   });
 
+const themes: any = {}
+
+themes.default = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#0099FF',
+    },
+    secondary: {
+      main: '#d7d7d7',
+    },
+  },
+});
+themes.silpo = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#ff8522',
+    },
+    secondary: {
+      main: '#d7d7d7',
+    },
+  },
+});
+themes.fora = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#76b72f',
+    },
+    secondary: {
+      main: '#ef036',
+    },
+  },
+});
+
+
 
 function App() {
 
 	const classes = useStyles();
+  const [theme, setTheme] = useState(themes.default);
 
-  
+
+
   return (
       <>
-        <div className={classes.scale}>
-        </div>
-        <div className={classes.mainWrap}>
-          <div className={`${classes.main}`}>
-            <Main />
+        <ThemeProvider theme={theme}>
+          <div className={classes.scale}>
+            <button onClick={()=>setTheme(themes.default)}>DEFAULT</button>
+            <button onClick={()=>setTheme(themes.silpo)}>SILPO</button>
+            <button onClick={()=>setTheme(themes.fora)}>FORA</button>
           </div>
-          <div className={classes.keyboardWrap}>
-            <KeyboardGrid service={ActiveInputServise} keyboardLayout={keyBoard}/>
-            {/* <KeyboardFlex service={ActiveInputServise} keyboardLayout={keyBoardFlex}/> */}
+          <div className={classes.mainWrap}>
+            <div className={`${classes.main}`}>
+              <Main />
+            </div>
+            <div className={classes.keyboardWrap}>
+              <KeyboardGrid service={ActiveInputServise} keyboardLayout={keyBoard}/>
+              {/* <KeyboardFlex service={ActiveInputServise} keyboardLayout={keyBoardFlex}/> */}
+            </div>
           </div>
-        </div>
+        </ThemeProvider>
      </>
   );
 }

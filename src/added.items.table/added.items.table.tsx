@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 		fontSize: '24px',
 		flexDirection: 'column',
 		flexGrow: 1,
-		backgroundColor: (props: any) => props.backgroundColor,
+		backgroundColor: (props: any) => props.palette.primary.main,
 	},
 	'@global': {
     '::-webkit-scrollbar': {
@@ -50,7 +50,7 @@ const useStyles = makeStyles({
 
 export default function AddedItemsTable({values, onClick, active}: any): ReactElement {	//поменять onClick
 	const theme = useTheme();
-	const classes = useStyles({backgroundColor : theme.palette.grey[500] });
+	const classes = useStyles(theme);
 
 	// const classes2 = useStyles2();
 
