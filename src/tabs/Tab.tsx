@@ -1,6 +1,7 @@
 import React, {FC, useState} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {MAX_NUMBER_OF_TABS} from "./Tabs";
+import {createStyles, Theme} from "@material-ui/core/styles";
 
 enum ItemType {
 	WEIGHT,
@@ -53,7 +54,7 @@ const Tab: FC<PropsTab> = ({tab, setActive}) => {
 	const getTara = () => {
 	}
 
-	const styles = makeStyles({
+	const styles = makeStyles((theme: Theme) => createStyles({
 		tab_style: {
 			marginRight: '.2rem',
 			width: `calc((100% - 1.6rem) / ${MAX_NUMBER_OF_TABS})`,
@@ -69,11 +70,11 @@ const Tab: FC<PropsTab> = ({tab, setActive}) => {
 			border: 'none',
 		},
 		tab_active: {
-			backgroundColor: '#09f',
+			backgroundColor: theme.palette.primary.main,
 			color: '#fff',
 			outline: 'none',
 		}
-	})
+	}))
 
 	const {tab_style, tab_active} = styles()
 

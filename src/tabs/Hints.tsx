@@ -1,15 +1,19 @@
 import React, {FunctionComponent, useState} from 'react';
 import {makeStyles} from "@material-ui/styles";
 
-interface OwnProps {
+export interface HintsProps {
+	error: boolean
 }
 
-type Props = OwnProps;
+type Props = HintsProps;
 
-const Hints: FunctionComponent<Props> = (props) => {
+const Hints: FunctionComponent<Props> = ({error
+	= false}) => {
 
 
 	const [state, setState] = useState('Вага товару має перевищувати 40 грам')
+	const [showErr, setShowErr] = useState(error)
+
 
 	const styles = makeStyles({
 		hints: {
@@ -28,14 +32,35 @@ const Hints: FunctionComponent<Props> = (props) => {
 			display: 'flex',
 			justifyContent: 'center',
 			alignItems: 'center',
-		}
+		},
+		hints_error: {
+			color: 'white',
+			background: 'tomato',
+			animation: '$error 300ms ',
+		},
+		'@keyframes error': {
+			'0%': {opacity: 0},
+			'25%': {opacity: 1},
+			'50%': {opacity: 0},
+			'75%': {opacity: 1},
+			'100%': {opacity: 0},
+		},
 	})
 
-	const {hints, hints_messages} = styles()
+	const {hints, hints_messages, hints_error} = styles()
+
+	const showError = (e: React.MouseEvent<HTMLDivElement>) => {
+		setShowErr(true)
+
+		setTimeout(() => {
+			setShowErr(false)
+		}, 300)
+
+	}
 
 	return (
 		<div className={hints}>
-			<div className={hints_messages}>{state}</div>
+			<div onClick={showError} className={`${hints_messages} ${showErr ? hints_error : ''}`}>{state}</div>
 		</div>
 	);
 };
