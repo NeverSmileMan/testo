@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         paddingRight: '20px',     
         backgroundColor: 'white',
         borderRadius: '100px',
-        color: 'rgb(0, 153, 255)',
+        color: theme.palette.primary.main,
         minWidth: '100px',
     }
 }));
