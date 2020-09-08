@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     'order-info': {
+        backgroundColor: theme.palette.primary.main,
         flex: '1 0 0',
         padding: '10px',
         display: 'flex',
@@ -32,7 +33,7 @@ const useStyles = makeStyles({
         color: 'rgb(0, 153, 255)',
         minWidth: '100px',
     }
-});
+}));
 
 function OrderInfo() {
     const classes = useStyles();

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import itemsData from './itemsData';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     'list': {
         position: 'absolute',
         top: '50px',
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
             fontWeight: 'bold',
         },
     },
-});
+}));
 
 function List() {
     const classes = useStyles();

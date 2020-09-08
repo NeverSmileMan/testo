@@ -1,9 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import Input from './Input';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     'search': {
+        backgroundColor: theme.palette.primary.main,
         position: 'relative',
         width: '800px',
         padding: '10px',
@@ -11,7 +12,7 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         alignItems: 'center',
     },
-});
+}));
 
 function Search() {
     const classes = useStyles();
