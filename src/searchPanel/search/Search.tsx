@@ -1,17 +1,15 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import InputList from './InputList';
+import Input from './Input';
 
 const useStyles = makeStyles({
     'search': {
         position: 'relative',
-        backgroundColor: 'rgb(0, 153, 255)',
+        width: '800px',
         padding: '10px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '17%',
-        boxSizing: 'border-box',
     },
 });
 
@@ -20,7 +18,7 @@ function Search() {
 
     return (
         <div className={`${classes.search}`}>
-            <InputList />
+            <Input />
         </div>
     );
 }

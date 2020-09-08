@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import List from './List';
 
 const useStyles = makeStyles({
-    'input-list': {
+    'input': {
         fontWeight: 'bold',
         verticalAlign: 'middle',
         backgroundColor: 'white',
         borderRadius: '100px',
         flex: '1 0 0',
         paddingLeft: '20px',
+        paddingRight: '20px',
         '&:after': {
             content: "''",
             display: 'inline',
@@ -20,18 +21,17 @@ const useStyles = makeStyles({
             animationIterationCount: 'infinite',
         },
     },
-
 });
 
 function InputList() {
     const classes = useStyles();
-
+    const [state, setState] = useState(true);
     return (
         <>
-            <div className={classes['input-list']}>
+            <div className={classes.input} onClick={() => setState(state => !state)}>
                 {'input'}
             </div>
-            <List />
+            {state ? <List /> : null}
         </>
     );
 }

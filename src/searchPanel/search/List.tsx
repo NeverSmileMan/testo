@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import itemsData from './items';
+import itemsData from './itemsData';
 
 const useStyles = makeStyles({
     'list': {
-        backgroundColor: 'rgb(0, 153, 255)',
         position: 'absolute',
         top: '50px',
+        left: '0px',
+        width: '1216px',
+        height: '353px',
+        fontSize: '0.9em',
         '& ul': {
             listStyle: 'none',
             margin: '0px',
             padding: '0px',
             overflowY: 'auto',
-            textAlign: 'left',
-            maxHeight: '368px',
         },
         '& li': {
-            fontSize: '0.8em',
             borderBottom: 'solid 1px black',
             paddingLeft: '10px',
             paddingRight: '10px',
@@ -27,21 +27,19 @@ const useStyles = makeStyles({
             width: '50px',
         },
         '& .not-found': {
-            width: '100%',
-            height: '300px',
+            height: '100%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             color: 'white',
             fontWeight: 'bold',
         },
-
     },
 });
 
 function List() {
     const classes = useStyles();
-    const [, setState] = useState({});
+    const [state, setState] = useState(true);
 
     const itemsArray = itemsData as any as { plu: string, name: string }[];
 
@@ -55,15 +53,17 @@ function List() {
     );
 
     return (
-        <div className={`${classes.list} list`}>
-            <ul>
-                {items.length ?
-                    items :
-                    <div className='not-found'>
-                        <div>НІЧОГО НЕ ЗНАЙДЕНО</div>
-                    </div>
-                }
-            </ul>
+        <div className={classes.list} onClick={() => setState((state) => !state)}>
+            {items.length && state ?
+
+                <ul>
+                    {items}
+                </ul> :
+
+                <div className='not-found'>
+                    НІЧОГО НЕ ЗНАЙДЕНО
+                </div>
+            }
         </div>
     );
 }

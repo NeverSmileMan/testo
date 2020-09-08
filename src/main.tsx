@@ -7,7 +7,9 @@ import Hints from './tabs/Hints';
 import HomeButton from './tabs/HomeButton';
 import GroupBtn from './functional-buttons/groupBtn';
 import AddedItemsTable from './added.items.table/added.items.table';
-import Search from './search/Search';
+import Search from './searchPanel/search/Search';
+import OrderInfo from './searchPanel/orderInfo/OrderInfo';
+
 //---------plugs---------------
 import {values} from './plugs/added.items'
 
@@ -34,6 +36,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 		width: '100%',
 		height: '86%',
 		display: 'flex',
+    },
+    searchPanel: {
+		width: '100%',
+		height: '50px',
+		display: 'flex',
 	},
 	body: {
     width: '92%',
@@ -54,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 
 export default function Main() {
 
-	const {tab, sideButtons, info, bodyWrap, body, header} = useStyles();
+	const {tab, sideButtons, info, bodyWrap, body, header, searchPanel} = useStyles();
 
 	return (
 		<>
@@ -69,7 +76,10 @@ export default function Main() {
 			</div>
 			<div className={bodyWrap}>
 				<div className={body}>
-					<Search/>
+					<div className={searchPanel}>
+                        <Search />
+                        <OrderInfo />
+                    </div>
 					<AddedItemsTable values={values} onClick={'onClick' as any} active={null}/>
 				</div>
 				<div className={sideButtons}>
