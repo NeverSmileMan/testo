@@ -5,7 +5,8 @@ import Hints from "./header/Hints";
 import HomeButton from "./header/HomeButton";
 import Keyboard from "./keyboard/Keyboard";
 import TabsProvider from "./Tabs-context";
-
+import Search from './search/Search';
+import TabInfo from './tabInfo/TabInfo';
 
 function App() {
 
@@ -75,8 +76,8 @@ function App() {
 				<div className={main}>
 					<div className={main_window}>
 						<div className={search_panel}>
-							<div className="search_input"></div>
-							<div className="total_price"></div>
+							<Search/>
+							<TabInfo/>
 						</div>
 						<div className="list_order"></div>
 					</div>
@@ -86,8 +87,9 @@ function App() {
 					<Keyboard/>
 				</div>
 			</div>
+
 		</>
-	);
+	)
 }
 
 export default App;
