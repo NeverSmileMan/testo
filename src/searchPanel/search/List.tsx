@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     'list': {
         backgroundColor: theme.palette.primary.main,
         position: 'absolute',
-        top: '50px',
+        top: '100%',
         left: '0px',
         width: '100%',
         height: '353px',
