@@ -58,7 +58,6 @@ function List() {
 
     const itemsArray = list.getItems();
 
-    console.log(itemsArray);
     if (!itemsArray) return null;
     
     const items = itemsArray.map((item, i) => 
