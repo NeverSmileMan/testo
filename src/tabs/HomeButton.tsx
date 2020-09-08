@@ -9,7 +9,7 @@ type Props = OwnProps;
 
 const HomeButton: FunctionComponent<Props> = (props) => {
 
-	const click = (e: React.MouseEvent<HTMLButtonElement>) => {
+	const click = (e: React.MouseEvent<HTMLDivElement>) => {
 		console.log('home', e.target)
 	}
 
@@ -25,9 +25,9 @@ const HomeButton: FunctionComponent<Props> = (props) => {
 	const {home} = styles()
 	return (
 		<div className={home}>
-			<button onClick={click}>
+			<div onClick={click}>
 				<HomeIcon fontSize="small" />
-			</button>
+			</div>
 		</div>
 	);
 };

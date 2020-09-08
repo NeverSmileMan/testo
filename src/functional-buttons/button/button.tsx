@@ -1,5 +1,6 @@
 import React, { JSXElementConstructor } from 'react';
 import { makeStyles } from '@material-ui/styles';
+import {createStyles, Theme} from "@material-ui/core/styles";
 
 interface ButtonProp {
     nameButton: string;
@@ -9,7 +10,7 @@ interface ButtonProp {
     color?: string;
     fontSize?: string;
 }
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
     btn: (prop: ButtonProp) => ({
         height: '33.33%',
         borderRadius: '0 .4em .4em 0',
@@ -18,7 +19,7 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
-        backgroundColor: 'rgb(0, 153, 255)',
+        backgroundColor: theme.palette.primary.main,
         '&:first-child': {
             borderBottom: '2px solid #fff',
         },
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
             borderTop:'2px solid #fff'
         }
     }),
-})
+}))
 const Button = (prop: ButtonProp) => {
     const classes = useStyles(prop);
     return (
