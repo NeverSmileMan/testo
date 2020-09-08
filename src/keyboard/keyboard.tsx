@@ -83,7 +83,7 @@ const useStyles = makeStyles({
 	keyboard: {
 		height: '100%',
 		width: '100%',
-		padding: '0.6em',
+		padding: '0.4em',
 		display: 'flex',
 		backgroundColor: '#fff',
 		boxSizing: 'border-box',

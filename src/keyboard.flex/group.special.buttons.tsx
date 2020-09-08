@@ -21,8 +21,9 @@ const useStyles = makeStyles({
 	keyboardSpecialGrid: {
 		
 		display: 'grid',
-		gridGap: '0.4em',
+		gridGap: '0.2em',
 		gridTemplateColumns: 'repeat(1, 1fr)',
+		gridTemplateRows: 'repeat(3, 1fr)',
 	},
 	skey_0: {
 		gridColumn: '1',
@@ -39,7 +40,9 @@ const useStyles = makeStyles({
 	btnSpecial: {
 		display: 'flex',
 		margin: '0px',
-
+	},
+	clearBtn: {
+		fontSize: '0.8em',
 	}
 });
 
@@ -60,7 +63,7 @@ export default function GroupSpecialButtons({ options, service }: Props): ReactE
 						<>{item.value ? (item.value as SpecialValue)[layout.name] : null}</>
 					</Button>
 				) : (
-					<Button key={id} callback={service[item.action as keyof Servise]} className={`${classes.btnSpecial} skey_${id}`} >
+					<Button key={id} callback={service[item.action as keyof Servise]} className={`${classes.btnSpecial} skey_${id} `+(item.value === 'CLEAR' ? classes.clearBtn : '')} >
 						<>{item.value}</>
 					</Button>
 				),

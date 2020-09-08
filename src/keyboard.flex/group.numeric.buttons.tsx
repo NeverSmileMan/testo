@@ -23,7 +23,7 @@ const useStyles2 = makeStyles({
 const useStyles = makeStyles({
 	numericGrid: {
 		display: 'grid',
-		gridGap: '0.4em',
+		gridGap: '0.15em',
 		gridTemplateColumns: 'repeat(3, 1fr)',
 		gridTemplateRows: 'repeat(4, 1fr)',
 	},

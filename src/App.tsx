@@ -12,6 +12,7 @@ const useStyles = makeStyles({
 	scale: {
     width: '100%',
     height: '15.8854%',
+    backgroundColor: 'gray',
   },
 	mainWrap: {
     width: '100%',
@@ -46,6 +47,8 @@ const useStyles = makeStyles({
         height: '100%',
         margin: 0,
         padding: 0,
+        fontFamily: 'Arial',
+        fontSize: '24px',
       }
     },
   });

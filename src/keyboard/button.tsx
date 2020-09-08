@@ -20,7 +20,6 @@ const useStyles = makeStyles({
 		fontSize: '1.1em',
 		background:'#e4e4e4', 
 		overflow: 'hidden',
-		margin:' .15em',
 		boxSizing: 'border-box',
 		fontWeight: 400,
 		textTransform: 'uppercase',

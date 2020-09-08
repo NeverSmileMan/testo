@@ -53,11 +53,13 @@ export const keyBoard: Keyboard = {
         row: 3,
         col: 12,
         shiftEvenRow: true,
+        gridGap: '0.4em',
       },
 			uk: {
         row: 3,
         col: 12,
         shiftEvenRow: true,
+        gridGap: '0.4em',
       },
 		},
 	}, 
@@ -67,6 +69,7 @@ export const keyBoard: Keyboard = {
 		options: {
       row: 4,
       col: 3,
+			gridGap: '0.15em',
     },
 	},
 	
@@ -94,6 +97,7 @@ export const keyBoard: Keyboard = {
 		options: {
       row: 3,
       col: 1,
+			gridGap: '0.1em',
     },
 	},
 };

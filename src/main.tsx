@@ -7,7 +7,7 @@ import Hints from './tabs/Hints';
 import HomeButton from './tabs/HomeButton';
 import GroupBtn from './functional-buttons/groupBtn';
 import AddedItemsTable from './added.items.table/added.items.table';
-
+import Search from './search/Search';
 //---------plugs---------------
 
 import {values} from './plugs/added.items'
@@ -67,7 +67,7 @@ export default function Main() {
     </div>
     <div className={classes.bodyWrap}>
       <div className={classes.body}>
-
+        <Search />
         <AddedItemsTable values={values} onClick={'onClick' as any} active={null}/>
       </div>  
       <div className={classes.sideButtons}>

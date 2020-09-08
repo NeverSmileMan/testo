@@ -78,7 +78,7 @@ const useStyles = makeStyles({
 	keyboard: {
 		height: '100%',
 		width: '100%',
-		padding: '0.5em',
+		padding: '0.2em',
 		display: 'flex',
 		backgroundColor: '#fff',
 		boxSizing: 'border-box',
@@ -88,7 +88,7 @@ const useStyles = makeStyles({
 		display: 'grid',
 		gridTemplateColumns: '77fr 17fr 6fr',
 		gridTemplateRows: '100%',
-		gridGap: '0.4em',
+		gridGap: '0.3em',
 		width: '100%',
 		height: '100%',
 	},
