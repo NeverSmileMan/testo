@@ -5,7 +5,7 @@ import Input from './Input';
 const useStyles = makeStyles((theme: Theme) => ({
     'search': {
         backgroundColor: theme.palette.primary.main,
-        position: 'relative',
+        //position: 'relative',
         width: '800px',
         padding: '10px',
         display: 'flex',

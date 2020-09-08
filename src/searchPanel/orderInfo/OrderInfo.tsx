@@ -44,7 +44,7 @@ function OrderInfo() {
             {state ?
 
                 <div className={classes['delete-icon']}>
-                    <DeleteForeverIcon />
+                    <DeleteForeverIcon fontSize='small'/>
                 </div> :
 
                 <div className={classes.total}>
