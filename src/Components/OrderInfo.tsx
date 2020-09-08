@@ -29,9 +29,8 @@ const useStyles = makeStyles({
         paddingRight: '10px',     
         backgroundColor: 'white',
         borderRadius: '100px',
-        lineHeight: '1rem',
         color: 'rgb(0, 153, 255)',
-        minWidth: '50px',
+        minWidth: '100px',
     }
 });
 
