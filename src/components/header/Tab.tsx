@@ -1,7 +1,7 @@
-import React, {FC, useContext, useState} from "react";
+import React, {FC, useState} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {MAX_NUMBER_OF_TABS} from "./Tabs";
-import {TabsContext} from "../Tabs-context";
+import {useTabContext} from "../Tabs-context";
 
 enum ItemType {
 	WEIGHT,
@@ -25,7 +25,6 @@ export interface ITab {
 	active?: boolean
 }
 
-
 interface PropsTab {
 	tab: ITab;
 	setActive?: (e: any) => void;
@@ -34,7 +33,7 @@ interface PropsTab {
 
 const Tab: FC<PropsTab> = ({tab, setActive}) => {
 
-	const data = useContext(TabsContext)
+	const data = useTabContext()
 	console.log(data)
 
 	const [number, setNumber] = useState(tab.tabNumber)

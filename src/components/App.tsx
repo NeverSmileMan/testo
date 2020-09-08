@@ -1,9 +1,8 @@
-import React, {createContext, useState} from 'react';
+import React from 'react';
 import {makeStyles} from "@material-ui/styles";
 import Tabs from "./header/Tabs";
 import Hints from "./header/Hints";
 import HomeButton from "./header/HomeButton";
-import {ITab} from "./header/Tab";
 import Keyboard from "./keyboard/Keyboard";
 import TabsProvider from "./Tabs-context";
 
@@ -65,28 +64,28 @@ function App() {
 			<div className={scale}>
 				<div className={scale2}>scale</div>
 			</div>
-			<TabsProvider>
-				<div className={app}>
+			<div className={app}>
+				<TabsProvider>
 					<div className={header}>
 						<Tabs/>
 						<Hints/>
 						<HomeButton/>
 					</div>
-					<div className={main}>
-						<div className={main_window}>
-							<div className={search_panel}>
-								<div className="search_input"></div>
-								<div className="total_price"></div>
-							</div>
-							<div className="list_order"></div>
+				</TabsProvider>
+				<div className={main}>
+					<div className={main_window}>
+						<div className={search_panel}>
+							<div className="search_input"></div>
+							<div className="total_price"></div>
 						</div>
-						<div className={group_buttons}></div>
+						<div className="list_order"></div>
 					</div>
-					<div className={keyboard}>
-						<Keyboard/>
-					</div>
+					<div className={group_buttons}></div>
 				</div>
-			</TabsProvider>
+				<div className={keyboard}>
+					<Keyboard/>
+				</div>
+			</div>
 		</>
 	);
 }

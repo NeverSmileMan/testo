@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useState} from "react";
+import React, {FC, useCallback, useState} from "react";
 import Tab, {ITab} from "./Tab";
 import {makeStyles} from "@material-ui/styles";
 
