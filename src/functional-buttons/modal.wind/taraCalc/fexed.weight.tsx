@@ -7,17 +7,18 @@ const useStyle = makeStyles({
     display: 'grid',
     backgroundColor: '#f5f5f5',
     borderRadius: '10px',
-    gridTemplateColumns: 'repeat(3, 80px)',
-    gridTemplateRows: 'repeat(3, 80px)',
-    gridColumnGap: '10px',
-    gridRowGap: '10px',
-    padding: '10px',
+    gridTemplateColumns: 'repeat(3, 95px)',
+    gridTemplateRows: 'repeat(3, 95px)',
+    gridColumnGap: '15px',
+    gridRowGap: '15px',
+    padding: '15px',
   }
 })
 interface Prop {
   strWeight?: number;
   step?: number;
   countButton?: number;
+  borderColor?: string;
 }
 const initialWeight = 4;
 const initStep = 2;
@@ -27,7 +28,7 @@ const FixedWeight = ({ strWeight = initialWeight, step = initStep, countButton =
   const cls = useStyle();
   return (
     <div className={cls.btnConteiner}>
-      {enumBtns.map((val, index) => (<WeightBtn key={index} btnName={(strWeight + index * step)} />))}
+      {enumBtns.map((val, index) => (<WeightBtn key={index} btnName={`${(strWeight + index * step)} гр.`} borderColor={'rgb(0, 153, 255)'} />))}
     </div>
   )
 }

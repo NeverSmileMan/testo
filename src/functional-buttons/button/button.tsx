@@ -1,7 +1,5 @@
 import React, { JSXElementConstructor } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { colors } from '@material-ui/core';
-
 
 interface ButtonProp {
     nameButton: string;
@@ -31,7 +29,6 @@ const useStyles = makeStyles({
 })
 const Button = (prop: ButtonProp) => {
     const classes = useStyles(prop);
-    const modalType = prop.click;
     return (
         <div onClick={prop.click} className={classes.btn}>
             {prop.buttonIcon()}

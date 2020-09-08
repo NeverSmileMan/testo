@@ -1,24 +1,23 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/styles';
 import FixedWeight from './taraCalc/fexed.weight';
+import InputWeight from './taraCalc/input.weight';
 
 const useStyles = makeStyles({
-    title: {
+    conteiner: {
         display: 'flex',
         justifyContent: 'center',
+        transform: 'translateY(50%)',
         color: '#fff',
         fontSize: '40px',
     }
 })
 
-interface Prop {
-    title?: string;
-}
-
-const ModalTara = ({title='Тара'}:Prop) => {
+const ModalTara = () => {
     const cls = useStyles();
     return (
-        <div className={cls.title}>
+        <div className={cls.conteiner}>
+            <InputWeight/>
             <FixedWeight/>
         </div>
     )
