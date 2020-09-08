@@ -10,7 +10,7 @@ export const keyboardSetUA: IKeyboardSet = {
 
 export const keyboardSetEN: IKeyboardSet = {
     setName: 'EN',
-    setKeys: ['A', 'B', 'C', 'D', 'E', 'F'],
+    setKeys: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
 };
 
 export const keyboardSetNUMS: IKeyboardSet = {

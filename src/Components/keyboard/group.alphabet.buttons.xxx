@@ -1,0 +1,113 @@
+import React, {useContext, useMemo, } from 'react';
+import Button from './button';
+import { makeStyles } from '@material-ui/styles';
+import {LayoutContext, Key, KeyWithOpts, Alphabet, Servise} from './keyboard';
+
+
+interface Props {
+  options: Alphabet;
+  service: Servise;
+}
+
+const useStyles2 = makeStyles({
+	keyboardAlphabet: {
+    height: '100%',
+    width: '76%',
+    display: 'flex',
+    boxSizing: 'border-box',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+  },
+});
+
+export function createGrid(keys: any, options: any) {
+	const grid = {};
+	Object.keys(keys).forEach((item)=>Object.assign(grid,getKeyboardGridStyle(options[item], keys[item], item)));
+	return grid;
+}
+
+export function getKeyboardGridStyle() {
+
+    const arr = ['q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m',{
+        key: ' ',
+        opts: {
+          hMultiplier: 1,
+          wMultiplier: 3,
+        },
+      },];
+
+    const lang = 'en';
+    const row = 3, col = 9, shiftEvenRow = true, gridGap = '0.5em', additionalCol = true;
+    let shiftDivider = 3;
+
+	const style: any = {}; //возвращаемый объект стилей
+	const offset = new Map(); //аккумулятор смещения
+
+	if (shiftDivider < 1 || !shiftEvenRow) {
+		shiftDivider = 1;
+	}
+
+	const calcGridColsQty = shiftDivider * col + (+shiftEvenRow) + (additionalCol ? shiftDivider - 1 : 0);
+
+	style[`grid_${lang}`] = {
+		display: 'grid',
+		gridGap: gridGap,
+		gridTemplateColumns: `repeat(${calcGridColsQty}, 1fr)`,
+		gridTemplateRows: `repeat(${row}, 1fr)`,
+	};
+
+	let keyOpt: KeyOpts | null = null; //индивидуальныеы опции отображения кнопки из arr
+	let createdKeyCounter = 0;
+	//создаёт ряды
+	for (let i = 0; i < row; i++) {
+		//заполняет ряды кнопками
+		for (let j = 0; j < col + (!(i % 2) ? +additionalCol : 0); j++) {
+			if (offset.get(i) && offset.get(i).includes(j)) {
+				/*  добаыить отступ  */
+				continue;
+			} else {
+				//не даёт создавать лишние стили
+				if (createdKeyCounter < arr.length) {
+					keyOpt = (arr[createdKeyCounter] as Key).opts ?? null;
+					//обработка кнопки с опциями h/w
+					if (keyOpt && keyOpt.wMultiplier >= 1 && keyOpt.hMultiplier >= 1) {
+						for (let k = i; k <= i + keyOpt.hMultiplier - 1; k++) {
+							for (let n = j; n < j + keyOpt.wMultiplier; n++) {
+								if (offset.get(k)) {
+									offset.set(k, [...offset.get(k), n]);
+								} else {
+									offset.set(k, [n]);
+								}
+							}
+						}
+					}
+					style[`${createdKeyCounter}_${lang}`] = {
+						gridColumn: `${1 + (shiftEvenRow ? i % 2 : 0) + j * shiftDivider} / ${1 + (shiftEvenRow ? i % 2 : 0) + (1 + j) * shiftDivider + (keyOpt ? (keyOpt.wMultiplier - 1) * shiftDivider : 0)}`,
+						gridRow: `${i + 1} / ${i + 2 + (keyOpt ? keyOpt.hMultiplier - 1 : 0)}`,
+					};
+				}
+				createdKeyCounter++;
+			}
+		}
+	}
+	return style;
+}
+export default function GroupAlphabetButtons({options, service} : Props) {
+  const grid = createGrid(options.keys, options.options);
+
+  const useStyles = useMemo(() => makeStyles(grid), []);
+  const classes = useStyles();
+  const layout = useContext(LayoutContext);
+  
+  const classes2 = useStyles2();
+  // console.log(classes);
+  
+  
+  return (
+    <div className={classes2.keyboardAlphabet +" " + (classes as any)[`grid_${layout.name}`] }>
+       {options.keys[layout.name].map((item: Key, id: number) => (
+         <Button key={id} value={(item as KeyWithOpts).key ?? item  } callback={service[options.action]}  className={'btn-alphabet ' +  (classes as any)[`${id}_${layout.name}`] } />
+         ))}
+    </div>
+  )
+}
