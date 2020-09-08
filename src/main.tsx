@@ -19,7 +19,7 @@ import {values} from './plugs/added.items'
 const useStyles = makeStyles({
 	header: {
     width: '100%',
-    height: '10%',
+    height: '14%',
     display: 'flex',
   },
 	tab: {
@@ -34,7 +34,7 @@ const useStyles = makeStyles({
   },
 	bodyWrap: {
     width: '100%',
-    height: '90%',
+    height: '86%',
     display: 'flex',
   },
 	body: {

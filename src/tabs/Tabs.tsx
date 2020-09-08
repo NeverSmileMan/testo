@@ -70,7 +70,8 @@ const Tabs: FC = () => {
 		tabs: {
 			display: 'flex',
 			width: '100%',
-			paddingTop: '.2rem',
+			paddingTop: '.4rem',
+			boxSizing: 'border-box',
 			height: '100%',
 		},
 		tab: {
