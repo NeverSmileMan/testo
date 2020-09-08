@@ -69,7 +69,7 @@ const Tabs: FC = () => {
 	const styles = makeStyles({
 		tabs: {
 			display: 'flex',
-			width: '60%',
+			width: '100%',
 			paddingTop: '.2rem',
 			height: '100%',
 		},
