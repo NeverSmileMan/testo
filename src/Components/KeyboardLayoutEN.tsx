@@ -5,22 +5,27 @@ import { makeStyles } from '@material-ui/styles';
 const keyboardSet = keyboardSetEN.setKeys;
 
 const differentKeys: {[key: string]: number} = {
-    'A': 1.5, // кнопки, ширина яких відрізняється від звичайної у відносних одиницях 
+    'A': 2, // кнопки, ширина яких відрізняється від звичайної у відносних одиницях
 };
 
 const keyCountByRow = [8, 9, 9]; // sum = keyboardSet.length
-const k1 = 0.7; // розрахункова (середня) відстань між кнопками (відносно ширини кнопки)
-const k2 = 0.2; // фактична відстань між кнопками (відносно ширини кнопки)
+const k1 = 0.4; // розрахункова відстань між кнопками (відносно ширини кнопки)
+const k2 = 0.4; // фактична відстань між кнопками (відносно ширини кнопки)
+const k3 = 0.7; // висота кнопки відносно висоти ряду
+const k4 = 20; // співвідношення ширини блоку до висоти блоку
 
 function getSizeOfElements() {
-    const keyCount = keyboardSet.length;
+    const additionalCount = Object.values(differentKeys).reduce((r, value) => r + value - 1, 0);
+    const keyCount = keyboardSet.length + additionalCount;
     const rowCount = keyCountByRow.length;
-    const keyWidth = Math.ceil(100 * rowCount / keyCount / (1 + k1));
-    const keySpace = Math.floor(keyWidth * k2);
-    const paddingVertical = Math.floor(k2 * keyWidth);
+    const keyWidth = Math.round(100 * rowCount / keyCount / ( 1 + k1));
+    const keyHeight = Math.round(k3 * 100);
+    const keySpace = Math.round(keyWidth * k2);
+    const paddingVertical = Math.round((1 - k3) * 100 / 2 / k4);
 
     return {
         keyWidth,
+        keyHeight,
         keySpace,
         paddingVertical,
     };
@@ -34,6 +39,7 @@ function toUnits(value: number, unit: 'px' | '%' = '%') {
 
 const sizeInUnits = {
     keyWidth: toUnits(sizeOfElements.keyWidth),
+    keyHeight: toUnits(sizeOfElements.keyHeight),
     keySpace: toUnits(sizeOfElements.keySpace),
     paddingVertical: toUnits(sizeOfElements.paddingVertical),
 }
@@ -48,13 +54,18 @@ const useStyles = makeStyles({
         '& [class*=row]': {
             flexGrow: '1',
             display: 'flex',
-            justifyContent: 'center',
             alignItems: 'center',
-
+            justifyContent: 'center',
         },
-        '& .row-1': {},
-        '& .row-2': {},
-        '& .row-3': {},
+        '& .row-1': {
+            //paddingLeft: '3%',
+        },
+        '& .row-2': {
+            //paddingLeft: '7%',
+        },
+        '& .row-3': {
+            //paddingLeft: '3%',
+        },
     },
 
 	'key': {
@@ -66,7 +77,7 @@ const useStyles = makeStyles({
 		background:'#e4e4e4', 
 		overflow: 'hidden',
 		fontWeight: 400,
-		height: '80%',
+		height: sizeInUnits.keyHeight,
         width: sizeInUnits.keyWidth,
         marginRight: sizeInUnits.keySpace,
         '&:last-child': {
@@ -81,7 +92,7 @@ function KeyboardLayoutEN() {
     const keys = keyboardSet.map(
         (key, i) => {
             let style = {};
-            let width = differentKeys[key] && differentKeys[key] * sizeOfElements.keyWidth;
+            let width = differentKeys[key] && Math.round(differentKeys[key] * (sizeOfElements.keyWidth + sizeOfElements.keySpace) - sizeOfElements.keySpace);
             if (width) style = { width:  toUnits(width) };
             return (
                 <div className={classes.key} key={i} data-key={key} style={style}>
@@ -92,7 +103,7 @@ function KeyboardLayoutEN() {
     );
 
     const rows = keyCountByRow.map((count, i) => 
-        <div className={`row-${i}`} key={i}>
+        <div className={`row-${i + 1}`} key={i}>
             {keys.splice(0, count)}
         </div>
     );
