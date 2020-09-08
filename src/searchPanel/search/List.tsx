@@ -4,10 +4,11 @@ import itemsData from './itemsData';
 
 const useStyles = makeStyles((theme: Theme) => ({
     'list': {
+        backgroundColor: theme.palette.primary.main,
         position: 'absolute',
         top: '50px',
         left: '0px',
-        width: '1216px',
+        width: '1300px',
         height: '353px',
         fontSize: '0.9em',
         '& ul': {
