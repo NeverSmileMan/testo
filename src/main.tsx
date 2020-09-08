@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTheme, makeStyles  } from '@material-ui/core/styles';
+import { useTheme, makeStyles, createStyles, Theme  } from '@material-ui/core/styles';
 
 
 import Tabs from './tabs/Tabs';
@@ -16,7 +16,7 @@ import {values} from './plugs/added.items'
 
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
 	header: {
     width: '100%',
     height: '14%',
@@ -40,13 +40,17 @@ const useStyles = makeStyles({
 	body: {
     width: '92%',
     height: '100%',
+    borderRadius: '0 0 0 .4em',
+    borderBottom: `2px ${theme.palette.primary.main} solid`,
+    borderLeft: `2px ${theme.palette.primary.main} solid`,
+    boxSizing: 'border-box',
   },
 	sideButtons: {
     width: '8%',
     height: '100%',
     display: 'flex',
   },
-});
+}));
 
 
 

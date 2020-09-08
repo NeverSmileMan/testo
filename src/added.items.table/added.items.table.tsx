@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { useTheme, makeStyles  } from '@material-ui/core/styles';
+import { makeStyles, Theme, createStyles  } from '@material-ui/core/styles';
 import SingleItem from './single.item';
 
 
@@ -11,28 +11,20 @@ export interface Item {
 	cost: number;
 	type: 'ваговий' | 'штучний';
 }
-//--------------------------------
-// import { createStyles, Theme } from '@material-ui/core/styles';
 
-// const useStyles2 = makeStyles((theme: Theme) => createStyles({        // или так подключать?????????????????????????????
-//   root: {
-//     backgroundColor: theme.palette.primary.dark,
-//   },
-// }));
-//--------------------------------
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => createStyles({
 	bodyContainer: {
 		textAlign: 'start',
 		height: '83%',
 		overflowY: 'auto',
 		borderRadius: '0 0 0 .4em',
-		padding: '0',
+		padding: '0px',
 		margin: '0',
 		display: 'flex',
 		fontSize: '24px',
 		flexDirection: 'column',
 		flexGrow: 1,
-		backgroundColor: (props: any) => props.backgroundColor,
+		backgroundColor: theme.palette.primary.main,
 	},
 	'@global': {
     '::-webkit-scrollbar': {
@@ -46,13 +38,14 @@ const useStyles = makeStyles({
       borderRadius: '10px',
     },
   },
-});
+}));
+
 
 export default function AddedItemsTable({values, onClick, active}: any): ReactElement {	//поменять onClick
-	const theme = useTheme();
-	const classes = useStyles({backgroundColor : theme.palette.grey[500] });
 
-	// const classes2 = useStyles2();
+	const classes = useStyles();
+
+
 
 	return (
 		<div className={classes.bodyContainer}>
