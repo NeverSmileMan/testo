@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         position: 'absolute',
         top: '50px',
         left: '0px',
-        width: '1300px',
+        width: '100%',
         height: '353px',
         fontSize: '0.9em',
         '& ul': {

@@ -40,7 +40,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     searchPanel: {
 		width: '100%',
 		height: '50px',
-		display: 'flex',
+        display: 'flex',
+        position: 'relative',
 	},
 	body: {
     width: '92%',

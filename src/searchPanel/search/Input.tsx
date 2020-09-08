@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import List from './List';
+import './caret.css';
 
 const useStyles = makeStyles({
     input: {
