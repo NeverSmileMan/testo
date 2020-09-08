@@ -5,9 +5,7 @@ import KeyboardGrid from './keyboard/keyboard';
 import {keyBoard} from './keyboard/settings';
 import KeyboardFlex from './keyboard.flex/keyboard.flex';
 import {keyBoardFlex} from './keyboard.flex/settings.flex';
-import Tabs from './tabs/Tabs';
-import Hints from './tabs/Hints';
-import HomeButton from './tabs/HomeButton';
+import Main from './main';
 
 
 const useStyles = makeStyles({
@@ -27,23 +25,7 @@ const useStyles = makeStyles({
     width: '100%',
     height: '30%',
   },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: '60% 40%',
-    gridTemplateRows: '10% 90%',
 
-  },
-  gridTab: {
-    gridColumn: '1 / 3',
-    gridRow: '1 / 3',
-  },
-  gridInfo: {
-    gridColumn: '2 / 3',
-    gridRow: '1 / 2',
-    display: 'flex',
-    justifyContent: 'space-around',
-
-  },
     '@global': {
       '::-webkit-scrollbar': {
         width: '40px',
@@ -79,14 +61,8 @@ function App() {
         <div className={classes.scale}>
         </div>
         <div className={classes.mainWrap}>
-          <div className={`${classes.main} ${classes.grid}`}>
-            <div className={classes.gridTab}>
-              <Tabs/>
-            </div>
-            <div className={classes.gridInfo}>
-              <Hints/>
-              <HomeButton/>
-            </div>
+          <div className={`${classes.main}`}>
+            <Main />
           </div>
           <div className={classes.keyboardWrap}>
             <KeyboardGrid service={ActiveInputServise} keyboardLayout={keyBoard}/>
