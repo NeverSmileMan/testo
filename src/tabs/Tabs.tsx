@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useState} from "react";
+import React, {FC, useCallback, useState} from "react";
 import Tab, {ITab} from "./Tab";
 import {makeStyles} from "@material-ui/styles";
 
@@ -30,7 +30,7 @@ const Tabs: FC = () => {
 	//видаляєм активні таби
 	const removeActiveTabs = (arr: Array<ITab>) => arr.forEach((value: ITab) => value.active = false)
 
-	const setActive = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+	const setActive = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
 		removeActiveTabs(numbers)
 		const activeEl = +(e.target as Element).id
 		numbers[activeEl - 1].active = true
@@ -41,16 +41,14 @@ const Tabs: FC = () => {
 	// 	console.log(`activeTab change = ${activeTab}`)
 	// }, [numbers, activeTab])
 
-	const addTab = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+	const addTab = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
 // =====================================================================================
 		const orderNumber = ordersFreeNums.findIndex(item => item) + 1;
 		console.log(ordersFreeNums[orderNumber], orderNumber)
 		setOrdersFreeNums([...ordersFreeNums, ordersFreeNums[orderNumber] = false])
-		console.log(ordersFreeNums)
 		// ordersFreeNums[orderNumber - 1] = false
 		// console.log(orderNumber)
 // =====================================================================================
-
 
 		removeActiveTabs(numbers)
 		// filter
@@ -72,15 +70,14 @@ const Tabs: FC = () => {
 		tabs: {
 			display: 'flex',
 			width: '60%',
-			paddingTop: '.4rem',
+			paddingTop: '.2rem',
 			height: '100%',
 		},
 		tab: {
-			marginRight: '.2rem',
 			width: `calc((100% - 1.6rem) / ${MAX_NUMBER_OF_TABS})`,
 			height: '100%',
 			borderRadius: '.3rem .3rem 0 0',
-			fontSize: '1.3em',
+			fontSize: '1.2em',
 			fontWeight: 'bolder',
 			display: 'flex',
 			alignItems: 'center',
@@ -88,7 +85,6 @@ const Tabs: FC = () => {
 			backgroundColor: '#e4e4e4',
 			color: '#333',
 			border: 'none',
-			padding: '.5rem 0',
 			boxSizing: 'border-box',
 		},
 		none: {
@@ -104,10 +100,9 @@ const Tabs: FC = () => {
 			                                  tab={tab}
 			                                  key={index + 1}/>
 			)}
-			<button className={numbers.length === MAX_NUMBER_OF_TABS ? none : tab}
-			        disabled={numbers.length + 1 > MAX_NUMBER_OF_TABS}
-			        onClick={addTab}>+
-			</button>
+			<div className={numbers.length === MAX_NUMBER_OF_TABS ? none : tab}
+			     onClick={addTab}>+
+			</div>
 		</div>
 	)
 }

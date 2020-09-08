@@ -1,6 +1,6 @@
 import React, {FunctionComponent} from 'react';
 import {makeStyles} from "@material-ui/styles";
-import {MAX_NUMBER_OF_TABS} from "./Tabs";
+import HomeIcon from '@material-ui/icons/Home';
 
 interface OwnProps {
 }
@@ -25,7 +25,9 @@ const HomeButton: FunctionComponent<Props> = (props) => {
 	const {home} = styles()
 	return (
 		<div className={home}>
-			<button onClick={click}>home</button>
+			<button onClick={click}>
+				<HomeIcon fontSize="small" />
+			</button>
 		</div>
 	);
 };

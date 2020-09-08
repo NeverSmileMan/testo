@@ -1,7 +1,6 @@
-import React, {FC, useContext, useState} from "react";
+import React, {FC, useState} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {MAX_NUMBER_OF_TABS} from "./Tabs";
-// import {DataContext} from "../App";
 
 enum ItemType {
 	WEIGHT,
@@ -35,9 +34,6 @@ interface PropsTab {
 
 const Tab: FC<PropsTab> = ({tab, setActive}) => {
 
-	// const data = useContext(DataContext)
-	// console.log(data)
-
 	const [number, setNumber] = useState(tab.tabNumber)
 	const [tara, setTara] = useState(0)
 	const [items, setItems] = useState([{}]) // список товарів
@@ -63,7 +59,7 @@ const Tab: FC<PropsTab> = ({tab, setActive}) => {
 			width: `calc((100% - 1.6rem) / ${MAX_NUMBER_OF_TABS})`,
 			height: '100%',
 			borderRadius: '.3rem .3rem 0 0',
-			fontSize: '1.3em',
+			fontSize: '1.2em',
 			fontWeight: 'bolder',
 			display: 'flex',
 			alignItems: 'center',
@@ -71,20 +67,8 @@ const Tab: FC<PropsTab> = ({tab, setActive}) => {
 			backgroundColor: '#e4e4e4',
 			color: '#333',
 			border: 'none',
-			padding: '.5rem 0',
 		},
 		tab_active: {
-			marginRight: '.2rem',
-			width: `calc((100% - 1.6rem) / ${MAX_NUMBER_OF_TABS})`,
-			height: '100%',
-			borderRadius: '.3rem .3rem 0 0',
-			fontSize: '1.3em',
-			fontWeight: 'bolder',
-			display: 'flex',
-			alignItems: 'center',
-			justifyContent: 'center',
-			border: 'none',
-			padding: '.5rem 0',
 			backgroundColor: '#09f',
 			color: '#fff',
 			outline: 'none',
@@ -93,11 +77,11 @@ const Tab: FC<PropsTab> = ({tab, setActive}) => {
 
 	const {tab_style, tab_active} = styles()
 
-	return <button id={tab.tabNumber.toString()}
+	return <div id={tab.tabNumber.toString()}
 	               onClick={setActive}
-	               className={tab.active ? tab_active : tab_style}>
+	               className={`${tab_style} ${tab.active ? tab_active : ''}`}>
 		{number}
-	</button>
+	</div>
 
 }
 export default Tab;
