@@ -1,6 +1,18 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-interface IKeyboardOptions {
+export interface IDifferentKeys {
+    [key: string]: {
+        width: number;
+        text: string | React.ReactElement;
+        attr?: {
+            onClick?: Function;
+            'data-next-lang'?: string;
+            'data-key'?: string;
+        };
+    };
+}
+
+export interface IKeyboardOptions {
     keyboardSet: string[];
     keyCountByRow: number[];
     differentKeys: { [key: string]: { width: number, text: string | React.ReactElement } };
@@ -9,36 +21,74 @@ interface IKeyboardOptions {
     k3: number;
 }
 
+interface ISizeOfElements {
+    keyWidth: number,
+    keyHeight: number,
+    keySpace: number,
+}
+
+interface ISizeOfElementsInUnits {
+    keyWidth: string,
+    keyHeight: string,
+    keySpace: string,
+}
+
 export function toUnits(value: number, unit: 'px' | '%' = '%') {
     return `${value}${unit}`;
 }
 
-function KeyboardLayoutStyles(options: IKeyboardOptions) {
-
+export function getSizeOfElements(options: IKeyboardOptions) {
     const { keyboardSet, differentKeys,  keyCountByRow, k1, k2, k3 } = options;
+    const additionalCount = Object.values(differentKeys).reduce((r, value) => r + value.width - 1, 0);
+    const keyCount = keyboardSet.length + additionalCount;
+    const rowCount = keyCountByRow.length;
+    const keyWidth = Math.round(100 * rowCount / keyCount / ( 1 + k1));
+    const keyHeight = 100 / rowCount * k3;
+    const keySpace = Math.round(keyWidth * k2);
 
-    function getSizeOfElements() {
-        const additionalCount = Object.values(differentKeys).reduce((r, value) => r + value.width - 1, 0);
-        const keyCount = keyboardSet.length + additionalCount;
-        const rowCount = keyCountByRow.length;
-        const keyWidth = Math.round(100 * rowCount / keyCount / ( 1 + k1));
-        const keyHeight = 100 / rowCount * k3;
-        const keySpace = Math.round(keyWidth * k2);
-    
-        return {
-            keyWidth,
-            keyHeight,
-            keySpace,
-        };
-    }
-    
-    const sizeOfElements = getSizeOfElements();
+    return {
+        keyWidth,
+        keyHeight,
+        keySpace,
+    };
+}
 
+export function getSizeOfElementsInUnits(sizeOfElements: ISizeOfElements) {
     const sizeInUnits = {
         keyWidth: toUnits(sizeOfElements.keyWidth),
         keyHeight: toUnits(sizeOfElements.keyHeight),
         keySpace: toUnits(sizeOfElements.keySpace),
-    }
+    };
+
+    return sizeInUnits;
+}
+
+//function KeyboardLayoutStyles(options: IKeyboardOptions) {
+function KeyboardLayoutStyles() {
+    // const { keyboardSet, differentKeys,  keyCountByRow, k1, k2, k3 } = options;
+
+    // function getSizeOfElements() {
+    //     const additionalCount = Object.values(differentKeys).reduce((r, value) => r + value.width - 1, 0);
+    //     const keyCount = keyboardSet.length + additionalCount;
+    //     const rowCount = keyCountByRow.length;
+    //     const keyWidth = Math.round(100 * rowCount / keyCount / ( 1 + k1));
+    //     const keyHeight = 100 / rowCount * k3;
+    //     const keySpace = Math.round(keyWidth * k2);
+    
+    //     return {
+    //         keyWidth,
+    //         keyHeight,
+    //         keySpace,
+    //     };
+    // }
+    
+    // const sizeOfElements = getSizeOfElements();
+
+    // const sizeInUnits = {
+    //     keyWidth: toUnits(sizeOfElements.keyWidth),
+    //     keyHeight: toUnits(sizeOfElements.keyHeight),
+    //     keySpace: toUnits(sizeOfElements.keySpace),
+    // }
 
     const useStyles = makeStyles((theme: Theme) => ({
         'layout': {
@@ -51,7 +101,7 @@ function KeyboardLayoutStyles(options: IKeyboardOptions) {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                maxHeight: sizeInUnits.keyHeight,
+                maxHeight: ({ keyHeight }: ISizeOfElementsInUnits) => keyHeight,
                 // '&:first-child': {
                 //     alignItems: 'flex-start',
                 // },
@@ -83,15 +133,16 @@ function KeyboardLayoutStyles(options: IKeyboardOptions) {
             fontWeight: 400,
             //height: sizeInUnits.keyHeight,
             height: '100%',
-            width: sizeInUnits.keyWidth,
-            marginRight: sizeInUnits.keySpace,
+            width: ({ keyWidth }: ISizeOfElementsInUnits) => keyWidth,
+            marginRight: ({ keySpace }: ISizeOfElementsInUnits) => keySpace,
             '&:last-child': {
                 marginRight: '0px',
             },
         },
     }));
 
-    return { useStyles, sizeOfElements };
+    // return { useStyles, sizeOfElements };
+    return useStyles;
 }
 
 export default KeyboardLayoutStyles;

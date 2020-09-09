@@ -1,6 +1,6 @@
-import React, {} from 'react';
+import React, { useState } from 'react';
 import { keyboardSetFUNC } from '../data.structure/data/keyboardSets';
-import KeyboardLayoutStyles, { toUnits } from './KeyboardLayoutStyles';
+import KeyboardLayoutStyles, { IDifferentKeys, IKeyboardOptions, toUnits, getSizeOfElements, getSizeOfElementsInUnits } from './KeyboardLayoutStyles';
 
 // const keyboard = KeyboardObject.getInstance();
 
@@ -15,8 +15,9 @@ import KeyboardLayoutStyles, { toUnits } from './KeyboardLayoutStyles';
 
 const keyboardSet = keyboardSetFUNC.setKeys;
 keyboardSet.splice(2, 1);
+keyboardSet.push('LANG');
 
-const differentKeys: { [key: string]: { width: number, text: string | React.ReactElement} } = {
+const differentKeys: IDifferentKeys = {
     'CLEAR': {
         width: 1,
         text: 'DEL', 
@@ -24,6 +25,10 @@ const differentKeys: { [key: string]: { width: number, text: string | React.Reac
     'BACKSPACE': {
         width: 1,
         text: <span>&#8592;</span>,
+    }, 
+    'LANG': {
+        width: 1,
+        text: 'EN',
     }, // кнопки, ширина яких відрізняється від звичайної у відносних одиницях
 };
 
@@ -33,37 +38,53 @@ const k2 = 0.4; // фактична відстань між кнопками (в
 const k3 = 0.7; // висота кнопки відносно висоти ряду
 //const k4 = 20; // співвідношення ширини блоку до висоти блоку
 
-const { useStyles, sizeOfElements } = KeyboardLayoutStyles({
+const options: IKeyboardOptions = {
     keyboardSet,
     differentKeys,
     keyCountByRow,
     k1,
     k2,
     k3,
-    //k4,
-});
+};
 
-function KeyboardLayoutFUNC() {
-    const classes = useStyles();
+const sizeOfElements = getSizeOfElements(options);
+
+const sizeOfElementsInUnits = getSizeOfElementsInUnits(sizeOfElements);
+const useStyles = KeyboardLayoutStyles();
+
+function KeyboardLayoutFUNC({ diffKeys }: { diffKeys?: IDifferentKeys }) {
+    useState(() => Object.assign(differentKeys, diffKeys));
+    const classes = useStyles(sizeOfElementsInUnits);
 
     const keys = keyboardSet.map(
         (key, i) => {
             let style = {};
+            let attr = { 'data-key': key } as any;
+            let text: string | React.ReactElement = '';
             let width = differentKeys[key] && Math.round(differentKeys[key].width * (sizeOfElements.keyWidth + sizeOfElements.keySpace) - sizeOfElements.keySpace);
             if (width) style = { width:  toUnits(width) };
+            if (differentKeys[key]) {
+                attr = differentKeys[key].attr || attr;
+                text = differentKeys[key].text || key;
+            }
             return (
-                <div className={classes.key} key={i} data-key={key} style={style}>
-                    {differentKeys[key] ? differentKeys[key].text : key}
+                <div
+                    className={classes.key}
+                    key={i}
+                    data-key={key}
+                    style={style}
+                    {...attr}>
+                    {text}
                 </div>
             );
         }
     );
 
-    keys.push(
-        <div className={classes.key} key={2} data-next-lang={'EN'}>
-            {'EN'}
-        </div>
-    );
+    // keys.push(
+    //     <div className={classes.key} key={2} data-next-lang={'EN'}>
+    //         {'EN'}
+    //     </div>
+    // );
 
     const rows = keyCountByRow.map((count, i) => 
         <div className={`row-${i + 1}`} key={i}>

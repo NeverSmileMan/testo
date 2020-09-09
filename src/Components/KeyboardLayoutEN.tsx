@@ -1,10 +1,10 @@
 import React, {} from 'react';
 import { keyboardSetEN } from '../data.structure/data/keyboardSets';
-import KeyboardLayoutStyles, { toUnits } from './KeyboardLayoutStyles';
+import KeyboardLayoutStyles, { IDifferentKeys, IKeyboardOptions, toUnits, getSizeOfElements, getSizeOfElementsInUnits } from './KeyboardLayoutStyles';
 
 const keyboardSet = keyboardSetEN.setKeys;
 
-const differentKeys: { [key: string]: { width: number, text: string | React.ReactElement } } = {
+const differentKeys: IDifferentKeys = {
     'SPACE': {
         width: 2,
         text: '',
@@ -17,18 +17,22 @@ const k2 = 0.4; // фактична відстань між кнопками (в
 const k3 = 0.7; // висота кнопки відносно висоти ряду
 //const k4 = 20; // співвідношення ширини блоку до висоти блоку
 
-const { useStyles, sizeOfElements } = KeyboardLayoutStyles({
+const options: IKeyboardOptions = {
     keyboardSet,
     differentKeys,
     keyCountByRow,
     k1,
     k2,
     k3,
-    //k4,
-});
+};
+
+const sizeOfElements = getSizeOfElements(options);
+
+const sizeOfElementsInUnits = getSizeOfElementsInUnits(sizeOfElements);
+const useStyles = KeyboardLayoutStyles();
 
 function KeyboardLayoutEN() {
-    const classes = useStyles();
+    const classes = useStyles(sizeOfElementsInUnits);
 
     const keys = keyboardSet.map(
         (key, i) => {
