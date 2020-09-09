@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useTheme, makeStyles, ThemeProvider, createMuiTheme  } from '@material-ui/core/styles';
-import {ActiveInputServise} from './services/ActiveInputServise';
+import {ActiveInputService} from './services/ActiveInputService';
 import KeyboardGrid from './keyboard/keyboard';
 import {keyBoard} from './keyboard/settings';
 import KeyboardFlex from './keyboard.flex/keyboard.flex';
@@ -116,8 +116,8 @@ function App() {
               <Main />
             </div>
             <div className={classes.keyboardWrap}>
-              <KeyboardGrid service={ActiveInputServise} keyboardLayout={keyBoard}/>
-              {/* <KeyboardFlex service={ActiveInputServise} keyboardLayout={keyBoardFlex}/> */}
+              <KeyboardGrid service={ActiveInputService} keyboardLayout={keyBoard}/>
+              {/* <KeyboardFlex service={ActiveInputService} keyboardLayout={keyBoardFlex}/> */}
             </div>
           </div>
         </ThemeProvider>
