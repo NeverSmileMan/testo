@@ -5,21 +5,28 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyle = makeStyles({
     'tabs-nav': {
-        width: '50%',
-        paddingTop: '0.2%',
-        backgroundColor: 'red',
-        '& .tab': {
-            textAlign: 'center',
-            cursor: 'pointer',
-            display: 'inline-block',
-            width: '60px',
+        width: '55%',
+        paddingTop: '.4rem',
+        display: 'flex',
+        '& [class*=tab]': {
+            marginRight: '.2rem',
+            width: '15%',
             height: '100%',
-            backgroundColor: 'green',
-            color: 'white',
-            marginRight: '1px',
-            '& .active': {
-                backgroundColor: 'green',
-            },
+            borderRadius: '.3rem .3rem 0 0',
+            fontSize: '1.2em',
+            fontWeight: 'bolder',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#e4e4e4',
+            color: '#333',
+            border: 'none',
+            cursor: 'pointer',
+        },
+        '& .tab-active': {
+            backgroundColor: 'blue', //theme.palette.primary.main,
+            color: '#fff',
+            outline: 'none',
         },
     },
 });
@@ -53,7 +60,7 @@ function TabsNav() {
 
     const tabs = Array.from(orders.keys()).map(orderNumber =>
         <div 
-            className={`tab ${(orderNumber === currentOrderNumber && 'active') || ''}`}
+            className={`tab${(orderNumber === currentOrderNumber && '-active') || ''}`}
             key={orderNumber}
             data-order-number={orderNumber}
             onClick={selectOrder}>
@@ -66,10 +73,10 @@ function TabsNav() {
             {tabs}
             {canCreate ?
                 <div 
-                    className='tab create'
+                    className='tab'
                     onClick={createOrder}>
                     +
-                </div> 
+                </div>
                 : null
             }
         </div>

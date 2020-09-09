@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import HomeIcon from '@material-ui/icons/Home';
 
 const useStyle = makeStyles({
     'home': {
-        width: '15%',
+        width: '12%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
     },
 });
 
@@ -13,7 +18,7 @@ function Home() {
 
     return (
         <div className={classes.home}>
-            home
+			<HomeIcon fontSize="small" />
         </div>
     );
 }
