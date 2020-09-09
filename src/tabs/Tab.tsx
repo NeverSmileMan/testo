@@ -1,7 +1,7 @@
 import React, {FC, useState} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {MAX_NUMBER_OF_TABS} from "./Tabs";
-import {createStyles, Theme} from "@material-ui/core/styles";
+import {createStyles, Theme} from "@material-ui/core/";
 
 enum ItemType {
 	WEIGHT,
@@ -30,10 +30,12 @@ interface PropsTab {
 	tab: ITab;
 	setActive?: (e: any) => void;
 	key?: number
+	active: boolean
+	index?: number
 }
 
 
-const Tab: FC<PropsTab> = ({tab, setActive}) => {
+const Tab: FC<PropsTab> = ({tab, setActive, active,index}) => {
 
 	const [number, setNumber] = useState(tab.tabNumber)
 	const [tara, setTara] = useState(0)
@@ -78,10 +80,10 @@ const Tab: FC<PropsTab> = ({tab, setActive}) => {
 
 	const {tab_style, tab_active} = styles()
 
-	return <div id={tab.tabNumber.toString()}
-	               onClick={setActive}
-	               className={`${tab_style} ${tab.active ? tab_active : ''}`}>
-		{number}
+	return <div id={`${index}`}
+	            onClick={setActive}
+	            className={`${tab_style} ${active ? tab_active : ''}`}>
+		{tab.tabNumber}
 	</div>
 
 }

@@ -1,16 +1,23 @@
 import React, {FC, useCallback, useState} from "react";
 import Tab, {ITab} from "./Tab";
 import {makeStyles} from "@material-ui/styles";
+import {Delete} from "@material-ui/icons";
 
 export const MAX_NUMBER_OF_TABS = 6;
 
 const Tabs: FC = () => {
 
-	const [tabsArray, setTabsArr] = useState(Array(MAX_NUMBER_OF_TABS).fill(0).map((e: number, i) => i + 1))
-	const [numbers, setNumbers] = useState([{tabNumber: tabsArray[0], active: true} as ITab])
-	const [activeTab, setActiveTab] = useState(tabsArray[0])
-	const [showCloseModal, setShowCloseModal] = useState(false)
-	const [isPrintDisabled, setIsPrintDisabled] = useState(false)
+	// const [tabsArray, setTabsArr] = useState(Array(MAX_NUMBER_OF_TABS).fill(true))
+	// const [tabsArray, setTabsArr] = useState(Array(MAX_NUMBER_OF_TABS).fill(0).map((e: number, i) => i + 1))
+	const [tabsArrayBool, setTabsArrBool] = useState(() => {
+		const arr = Array(MAX_NUMBER_OF_TABS).fill(false)
+		arr[0] = true
+		return arr
+	})
+	const [tabs, setTabs] = useState([{tabNumber: 1} as ITab])
+	const [activeTab, setActiveTab] = useState(0)
+	// const [showCloseModal, setShowCloseModal] = useState(false)
+	// const [isPrintDisabled, setIsPrintDisabled] = useState(false)
 
 	//     Tab.setSelectedItem()
 	//     ScaleService.setTara()
@@ -22,52 +29,50 @@ const Tabs: FC = () => {
 	// 	close();
 	// }, [])
 
-	// =====================================================================================
-	const order: Map<number, ITab> = new Map()
-	const [ordersFreeNums, setOrdersFreeNums] = useState(Array(MAX_NUMBER_OF_TABS).fill(true))
+// =====================================================================================
+	// const order: Map<number, ITab> = new Map()
 // ========================================================================================
 
-	//видаляєм активні таби
-	const removeActiveTabs = (arr: Array<ITab>) => arr.forEach((value: ITab) => value.active = false)
-
 	const setActive = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-		removeActiveTabs(numbers)
 		const activeEl = +(e.target as Element).id
-		numbers[activeEl - 1].active = true
-		setActiveTab(activeEl);
-	}, [numbers, activeTab])
+		setActiveTab(activeEl)
+	}, [tabs, activeTab])
 
-	// useEffect(() => {
-	// 	console.log(`activeTab change = ${activeTab}`)
-	// }, [numbers, activeTab])
 
 	const addTab = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-// =====================================================================================
-		const orderNumber = ordersFreeNums.findIndex(item => item) + 1;
-		console.log(ordersFreeNums[orderNumber], orderNumber)
-		setOrdersFreeNums([...ordersFreeNums, ordersFreeNums[orderNumber] = false])
-		// ordersFreeNums[orderNumber - 1] = false
-		// console.log(orderNumber)
-// =====================================================================================
 
-		removeActiveTabs(numbers)
-		// filter
-		const nextTab = numbers.slice(-1)[0].tabNumber + 1
-		if (numbers.length === tabsArray.length) return
-		setActiveTab(nextTab)
-		setNumbers((prevState) => [...prevState, {tabNumber: nextTab, active: true}])
+		const num = tabsArrayBool.findIndex(item => !item) + 1
+		const tabsCount = tabs.length
+		setTabsArrBool((prevState) => {
+			prevState[num - 1] = true;
+			return prevState
+		})
+		setTabs((prevState) => [...prevState, {tabNumber: num}])
+		setActiveTab((prevState) => tabsCount)
 
-	}, [numbers, activeTab, ordersFreeNums])
+	}, [tabs, activeTab, tabsArrayBool])
+
 
 	const deleteTab = useCallback(() => {
-		if (numbers.length > 1) {
-			setNumbers(numbers.filter(((value) => value.tabNumber !== activeTab)))
-			setActiveTab(activeTab - 1)
-		}
-	}, [numbers])
+
+		const num = tabs[activeTab].tabNumber
+
+		setTabsArrBool((prevState) => {
+			prevState[num - 1] = false;
+			return prevState
+		})
+
+		setTabs((prevState) => {
+			// prevState.splice(activeTab, 1)
+			return prevState.filter((value, index) => index !== activeTab)
+		})
+		console.log(1)
+		setActiveTab((prevState) => 0)
+
+	}, [tabs, activeTab])
 
 	const styles = makeStyles({
-		tabs: {
+		header_tabs: {
 			display: 'flex',
 			width: '100%',
 			paddingTop: '.4rem',
@@ -93,17 +98,20 @@ const Tabs: FC = () => {
 		}
 	})
 
-	const {tabs, tab, none} = styles()
+	const {header_tabs, tab, none} = styles()
 
 	return (
-		<div className={tabs}>
-			{numbers.map((tab, index) => <Tab setActive={setActive}
-			                                  tab={tab}
-			                                  key={index + 1}/>
+		<div className={header_tabs}>
+			{tabs.map((tab, index) => <Tab setActive={setActive}
+			                               tab={tab}
+			                               index={index}
+			                               active={activeTab === index}
+			                               key={index }/>
 			)}
-			<div className={numbers.length === MAX_NUMBER_OF_TABS ? none : tab}
+			<div className={tabs.length === MAX_NUMBER_OF_TABS ? none : tab}
 			     onClick={addTab}>+
 			</div>
+			<div onClick={deleteTab}><Delete/></div>
 		</div>
 	)
 }
