@@ -2,7 +2,6 @@ import React, {FC, useCallback, useState} from "react";
 import Tab, {ITab} from "./Tab";
 import {makeStyles} from "@material-ui/styles";
 import {Delete} from "@material-ui/icons";
-import {act} from "react-dom/test-utils";
 
 export const MAX_NUMBER_OF_TABS = 6;
 
@@ -28,7 +27,6 @@ const Tabs: FC = () => {
 		setActiveTab(activeEl)
 	}, [tabs, activeTab])
 
-
 	const addTab = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
 		const num = chooseFreeNumber.findIndex(item => !item) + 1
 		setChooseFreeNumber((prevState) => {
@@ -37,9 +35,7 @@ const Tabs: FC = () => {
 		})
 		setTabs((prevState) => [...prevState, {tabNumber: num}])
 		setActiveTab(tabs.length)
-
 	}, [tabs, chooseFreeNumber])
-
 
 	const deleteTab = useCallback(() => {
 		if (tabs.length === 1) {
