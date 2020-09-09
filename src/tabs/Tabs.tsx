@@ -2,12 +2,13 @@ import React, {FC, useCallback, useState} from "react";
 import Tab, {ITab} from "./Tab";
 import {makeStyles} from "@material-ui/styles";
 import {Delete} from "@material-ui/icons";
+import {act} from "react-dom/test-utils";
 
 export const MAX_NUMBER_OF_TABS = 6;
 
 const Tabs: FC = () => {
 
-	const [tabsArrayBool, setTabsArrBool] = useState(() => {
+	const [chooseFreeNumber, setChooseFreeNumber] = useState(() => {
 		const arr = Array(MAX_NUMBER_OF_TABS).fill(false)
 		arr[0] = true
 		return arr
@@ -29,25 +30,35 @@ const Tabs: FC = () => {
 
 
 	const addTab = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-		const num = tabsArrayBool.findIndex(item => !item) + 1
-		setTabsArrBool((prevState) => {
+		const num = chooseFreeNumber.findIndex(item => !item) + 1
+		setChooseFreeNumber((prevState) => {
 			prevState[num - 1] = true;
 			return prevState
 		})
 		setTabs((prevState) => [...prevState, {tabNumber: num}])
 		setActiveTab(tabs.length)
 
-	}, [tabs, tabsArrayBool])
+	}, [tabs, chooseFreeNumber])
 
 
 	const deleteTab = useCallback(() => {
-		setTabsArrBool((prevState) => {
+		if (tabs.length === 1) {
+			//умова при якій не видалятиметься ТАБ якщо він 1 і його номер також 1
+			if (tabs[0].tabNumber === 1) return
+			else {
+				setChooseFreeNumber((prevState) => {
+					prevState[0] = true;
+					return prevState
+				})
+				setTabs((prevState) => [...prevState, {tabNumber: 1}] )
+			}
+		}
+		setChooseFreeNumber((prevState) => {
 			prevState[tabs[activeTab].tabNumber - 1] = false;
 			return prevState
 		})
 		setTabs((prevState) => prevState.filter((value, index) => index !== activeTab))
-		setActiveTab((prevState) => 0)
-
+		setActiveTab((prevTabNum) => prevTabNum ? prevTabNum - 1 : 0)
 	}, [tabs, activeTab])
 
 	const styles = makeStyles({
@@ -76,16 +87,15 @@ const Tabs: FC = () => {
 
 	const {header_tabs, tab} = styles()
 
-	const showTabs = tabs.map((tab, index) => <Tab setActive={setActive}
+	const viewTabs = tabs.map((tab, index) => <Tab setActive={setActive}
 	                                               tab={tab}
 	                                               index={index}
 	                                               active={activeTab === index}
 	                                               key={index}/>
 	)
-
 	return (
 		<div className={header_tabs}>
-			{showTabs}
+			{viewTabs}
 			{tabs.length < MAX_NUMBER_OF_TABS ?
 				<div className={tab} onClick={addTab}>+</div>
 				: null}
