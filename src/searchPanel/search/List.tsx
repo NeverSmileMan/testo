@@ -6,16 +6,16 @@ const useStyles = makeStyles((theme: Theme) => ({
     'list': {
         backgroundColor: theme.palette.primary.main,
         position: 'absolute',
-        top: '100%',
+        top: '17%',
         left: '0px',
         width: '100%',
-        height: '353px',
+        height: '83%',
         fontSize: '0.9em',
+        overflowY: 'auto',
         '& ul': {
             listStyle: 'none',
             margin: '0px',
             padding: '0px',
-            overflowY: 'auto',
         },
         '& li': {
             borderBottom: 'solid 1px black',
