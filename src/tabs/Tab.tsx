@@ -29,9 +29,8 @@ export interface ITab {
 interface PropsTab {
 	tab: ITab;
 	setActive?: (e: any) => void;
-	key?: number
 	active: boolean
-	index?: number
+	index: number
 }
 
 

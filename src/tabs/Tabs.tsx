@@ -7,8 +7,6 @@ export const MAX_NUMBER_OF_TABS = 6;
 
 const Tabs: FC = () => {
 
-	// const [tabsArray, setTabsArr] = useState(Array(MAX_NUMBER_OF_TABS).fill(true))
-	// const [tabsArray, setTabsArr] = useState(Array(MAX_NUMBER_OF_TABS).fill(0).map((e: number, i) => i + 1))
 	const [tabsArrayBool, setTabsArrBool] = useState(() => {
 		const arr = Array(MAX_NUMBER_OF_TABS).fill(false)
 		arr[0] = true
@@ -16,22 +14,13 @@ const Tabs: FC = () => {
 	})
 	const [tabs, setTabs] = useState([{tabNumber: 1} as ITab])
 	const [activeTab, setActiveTab] = useState(0)
-	// const [showCloseModal, setShowCloseModal] = useState(false)
-	// const [isPrintDisabled, setIsPrintDisabled] = useState(false)
+	const [showCloseModal, setShowCloseModal] = useState(false)
+	const [isPrintDisabled, setIsPrintDisabled] = useState(false)
 
-	//     Tab.setSelectedItem()
-	//     ScaleService.setTara()
-
-
-	// const close = () => useCallback(() => deleteTab(activeTab), [])
-	// const print = () => useCallback(() => {
-	// 	// Order()
-	// 	close();
-	// }, [])
-
-// =====================================================================================
-	// const order: Map<number, ITab> = new Map()
-// ========================================================================================
+	const close = useCallback(() => deleteTab(), [])
+	const print = useCallback(() => {	 /*Order() */
+		close()
+	}, [])
 
 	const setActive = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
 		const activeEl = +(e.target as Element).id
@@ -40,33 +29,23 @@ const Tabs: FC = () => {
 
 
 	const addTab = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-
 		const num = tabsArrayBool.findIndex(item => !item) + 1
-		const tabsCount = tabs.length
 		setTabsArrBool((prevState) => {
 			prevState[num - 1] = true;
 			return prevState
 		})
 		setTabs((prevState) => [...prevState, {tabNumber: num}])
-		setActiveTab((prevState) => tabsCount)
+		setActiveTab(tabs.length)
 
-	}, [tabs, activeTab, tabsArrayBool])
+	}, [tabs, tabsArrayBool])
 
 
 	const deleteTab = useCallback(() => {
-
-		const num = tabs[activeTab].tabNumber
-
 		setTabsArrBool((prevState) => {
-			prevState[num - 1] = false;
+			prevState[tabs[activeTab].tabNumber - 1] = false;
 			return prevState
 		})
-
-		setTabs((prevState) => {
-			// prevState.splice(activeTab, 1)
-			return prevState.filter((value, index) => index !== activeTab)
-		})
-		console.log(1)
+		setTabs((prevState) => prevState.filter((value, index) => index !== activeTab))
 		setActiveTab((prevState) => 0)
 
 	}, [tabs, activeTab])
@@ -92,25 +71,24 @@ const Tabs: FC = () => {
 			color: '#333',
 			border: 'none',
 			boxSizing: 'border-box',
-		},
-		none: {
-			display: 'none'
 		}
 	})
 
-	const {header_tabs, tab, none} = styles()
+	const {header_tabs, tab} = styles()
+
+	const showTabs = tabs.map((tab, index) => <Tab setActive={setActive}
+	                                               tab={tab}
+	                                               index={index}
+	                                               active={activeTab === index}
+	                                               key={index}/>
+	)
 
 	return (
 		<div className={header_tabs}>
-			{tabs.map((tab, index) => <Tab setActive={setActive}
-			                               tab={tab}
-			                               index={index}
-			                               active={activeTab === index}
-			                               key={index }/>
-			)}
-			<div className={tabs.length === MAX_NUMBER_OF_TABS ? none : tab}
-			     onClick={addTab}>+
-			</div>
+			{showTabs}
+			{tabs.length < MAX_NUMBER_OF_TABS ?
+				<div className={tab} onClick={addTab}>+</div>
+				: null}
 			<div onClick={deleteTab}><Delete/></div>
 		</div>
 	)
