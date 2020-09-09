@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Tara from '../data.structure/Tara';
 import { Mode, State } from '../data.structure/types';
 import ModalService from '../data.structure/ModalService';
-import TaraModal from './TaraModal';
+//import TaraModal from './TaraModal';
 import { makeStyles } from '@material-ui/styles';
 import TaraIcon from '@material-ui/icons/Speed';
+import TaraModal from './tara/modal.tara';
 
 const useStyles = makeStyles({
     btn: {
