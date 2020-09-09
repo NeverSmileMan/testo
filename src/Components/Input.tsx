@@ -48,10 +48,20 @@ function InputList() {
 
     useEffect(() => changeState(setState), []);
 
+    const value = input.getValue();
+
+    const match = (value).match(/ +$/);
+    let emptyText = [];
+    if (match) {
+        const index = match && match.index;
+        const empty = <>&nbsp;</>;
+        emptyText = Array(value.length - index!).fill(empty);       
+    }
+
     return (
         <>
             <div className={`${classes.input} input ${isFocus ? 'focus' : ''}`}>
-                {input.getValue()}
+                {input.getValue()} {emptyText}
             </div>
             <List />
         </>

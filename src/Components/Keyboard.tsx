@@ -11,13 +11,21 @@ const useStyles = makeStyles({
     'keyboard': {
         display: 'flex',
         padding: '0.5rem',
+        paddingLeft: '0.5rem',
+        paddingRight: '1.5rem',
         '& .letters': {
             width: '60%',
             display: 'flex',
             marginRight: '2%',
         },
         '& .nums': {
-            width: '30%',
+            //width: '15%',
+            flex: '1 0 0',
+            display: 'flex',
+            marginRight: '3%',
+        },
+        '& .func': {
+            width: '7%',
             display: 'flex',
         },
     },
@@ -46,11 +54,13 @@ const getLangHandler = (setLang: React.Dispatch<(lang: string) => string>) =>
         if (!keyElem) {
             keyElem = target.closest('[data-next-lang]');
             if (!keyElem) return;
-            let nextLang = target.dataset['nextLang'];
-            setLang((lang) => nextLang || lang);
-            target.innerHTML = nextLang || '';
-            console.log(nextLang);
-            target.setAttribute('data-next-lang', nextLang === 'UA' ? 'EN' : 'UA');
+            const currentLang = target.dataset['nextLang'];
+            if (currentLang) {
+                setLang(() => currentLang);
+                const nextLang = currentLang === 'UA' ? 'EN' : 'UA';
+                target.innerHTML = nextLang;
+                target.setAttribute('data-next-lang', nextLang);
+            }
             return;
         }
         const key = keyElem.dataset['key'];
@@ -59,7 +69,7 @@ const getLangHandler = (setLang: React.Dispatch<(lang: string) => string>) =>
 
 function Keyboard() {
     const classes = useStyles();
-    const [lang, setLang] = useState('EN');
+    const [lang, setLang] = useState('UA');
     const [changeLang] = useState(() => getLangHandler(setLang));
 
     //const nextLang = lang === 'UA' ? 'EN' : 'UA';
@@ -74,7 +84,7 @@ function Keyboard() {
             <div className='nums'>
                 <KeyboardLayoutNUMS />
             </div>
-            <div className='nums'>
+            <div className='func'>
                 <KeyboardLayoutFUNC />
             </div>
             {/* <div className='key'

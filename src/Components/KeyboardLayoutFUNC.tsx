@@ -16,8 +16,15 @@ import KeyboardLayoutStyles, { toUnits } from './KeyboardLayoutStyles';
 const keyboardSet = keyboardSetFUNC.setKeys;
 keyboardSet.splice(2, 1);
 
-const differentKeys: {[key: string]: number} = {
-    //'0': 3, // кнопки, ширина яких відрізняється від звичайної у відносних одиницях
+const differentKeys: { [key: string]: { width: number, text: string | React.ReactElement} } = {
+    'CLEAR': {
+        width: 1,
+        text: 'DEL', 
+    },
+    'BACKSPACE': {
+        width: 1,
+        text: <span>&#8592;</span>,
+    }, // кнопки, ширина яких відрізняється від звичайної у відносних одиницях
 };
 
 const keyCountByRow = [1, 1, 1]; // sum = keyboardSet.length
@@ -42,18 +49,18 @@ function KeyboardLayoutFUNC() {
     const keys = keyboardSet.map(
         (key, i) => {
             let style = {};
-            let width = differentKeys[key] && Math.round(differentKeys[key] * (sizeOfElements.keyWidth + sizeOfElements.keySpace) - sizeOfElements.keySpace);
+            let width = differentKeys[key] && Math.round(differentKeys[key].width * (sizeOfElements.keyWidth + sizeOfElements.keySpace) - sizeOfElements.keySpace);
             if (width) style = { width:  toUnits(width) };
             return (
                 <div className={classes.key} key={i} data-key={key} style={style}>
-                    {key}
+                    {differentKeys[key] ? differentKeys[key].text : key}
                 </div>
             );
         }
     );
 
     keys.push(
-        <div className={classes.key} key={2} data-next-lang={'UA'}>
+        <div className={classes.key} key={2} data-next-lang={'EN'}>
             {'EN'}
         </div>
     );

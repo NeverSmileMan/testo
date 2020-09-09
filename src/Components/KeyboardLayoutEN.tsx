@@ -4,8 +4,11 @@ import KeyboardLayoutStyles, { toUnits } from './KeyboardLayoutStyles';
 
 const keyboardSet = keyboardSetEN.setKeys;
 
-const differentKeys: {[key: string]: number} = {
-    'SPACE': 2, // кнопки, ширина яких відрізняється від звичайної у відносних одиницях
+const differentKeys: { [key: string]: { width: number, text: string | React.ReactElement } } = {
+    'SPACE': {
+        width: 2,
+        text: '',
+    }, // кнопки, ширина яких відрізняється від звичайної у відносних одиницях
 };
 
 const keyCountByRow = [9, 10, 8]; // sum = keyboardSet.length
@@ -30,11 +33,11 @@ function KeyboardLayoutEN() {
     const keys = keyboardSet.map(
         (key, i) => {
             let style = {};
-            let width = differentKeys[key] && Math.round(differentKeys[key] * (sizeOfElements.keyWidth + sizeOfElements.keySpace) - sizeOfElements.keySpace);
+            let width = differentKeys[key] && Math.round(differentKeys[key].width * (sizeOfElements.keyWidth + sizeOfElements.keySpace) - sizeOfElements.keySpace);
             if (width) style = { width:  toUnits(width) };
             return (
                 <div className={classes.key} key={i} data-key={key} style={style}>
-                    {key}
+                    {differentKeys[key] ? differentKeys[key].text : key}
                 </div>
             );
         }
