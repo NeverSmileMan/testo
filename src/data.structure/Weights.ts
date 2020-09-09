@@ -47,7 +47,7 @@ export class Weights implements IWeights{
     }
 
     getSum(): number {
-        return this._weight * this._price;
+        return (this._weight - this._tara) * this._price;
     }
 
     setTara(value: number) {
@@ -61,6 +61,7 @@ export class Weights implements IWeights{
 
     setPrice(value: number) {
         this._price = value;
+        this._onStateChange();
     }
 
     getWeight(): number {

@@ -57,8 +57,9 @@ class TabControl implements ITabControl {
     }
 
     selectItem(index: number | null) {
-        if (this._selectedItemIndex !== index)
+        if (this._selectedItemIndex !== index) {
             this._selectedItemIndex = index;
+        }
         else this._selectedItemIndex = null;
         this._onChange();
     }

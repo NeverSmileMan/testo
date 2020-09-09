@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import WeightsObject from '../data.structure/Weights';
 import { makeStyles } from '@material-ui/core/styles';
+import Tablo from './weights/Tablo';
 
 const useStyle = makeStyles({
     'weights': {
@@ -24,10 +25,11 @@ function Weights() {
 
     return (
         <div className={className}>
-            <div className='title'>WEIGHTS</div>
+            {/* <div className='title'>WEIGHTS</div>
             <div><span>Weight: </span>{weights.getWeight()}</div> 
             <div><span>Tara: </span>{weights.getTara()}</div>
-            <div><span>Sum: </span>{weights.getSum()}</div>
+            <div><span>Sum: </span>{weights.getSum()}</div> */}
+            <Tablo />
         </div>
     );
 }
