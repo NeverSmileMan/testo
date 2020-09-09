@@ -1,6 +1,7 @@
 import React from 'react';
 import WeightBtn from './weight.btn';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, useTheme } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
 const useStyle = makeStyles({
   btnConteiner: {
@@ -26,9 +27,14 @@ const countBtn = 9;
 const FixedWeight = ({ strWeight = initialWeight, step = initStep, countButton = countBtn }: Prop) => {
   const enumBtns = new Array(countButton).fill(null);
   const cls = useStyle();
+  const theme = useTheme<Theme>();
   return (
     <div className={cls.btnConteiner}>
-      {enumBtns.map((val, index) => (<WeightBtn key={index} btnName={`${(strWeight + index * step)} гр.`} borderColor={'rgb(0, 153, 255)'} />))}
+      {enumBtns.map((val, index) => (<WeightBtn 
+        key={index} 
+        btnName={`${(strWeight + index * step)} гр.`} 
+        borderColor={theme.palette.primary.main} 
+      />))}
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/styles';
-import FixedWeight from './taraCalc/fexed.weight';
+import FixedWeight from './taraCalc/fixed.weight';
 import InputWeight from './taraCalc/input.weight';
 
 const useStyles = makeStyles({
@@ -15,6 +15,7 @@ const useStyles = makeStyles({
 
 const ModalTara = () => {
     const cls = useStyles();
+    
     return (
         <div className={cls.conteiner}>
             <InputWeight/>
