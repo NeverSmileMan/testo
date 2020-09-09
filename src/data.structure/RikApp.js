@@ -1,14 +1,21 @@
 import Weights from './Weights';
 
-class RikApp {
+const weights = Weights.getInstance();
 
-    constructor() {
-        this._weights = Weights.getInstance();
-    }
+window.addEventListener('keypress', (event) => {
+    if (event.keyCode >= 48 && event.keyCode <= 57) weights.__setWeight(+event.key);
+    //console.log(event.keyCode);
+});
 
-    set w(value) {
-        this._weights.__setWeight(value)
-    }
-}
+// class RikApp {
 
-window.rik = new RikApp();
+//     constructor() {
+//         this._weights = Weights.getInstance();
+//     }
+
+//     set w(value) {
+//         this._weights.__setWeight(value)
+//     }
+// }
+
+// window.rik = new RikApp();

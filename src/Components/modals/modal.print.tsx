@@ -14,15 +14,11 @@ interface Prop {
 }
 const titlePrint: string = 'Зніміть товар з вагів';
 
-function TabControlModal({ title = titlePrint }: Prop) {
+const ModalPrint = ({ title = titlePrint }: Prop) => {
     const cls = useStyles();
     return (
-        // <div
-        //     className='order-control modal'>
-        //     TAB CONTROL MODAL
-        // </div>
         <div className={cls.title}>{title}</div>
-    );
+    )
 }
 
-export default TabControlModal;
+export default ModalPrint;

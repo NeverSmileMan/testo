@@ -1,6 +1,4 @@
 import React from 'react';
-import CloseObject from '../data.structure/Close';
-
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
@@ -45,32 +43,18 @@ interface CloseProp {
 const titleModal: string = 'Ви хочете остаточно закрити замовлення?';
 const modalConfirm: string = 'Так';
 const modalReject: string = 'Ні';
-const close = CloseObject.getInstance();
 
-const onClickTrue = () => {
-    close.doClose(true);
-};
-
-const onClickFalse = () => {
-    close.doClose(false);
-};
-
-function CloseModal({ title = titleModal, confirm = modalConfirm, reject = modalReject }: CloseProp) {
-    const clss = useStyles();
-    return (
-        // <div
-        //     className='close modal'
-        //     onClick={onClick}>
-        //     CLOSE MODAL
-        // </div>
-        <div className={clss.modal}>
-            <div className={clss.title}>{title}</div>
-            <div className={clss.btns}>
-                <div className={clss.btn} onClick={onClickTrue}>{confirm}</div>
-                <div className={clss.btn} onClick={onClickFalse}>{reject}</div>
-            </div>
-        </div>
-    );
+const ModalClose = ({ title = titleModal, confirm = modalConfirm, reject = modalReject }: CloseProp) => {
+  const clss = useStyles();
+  return (
+    <div className={clss.modal}>
+      <div className={clss.title}>{title}</div>
+      <div className={clss.btns}>
+        <div className={clss.btn}>{confirm}</div>
+        <div className={clss.btn}>{reject}</div>
+      </div>
+    </div>
+  )
 }
 
-export default CloseModal;
+export default ModalClose;
