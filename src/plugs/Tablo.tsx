@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles';
-
+import {ScalePlug} from './scale'
 
 const useStyles = makeStyles({
 	grid: {
@@ -49,14 +49,13 @@ export default function Tablo() {
   const classes = useStyles();
 
 
+  const [tara, setTara] = React.useState();
 const [title, setTitle] = React.useState();
-const [tara, setTara] = React.useState();
-const [weight, setWeight] = React.useState();
 const [price, setPrice] = React.useState();
+const [weight, setWeight] = React.useState();
 const [total, setTotal] = React.useState();
 
-
-
+ScalePlug.setFuncs( setTara, setTitle, setPrice, setWeight, setTotal);
 
 
   return (

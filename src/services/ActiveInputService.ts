@@ -1,6 +1,6 @@
 type Func = React.SetStateAction<any> | null; //any?
 
-export interface ActiveInputServise {
+export interface ActiveInputService {
   add: (str: string)=>void;
   delete: (number: number)=>void;
   clear: ()=>void;
@@ -10,7 +10,7 @@ export interface ActiveInputServise {
 
 let activeInput = null as Func;
 
-export const ActiveInputServise : ActiveInputServise = {
+export const ActiveInputService : ActiveInputService = {
   add(str: string) {
     if (activeInput) activeInput((prevState: string)  => prevState+str);
   },
