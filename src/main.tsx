@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 		width: '100%',
 		height: '17%',
         display: 'flex',
-        position: 'relative',
 	},
 	body: {
     width: '92%',
@@ -51,6 +50,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     borderLeft: `2px ${theme.palette.primary.main} solid`,
     boxSizing: 'border-box',
     overflow: 'hidden',
+    position: 'relative',
   },
 	sideButtons: {
 		width: '8%',

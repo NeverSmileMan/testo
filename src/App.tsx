@@ -7,12 +7,17 @@ import KeyboardFlex from './keyboard.flex/keyboard.flex';
 import {keyBoardFlex} from './keyboard.flex/settings.flex';
 import Main from './main';
 
+//-----
+import Tablo from './plugs/Tablo';
+//-----
+
 
 const useStyles = makeStyles({
 	scale: {
     width: '100%',
     height: '15.8854%',
     backgroundColor: 'gray',
+    display: 'flex',
   },
 	mainWrap: {
     width: '100%',
@@ -99,9 +104,12 @@ function App() {
       <>
         <ThemeProvider theme={theme}>
           <div className={classes.scale}>
-            <button onClick={()=>setTheme(themes.default)}>DEFAULT</button>
-            <button onClick={()=>setTheme(themes.silpo)}>SILPO</button>
-            <button onClick={()=>setTheme(themes.fora)}>FORA</button>
+            <div style={{display: 'inlie-block'}}>
+              <button style={{display: 'inlie-block'}} onClick={()=>setTheme(themes.default)}>DEFAULT</button>
+              <button style={{display: 'inlie-block'}} onClick={()=>setTheme(themes.silpo)}>SILPO</button>
+              <button style={{display: 'inlie-block'}} onClick={()=>setTheme(themes.fora)}>FORA</button>
+            </div>
+            <Tablo/>
           </div>
           <div className={classes.mainWrap}>
             <div className={`${classes.main}`}>

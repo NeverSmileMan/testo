@@ -1,10 +1,12 @@
 import React from 'react';
 import WeightBtn from './weight.btn';
-import { makeStyles } from '@material-ui/styles';
+// import { makeStyles } from '@material-ui/styles';
+import { makeStyles, useTheme } from '@material-ui/styles';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
 const useStyle = makeStyles({
     controlContainer: {
-        display:'grid',
+        display: 'grid',
         gridTemplateColumns: '50px',
         gridTemplateRows: 'repeat(2, 105px)',
         gridRowGap: '10px',
@@ -12,24 +14,18 @@ const useStyle = makeStyles({
         fontSize: '50px',
     }
 })
-const control = [
-    {
-        icon: <span>&#8592;</span>,
-        btnColor: 'rgb(0, 153, 255)'
-    },
-    {
-        icon: <span>&#10003;</span>,
-        btnColor: 'rgb(0, 185, 255)'
-    }]
+
 const ControlKeyboard = () => {
-    const {controlContainer} = useStyle ()
+    const theme = useTheme<Theme>();
+    const control = [<span>&#8592;</span>, <span>&#10003;</span>];
+    const { controlContainer } = useStyle()
     return (
         <div className={controlContainer}>
             {control.map((val, index) => (<WeightBtn
                 key={index}
-                btnName={val.icon}
+                btnName={val}
                 textColor='#fff'
-                colorBtn={val.btnColor} />))}
+                colorBtn={theme.palette.primary.main} />))}
         </div>
     )
 }
