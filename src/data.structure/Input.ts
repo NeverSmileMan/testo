@@ -95,6 +95,9 @@ export class Input implements IInput {
         const currentValue = this._value;
         try {
             switch(key) {
+                case "SPACE":
+                    this._addSymbol(' ');
+                    break;
                 case "BACKSPACE":
                     this._delSymbol();
                     break;

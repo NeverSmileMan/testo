@@ -5,17 +5,17 @@ export interface IKeyboardSet {
 
 export const keyboardSetUA: IKeyboardSet = {
     setName: 'UA',
-    setKeys: ['А', 'Б', 'В', 'Г', 'Д', 'Т'],
+    setKeys: ['й','ц','у','к','е','н','г','ш','щ','з','х','ї','ф','і','в','а','п','р','о','л','д','ж','є','я','ч','с','м','и','т','ь','б','ю','ґ', 'space'].map(l => l.toUpperCase()),
 };
 
 export const keyboardSetEN: IKeyboardSet = {
     setName: 'EN',
-    setKeys: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
+    setKeys: ['q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m', 'space'].map(l => l.toUpperCase()),
 };
 
 export const keyboardSetNUMS: IKeyboardSet = {
     setName: 'NUMS',
-    setKeys: ['0', '1', '2', '3', '4'],
+    setKeys: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
 };
 
 export const keyboardSetFUNC: IKeyboardSet = {
