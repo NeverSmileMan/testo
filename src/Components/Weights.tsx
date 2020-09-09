@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyle = makeStyles({
     'weights': {
-        backgroundColor: 'green',
+        backgroundColor: '#e4e4e4',
     }
 });
 

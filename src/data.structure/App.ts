@@ -8,6 +8,7 @@ export interface IAppState {
     getEnv: () => IEnv;
     getStateType: () => AppStateTypes;
     getOrdersControlInstance: () => IOrdersControl;
+    getConfigPar: (par: keyof IConfig) => IConfig[keyof IConfig];
 }
 
 class AppState implements IAppState {
@@ -45,12 +46,25 @@ class AppState implements IAppState {
 
     private _onStateChange() {
         if (this._callbackOnStateChange) {
-            setTimeout(() => this._callbackOnStateChange!(), 1000);
+            setTimeout(() => this._callbackOnStateChange!(), 500);
         }
     }
 
     getOrdersControlInstance() {
         return this._ordersControl;
+    }
+
+    getConfigPar(par: keyof IConfig) {
+        return this._config[par];
+    }
+
+    __changeTheme() {
+        let themeName = this._config.themeName;
+        themeName = themeName === 'default' ? 'silpo' :
+            themeName === 'silpo' ? 'fora' :
+                'default';
+        this._config.themeName = themeName;
+        this._onStateChange();
     }
 }
 

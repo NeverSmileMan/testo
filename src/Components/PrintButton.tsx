@@ -5,8 +5,9 @@ import ModalService from '../data.structure/ModalService';
 import PrintModal from './PrintModal';
 import { makeStyles } from '@material-ui/styles';
 import PrintIcon from '@material-ui/icons/Print';
+import { Theme } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     btn: {
         //height: '33.33%',
         flex: '1 0 0',
@@ -16,7 +17,7 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
-        backgroundColor: 'rgb(0, 153, 255)',
+        backgroundColor: theme.palette.primary.main,
         // '&:first-child': {
         //     borderBottom: '2px solid #fff',
         // },
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
         //     borderTop:'2px solid #fff'
         // },
     },
-});
+}));
 
 const print = Print.getInstance();
 const modalService = ModalService.getInstance();

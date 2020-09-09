@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import TabControl from '../data.structure/TabControl';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     'order-info': {
         flex: '1 0 0',
-        backgroundColor: 'rgb(0, 153, 255)', //theme.palette.primary.main
+        backgroundColor: theme.palette.primary.main,
         padding: '10px',
         display: 'flex',
         justifyContent: 'center',
@@ -29,12 +29,12 @@ const useStyles = makeStyles({
         paddingRight: '20px',     
         backgroundColor: 'white',
         borderRadius: '100px',
-        color: 'rgb(0, 153, 255)', //theme.palette.primary.main,
+        color: theme.palette.primary.main,
         minWidth: '100px',
         fontWeight: 'bold',
         verticalAlign: 'middle',
     }
-});
+}));
 
 const tabControl = TabControl.getInstance();
 

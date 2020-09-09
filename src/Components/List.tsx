@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import InputObject from '../data.structure/Input';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     'list': {
-        backgroundColor: 'rgb(0, 153, 255)', //theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.main,
+        borderLeft: 'solid 3px ' + theme.palette.primary.main,
+        borderBottom: 'solid 3px ' + theme.palette.primary.main,
         position: 'absolute',
         top: '17%',
         left: '0px',
@@ -36,9 +38,8 @@ const useStyles = makeStyles({
             color: 'white',
             fontWeight: 'bold',
         },
-
     },
-});
+}));
 
 const list = InputObject.getInputListInstance().getListInstance();
 

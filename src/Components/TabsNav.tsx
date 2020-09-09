@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import app from '../data.structure/App';
 import tabControl from '../data.structure/TabControl';
 import { makeStyles } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core';
 
-const useStyle = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     'tabs-nav': {
         width: '55%',
         paddingTop: '.4rem',
@@ -24,12 +25,12 @@ const useStyle = makeStyles({
             cursor: 'pointer',
         },
         '& .tab-active': {
-            backgroundColor: 'blue', //theme.palette.primary.main,
+            backgroundColor: theme.palette.primary.main,
             color: '#fff',
             outline: 'none',
         },
     },
-});
+}));
 
 const ordersControl = app.getInstance().getOrdersControlInstance();
 const currentOrderControl = tabControl.getInstance();
@@ -46,7 +47,7 @@ const selectOrder = (event: React.MouseEvent<HTMLDivElement>) => {
 }
 
 function TabsNav() {
-    const classes = useStyle();
+    const classes = useStyles();
     const [, setState] = useState({});
 
     useState(() => {

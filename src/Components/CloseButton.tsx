@@ -5,8 +5,9 @@ import ModalService from '../data.structure/ModalService';
 import CloseModal from './CloseModal';
 import { makeStyles } from '@material-ui/styles';
 import CloseIcon from '@material-ui/icons/CheckCircle';
+import { Theme } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     btn: {
         //height: '33.33%',
         flex: '1 0 0',
@@ -16,7 +17,7 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
-        backgroundColor: 'rgb(0, 153, 255)',
+        backgroundColor: theme.palette.primary.main,
         // '&:first-child': {
         //     borderBottom: '2px solid #fff',
         // },
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
             marginTop: '2px', // solid #fff'
         // },
     },
-});
+}));
 
 const close = Close.getInstance();
 const modalService = ModalService.getInstance();

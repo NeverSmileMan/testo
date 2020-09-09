@@ -6,8 +6,9 @@ import ModalService from '../data.structure/ModalService';
 import { makeStyles } from '@material-ui/styles';
 import TaraIcon from '@material-ui/icons/Speed';
 import TaraModal from './tara/modal.tara';
+import { Theme } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     btn: {
         //height: '33.33%',
         flex: '1 0 0',
@@ -17,7 +18,7 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
-        backgroundColor: 'rgb(0, 153, 255)',
+        backgroundColor: theme.palette.primary.main,
         // '&:first-child': {
             marginBottom: '2px', // solid #fff',
         // },
@@ -25,7 +26,7 @@ const useStyles = makeStyles({
         //     borderTop:'2px solid #fff'
         // },
     },
-});
+}));
 
 const tara = Tara.getInstance();
 const modalService = ModalService.getInstance();
