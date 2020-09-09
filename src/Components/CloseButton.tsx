@@ -8,7 +8,8 @@ import CloseIcon from '@material-ui/icons/CheckCircle';
 
 const useStyles = makeStyles({
     btn: {
-        height: '33.33%',
+        //height: '33.33%',
+        flex: '1 0 0',
         borderRadius: '0 .4em .4em 0',
         color: '#fff',
         alignItems: 'center',
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
         //     borderBottom: '2px solid #fff',
         // },
         // '&:last-child ': {
-            borderTop:'2px solid #fff'
+            marginTop: '2px', // solid #fff'
         // },
     },
 });

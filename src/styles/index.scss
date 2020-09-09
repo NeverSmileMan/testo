@@ -4,9 +4,9 @@ $color_back: rgb(110, 156, 199);
 $color_select: rgb(224, 21, 116);
 $color_background: rgba(187, 187, 202, 0.411);
 
-* {
-    box-sizing: border-box;
-}
+// * {
+//     box-sizing: border-box;
+// }
 
 .title {
     font-weight: bold;
@@ -18,34 +18,34 @@ $color_background: rgba(187, 187, 202, 0.411);
     background: $color_background;
 }
 
-.main {
-    background: $color_background;
-    text-align: center,
-}
+// .main {
+//     background: $color_background;
+//     text-align: center,
+// }
 
-.weights {
-    background-color: white;
-}
+// .weights {
+//     background-color: white;
+// }
 
-.orders {
-    background-color: white;
-}
+// .orders {
+//     background-color: white;
+// }
 
 .tabs-nav {
-    text-align: left;
-    .tab {
-        text-align: center;
-        cursor: pointer;
-        display: inline-block;
-        width: 60px;
-        height: 100%;
-        background-color: $color_back;
-        color: white;
-        margin-right: 1px;
-        &.active {
-            background-color: $color_select;
-        }
-    }
+    // text-align: left;
+    // .tab {
+    //     text-align: center;
+    //     cursor: pointer;
+    //     display: inline-block;
+    //     width: 60px;
+    //     height: 100%;
+    //     background-color: $color_back;
+    //     color: white;
+    //     margin-right: 1px;
+    //     &.active {
+    //         background-color: $color_select;
+    //     }
+    // }
 }
 
 // .message {
@@ -90,11 +90,11 @@ $color_background: rgba(187, 187, 202, 0.411);
 
 // }
 
-.order-items {
-    .selected {
-        background-color: $color_select;
-    }
-}
+// .order-items {
+//     .selected {
+//         background-color: $color_select;
+//     }
+// }
 
 .keyboard {
     background-color: white;
@@ -106,24 +106,24 @@ $color_background: rgba(187, 187, 202, 0.411);
     }
 }
 
-.controls {
-    .disabled {
-        background-color: rgb(100, 100, 100);
-    }
-}
+// .controls {
+//     .disabled {
+//         background-color: rgb(100, 100, 100);
+//     }
+// }
 
-.modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    z-index: 9999;
-    position: absolute;
-    background: rgba(0, 0, 0, 0.5);
-    left: 0;
-    top: 0;
-}
+// .modal {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     height: 100%;
+//     width: 100%;
+//     z-index: 9999;
+//     position: absolute;
+//     background: rgba(0, 0, 0, 0.5);
+//     left: 0;
+//     top: 0;
+// }
 
 /*
 .input-wrapper {

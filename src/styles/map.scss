@@ -8,22 +8,22 @@ $border-color: #242724;
 }
 
 .main {
-    position: relative;
-    height: 848px;
-    width: 1020px;
+    // position: relative;
+    // height: 848px;
+    // width: 1020px;
     .weights {
-        @include block;
-        top: 10px;
-        left: 10px;
-        height: 100px;
-        width: 1000px;
+        // @include block;
+        // top: 10px;
+        // left: 10px;
+        // height: 100px;
+        // width: 1000px;
     }
     .orders {
-        @include block;
-        top: 120px;
-        left: 10px;
-        height: 510px;
-        width: 1000px;
+        // @include block;
+        // top: 120px;
+        // left: 10px;
+        // height: 510px;
+        // width: 1000px;
         .head {
             @include block;
             top: 1px;
@@ -32,26 +32,26 @@ $border-color: #242724;
             width: 994px;
         }        
         .tabs-nav {
-            @include block;
-            top: 32px;
-            left: 1px;
-            height: 50px;
-            width: 599px;
+            // @include block;
+            // top: 32px;
+            // left: 1px;
+            // height: 50px;
+            // width: 599px;
         }
         .message {
-            @include block;
-            top: 32px;
-            left: 601px;
-            height: 50px;
-            width: 394px;
+            // @include block;
+            // top: 32px;
+            // left: 601px;
+            // height: 50px;
+            // width: 394px;
         }
         .order-control {
-            @include block;
-            border: none;
-            top: 82px;
-            left: 0px;
-            height: 424px;
-            width: 852px;
+            // @include block;
+            // border: none;
+            // top: 82px;
+            // left: 0px;
+            // height: 424px;
+            // width: 852px;
             .input-list{
                 @include block;
                 border: none;
@@ -91,43 +91,43 @@ $border-color: #242724;
                 width: 851px;
             }
         }
-        .controls {
-            @include block;
-            border: none;
-            top: 82px;
-            left: 853px;
-            height: 424px;
-            width: 143px;
-            padding: 1px;
-            .tara.btn {
-                @include block;
-                top: 1px;
-                left: 0px;
-                height: 140px;
-                width: 142px;
-            }
-            .print.btn {
-                @include block;
-                top: 142px;
-                left: 0px;
-                height: 140px;
-                width: 142px;
-            }
-            .close.btn {
-                @include block;
-                top: 283px;
-                left: 0px;
-                height: 140px;
-                width: 142px;
-            }
-        }
+        // .controls {
+        //     @include block;
+        //     border: none;
+        //     top: 82px;
+        //     left: 853px;
+        //     height: 424px;
+        //     width: 143px;
+        //     padding: 1px;
+        //     .tara.btn {
+        //         @include block;
+        //         top: 1px;
+        //         left: 0px;
+        //         height: 140px;
+        //         width: 142px;
+        //     }
+        //     .print.btn {
+        //         @include block;
+        //         top: 142px;
+        //         left: 0px;
+        //         height: 140px;
+        //         width: 142px;
+        //     }
+        //     .close.btn {
+        //         @include block;
+        //         top: 283px;
+        //         left: 0px;
+        //         height: 140px;
+        //         width: 142px;
+        //     }
+        // }
     }
     .keyboard {
-        @include block;
-        top: 638px;
-        left: 10px;
-        height: 200px;
-        width: 1000px;
+        // @include block;
+        // top: 638px;
+        // left: 10px;
+        // height: 200px;
+        // width: 1000px;
     }
 }
 

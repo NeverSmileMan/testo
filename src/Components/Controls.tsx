@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
     controls: {
-        flexGrow: 1,
+        width: '8%',
         display: 'flex',
         flexDirection: 'column',
     },

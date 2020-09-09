@@ -4,17 +4,21 @@ import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
     'list': {
-        backgroundColor: 'rgb(0, 153, 255)',
+        backgroundColor: 'rgb(0, 153, 255)', //theme.palette.primary.main,
+        position: 'absolute',
+        top: '17%',
+        left: '0px',
+        width: '100%',
+        height: '83%',
+        overflowY: 'auto',
+        fontSize: '0.9em',
         '& ul': {
             listStyle: 'none',
             margin: '0px',
             padding: '0px',
-            overflowY: 'auto',
-            textAlign: 'left',
-            maxHeight: '368px',
+            //overflowY: 'auto',
         },
         '& li': {
-            fontSize: '0.8em',
             borderBottom: 'solid 1px black',
             paddingLeft: '10px',
             paddingRight: '10px',
@@ -25,8 +29,7 @@ const useStyles = makeStyles({
             width: '50px',
         },
         '& .not-found': {
-            width: '100%',
-            height: '300px',
+            height: '100%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
@@ -69,14 +72,16 @@ function List() {
 
     return (
         <div className={`${classes.list} list`} onClick={onClick}>
-            <ul>
-                {items.length ?
-                    items :
-                    <div className='not-found'>
-                        <div>НІЧОГО НЕ ЗНАЙДЕНО</div>
-                    </div>
-                }
-            </ul>
+            {items.length?
+
+                <ul>
+                    {items}
+                </ul> :
+
+                <div className='not-found'>
+                    НІЧОГО НЕ ЗНАЙДЕНО
+                </div>
+            }
         </div>
     );
 }

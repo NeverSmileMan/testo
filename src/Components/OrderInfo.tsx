@@ -5,7 +5,8 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const useStyles = makeStyles({
     'order-info': {
-        backgroundColor: 'rgb(0, 153, 255)',
+        flex: '1 0 0',
+        backgroundColor: 'rgb(0, 153, 255)', //theme.palette.primary.main
         padding: '10px',
         display: 'flex',
         justifyContent: 'center',
@@ -23,14 +24,15 @@ const useStyles = makeStyles({
         cursor: 'pointer',
     },
     'total': {
-        fontWeight: 'bold',
-        verticalAlign: 'middle',
-        paddingLeft: '10px',
-        paddingRight: '10px',     
+        textAlign: 'center',
+        paddingLeft: '20px',
+        paddingRight: '20px',     
         backgroundColor: 'white',
         borderRadius: '100px',
-        color: 'rgb(0, 153, 255)',
+        color: 'rgb(0, 153, 255)', //theme.palette.primary.main,
         minWidth: '100px',
+        fontWeight: 'bold',
+        verticalAlign: 'middle',
     }
 });
 

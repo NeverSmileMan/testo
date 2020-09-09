@@ -5,14 +5,9 @@ import ActiveInputService from '../data.structure/ActiveInputService';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
-    'input-list': {
-        backgroundColor: 'rgb(0, 153, 255)',
-        padding: '10px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     input: {
+        paddingLeft: '20px',
+        paddingRight: '20px',
         fontWeight: 'bold',
         verticalAlign: 'middle',
         backgroundColor: 'white',
@@ -20,13 +15,16 @@ const useStyles = makeStyles({
         flex: '1 0 0',
         '&:after': {
             content: "''",
-            display: 'inline',
             paddingLeft: '2px',
-            animationName: 'caret-animation',
-            animationDuration: '1s',
-            animationDelay: '0s',
-            animationIterationCount: 'infinite',
+            animation: '$cursor 1s infinite',
+            background: 'black',
+            opacity: 0,
         },
+    },
+    '@keyframes cursor': {
+        '0%': {opacity: 0},
+        '40%': {opacity: 1},
+        '100%': {opacity: 0},
     },
 });
 
@@ -51,12 +49,12 @@ function InputList() {
     useEffect(() => changeState(setState), []);
 
     return (
-        <div className={`${classes['input-list']} input-list`}>
+        <>
             <div className={`${classes.input} input ${isFocus ? 'focus' : ''}`}>
                 {input.getValue()}
             </div>
             <List />
-        </div>
+        </>
     );
 }
 

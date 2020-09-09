@@ -38,17 +38,17 @@ function Keyboard() {
  
     return (
         <div className={`${classes.keyboard} keyboard`} onClick={onClick}>
-            {/* <div className='title'>KEYBOARD</div> */}
-            {/* {lang === 'UA' && <KeyboardLayoutUA />}
-            {lang === 'EN' && <KeyboardLayoutEN />} */}
-            <KeyboardLayoutEN />
-            {/* <KeyboardLayoutNUMS />
+            <div className='title'>KEYBOARD</div>
+            {lang === 'UA' && <KeyboardLayoutUA />}
+            {/* {lang === 'EN' && <KeyboardLayoutEN />} */}
+            {/* <KeyboardLayoutEN /> */}
+            <KeyboardLayoutNUMS />
             <KeyboardLayoutFUNC />
             <div className='key'
                 onClick={changeLang}
                 data-next-lang={nextLang}>
                 {nextLang}
-            </div> */}
+            </div>
         </div>
     );
 }

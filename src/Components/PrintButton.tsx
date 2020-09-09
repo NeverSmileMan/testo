@@ -8,7 +8,8 @@ import PrintIcon from '@material-ui/icons/Print';
 
 const useStyles = makeStyles({
     btn: {
-        height: '33.33%',
+        //height: '33.33%',
+        flex: '1 0 0',
         borderRadius: '0 .4em .4em 0',
         color: '#fff',
         alignItems: 'center',

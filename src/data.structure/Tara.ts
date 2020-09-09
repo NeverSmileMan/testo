@@ -19,7 +19,7 @@ export class Tara implements ITara {
     private _emitter: EventEmitter;
     private _weights: IWeights;
     private _tara: number = 0;
-    private _state: State = State.DISABLED;
+    private _state: State = State.ENABLED; //??
     private _input: IInputNumber;
     private _keyboard: IActiveInputService;
 

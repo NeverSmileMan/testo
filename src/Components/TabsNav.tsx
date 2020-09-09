@@ -1,6 +1,28 @@
 import React, { useState } from 'react';
 import app from '../data.structure/App';
 import tabControl from '../data.structure/TabControl';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyle = makeStyles({
+    'tabs-nav': {
+        width: '50%',
+        paddingTop: '0.2%',
+        backgroundColor: 'red',
+        '& .tab': {
+            textAlign: 'center',
+            cursor: 'pointer',
+            display: 'inline-block',
+            width: '60px',
+            height: '100%',
+            backgroundColor: 'green',
+            color: 'white',
+            marginRight: '1px',
+            '& .active': {
+                backgroundColor: 'green',
+            },
+        },
+    },
+});
 
 const ordersControl = app.getInstance().getOrdersControlInstance();
 const currentOrderControl = tabControl.getInstance();
@@ -17,6 +39,7 @@ const selectOrder = (event: React.MouseEvent<HTMLDivElement>) => {
 }
 
 function TabsNav() {
+    const classes = useStyle();
     const [, setState] = useState({});
 
     useState(() => {
@@ -39,7 +62,7 @@ function TabsNav() {
     );
 
     return (
-        <div className='tabs-nav'>
+        <div className={classes['tabs-nav']}>
             {tabs}
             {canCreate ?
                 <div 

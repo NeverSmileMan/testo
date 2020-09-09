@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
 import TabControl from '../data.structure/TabControl';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyle = makeStyles({
+    'order-items': {
+        backgroundColor: 'grey',
+        //width: '100%',
+        flex: '1 0 0',
+    }
+});
 
 const tabControl = TabControl.getInstance();
 
@@ -11,6 +20,7 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
 }
 
 function OrderItems() {
+    const classes = useStyle();
     const [, setState] = useState({});
 
     useState(() => {
@@ -23,7 +33,7 @@ function OrderItems() {
         <div key={i} data-item-index={i} className={(selectedItemIndex === i && 'selected') || ''}>{item.name}</div>);
 
     return (
-        <div className='order-items' onClick={onClick}>
+        <div className={`${classes['order-items']} order-items`} onClick={onClick}>
             {items}
         </div>
     );
