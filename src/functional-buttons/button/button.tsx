@@ -10,7 +10,7 @@ interface ButtonProp {
     color?: string;
     fontSize?: string;
 }
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles ((theme: Theme) => createStyles({
     btn: (prop: ButtonProp) => ({
         height: '33.33%',
         borderRadius: '0 .4em .4em 0',
