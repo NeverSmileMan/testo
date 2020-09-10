@@ -44,11 +44,16 @@ const useStyles = makeStyles({
 
 export default function GroupSpecialButtons({ options, service }: Props): ReactElement {
 	const layout = useContext(LayoutContext);
-
 	const classes = useStyles();
 
 	const changeLayout = useCallback(() => {
-		layout.setName(layout.name === 'uk' ? 'en' : layout.name === 'en' ? 'ru' : 'uk'); //поменять
+		let index = layout.names.indexOf(layout.name);
+
+		if (index + 1 === layout.names.length) {
+			layout.setName(layout.names[0]);
+		} else {
+			layout.setName(layout.names[index + 1]);
+		}
 	}, [layout]);
 
 	return (

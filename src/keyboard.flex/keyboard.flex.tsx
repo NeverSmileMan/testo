@@ -22,8 +22,7 @@ export interface Servise {
 	unsetActive: (func: React.SetStateAction<string>) => void;
 }
 
-
-export type Key =  string;
+export type Key = string;
 
 export type Keys = {
 	[K in Lang]: Key[][];
@@ -49,8 +48,8 @@ export interface Special {
 	options: any;
 }
 export interface Keyboard {
-	alphabet?: Alphabet;
-	numeric?: Numeric;
+	alphabet: Alphabet;
+	numeric: Numeric;
 	special?: Special;
 }
 
@@ -62,6 +61,7 @@ interface Props {
 export const LayoutContext = React.createContext({
 	name: '' as Lang,
 	setName: (val: Lang) => {},
+	names: [] as Lang[],
 });
 
 const useStyles = makeStyles({
@@ -93,18 +93,22 @@ const useStyles = makeStyles({
 	special: {
 		gridColumn: '3',
 		gridRow: '1',
-		
 	},
 });
 
-export default function Keyboard({ service, keyboardLayout }: Props): ReactElement {
-	const [layoutName, setLayoutName] = useState<Lang>('uk'); // вынести как язык по умолчанию
+function getDefaultLayout(obj: Keys): Lang {
+	return Object.keys(obj)[0] as Lang;
+}
 
+export default function Keyboard({ service, keyboardLayout }: Props): ReactElement {
+	const [layoutName, setLayoutName] = useState<Lang>(getDefaultLayout(keyboardLayout.alphabet.keys));
 	const classes = useStyles();
 
 	return (
-		<div className={classes.keyboard + " " + classes.grid} /* коробка для отображения расположения частей клавы*/>
-			<LayoutContext.Provider value={{ name: layoutName, setName: setLayoutName }}>
+		<div className={`${classes.keyboard} ${classes.grid}`} /* коробка для отображения расположения частей клавы*/>
+			<LayoutContext.Provider
+				value={{ name: layoutName, setName: setLayoutName, names: Object.keys(keyboardLayout.alphabet.keys) as Lang[] }}
+			>
 				{keyboardLayout.alphabet ? (
 					<div className={classes.alphabet}>
 						<GroupAlphabetButtons opts={keyboardLayout.alphabet} service={service} />
