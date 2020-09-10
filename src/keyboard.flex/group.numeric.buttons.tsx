@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import Button from './button';
-import {Numeric, Key, KeyWithOpts, Servise} from './keyboard.flex';
+import {Numeric, Key, Servise} from './keyboard.flex';
 
 interface Props {
   options: Numeric;
@@ -23,7 +23,7 @@ const useStyles2 = makeStyles({
 const useStyles = makeStyles({
 	numericGrid: {
 		display: 'grid',
-		gridGap: '0.15em',
+		gridGap: '0.4em',
 		gridTemplateColumns: 'repeat(3, 1fr)',
 		gridTemplateRows: 'repeat(4, 1fr)',
 	},
@@ -86,7 +86,7 @@ export default function GroupNumericButtons({options, service} : Props) {
   return (
     <div className= {`${classes2.keyboardNumeric} ${classes.numericGrid}`} >
       {options.keys.map((item: Key, id: number) => (
-          <Button key={id} value={(item as KeyWithOpts).key ?? item  } callback={service[options.action]} className={(classes as any)[`nkey_${id}`] + ' ' + classes2.btnNumeric} /> 
+          <Button key={id} value={item} callback={service[options.action]} className={(classes as any)[`nkey_${id}`] + ' ' + classes2.btnNumeric} /> 
       ))}
     </div>
   )

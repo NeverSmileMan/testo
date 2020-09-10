@@ -1,12 +1,12 @@
 import React, { ReactElement, useCallback, ReactNode } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { KeyValue } from './keyboard.flex';
+import { Key } from './keyboard.flex';
 
 
 
 interface Props {
 	callback: any;
-	value?: KeyValue;
+	value?: Key;
 	children?: ReactNode;
 	className: string;
 }
@@ -20,12 +20,9 @@ const useStyles = makeStyles({
 		fontSize: '1.1em',
 		background:'#e4e4e4', 
 		overflow: 'hidden',
-		boxSizing: 'border-box',
 		fontWeight: 400,
 		textTransform: 'uppercase',
-		height: '100%',
 		width: '100%',
-		textAlign: 'center',
 		marginLeft: '0.15em',
 		marginRight: '0.15em',
   },

@@ -1,95 +1,76 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext } from 'react';
+import { LayoutContext } from './keyboard.flex';
 import Button from './button';
 import { makeStyles } from '@material-ui/styles';
-import { LayoutContext, Key, KeyWithOpts, Alphabet, Servise } from './keyboard.flex';
+import { Key } from './keyboard.flex';
 
-interface Props {
-	opts: Alphabet;
-	service: Servise;
-}
 
-const useStyles = makeStyles({
-	keyboardAlphabet: {
-		height: '100%',
+
+  const useStyles = makeStyles({
+    keyboardAlphabet: {
 		display: 'flex',
-		boxSizing: 'border-box',
-		flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    alignContent:'space-around',
-	},
-	rowWrap: {
-		height: '0px',
-		width: '100%',
-	},
+    flexDirection: 'column',
+		height: '100%',
+    width: '100%',
+    boxSizing: 'border-box',
+  },
+  row: {
+		display: 'flex',
+    flexGrow: 1,
+    // marginTop: '0.2em',
+    // marginBottom: '0.2em',
+    boxSizing: 'border-box',
+
+
+  },
+  spacer: {
+    margin: '0.2em',
+  },
+  offset: {
+    width: '30%',
+  },
+  space: {
+    width: '300%',
+  },
 	alphabetBtn: {
-    width: (props : any) => `${props.width-1}%`,
-    height: '30%',
-    margin: '0.1em',
-	},
-	space_uk: {
-    width: (props : any) => `${props.width * 3}%`,
-	},
-	space_ru: {
-    width: (props : any) => `${props.width * 3}%`,
-	},
-	space_en: {
-    width: (props : any) => `${props.width * 3}%`,
-	},
-	spacer: {
-    width: '2%',
-    height: '30%',
-    margin: '0.1em',
+
+		// display: 'flex',
+		// boxSizing: 'border-box',
+		// flexDirection: 'row',
+    // flexWrap: 'wrap',
+    // justifyContent: 'space-around',
+    // alignContent:'space-around',
+
+    // width: '95%',
   },
 });
 
-export default function GroupAlphabetButtons({ opts, service }: Props) {
+export default function GroupAlphabetButtons({ opts, service }: any) {
 	const layout = useContext(LayoutContext);
-	const classes2 = useStyles({width: 100/(opts.options[layout.name].col + (layout.name === 'en' ? 1 : 0) ), height: 100/opts.options[layout.name].col,});
 
-	const keys = useMemo(() => {
-		const keys: any = [];
-
-		for (let j = 0; j < opts.options[layout.name].row; j++) {
-      if (j%2) {
-        keys.push(<div key={`${j}_spacer`} className={classes2.spacer}></div>);
-      }
-			for (let i = 0; i < opts.options[layout.name].col + (layout.name === 'en' && j === 0 ? 1 : 0); i++) {
-				let id = j * opts.options[layout.name].col + i + (layout.name === 'en' && j > 0 ? 1 : 0);
-				if (id >= opts.keys[layout.name].length) {
-					continue;
-				}
-				let value = (opts.keys[layout.name][id] as KeyWithOpts).key ?? opts.keys[layout.name][id];
-				keys.push(
-					<Button
-						key={id}
-						value={value}
-						callback={service[opts.action]}
-						className={classes2.alphabetBtn + ' ' + (value === ' ' ? (classes2 as any)[`space_${layout.name}`] : '')}
-					/>,
-				);
-      }
-      if (!(j%2)) {
-        keys.push(<div key={`${j}_spacer`} className={classes2.spacer}></div>);
-      }
-      keys.push(<div key={`${j}_divider`} className={classes2.rowWrap}></div>);
-
-      
-		}
-
-		return keys;
-	}, [opts, layout]);
-
-	console.log(keys);
+  const classes = useStyles();
 
 	return (
-		// <div className={classes2.keyboardAlphabet + ' ' }>
-		<div className={classes2.keyboardAlphabet}> 
-			<>
-				{keys.map((item: any) => {
-					return item;
-				})}
-			</>
+		<div className={classes.keyboardAlphabet}>
+			{opts.keys[layout.name].map((item: Key[], i: number) => {
+				return (
+          <>
+            <div key={`${i}x`} className={classes.row}>
+              {(i%2) ?<div key={`${i}i`} className={classes.offset}></div> : null}
+              {item.map((item: Key, index) => (
+                <Button
+                  key={index}
+                  value={item}
+                  callback={service[opts.action]}
+                  className={classes.alphabetBtn + ' ' + (item === ' ' ? classes.space : '')}
+                />
+              ))}
+            {!(i%2) ?<div key={`${i}o`} className={classes.offset}></div> : null}
+            </div>
+            {(i < (opts.keys[layout.name].length - 1)) ?<div key={`${i}z`} className={classes.spacer}></div> : null}
+          </>
+				);
+			})}
 		</div>
 	);
 }

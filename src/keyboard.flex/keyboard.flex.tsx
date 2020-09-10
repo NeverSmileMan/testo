@@ -1,11 +1,10 @@
 import React, { useState, ReactElement } from 'react';
 import { makeStyles } from '@material-ui/styles';
-// import GroupAlphabetButtons from './group.alphabet.buttons';
+import GroupAlphabetButtons from './group.alphabet.buttons';
 import GroupNumericButtons from './group.numeric.buttons';
 import GroupSpecialButtons from './group.special.buttons';
 
 //---------------------
-import Kflex2 from '../keyboard.flex/kflex2';
 type Lang = 'en' | 'ru' | 'uk'; // должно импортироваться???
 //------------------
 
@@ -23,20 +22,11 @@ export interface Servise {
 	unsetActive: (func: React.SetStateAction<string>) => void;
 }
 
-interface KeyOpts {
-	hMultiplier: number;
-	wMultiplier: number;
-}
-export type KeyValue = string;
-export interface KeyWithOpts {
-	key: KeyValue;
-	opts: KeyOpts;
-}
 
-export type Key = KeyWithOpts | KeyValue;
+export type Key =  string;
 
 export type Keys = {
-	[K in Lang]: Key[];
+	[K in Lang]: Key[][];
 };
 export interface SpecialKey {
 	name?: string;
@@ -78,7 +68,7 @@ const useStyles = makeStyles({
 	keyboard: {
 		height: '100%',
 		width: '100%',
-		padding: '0.2em',
+		padding: '0.5em',
 		display: 'flex',
 		backgroundColor: '#fff',
 		boxSizing: 'border-box',
@@ -88,7 +78,7 @@ const useStyles = makeStyles({
 		display: 'grid',
 		gridTemplateColumns: '77fr 17fr 6fr',
 		gridTemplateRows: '100%',
-		gridGap: '0.3em',
+		gridGap: '0.4em',
 		width: '100%',
 		height: '100%',
 	},
@@ -117,8 +107,7 @@ export default function Keyboard({ service, keyboardLayout }: Props): ReactEleme
 			<LayoutContext.Provider value={{ name: layoutName, setName: setLayoutName }}>
 				{keyboardLayout.alphabet ? (
 					<div className={classes.alphabet}>
-						{/* <GroupAlphabetButtons opts={keyboardLayout.alphabet} service={service} /> */}
-						<Kflex2 opts={keyboardLayout.alphabet} service={service} />
+						<GroupAlphabetButtons opts={keyboardLayout.alphabet} service={service} />
 					</div>
 				) : null}
 				{keyboardLayout.numeric ? (
