@@ -12,8 +12,11 @@ const useStyles = makeStyles({
         fontSize: '40px',
     }
 })
+interface Prop {
+    click?: any;
+}
 
-const ModalTara = () => {
+const ModalTara = ({ click }:Prop) => {
     const cls = useStyles();
     
     return (
