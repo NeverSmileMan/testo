@@ -96,8 +96,12 @@ const useStyles = makeStyles({
 	},
 });
 
-function getDefaultLayout(obj: Keys): Lang {
-	return Object.keys(obj)[0] as Lang;
+// function getDefaultLayout(obj: Keys): Lang {
+// 	return Object.keys(obj)[0] as Lang;
+// }
+
+function getDefaultLayout<T, K extends keyof T>(obj: T) {
+  return Object.keys(obj)[0] as K;
 }
 
 export default function Keyboard({ service, keyboardLayout }: Props): ReactElement {
