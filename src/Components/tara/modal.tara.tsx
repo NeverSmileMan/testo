@@ -6,8 +6,8 @@ import InputWeight from './taraCalc/input.weight';
 const useStyles = makeStyles({
     'conteiner': {
         display: 'flex',
-        justifyContent: 'center',
-        transform: 'translateY(50%)',
+        //justifyContent: 'center',
+        //transform: 'translateY(50%)',
         color: '#fff',
         fontSize: '40px',
     },

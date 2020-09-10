@@ -83,7 +83,7 @@ class TabControl implements ITabControl {
             return;
         }
 
-        this._weights.setPrice(item.price);
+        this._weights.setPrice(item.price, item.name);
         const newItem: IItemAmount = new ItemAmount(item, this._weights.getSum());
         //const newItem: IItemAmount = new ItemAmount(item, 10);
         this._order!.items.push(newItem);

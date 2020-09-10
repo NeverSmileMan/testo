@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         //     borderTop:'2px solid #fff'
         // },
     },
+    'disabled': {
+        backgrounColor: theme.palette.primary.light,
+    },
 }));
 
 const tara = Tara.getInstance();
@@ -56,10 +59,10 @@ function TaraButton() {
     useEffect(() => showModal(mode), [mode]);
 
     const isActive = tara.isActive(); 
-
+    const className = classes.btn + ' ' + (isActive ? '' : classes.disabled);
     return (
         <div
-            className={classes.btn}
+            className={className}
             onClick={onClick}>
             <TaraIcon />
             <div>тара</div>

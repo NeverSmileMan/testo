@@ -12,6 +12,7 @@ themes.default = createMuiTheme({
     palette: {
         primary: {
             main: '#0099FF',
+            light: '#7ecbff',
         },
         secondary: {
             main: '#d7d7d7',
@@ -23,6 +24,7 @@ themes.silpo = createMuiTheme({
     palette: {
         primary: {
             main: '#ff8522',
+            light: '#ffc595',
         },
         secondary: {
             main: '#d7d7d7',
@@ -34,6 +36,7 @@ themes.fora = createMuiTheme({
     palette: {
         primary: {
             main: '#76b72f',
+            light: '#9db682',
         },
         secondary: {
             main: '#ef036',

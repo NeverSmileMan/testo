@@ -3,7 +3,7 @@ import AppState from './data.structure/App';
 import { AppStateTypes } from './data.structure/types';
 import SetEnv from './Components/SetEnv';
 import Main from './Components/Main';
-import './styles/index.scss';
+import 'fontsource-roboto';
 import './data.structure/RikApp.js';
 import { ThemeProvider, Theme } from '@material-ui/core';
 import themes, { ThemesNames } from './themes/themes';

@@ -1,22 +1,22 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     btn: ({ borderColor, colorBtn, textColor}: StyleProp) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colorBtn,
-        border: `2px solid ${borderColor}`,
+        border: `2px solid ` + borderColor,
         borderRadius: '10px',
         color: textColor,
-        fontSize: '35px'
+        fontSize: '1.5rem'
     }),
     btn0: {
         gridColumnStart: '1',
         gridColumnEnd: '3',
     },
-})
+}))
 interface StyleProp {
     borderColor?: string;
     colorBtn?: string;

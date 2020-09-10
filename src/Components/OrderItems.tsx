@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         backgroundColor: '#e4e4e4', //theme.palette.primary.main,
         borderLeft: 'solid 3px ' + theme.palette.primary.main,
         borderBottom: 'solid 3px ' + theme.palette.primary.main,
+        borderRight: 'solid 3px ' + theme.palette.primary.main,
         flex: '1 0 0',
         //position: 'absolute',
         // top: '17%',
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
             padding: '0px',
         },
         '& li': {
-            borderBottom: 'solid 1px black',
+            borderBottom: 'solid 1px gray',
             paddingLeft: '10px',
             paddingRight: '10px',
             backgroundColor: 'white',

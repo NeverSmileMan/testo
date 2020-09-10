@@ -1,6 +1,6 @@
 import React from 'react';
 import WeightBtn from './weight.btn';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import KeyboardObject from '../../../data.structure/Keyboard';
 // import KeyboardLayoutNUMS from './KeyboardLayoutNUMS';
@@ -43,9 +43,10 @@ const countBtn = 9;
 const FixedWeight = ({ strWeight = initialWeight, step = initStep, countButton = countBtn }: Prop) => {
   const enumBtns = new Array(countButton).fill(null);
   const cls = useStyle();
+  const theme = useTheme();
   return (
     <div className={cls.btnConteiner} onClick={onClick}>
-      {enumBtns.map((val, index) => (<WeightBtn key={index} btnKey={`${strWeight + index * step}`} btnName={`${(strWeight + index * step)} гр.`} borderColor={'rgb(0, 153, 255)'} />))}
+      {enumBtns.map((val, index) => (<WeightBtn key={index} btnKey={`${strWeight + index * step}`} btnName={`${(strWeight + index * step)} гр.`} borderColor={theme.palette.primary.main} />))}
     </div>
   )
 }

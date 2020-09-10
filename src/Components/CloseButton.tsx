@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme: Theme) => ({
             marginTop: '2px', // solid #fff'
         // },
     },
+    'disabled': {
+        backgroundColor: theme.palette.primary.light,
+    },
 }));
 
 const close = Close.getInstance();
@@ -55,13 +58,13 @@ function CloseButton() {
     useEffect(() => showModal(mode), [mode]);
 
     const isActive = close.isActive();
-
+    const className = classes.btn + ' ' + (isActive ? '' : classes.disabled);
     return (
         <div
-            className={classes.btn}
+            className={className}
             onClick={onClick}>
             <CloseIcon />
-            <div>тара</div>
+            <div>закрити</div>
         </div>
     );
 }

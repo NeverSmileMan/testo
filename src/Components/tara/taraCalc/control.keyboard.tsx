@@ -1,6 +1,6 @@
 import React from 'react';
 import WeightBtn from './weight.btn';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 
 import KeyboardObject from '../../../data.structure/Keyboard';
 // import KeyboardLayoutNUMS from './KeyboardLayoutNUMS';
@@ -15,7 +15,7 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     key && keyboard.onClick(key);
 };
 
-const useStyle = makeStyles({
+const useStyle = makeStyles((theme: Theme) => ({
     controlContainer: {
         display:'grid',
         gridTemplateColumns: '50px',
@@ -24,7 +24,7 @@ const useStyle = makeStyles({
         padding: '5px',
         fontSize: '50px',
     }
-})
+}))
 const control = [
     {
         key: 'BACKSPACE',
@@ -38,6 +38,7 @@ const control = [
     }]
 const ControlKeyboard = () => {
     const {controlContainer} = useStyle ()
+    const theme = useTheme();
     return (
         <div className={controlContainer} onClick={onClick}>
             {control.map((val, index) => (<WeightBtn
@@ -45,7 +46,7 @@ const ControlKeyboard = () => {
                 key={index}
                 btnName={val.icon}
                 textColor='#fff'
-                colorBtn={val.btnColor} />))}
+                colorBtn={theme.palette.primary.main} />))}
         </div>
     )
 }

@@ -14,7 +14,7 @@ const useStyles = makeStyles({
       flexDirection: 'column',
       opacity: '1',
       margin: '0 auto',
-      transform: 'translateY(50%)',
+      //transform: 'translateY(50%)',
     },
     title: {
       padding: '40px',

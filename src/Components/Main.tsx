@@ -1,12 +1,11 @@
 import React from 'react';
 import Weights from './Weights';
 import Orders from './Orders';
-import Keyboard from './Keyboard';
-import AppState from '../data.structure/App';
+import Keyboard from './KeyboardMain';
 import Modal from './Modal';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
-const useStyle = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     'main': {
         width: 1366 + 10 + 'px',
         height: 768 + 10 + 'px',
@@ -23,38 +22,31 @@ const useStyle = makeStyles({
         },
     },
     '@global': {
+        'html, body': {
+            fontSize: '18px',
+            fontFamily: 'Roboto',
+        },
         '*': {
             boxSizing: 'border-box',
         },
         '::-webkit-scrollbar': {
-            width: '40px',
+            width: '2.2rem',
         },
         '::-webkit-scrollbar-track': {
-            boxShadow: 'inset 0 0 5px #e4e4e4',
+            boxShadow: 'inset 0 0 0.3rem #e4e4e4',
         },
         '::-webkit-scrollbar-thumb': {
             background: '#fff',
-            borderRadius: '10px',
+            borderRadius: '0 1rem 1rem 0',
+            border: '1px solid gray',
+            borderLeft: 'none' ,
         },
-        // '#root': {
-        //     width: '100%',
-        //     height: '100%',
-        // },
-        // 'html, body': {
-        //     width: '100%',
-        //     height: '100%',
-        //     margin: 0,
-        //     padding: 0,
-        //     fontFamily: 'Arial',
-        //     fontSize: '24px',
-        // },
     },
-});
-
-AppState.getInstance();
+}));
 
 function Main() {
-    const { main } = useStyle();
+
+    const { main } = useStyles();
 
     return (
         <div className={main}>

@@ -13,11 +13,13 @@ export interface IWeights {
     getSum: () => number;
     setTara: (value: number) => void;
     getTara: () => number;
-    setPrice: (value: number) => void;
+    setPrice: (value: number, title: string) => void;
     getWeight: () => number;
     on: (event: WeightsEvents, callback: () => void) => void;
     off: (event: WeightsEvents, callback: () => void) => void;
     __setWeight: (value: number) => void;
+    __getPrice: () => number;
+    __getTitle: () => string;
 }
 
 type WeightsEvents = 'stateChange';
@@ -28,6 +30,7 @@ export class Weights implements IWeights{
     private _tara: number = 0;
     private _price: number = 0;
     private _weight: number = 0;
+    private _title: string = '';
     private _callbackOnStateChange?: () => void;
 
     /* Характеристики вагів: */
@@ -59,9 +62,10 @@ export class Weights implements IWeights{
         return this._tara;
     }
 
-    setPrice(value: number) {
+    setPrice(value: number, title: string) {
         this._price = value;
-        this._onStateChange();
+        this._title = title;
+        this._onStateChange()
     }
 
     getWeight(): number {
@@ -87,6 +91,14 @@ export class Weights implements IWeights{
     __setWeight(value: number) {
         this._weight = value;
         this._onStateChange();
+    }
+
+    __getPrice() {
+        return this._price;
+    }
+
+    __getTitle() {
+        return this._title;
     }
 }
 

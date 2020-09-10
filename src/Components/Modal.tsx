@@ -7,13 +7,13 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100%',
+        height: '84.1%',
         width: '100%',
         zIndex: 9999,
         position: 'absolute',
         background: 'rgba(0, 0, 0, 0.5)',
         left: '0px',
-        top: '0px',
+        top: '15.9%',
     }
 });
 

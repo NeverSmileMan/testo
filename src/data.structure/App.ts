@@ -59,6 +59,7 @@ class AppState implements IAppState {
     }
 
     __changeTheme() {
+        console.log('THEME');
         let themeName = this._config.themeName;
         themeName = themeName === 'default' ? 'silpo' :
             themeName === 'silpo' ? 'fora' :

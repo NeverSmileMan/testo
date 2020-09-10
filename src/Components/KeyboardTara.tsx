@@ -1,7 +1,6 @@
 import React from 'react';
 import KeyboardObject from '../data.structure/Keyboard';
-import KeyboardLayoutNUMS from './KeyboardLayoutNUMS';
-import KeyboardLayoutFUNC from './KeyboardLayoutFUNC';
+import KeyboardLayout from './KeyboardLayout';
 
 const keyboard = KeyboardObject.getInstance();
 
@@ -30,8 +29,8 @@ function Keyboard() {
             <div className='title'>KEYBOARD</div>
             {/* {lang === 'UA' && <KeyboardLayoutUA />}
             {lang === 'EN' && <KeyboardLayoutEN />} */}
-            <KeyboardLayoutNUMS />
-            <KeyboardLayoutFUNC />
+            {/* <KeyboardLayoutNUMS />
+            <KeyboardLayoutFUNC /> */}
             {/* <div className='key'
                 onClick={changeLang}
                 data-next-lang={nextLang}>

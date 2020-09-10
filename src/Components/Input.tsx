@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import InputObject from '../data.structure/Input';
 import List from './List';
 import ActiveInputService from '../data.structure/ActiveInputService';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
-    input: {
+    'input': {
         paddingLeft: '20px',
         paddingRight: '20px',
         fontWeight: 'bold',
@@ -13,6 +13,9 @@ const useStyles = makeStyles({
         backgroundColor: 'white',
         borderRadius: '100px',
         flex: '1 0 0',
+        fontSize: '1rem',
+    },
+    'focus': {
         '&:after': {
             content: "''",
             paddingLeft: '2px',
@@ -30,38 +33,33 @@ const useStyles = makeStyles({
 
 const input = InputObject.getInputListInstance();
 const activeInputService = ActiveInputService.getInstance();
-const ifFocus = () => ({ isFocus: activeInputService.ifActiveInput(input) });
+const ifFocus = () => activeInputService.ifActiveInput(input);
 
-function changeState(setState: React.Dispatch<(state: { isFocus: boolean}) => { isFocus: boolean}>) {
-    input.onChange(() => {
-        setState(state => ({ ...state }));
-    });
-    input.onFocusChange(() => {
-        setState(ifFocus);
-    });
+function changeState(setState: React.Dispatch<(state: boolean) => boolean>) {
+    input.onFocusChange(() => setState(ifFocus));
     return () => activeInputService.delActiveInput(input);
+}
+
+function changeRef(ref: React.RefObject<HTMLDivElement>) {
+    input.onChange(() => {
+        if (ref.current) 
+            ref.current.innerHTML = '&nbsp;' + input.getValue().replace(/ /g, '&nbsp;');
+    });
 }
 
 function InputList() {
     const classes = useStyles();
-    const [{ isFocus }, setState] = useState(ifFocus);
+    const [isFocus, setState] = useState(ifFocus);
+    const ref = useRef(null);
 
     useEffect(() => changeState(setState), []);
-
-    const value = input.getValue();
-
-    const match = (value).match(/ +$/);
-    let emptyText = [];
-    if (match) {
-        const index = match && match.index;
-        const empty = <>&nbsp;</>;
-        emptyText = Array(value.length - index!).fill(empty);       
-    }
+    useEffect(() => changeRef(ref), []);
 
     return (
         <>
-            <div className={`${classes.input} input ${isFocus ? 'focus' : ''}`}>
-                {input.getValue()} {emptyText}
+            <div ref={ref}
+                className={`${classes.input} ${isFocus ? classes.focus : ''}`}>
+                <span>&nbsp;</span>
             </div>
             <List />
         </>

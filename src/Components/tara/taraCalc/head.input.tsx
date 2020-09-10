@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import KeyboardObject from '../../../data.structure/Keyboard';
 // import KeyboardLayoutNUMS from './KeyboardLayoutNUMS';
@@ -22,13 +22,15 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
 const input = InputObject.getInputNumberInstance();
 const activeInputService = ActiveInputService.getInstance();
 
-const useStyle = makeStyles({
+const useStyle = makeStyles((theme: Theme) => ({
     'input': {
         backgroundColor: '#fff',
         borderRadius: '15px',
-        height: '30px',
-        fontSize: '0.5em', //??
+        //height: '30px',
+        fontSize: '1.5rem', //??
         color: 'black', //??
+        verticalAlign: 'middle',
+        paddingLeft: '2rem',
     },
     'head': {
         display: 'flex',
@@ -36,12 +38,12 @@ const useStyle = makeStyles({
         marginBottom: '15px',
     },
     'inputHead': {
-        backgroundColor: 'rgb(0, 153, 255)',
+        backgroundColor: theme.palette.primary.main,
         height: '110px',
         padding: '0 10px',
         borderRadius: '10px 10px 0 0',
     },
-});
+}));
 
 const InputHead = () => {
     const { input: inputStyle, head, inputHead } = useStyle();

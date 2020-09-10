@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         //     borderTop:'2px solid #fff'
         // },
     },
+    'disabled': {
+        backgrounColor: theme.palette.primary.light,
+    },
 }));
 
 const print = Print.getInstance();
@@ -55,13 +58,13 @@ function PrintButton() {
     useEffect(() => showModal(mode), [mode]);
 
     const isActive = print.isActive();
-
+    const className = classes.btn + ' ' + (isActive ? '' : classes.disabled);
     return (
         <div
-            className={classes.btn}
+            className={className}
             onClick={onClick}>
             <PrintIcon />
-            <div>тара</div>
+            <div>друк</div>
         </div>
     );
 }

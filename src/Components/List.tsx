@@ -4,13 +4,14 @@ import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
     'list': {
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.light,
+        //opacity: '0.8',
         borderLeft: 'solid 3px ' + theme.palette.primary.main,
         borderBottom: 'solid 3px ' + theme.palette.primary.main,
         position: 'absolute',
         top: '17%',
         left: '0px',
-        width: '100%',
+        width: 'calc(100% - 3px)',
         height: '83%',
         overflowY: 'auto',
         fontSize: '0.9em',
@@ -19,12 +20,14 @@ const useStyles = makeStyles((theme: Theme) => ({
             margin: '0px',
             padding: '0px',
             //overflowY: 'auto',
+            //verticalAlign: 'baseline',
         },
         '& li': {
-            borderBottom: 'solid 1px black',
+            borderBottom: 'solid 1px gray',
             paddingLeft: '10px',
             paddingRight: '10px',
             backgroundColor: 'white',
+            lineHeight: '1.5rem',
         },
         '& span:first-child': {
             display: 'inline-block',
