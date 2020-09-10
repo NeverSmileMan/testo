@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme, makeStyles, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { makeStyles, ThemeProvider, createMuiTheme, Theme } from '@material-ui/core/styles';
 import { ActiveInputService } from './services/ActiveInputService';
 import KeyboardGrid from './keyboard/keyboard';
 import { keyBoard } from './keyboard/settings';
@@ -57,7 +57,10 @@ const useStyles = makeStyles({
 	},
 });
 
-const themes: any = {};
+type ThemesObj = {
+	[property: string] : Theme;
+}
+const themes: ThemesObj = {};
 
 themes.default = createMuiTheme({
 	palette: {
