@@ -19,6 +19,7 @@ const useStyles = makeStyles({
 		display: 'grid',
 		gridGap: '0.4em',
 		gridTemplateColumns: 'repeat(1, 1fr)',
+		gridTemplateRows: 'repeat(3, 1fr)',
 	},
 	skey_0: {
 		gridColumn: '1',
