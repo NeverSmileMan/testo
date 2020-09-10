@@ -1,6 +1,5 @@
 import React from 'react';
 import WeightBtn from './weight.btn';
-// import { makeStyles } from '@material-ui/styles';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
@@ -21,11 +20,20 @@ const ControlKeyboard = () => {
     const { controlContainer } = useStyle()
     return (
         <div className={controlContainer}>
-            {control.map((val, index) => (<WeightBtn
+            {control.map((val, index) => {
+                if (index===control.length-1) {
+                    return (<WeightBtn
+                        key={index}
+                        btnName={val}
+                        textColor='#fff'
+                        colorBtn={theme.palette.primary.main}
+                        nameClass={'backLigth'} />)
+                }
+                return (<WeightBtn
                 key={index}
                 btnName={val}
                 textColor='#fff'
-                colorBtn={theme.palette.primary.main} />))}
+                colorBtn={theme.palette.primary.main} />)})}
         </div>
     )
 }

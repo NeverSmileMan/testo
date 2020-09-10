@@ -16,19 +16,30 @@ const useStyles = makeStyles ((theme: Theme) => createStyles({
         gridColumnStart: '1',
         gridColumnEnd: '3',
     },
+    backLigth:{
+        filter: 'brightness(150%)',
+    }
 }))
 interface StyleProp {
     borderColor?: string;
     colorBtn?: string;
-    nameClass?: string;
     textColor?: string;
 }
 interface Prop extends StyleProp {
     btnName?: string | any;
+    nameClass?: string;
 }
+enum Cls {
+    btn,
+    btn0,
+    backLigth
+}
+
 const WeightBtn = ({ btnName, borderColor = 'none', textColor='#000', colorBtn = '#e4e4e4', nameClass }: Prop) => {
-    const { btn, btn0 } = useStyles({ borderColor, colorBtn, textColor});
-    const namedClass = nameClass === 'btn0' ? `${btn} ${btn0}` : `${btn}`
+    const cls:Record<string, string> = useStyles({ borderColor, colorBtn, textColor});
+    const namedClass = nameClass && cls[nameClass]
+        ? `${cls.btn} ${cls[nameClass]}` 
+        : `${cls.btn}`
     return (
         <div className={namedClass}>{btnName}</div>
     )
