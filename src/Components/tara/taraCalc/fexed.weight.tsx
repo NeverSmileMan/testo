@@ -3,8 +3,6 @@ import WeightBtn from './weight.btn';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 import KeyboardObject from '../../../data.structure/Keyboard';
-// import KeyboardLayoutNUMS from './KeyboardLayoutNUMS';
-// import KeyboardLayoutFUNC from './KeyboardLayoutFUNC';
 
 const keyboard = KeyboardObject.getInstance();
 

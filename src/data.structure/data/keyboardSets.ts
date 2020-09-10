@@ -22,3 +22,8 @@ export const keyboardSetFUNC: IKeyboardSet = {
     setName: 'FUNC',
     setKeys: ['CLEAR', 'BACKSPACE', 'ENTER'],
 };
+
+export const keyboardSetTARAFIX: IKeyboardSet = {
+    setName: 'TARA',
+    setKeys: ['4', '6', '8', '10', '12', '14', '16', '18', '20'],
+};

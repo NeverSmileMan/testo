@@ -33,7 +33,6 @@ const useStyle = makeStyles({
 
 const NumberKeyboard = () => {
     const { numberKeyboard } = useStyle()
-    console.log(numbers.reverse())
     return (
         <div className={numberKeyboard} onClick={onClick}>
             {numbers.map((val,index) => {

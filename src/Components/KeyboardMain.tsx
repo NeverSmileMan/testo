@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import KeyboardObject from '../data.structure/Keyboard';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { KeyboardLayoutOptionsEN, KeyboardLayoutOptionsUA, KeyboardLayoutOptionsNUMS, KeyboardLayoutOptionsFUNC } from './KeyboardLayoutOptions';
+import { 
+    KeyboardLayoutOptionsEN, KeyboardLayoutOptionsUA,
+    KeyboardLayoutOptionsNUMS, KeyboardLayoutOptionsFUNC
+} from './KeyboardLayoutOptions';
 import KeyboardLayout from './KeyboardLayout';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -58,23 +61,30 @@ const getDiffKeys = (setLang: React.Dispatch<(lang: string) => string>) => {
     };
 };
 
+const KeyboardLayoutUA = KeyboardLayout({ options: KeyboardLayoutOptionsUA });
+const KeyboardLayoutEN = KeyboardLayout({ options: KeyboardLayoutOptionsEN });
+const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsNUMS });
+
 function Keyboard() {
     const classes = useStyles();
     const [lang, setLang] = useState('UA');
     const [diffKeys] = useState(() => getDiffKeys(setLang));
+    const [KeyboardLayoutFUNC] = useState(() =>
+        KeyboardLayout({ options: KeyboardLayoutOptionsFUNC, diffKeys: diffKeys })
+    );
 
     const className = classes.keyboard + ' keyboard';
     return (
         <div className={className} onClick={onClick}>
             <div className='letters'>
-                {lang === 'UA' && <KeyboardLayout options={KeyboardLayoutOptionsUA} />}
-                {lang === 'EN' && <KeyboardLayout options={KeyboardLayoutOptionsEN} />}
+                {lang === 'UA' && <KeyboardLayoutUA />}
+                {lang === 'EN' && <KeyboardLayoutEN />}
             </div>
             <div className='nums'>
-                <KeyboardLayout options={KeyboardLayoutOptionsNUMS} />
+                <KeyboardLayoutNUMS />
             </div>
             <div className='func'>
-                <KeyboardLayout options={KeyboardLayoutOptionsFUNC} diffKeys={diffKeys}/>
+                <KeyboardLayoutFUNC />
             </div>
         </div>
     );

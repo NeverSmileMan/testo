@@ -1,5 +1,5 @@
 import React, {} from 'react';
-import { keyboardSetEN, keyboardSetUA, keyboardSetNUMS, keyboardSetFUNC } from '../data.structure/data/keyboardSets';
+import { keyboardSetEN, keyboardSetUA, keyboardSetNUMS, keyboardSetFUNC, keyboardSetTARAFIX } from '../data.structure/data/keyboardSets';
 import { IKeyboardOptions } from '../functions/keyboardFunc';
 
 export const KeyboardLayoutOptionsEN: IKeyboardOptions = {
@@ -29,9 +29,7 @@ export const KeyboardLayoutOptionsUA: IKeyboardOptions = {
 export const KeyboardLayoutOptionsNUMS: IKeyboardOptions = {
     keyboardSet: keyboardSetNUMS.setKeys,
     keyCountByRow: [3, 3, 3, 1],
-    k1: 0.4,
-    k2: 0.4,
-    k3: 0.8,
+    k1: 0.4, k2: 0.4, k3: 0.8,
     differentKeys: {
         '0': {
             width: 3,
@@ -59,3 +57,14 @@ export const KeyboardLayoutOptionsFUNC: IKeyboardOptions = {
         },
     },
 };
+
+export const KeyboardLayoutOptionsTARAFIX: IKeyboardOptions = {
+    keyboardSet: keyboardSetTARAFIX.setKeys,
+    keyCountByRow: [3, 3, 3],
+    k1: 0.3, k2: 0.3, k3: 0.9,
+    differentKeys: keyboardSetTARAFIX.setKeys.reduce(
+        (r, key) => Object.assign(r, ({ [key]: { content: key + ' гр' } })), {}
+    ),
+};
+
+console.log(KeyboardLayoutOptionsTARAFIX);

@@ -1,15 +1,12 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/styles';
-import FixedWeight from './taraCalc/fexed.weight';
 import InputWeight from './taraCalc/input.weight';
+import KeyboardTaraFix from '../KeyboardTaraFix';
 
 const useStyles = makeStyles({
     'conteiner': {
         display: 'flex',
-        //justifyContent: 'center',
-        //transform: 'translateY(50%)',
-        color: '#fff',
-        fontSize: '40px',
+        width: '50%',
     },
 });
 
@@ -18,7 +15,7 @@ const ModalTara = () => {
     return (
         <div className={classes.conteiner}>
             <InputWeight/>
-            <FixedWeight/>
+            <KeyboardTaraFix />
         </div>
     );
 };

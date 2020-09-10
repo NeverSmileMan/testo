@@ -5,10 +5,12 @@ import KeyboardInput from './keyboard.input';
 
 const useStyle = makeStyles({
     'inputConteiner': {
-        width: '310px',
+        width: '44%',
         marginRight: '12px',
         backgroundColor: '#f5f5f5',
         borderRadius: '10px',
+                color: '#fff',
+                fontSize: '40px',
     },
 });
 

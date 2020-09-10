@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         // },
     },
     'disabled': {
-        backgrounColor: theme.palette.primary.light,
+        backgroundColor: theme.palette.primary.light,
     },
 }));
 
@@ -59,6 +59,7 @@ function PrintButton() {
 
     const isActive = print.isActive();
     const className = classes.btn + ' ' + (isActive ? '' : classes.disabled);
+
     return (
         <div
             className={className}
