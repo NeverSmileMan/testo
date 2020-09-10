@@ -25,7 +25,7 @@ const Tabs: FC = () => {
 	const setActive = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
 		const activeEl = +(e.target as Element).id
 		setActiveTab(activeEl)
-	}, [tabs, activeTab])
+	}, [])
 
 	const addTab = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
 		const num = chooseFreeNumber.findIndex(item => !item) + 1
@@ -35,7 +35,7 @@ const Tabs: FC = () => {
 		})
 		setTabs((prevState) => [...prevState, {tabNumber: num}])
 		setActiveTab(tabs.length)
-	}, [tabs, chooseFreeNumber])
+	}, [tabs])
 
 	const deleteTab = useCallback(() => {
 		if (tabs.length === 1) {
