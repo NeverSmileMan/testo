@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 	scale: {
 		width: '100%',
 		height: '15.8854%',
-		backgroundColor: 'gray',
+		backgroundColor: 'grey',
 		display: 'flex',
 	},
 	mainWrap: {
