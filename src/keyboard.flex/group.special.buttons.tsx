@@ -13,13 +13,9 @@ const useStyles = makeStyles({
 		height: '100%',
 		display: 'flex',
 		flexDirection: 'column',
-		// justifyContent: 'space-between',
-		// alignContent: 'space-between',
-		// alignItems: 'stretch',
 		boxSizing: 'border-box',
 	},
 	keyboardSpecialGrid: {
-		
 		display: 'grid',
 		gridGap: '0.4em',
 		gridTemplateColumns: 'repeat(1, 1fr)',
@@ -39,8 +35,10 @@ const useStyles = makeStyles({
 	btnSpecial: {
 		display: 'flex',
 		margin: '0px',
-
-	}
+	},
+	clearBtn: {
+		fontSize: '0.8em',
+	},
 });
 
 export default function GroupSpecialButtons({ options, service }: Props): ReactElement {
@@ -56,11 +54,15 @@ export default function GroupSpecialButtons({ options, service }: Props): ReactE
 		<div className={`${classes.keyboardSpecial} ${classes.keyboardSpecialGrid}`}>
 			{options.keys.map((item: SpecialKey, id) =>
 				item.name === 'layout' ? (
-					<Button key={id} callback={changeLayout} className={classes.btnSpecial} >
+					<Button key={id} callback={changeLayout} className={classes.btnSpecial}>
 						<>{item.value ? (item.value as SpecialValue)[layout.name] : null}</>
 					</Button>
 				) : (
-					<Button key={id} callback={service[item.action as keyof Servise]} className={`${classes.btnSpecial} skey_${id}`} >
+					<Button
+						key={id}
+						callback={service[item.action as keyof Servise]}
+						className={`${classes.btnSpecial} skey_${id} ${item.value === 'CLEAR' ? classes.clearBtn : ''}`}
+					>
 						<>{item.value}</>
 					</Button>
 				),
@@ -68,4 +70,3 @@ export default function GroupSpecialButtons({ options, service }: Props): ReactE
 		</div>
 	);
 }
-
