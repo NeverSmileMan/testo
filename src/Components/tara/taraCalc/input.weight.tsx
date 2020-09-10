@@ -1,7 +1,8 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/styles';
 import InputHead from './head.input';
-import KeyboardInput from './keyboard.input';
+//import KeyboardInput from './keyboard.input';
+import KeyboardTara from '../../KeyboardTara';
 
 const useStyle = makeStyles({
     'inputConteiner': {
@@ -20,7 +21,7 @@ const InputWeight = () => {
     return (
         <div className={inputConteiner}>
             <InputHead />
-            <KeyboardInput />
+            <KeyboardTara />
         </div>
     );
 };

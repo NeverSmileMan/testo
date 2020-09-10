@@ -1,6 +1,8 @@
 import React from 'react';
 import KeyboardObject from '../data.structure/Keyboard';
 import KeyboardLayout from './KeyboardLayout';
+import { makeStyles, Theme } from '@material-ui/core/styles';
+import { KeyboardLayoutOptionsTaraNUMS, KeyboardLayoutOptionsTaraFUNC} from './KeyboardLayoutOptions';
 
 const keyboard = KeyboardObject.getInstance();
 
@@ -11,33 +13,39 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     key && keyboard.onClick(key);
 };
 
-// const getLangHandler = (setLang: React.Dispatch<(lang: string) => string>) =>
-//     (event: React.MouseEvent<HTMLDivElement>) => {
-//         const target = event.target as HTMLDivElement;
-//         const nextLang = target.dataset['nextLang'];
-//         setLang((lang) => nextLang || lang);
-// };
+const useStyles = makeStyles((theme: Theme) => ({
+    'keyboard': {
+        //width: '56%',
+        backgroundColor: '#f5f5f5',
+        borderRadius: '0 0 10px 10px',
+        //padding: '15px',
+        display: 'flex',
+        padding: '0.5rem',
+        '& .nums': {
+            width: '80%',
+            //marginRight: '0.rem',
+        },
+        '& .func': {
+            flex: '1 0 0',
+        },
+    },
+}));
 
-function Keyboard() {
-    // const [lang, setLang] = useState('UA');
-    // const [changeLang] = useState(() => getLangHandler(setLang));
+const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsTaraNUMS, keyStyleName: 'taraNums' });
+const KeyboardLayoutFUNC = KeyboardLayout({ options: KeyboardLayoutOptionsTaraFUNC, keyStyleName: 'taraFunc' });
+function KeyboardTara() {
+    const classes = useStyles();
 
-    // const nextLang = lang === 'UA' ? 'EN' : 'UA';
- 
     return (
-        <div className='keyboard' onClick={onClick}>
-            <div className='title'>KEYBOARD</div>
-            {/* {lang === 'UA' && <KeyboardLayoutUA />}
-            {lang === 'EN' && <KeyboardLayoutEN />} */}
-            {/* <KeyboardLayoutNUMS />
-            <KeyboardLayoutFUNC /> */}
-            {/* <div className='key'
-                onClick={changeLang}
-                data-next-lang={nextLang}>
-                {nextLang}
-            </div> */}
+        <div className={classes.keyboard + ' keyboardTara'} onClick={onClick}>
+            <div className='nums'>
+                <KeyboardLayoutNUMS />
+            </div>
+            <div className='func'>
+                <KeyboardLayoutFUNC />
+            </div>
         </div>
     );
 }
 
-export default Keyboard;
+export default KeyboardTara;

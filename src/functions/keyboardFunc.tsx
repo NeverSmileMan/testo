@@ -5,8 +5,8 @@ export interface IKeyboardOptions {
     keyCountByRow: number[]; // keyCountByRow = [9, 10, 8].length = keyboardSet.length
     differentKeys: IDifferentKeys;
     k1: number; // розрахункова відстань між кнопками (відносно ширини кнопки)
-    k2: number; // фактична відстань між кнопками (відносно ширини кнопки)
-    k3: number; // висота кнопки відносно висоти ряду
+    k2: number; // фактична відстань між кнопками (відносно k1)
+    k3: number; // висота кнопки (відносно висоти ряду)
 }
 
 export interface ISizeOfElements {
@@ -32,7 +32,7 @@ export function getSizeOfElements(options: IKeyboardOptions) {
     const rowCount = keyCountByRow.length;
     const keyWidth = Math.round(100 * rowCount / keyCount / ( 1 + k1));
     const keyHeight = 100 / rowCount * k3;
-    const keySpace = Math.round(keyWidth * k2);
+    const keySpace = Math.round(keyWidth * k1 * k2);
 
     return {
         keyWidth,

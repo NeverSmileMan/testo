@@ -6,10 +6,10 @@ import KeyboardLayout from './KeyboardLayout';
 
 const useStyles = makeStyles((theme: Theme) => ({
     'keyboard': {
-        width: '56%',
+        //width: '56%',
         backgroundColor: '#f5f5f5',
         borderRadius: '10px',
-        padding: '15px',
+        padding: '1rem 0.5rem',
     },
 }));
 
@@ -32,7 +32,7 @@ function Keyboard() {
     const classes = useStyles();
 
     return (
-        <div className={classes.keyboard} onClick={onClick}>
+        <div className={classes.keyboard + ' keyboardTaraFix'} onClick={onClick}>
             <KeyboardLayoutTARAFIX />
         </div>
     );

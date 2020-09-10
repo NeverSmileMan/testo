@@ -147,6 +147,11 @@ export class InputList extends Input implements IInputList {
 
 export class InputNumber extends Input implements IInputNumber {
 
+    // constructor() {
+    //     super();
+    //     this._value = '0';
+    // }
+
     protected _onChange() {
         if (!this._value || String(this.getValue()) === this._value) {
             super._onChange();

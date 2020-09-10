@@ -1,77 +1,97 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-
 import KeyboardObject from '../../../data.structure/Keyboard';
-// import KeyboardLayoutNUMS from './KeyboardLayoutNUMS';
-// import KeyboardLayoutFUNC from './KeyboardLayoutFUNC';
 import InputObject from '../../../data.structure/Input';
-//import KeyboardTara from './KeyboardTara';
 import ActiveInputService from '../../../data.structure/ActiveInputService';
 
 const keyboard = KeyboardObject.getInstance();
 
-const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    // const target = event.target as HTMLElement;
-    // const keyElem: HTMLElement | null = target.closest('[data-key]');
-    // const key = keyElem?.dataset['key'];
-    // key && keyboard.onClick(key);
-    keyboard.onClick('CLEAR');
-    keyboard.onClick('ENTER');
-};
+// const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+//     keyboard.onClick('CLEAR');
+//     keyboard.onClick('ENTER');
+// };
 
 const input = InputObject.getInputNumberInstance();
 const activeInputService = ActiveInputService.getInstance();
+const ifFocus = () => activeInputService.ifActiveInput(input);
+const getValue = () => (input.getValue() / 1000).toFixed(3);
+
+function changeState(setState: React.Dispatch<(state: boolean) => boolean>) {
+    input.onFocusChange(() => setState(ifFocus));
+    return () => activeInputService.delActiveInput(input);
+}
+
+function changeRef(ref: React.RefObject<HTMLDivElement>) {
+    if (ref.current) ref.current.innerHTML = getValue();
+    input.onChange(() => {
+        if (ref.current) 
+            ref.current.innerHTML = getValue();
+    });
+}
 
 const useStyle = makeStyles((theme: Theme) => ({
     'input': {
-        backgroundColor: '#fff',
-        borderRadius: '15px',
-        //height: '30px',
-        fontSize: '1.5rem', //??
-        color: 'black', //??
+        paddingLeft: '1.5rem',
+        paddingRight: '1.5rem',
+        fontWeight: 'bold',
         verticalAlign: 'middle',
-        paddingLeft: '2rem',
+        backgroundColor: 'white',
+        borderRadius: '100px',
+        fontSize: '1.2rem',
+        flex: '1 0 0',
+    },
+    'focus': {
+        '&:after': {
+            content: "''",
+            paddingLeft: '2px',
+            animation: '$cursor 1s infinite',
+            background: 'black',
+            opacity: 0,
+        },
+    },
+    '@keyframes cursor': {
+        '0%': {opacity: 0},
+        '40%': {opacity: 1},
+        '100%': {opacity: 0},
     },
     'head': {
         display: 'flex',
-        justifyContent: 'space-between;',
-        marginBottom: '15px',
+        justifyContent: 'space-between',
+        marginBottom: '0.5rem',
+        marginLeft: '0.5rem',
     },
     'inputHead': {
         backgroundColor: theme.palette.primary.main,
-        height: '110px',
-        padding: '0 10px',
+        padding: '1rem 1.5rem 0.3rem',
         borderRadius: '10px 10px 0 0',
+        display: 'flex',
+        justifyContentL: 'center',
+        alignItems: 'center',
     },
 }));
 
 const InputHead = () => {
-    const { input: inputStyle, head, inputHead } = useStyle();
-    const [, setState] = useState({});
+    const { input: inputStyle, head, inputHead, focus } = useStyle();
+    const [isFocus, setState] = useState(ifFocus);
+    const ref: React.RefObject<HTMLDivElement> = useRef(null);
 
-    useState(() => {
-        input.onChange(() =>
-            setState({}))
-    });
-
-    const isFocus = activeInputService.ifActiveInput(input);
-
-    useEffect(() => () => activeInputService.delActiveInput(input), []);
+    useEffect(() => {
+        changeRef(ref);
+        return changeState(setState);
+    }, []);
+    
     return (
-        <div className={inputHead}>
-            <div className={head}>
+        <div className={inputHead + ' display'}>
+            {/* <div className={head}>
                 <div>Тара</div>
                 <div onClick={onClick}>&#10005;</div>
-            </div>
-            <div className={inputStyle}>
-                <div>{input.getValue()}</div>
+            </div> */}
+            <div
+                ref={ref}
+                className={inputStyle + ' ' + (isFocus ? focus : '')}>
             </div>
         </div>
     );
 };
 
 export default InputHead;
-
-{/* <div className={`input ${isFocus ? 'focus' : ''}`}>
-    {input.getValue()}
-</div> */}
