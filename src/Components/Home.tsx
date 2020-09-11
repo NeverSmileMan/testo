@@ -9,6 +9,7 @@ const useStyle = makeStyles({
         alignItems: 'center',
         justifyContent: 'center',
         height: '100%',
+        color: 'grey', //'#e4e4e4',
     },
 });
 
@@ -18,7 +19,7 @@ function Home() {
 
     return (
         <div className={classes.home}>
-			<HomeIcon fontSize="small" />
+			<HomeIcon fontSize="large" />
         </div>
     );
 }

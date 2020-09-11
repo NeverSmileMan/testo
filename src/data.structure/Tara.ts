@@ -41,7 +41,7 @@ export class Tara implements ITara {
     }
 
     private _onWeightsStateChange() {
-        if (this._state !== State.ENABLED) return;
+        if (this._state === State.PENDING) return;
         if (this._weights.isStable()) {
             this._state = State.ENABLED;
         } else {
@@ -60,7 +60,7 @@ export class Tara implements ITara {
             this._tara = 0;
             //return;
         }
-        this._tara = value;
+        this._tara = value / 1000;
         this._input.clearValue();
         this.doTara();
     }

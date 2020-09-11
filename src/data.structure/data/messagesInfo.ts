@@ -7,6 +7,7 @@ export enum MessageType {
 export enum MessageCode {
     WEIGHTS_IS_EMPTY,
     WEIGHTS_NOT_STABLE,
+    WEIGHTS_IS_SMALL,
 }
 
 export interface IMessageInfo {
@@ -15,7 +16,8 @@ export interface IMessageInfo {
 }
 
 const messagesInfo: { [key in MessageCode]: IMessageInfo } = {
-    [MessageCode.WEIGHTS_IS_EMPTY]: { type: MessageType.WARNING, text: 'Поставте товар на ваги!' },
+    [MessageCode.WEIGHTS_IS_SMALL]: { type: MessageType.WARNING, text: 'Вага має перевищувати 40гр!' },
+    [MessageCode.WEIGHTS_IS_EMPTY]: { type: MessageType.ERROR, text: 'Поставте товар на ваги!' },
     [MessageCode.WEIGHTS_NOT_STABLE]: { type: MessageType.WARNING, text: 'Вага не стабільна!' },
 };
 

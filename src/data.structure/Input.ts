@@ -13,10 +13,6 @@ export interface IInput {
     onFocusChange: (callback: () => void) => void;
 }
 
-// export interface IInputOptions {
-//     tabIndex?: number;
-// }
-
 export interface IInputNumber extends IInput {
     getValue: () => number;
     onSelect: (callback: (value: number) => void) => void;
@@ -30,7 +26,6 @@ export interface IInputList extends IInput {
 
 export class Input implements IInput {
     private _keyboard: IActiveInputService;
-    //private _focus: boolean = false;
     protected _value: string = '';
     private _callbackOnFocusChange?: () => void;
     protected _callbackOnChange?: (value: string) => void;
@@ -146,11 +141,6 @@ export class InputList extends Input implements IInputList {
 }
 
 export class InputNumber extends Input implements IInputNumber {
-
-    // constructor() {
-    //     super();
-    //     this._value = '0';
-    // }
 
     protected _onChange() {
         if (!this._value || String(this.getValue()) === this._value) {

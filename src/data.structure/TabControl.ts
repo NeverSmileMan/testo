@@ -54,6 +54,7 @@ class TabControl implements ITabControl {
         this._order = order;
         this._weights.setTara(this._order.tara);
         this.selectItem(null);
+        this._onWeightsChange();
     }
 
     selectItem(index: number | null) {
@@ -78,7 +79,7 @@ class TabControl implements ITabControl {
             return;
         }
 
-        if (this._weights.getWeight() <= 0) {
+        if (this._weights.getWeight() <= 0.040) {
             this._throwMessage(MessageCode.WEIGHTS_IS_EMPTY);
             return;
         }
@@ -96,7 +97,11 @@ class TabControl implements ITabControl {
 
     private _throwMessage(code: MessageCode | null) {
         this._message.sendMessage(code);
-        this._onChange();
+        if (code === MessageCode.WEIGHTS_IS_EMPTY) {
+            setTimeout(() => this._onWeightsChange(), 1000)
+        }
+        
+        //this._onChange();
     }
 
     delItem() {
@@ -154,7 +159,18 @@ class TabControl implements ITabControl {
             }
             return;
         }
-        
+
+        if (!this._weights.isStable()) {
+            this._throwMessage(MessageCode.WEIGHTS_NOT_STABLE);
+            return;
+        }
+
+        if (this._weights.getWeight() <= 0.040) {
+            console.log(this._weights.getWeight());
+            this._throwMessage(MessageCode.WEIGHTS_IS_SMALL);
+            return;
+        }
+
         this._throwMessage(null);
     }
 

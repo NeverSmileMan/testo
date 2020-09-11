@@ -20,6 +20,7 @@ export interface IWeights {
     __setWeight: (value: number) => void;
     __getPrice: () => number;
     __getTitle: () => string;
+    __setStable: (isStable: boolean) => void;
 }
 
 type WeightsEvents = 'stateChange';
@@ -90,6 +91,11 @@ export class Weights implements IWeights{
 
     __setWeight(value: number) {
         this._weight = value;
+        this._onStateChange();
+    }
+
+    __setStable(isStable: boolean) {
+        this._isStable = !this._isStable;
         this._onStateChange();
     }
 

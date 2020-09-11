@@ -81,22 +81,22 @@ export default function Tablo() {
             </div>
             <div className='tara'>tara
                 <div className='val'>
-                    {weights.getTara()}
+                    {weights.getTara().toFixed(3)}
                 </div>
             </div>
             <div className='weight'>weight
                 <div className='val'>
-                    {weights.getWeight()}
+                    {weights.getWeight().toFixed(3)}
                 </div>
             </div>
             <div className='price'>price
                 <div className='val'>
-                    {weights.__getPrice()}
+                    {weights.__getPrice().toFixed(2)}
                 </div>
             </div>
             <div className='total'>total
                 <div className='val'>
-                    {weights.getSum()}
+                    {weights.getSum().toFixed(2)}
                 </div>
             </div>
         </div>
