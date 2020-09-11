@@ -6,6 +6,7 @@ import { makeStyles, createStyles, withStyles, Theme, StyledComponentProps } fro
 import CloseIcon from '@material-ui/icons/CheckCircle';
 import CloseModal from './CloseModal';
 
+
 const styles = createStyles((theme: Theme) => ({
     'btn': {
         //height: '33.33%',
@@ -48,7 +49,7 @@ function showModal(mode: Mode) {
     else modalService.showModal(null);
 }
 
-function CloseButton(props: StyledComponentProps) {
+function CloseButton(props: { classes: { [key: string]: string } }) {
     //const classes = useStyles();
     const [{ mode }, setState] = useState({ mode: Mode.BUTTON });
 
@@ -57,7 +58,7 @@ function CloseButton(props: StyledComponentProps) {
     useEffect(() => showModal(mode), [mode]);
 
     const isActive = close.isActive();
-    const className = props.classes?.btn + ' ' + (isActive ? '' : props.classes?.disabled);
+    const className = props.classes.btn + ' ' + (isActive ? '' : props.classes.disabled);
     return (
         <div
             className={className}

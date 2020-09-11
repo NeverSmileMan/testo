@@ -55,7 +55,7 @@ const onClickFalse = () => {
     close.doClose(false);
 };
 
-function CloseModal({ title = titleModal, confirm = modalConfirm, reject = modalReject }: CloseProp) {
+function CloseModal({ title = titleModal, confirm = modalConfirm, reject = modalReject }: CloseProp): React.ReactElement {
     const clss = useStyles();
     return (
         // <div

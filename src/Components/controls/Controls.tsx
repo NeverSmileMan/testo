@@ -1,7 +1,7 @@
 import React from 'react';
-import TaraButton from '../keyboard/TaraButton';
+import TaraButton from './TaraButton';
 import PrintButton from './PrintButton';
-import CloseButton from './CloseButton';
+import CloseButton from './NewCloseButton';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
