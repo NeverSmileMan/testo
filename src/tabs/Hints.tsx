@@ -25,7 +25,7 @@ const styles = makeStyles({
 	},
 	hints_error: {
 		color: 'white',
-		background: 'tomato',
+		background: 'red',
 		animation: '$error 300ms ',
 	},
 	'@keyframes error': {
