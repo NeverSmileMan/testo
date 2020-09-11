@@ -1,4 +1,12 @@
-const items = [
+
+export interface IItem {
+    plu: number,
+    name: string,
+    price: number,
+    type: 'weight' | 'piece',
+}
+
+const items: IItem[] = [
     {plu: 1000, name: "Товар 100", price: 100, type: 'weight'},
     {plu: 1001, name: "Товар 101", price: 101, type: 'weight'},
     {plu: 1002, name: "Товар 102", price: 102, type: 'weight'},

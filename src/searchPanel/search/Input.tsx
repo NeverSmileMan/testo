@@ -47,7 +47,7 @@ function InputList() {
             <div className={classes.input} onClick={onClick}>
                 {state}
             </div>
-            {state ? <List /> : null}
+            <List input={state} />
         </>
     );
 }
