@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import List from './List';
+import { ActiveInputService } from '../../services/ActiveInputService';
 
 const useStyles = makeStyles({
     input: {
@@ -31,11 +32,20 @@ const useStyles = makeStyles({
 
 function InputList() {
     const classes = useStyles();
-    const [state, setState] = useState(true);
+    //const [state, setState] = useState(true);
+    const [state, setState] = useState('');
+
+    const onClick = useCallback(() => ActiveInputService.setActive(setState), []);
+
+    useEffect(() => {
+        ActiveInputService.setActive(setState);
+        return () => ActiveInputService.unsetActive(setState);
+    }, []);
+
     return (
         <>
-            <div className={classes.input} onClick={() => setState(state => !state)}>
-                {/*{'input'}*/}
+            <div className={classes.input} onClick={onClick}>
+                {state}
             </div>
             {state ? <List /> : null}
         </>
