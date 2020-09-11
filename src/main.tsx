@@ -7,12 +7,12 @@ import GroupBtn from './functional-buttons/groupBtn';
 import AddedItemsTable from './added.items.table/added.items.table';
 import Search from './searchPanel/search/Search';
 import OrderInfo from './searchPanel/orderInfo/OrderInfo';
-//---------plugs---------------
-import { values } from './plugs/added.items'
-//-----------------------------
 import ModalWindow from './functional-buttons/modal.wind/modal.wind';
 import {MAX_NUMBER_OF_TABS} from './tabs/Tabs';
 import {ITab} from './tabs/Tab';
+//---------plugs---------------
+import { values } from './plugs/added.items'
+//-----------------------------
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   header: {
