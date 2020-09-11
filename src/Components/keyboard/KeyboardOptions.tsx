@@ -1,6 +1,9 @@
 import React, {} from 'react';
-import { keyboardSetEN, keyboardSetUA, keyboardSetNUMS, keyboardSetFUNC, keyboardSetTARAFIX } from '../data.structure/data/keyboardSets';
-import { IKeyboardOptions } from '../functions/keyboardFunc';
+import {
+    keyboardSetEN, keyboardSetUA,
+    keyboardSetNUMS, keyboardSetFUNC,
+    keyboardSetTARAFIX } from '../../data.structure/data/keyboardSets';
+import { IKeyboardOptions } from '../../functions/keyboardFunc';
 
 export const KeyboardLayoutOptionsEN: IKeyboardOptions = {
     keyboardSet: keyboardSetEN.setKeys,

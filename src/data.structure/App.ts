@@ -1,11 +1,11 @@
 import { IConfig, config, IEnv } from './data/config';
 import { IOrdersControl, OrdersControl } from './OrdersControl';
-import { AppStateTypes } from './types';
+import { AppStateTypes } from './types/types';
 
 export interface IAppState {
     onStateChange: (callback: () => void) => void;
-    setEnv: (rect: DOMRect) => void;
-    getEnv: () => IEnv;
+    setEnvironment: (rect: DOMRect) => void;
+    getEnvironment: () => IEnv;
     getStateType: () => AppStateTypes;
     getOrdersControlInstance: () => IOrdersControl;
     getConfigPar: (par: keyof IConfig) => IConfig[keyof IConfig];
@@ -27,7 +27,7 @@ class AppState implements IAppState {
         this._callbackOnStateChange = callback;
     }
 
-    setEnv(rect: DOMRect) {
+    setEnvironment(rect: DOMRect) {
         this._env = {
             displayWidth: rect.height,
             displayHeight: rect.width,
@@ -36,7 +36,7 @@ class AppState implements IAppState {
         this._onStateChange();
     }
 
-    getEnv() {
+    getEnvironment() {
         return this._env;
     }
 

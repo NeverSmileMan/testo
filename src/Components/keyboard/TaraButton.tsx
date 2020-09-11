@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import Close from '../data.structure/Close';
-import { Mode, State } from '../data.structure/types';
-import ModalService from '../data.structure/ModalService';
-import CloseModal from './CloseModal';
+import Tara from '../../data.structure/Tara';
+import { Mode, State } from '../../data.structure/types/types';
+import ModalService from '../../data.structure/ModalService';
+//import TaraModal from './TaraModal';
 import { makeStyles } from '@material-ui/styles';
-import CloseIcon from '@material-ui/icons/CheckCircle';
+import TaraIcon from '@material-ui/icons/Speed';
+import TaraModal from '../tara/TaraModal';
 import { Theme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -19,37 +20,37 @@ const useStyles = makeStyles((theme: Theme) => ({
         flexDirection: 'column',
         backgroundColor: theme.palette.primary.main,
         // '&:first-child': {
-        //     borderBottom: '2px solid #fff',
+            marginBottom: '2px', // solid #fff',
         // },
         // '&:last-child ': {
-            marginTop: '2px', // solid #fff'
+        //     borderTop:'2px solid #fff'
         // },
     },
     'disabled': {
-        backgroundColor: theme.palette.primary.light,
+        backgrounColor: theme.palette.primary.light,
     },
 }));
 
-const close = Close.getInstance();
+const tara = Tara.getInstance();
 const modalService = ModalService.getInstance();
 
 const onClick = () => {
-    close.doClose();
+    tara.doTara();
 }
 
 function changeState(setState: React.Dispatch<() => { mode: Mode}>) {
-    close.on('stateChange', () =>
-        setState(() => ({ mode: close.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON }))
+    tara.on('stateChange', () =>
+        setState(() => ({ mode: tara.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON }))
     );
 }
 
 function showModal(mode: Mode) {
     if (mode === Mode.MODAL)
-        modalService.showModal(<CloseModal />);
+        modalService.showModal(<TaraModal />);
     else modalService.showModal(null);
 }
 
-function CloseButton() {
+function TaraButton() {
     const classes = useStyles();
     const [{ mode }, setState] = useState({ mode: Mode.BUTTON });
 
@@ -57,16 +58,24 @@ function CloseButton() {
 
     useEffect(() => showModal(mode), [mode]);
 
-    const isActive = close.isActive();
+    const isActive = tara.isActive(); 
     const className = classes.btn + ' ' + (isActive ? '' : classes.disabled);
     return (
         <div
             className={className}
             onClick={onClick}>
-            <CloseIcon />
-            <div>закрити</div>
+            <TaraIcon />
+            <div>тара</div>
         </div>
     );
 }
 
-export default CloseButton;
+export default TaraButton;
+
+// return (
+//     <div
+//         className={`tara btn ${isActive ? '' : 'disabled'}`}
+//         onClick={onClick}>
+//         <div className='title'>TARA</div>
+//     </div>
+// );

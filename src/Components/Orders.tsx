@@ -1,9 +1,9 @@
 import React from 'react';
-import TabsNav from './TabsNav';
-import Message from './Message';
-import Home from './Home';
-import OrderControl from './OrderControl';
-import Controls from './Controls';
+import TabsNav from './tabs.panel/TabsNav';
+import Message from './tabs.panel/Message';
+import HomeButton from './tabs.panel/HomeButton';
+import OrderControl from './orders/OrderControl';
+import Controls from './controls/Controls';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyle = makeStyles({
@@ -28,7 +28,7 @@ function Orders() {
             <div className='tabs-panel'>
                 <TabsNav />
                 <Message />
-                <Home />
+                <HomeButton />
             </div>
             <div className='order-panel'>
                 <OrderControl />

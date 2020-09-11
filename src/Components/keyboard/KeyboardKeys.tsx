@@ -1,6 +1,6 @@
 import React from 'react';
-import { IDifferentKeys, IKeyAttr } from './KeyboardLayoutStyles';
-import { ISizeOfElements, toUnits } from '../functions/keyboardFunc';
+import { IDifferentKeys, IKeyAttr } from './KeyboardStyles';
+import { ISizeOfElements, toUnits } from '../../functions/keyboardFunc';
 
 interface Props {
     keyboardSet: string[];

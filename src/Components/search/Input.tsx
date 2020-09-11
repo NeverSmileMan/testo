@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import InputObject from '../data.structure/Input';
+import InputObject from '../../data.structure/Input';
 import List from './List';
-import ActiveInputService from '../data.structure/ActiveInputService';
+import ActiveInputService from '../../data.structure/ActiveInputService';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({

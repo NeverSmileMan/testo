@@ -1,5 +1,5 @@
 import React from 'react';
-import PrintObject from '../data.structure/Print';
+import PrintObject from '../../data.structure/Print';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({

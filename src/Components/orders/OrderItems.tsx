@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TabControl from '../data.structure/OrderControl';
+import TabControl from '../../data.structure/OrderControl';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 // const useStyle = makeStyles({

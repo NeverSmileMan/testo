@@ -1,4 +1,4 @@
-import { State } from './types';
+import { State } from './types/types';
 import EventEmitter from 'events';
 
 export interface IClose {

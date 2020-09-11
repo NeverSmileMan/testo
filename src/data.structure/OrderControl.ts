@@ -7,7 +7,7 @@ import { MessageCode } from './data/messagesInfo';
 import ActiveInputService, { IActiveInputService } from './ActiveInputService';
 
 import EventEmitter from 'events';
-import { State, Mode } from './types';
+import { State, Mode } from './types/types';
 
 export interface IOrderControl {
     order?: IOrder;

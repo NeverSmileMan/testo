@@ -1,7 +1,7 @@
 import React from 'react';
-import Weights from './Weights';
+import Weights from './weights/Weights';
 import Orders from './Orders';
-import Keyboard from './KeyboardMain';
+import Keyboard from './keyboard/KeyboardMain';
 import Modal from './Modal';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 

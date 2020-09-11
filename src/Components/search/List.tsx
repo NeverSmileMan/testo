@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import InputObject from '../data.structure/Input';
+import InputObject from '../../data.structure/Input';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({

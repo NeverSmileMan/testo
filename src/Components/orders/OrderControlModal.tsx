@@ -14,7 +14,7 @@ interface Prop {
 }
 const titlePrint: string = 'Зніміть товар з вагів';
 
-function TabControlModal({ title = titlePrint }: Prop) {
+function OrderControlModal({ title = titlePrint }: Prop) {
     const cls = useStyles();
     return (
         // <div
@@ -25,4 +25,4 @@ function TabControlModal({ title = titlePrint }: Prop) {
     );
 }
 
-export default TabControlModal;
+export default OrderControlModal;

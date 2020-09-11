@@ -1,8 +1,8 @@
 import React from 'react';
-import KeyboardObject from '../data.structure/Keyboard';
+import KeyboardObject from '../../data.structure/Keyboard';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { KeyboardLayoutOptionsTARAFIX } from './KeyboardLayoutOptions';
-import KeyboardLayout from './KeyboardLayout';
+import { KeyboardLayoutOptionsTARAFIX } from '../keyboard/KeyboardOptions';
+import KeyboardLayout from '../keyboard/KeyboardLayout';
 
 const useStyles = makeStyles((theme: Theme) => ({
     'keyboard': {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Print from '../data.structure/Print';
-import { Mode, State } from '../data.structure/types';
-import ModalService from '../data.structure/ModalService';
+import Print from '../../data.structure/Print';
+import { Mode, State } from '../../data.structure/types/types';
+import ModalService from '../../data.structure/ModalService';
 import PrintModal from './PrintModal';
 import { makeStyles } from '@material-ui/styles';
 import PrintIcon from '@material-ui/icons/Print';

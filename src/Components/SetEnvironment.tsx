@@ -10,7 +10,7 @@ function SetEnv(): React.ReactElement {
         () => {
             const elem: HTMLDivElement = ref.current!;
             const rect: DOMRect = elem.getBoundingClientRect();
-            app.setEnv(rect);
+            app.setEnvironment(rect);
     }, []);
 
     return (

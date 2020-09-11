@@ -1,5 +1,5 @@
 import React from 'react';
-import CloseObject from '../data.structure/Close';
+import CloseObject from '../../data.structure/Close';
 
 import { makeStyles } from '@material-ui/styles';
 

@@ -1,5 +1,5 @@
 import Weights, { IWeights } from './Weights';
-import { State } from './types';
+import { State } from './types/types';
 import Input, { IInputNumber } from './Input';
 import EventEmitter from 'events';
 import ActiveInputService, { IActiveInputService } from './ActiveInputService';

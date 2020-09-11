@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import OrderInfo from './OrderInfo';
-import Search from './Search';
+import Search from './../search/Search';
 import OrderItems from './OrderItems';
-import TabControl from '../data.structure/OrderControl';
-import { Mode } from '../data.structure/types';
-import ModalService from '../data.structure/ModalService';
-import TabControlModal from './TabControlModal';
+import TabControl from '../../data.structure/OrderControl';
+import { Mode } from '../../data.structure/types/types';
+import ModalService from '../../data.structure/ModalService';
+import OrderControlModal from './OrderControlModal';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
@@ -34,7 +34,7 @@ function changeState(setState: React.Dispatch<() => Mode | null>) {
 
 function showModal(mode: Mode | null) {
     if (mode === Mode.MODAL)
-        modalService.showModal(<TabControlModal />);
+        modalService.showModal(<OrderControlModal />);
     else modalService.showModal(null);
 }
 

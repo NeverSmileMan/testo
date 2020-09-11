@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import WeightsObject from '../data.structure/Weights';
+//import WeightsObject from '../../data.structure/Weights';
 import { makeStyles } from '@material-ui/core/styles';
-import Tablo from './weights/WeightsDisplay';
+import WeightsDisplay from './WeightsDisplay';
 
 const useStyle = makeStyles({
     'weights': {
@@ -9,17 +9,17 @@ const useStyle = makeStyles({
     }
 });
 
-const weights = WeightsObject.getInstance();
+//const weights = WeightsObject.getInstance();
 
 function Weights() {
     const classes = useStyle();
 
-    const [, setState] = useState({});
+    // const [, setState] = useState({});
 
-    useState(() => {
-        weights.on('stateChange', () =>
-            setState({}))
-    });
+    // useState(() => {
+    //     weights.on('stateChange', () =>
+    //         setState({}))
+    // });
 
     const className = classes.weights + ' weights';
 
@@ -29,7 +29,7 @@ function Weights() {
             <div><span>Weight: </span>{weights.getWeight()}</div> 
             <div><span>Tara: </span>{weights.getTara()}</div>
             <div><span>Sum: </span>{weights.getSum()}</div> */}
-            <Tablo />
+            <WeightsDisplay />
         </div>
     );
 }

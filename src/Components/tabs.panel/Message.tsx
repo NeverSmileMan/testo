@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import MessageObject from '../data.structure/Message';
-import { IMessageInfo, MessageType } from '../data.structure/data/messagesInfo';
+import MessageObject from '../../data.structure/Message';
+import { IMessageInfo, MessageType } from '../../data.structure/data/messagesInfo';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyle = makeStyles((theme: Theme) => ({

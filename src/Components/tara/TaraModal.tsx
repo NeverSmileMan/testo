@@ -1,8 +1,8 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/styles';
-import KeyboardTaraFix from './KeyboardTaraFix';
 import TaraDisplay from './TaraDisplay';
 import KeyboardTara from './KeyboardTara';
+import KeyboardTaraFix from './KeyboardTaraFix';
 
 const useStyles = makeStyles({
     'container': {

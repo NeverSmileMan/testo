@@ -1,8 +1,11 @@
 import React from 'react';
-import KeyboardObject from '../data.structure/Keyboard';
-import KeyboardLayout from './KeyboardLayout';
+import KeyboardObject from '../../data.structure/Keyboard';
+import KeyboardLayout from '../keyboard/KeyboardLayout';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import { KeyboardLayoutOptionsTaraNUMS, KeyboardLayoutOptionsTaraFUNC} from './KeyboardLayoutOptions';
+import { 
+    KeyboardLayoutOptionsTaraNUMS,
+    KeyboardLayoutOptionsTaraFUNC,
+} from '../keyboard/KeyboardOptions';
 
 const keyboard = KeyboardObject.getInstance();
 

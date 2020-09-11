@@ -13,7 +13,7 @@ const useStyle = makeStyles({
     },
 });
 
-function Home() {
+function HomeButton() {
     const classes = useStyle();
     const [, setState] = useState({});
 
@@ -24,4 +24,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default HomeButton;

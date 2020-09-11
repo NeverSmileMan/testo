@@ -1,5 +1,5 @@
 import { Theme } from '@material-ui/core/styles';
-import { ISizeOfElementsInUnits } from '../functions/keyboardFunc';
+import { ISizeOfElementsInUnits } from '../../functions/keyboardFunc';
 import React from 'react';
 
 export interface IDifferentKeys { // кнопки, які відрізняється від звичайних

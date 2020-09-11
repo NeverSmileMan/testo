@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import KeyboardObject from '../data.structure/Keyboard';
-import InputObject from '../data.structure/Input';
-import ActiveInputService from '../data.structure/ActiveInputService';
+import KeyboardObject from '../../data.structure/Keyboard';
+import InputObject from '../../data.structure/Input';
+import ActiveInputService from '../../data.structure/ActiveInputService';
 
 const keyboard = KeyboardObject.getInstance();
 

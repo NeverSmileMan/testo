@@ -1,5 +1,5 @@
-import Weights from './Weights';
-import App from './App';
+import Weights from '../data.structure/Weights';
+import App from '../data.structure/App';
 import {setTimeout, clearTimeout} from 'timers';
 
 const weights = Weights.getInstance();

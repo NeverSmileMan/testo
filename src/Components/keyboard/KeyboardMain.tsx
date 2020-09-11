@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import KeyboardObject from '../data.structure/Keyboard';
+import KeyboardObject from '../../data.structure/Keyboard';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { 
     KeyboardLayoutOptionsEN, KeyboardLayoutOptionsUA,
     KeyboardLayoutOptionsNUMS, KeyboardLayoutOptionsFUNC
-} from './KeyboardLayoutOptions';
+} from './KeyboardOptions';
 import KeyboardLayout from './KeyboardLayout';
 
 const useStyles = makeStyles((theme: Theme) => ({
