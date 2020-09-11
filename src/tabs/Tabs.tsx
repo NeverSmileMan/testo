@@ -5,6 +5,30 @@ import {Delete} from "@material-ui/icons";
 
 export const MAX_NUMBER_OF_TABS = 6;
 
+const styles = makeStyles({
+	header_tabs: {
+		display: 'flex',
+		width: '100%',
+		paddingTop: '.4rem',
+		boxSizing: 'border-box',
+		height: '100%',
+	},
+	tab: {
+		width: `calc((100% - 1.6rem) / ${MAX_NUMBER_OF_TABS})`,
+		height: '100%',
+		borderRadius: '.3rem .3rem 0 0',
+		fontSize: '1.2em',
+		fontWeight: 'bolder',
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#e4e4e4',
+		color: '#333',
+		border: 'none',
+		boxSizing: 'border-box',
+	}
+})
+
 const Tabs: FC = () => {
 
 	const [chooseFreeNumber, setChooseFreeNumber] = useState(() => {
@@ -14,8 +38,11 @@ const Tabs: FC = () => {
 	})
 	const [tabs, setTabs] = useState([{tabNumber: 1} as ITab])
 	const [activeTab, setActiveTab] = useState(0)
+
 	const [showCloseModal, setShowCloseModal] = useState(false)
 	const [isPrintDisabled, setIsPrintDisabled] = useState(false)
+	const {header_tabs, tab} = styles()
+
 
 	const close = useCallback(() => deleteTab(), [])
 	const print = useCallback(() => {	 /*Order() */
@@ -56,32 +83,6 @@ const Tabs: FC = () => {
 		setTabs((prevState) => prevState.filter((value, index) => index !== activeTab))
 		setActiveTab((prevTabNum) => prevTabNum ? prevTabNum - 1 : 0)
 	}, [tabs, activeTab])
-
-	const styles = makeStyles({
-		header_tabs: {
-			display: 'flex',
-			width: '100%',
-			paddingTop: '.4rem',
-			boxSizing: 'border-box',
-			height: '100%',
-		},
-		tab: {
-			width: `calc((100% - 1.6rem) / ${MAX_NUMBER_OF_TABS})`,
-			height: '100%',
-			borderRadius: '.3rem .3rem 0 0',
-			fontSize: '1.2em',
-			fontWeight: 'bolder',
-			display: 'flex',
-			alignItems: 'center',
-			justifyContent: 'center',
-			backgroundColor: '#e4e4e4',
-			color: '#333',
-			border: 'none',
-			boxSizing: 'border-box',
-		}
-	})
-
-	const {header_tabs, tab} = styles()
 
 	const viewTabs = tabs.map((tab, index) => <Tab setActive={setActive}
 	                                               tab={tab}

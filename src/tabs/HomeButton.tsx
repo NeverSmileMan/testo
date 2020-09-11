@@ -1,34 +1,31 @@
-import React, {FunctionComponent} from 'react';
+import React, {FC} from 'react';
 import {makeStyles} from "@material-ui/styles";
 import HomeIcon from '@material-ui/icons/Home';
 
 interface OwnProps {
 }
 
-type Props = OwnProps;
+const styles = makeStyles({
+	home: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center',
+		height: '100%'
+	}
+})
 
-const HomeButton: FunctionComponent<Props> = (props) => {
+const HomeButton: FC<OwnProps> = (props) => {
 
 	const click = (e: React.MouseEvent<HTMLDivElement>) => {
 		console.log('home', e.target)
 	}
 
-	const styles = makeStyles({
-		home: {
-			display: 'flex',
-			alignItems: 'center',
-			justifyContent: 'center',
-			height: '100%'
-		}
-	})
-
 	const {home} = styles()
+
 	return (
-		<div className={home}>
-			<div onClick={click}>
-				<HomeIcon fontSize="small" />
+			<div className={home} onClick={click}>
+				<HomeIcon fontSize="small"/>
 			</div>
-		</div>
 	);
 };
 
