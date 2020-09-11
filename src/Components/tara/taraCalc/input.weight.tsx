@@ -1,6 +1,6 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/styles';
-import InputHead from './head.input';
+import InputHead from '../../TaraDisplay';
 //import KeyboardInput from './keyboard.input';
 import KeyboardTara from '../../KeyboardTara';
 
@@ -20,8 +20,8 @@ const InputWeight = () => {
 
     return (
         <div className={inputConteiner}>
-            <InputHead />
-            <KeyboardTara />
+            {/* <InputHead />
+            <KeyboardTara /> */}
         </div>
     );
 };

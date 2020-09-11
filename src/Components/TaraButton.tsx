@@ -5,7 +5,7 @@ import ModalService from '../data.structure/ModalService';
 //import TaraModal from './TaraModal';
 import { makeStyles } from '@material-ui/styles';
 import TaraIcon from '@material-ui/icons/Speed';
-import TaraModal from './tara/modal.tara';
+import TaraModal from './TaraModal';
 import { Theme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({

@@ -15,15 +15,12 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
 
 const useStyles = makeStyles((theme: Theme) => ({
     'keyboard': {
-        //width: '56%',
         backgroundColor: '#f5f5f5',
         borderRadius: '0 0 10px 10px',
-        //padding: '15px',
         display: 'flex',
         padding: '0.5rem',
         '& .nums': {
             width: '80%',
-            //marginRight: '0.rem',
         },
         '& .func': {
             flex: '1 0 0',
@@ -33,11 +30,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsTaraNUMS, keyStyleName: 'taraNums' });
 const KeyboardLayoutFUNC = KeyboardLayout({ options: KeyboardLayoutOptionsTaraFUNC, keyStyleName: 'taraFunc' });
-function KeyboardTara() {
+function KeyboardTara({ containerClassName }: { containerClassName: string }) {
     const classes = useStyles();
 
+    const className = `${classes.keyboard} ${containerClassName}`;
+
     return (
-        <div className={classes.keyboard + ' keyboardTara'} onClick={onClick}>
+        <div className={className} onClick={onClick}>
             <div className='nums'>
                 <KeyboardLayoutNUMS />
             </div>

@@ -1,34 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import InputObject from '../data.structure/Input';
+import React from 'react';
+import {makeStyles} from '@material-ui/styles';
+import KeyboardTaraFix from './KeyboardTaraFix';
+import TaraDisplay from './TaraDisplay';
 import KeyboardTara from './KeyboardTara';
-import ActiveInputService from '../data.structure/ActiveInputService';
 
-const input = InputObject.getInputNumberInstance();
-const activeInputService = ActiveInputService.getInstance();
+const useStyles = makeStyles({
+    'container': {
+        display: 'flex',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        width: '50%',
+        height: '50%',
+        '& .display': {
+            height: '30%',
+            width: '50%',
+            flex: '1 0 30%',
+        },
+        '& .keyboardTara': {
+            height: '70%',
+            flex: '1 0 70%',
+        },
+        '& .keyboardTaraFix': {
+            width: '50%',
+            flex: '1 0 100%',
+            marginLeft: '0.3rem',
+        },
+    },
+});
 
-function TaraModal() {
-    const [, setState] = useState({});
-
-    useState(() => {
-        input.onChange(() =>
-            setState({}))
-    });
-
-    const isFocus = activeInputService.ifActiveInput(input);
-
-    useEffect(() => () => activeInputService.delActiveInput(input), []);
-
+const ModalTara = () => {
+    const classes = useStyles();
+    console.log(classes);
     return (
-        <div className='tara modal'>
-            <div className='set-tara'>    
-                SET TARA
-                <div className={`input ${isFocus ? 'focus' : ''}`}>
-                    {input.getValue()}
-                </div>
-                <KeyboardTara />
-            </div>
+        <div className={classes.container}>
+            <TaraDisplay containerClassName='display'/>
+            <KeyboardTara containerClassName='keyboardTara'/>
+            <KeyboardTaraFix containerClassName='keyboardTaraFix'/>
         </div>
     );
-}
+};
 
-export default TaraModal;
+export default ModalTara;

@@ -6,7 +6,6 @@ import KeyboardLayout from './KeyboardLayout';
 
 const useStyles = makeStyles((theme: Theme) => ({
     'keyboard': {
-        //width: '56%',
         backgroundColor: '#f5f5f5',
         borderRadius: '10px',
         padding: '1rem 0.5rem',
@@ -28,11 +27,11 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
 
 const KeyboardLayoutTARAFIX = KeyboardLayout({ options: KeyboardLayoutOptionsTARAFIX, keyStyleName: 'taraFix' });
 
-function Keyboard() {
+function Keyboard({ containerClassName}: { containerClassName: string }) {
     const classes = useStyles();
-
+    const className = `${classes.keyboard} ${containerClassName}`;
     return (
-        <div className={classes.keyboard + ' keyboardTaraFix'} onClick={onClick}>
+        <div className={className} onClick={onClick}>
             <KeyboardLayoutTARAFIX />
         </div>
     );
