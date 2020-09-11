@@ -30,19 +30,8 @@ const styles = makeStyles({
 })
 
 const Tabs: FC = () => {
-	const {addTab, setActive, tabs, activeTab} = useContext(MainContext)
-	const [chooseFreeNumber, setChooseFreeNumber] = useState(() => {
-		const arr = Array(MAX_NUMBER_OF_TABS).fill(false)
-		arr[0] = true
-		return arr
-	})
-	// const [showCloseModal, setShowCloseModal] = useState(false)
-	// const [isPrintDisabled, setIsPrintDisabled] = useState(false)
 
-	// const close = useCallback(() => deleteTab(), [])
-	// const print = useCallback(() => {	 /*Order() */
-	// 	close()
-	// }, [])
+	const {addTab, setActive, tabs, activeTab} = useContext(MainContext)
 	const {header_tabs, tab} = styles()
 	const viewTabs = tabs.map((tab, index) => <Tab setActive={setActive}
 	                                               tab={tab}
@@ -56,7 +45,6 @@ const Tabs: FC = () => {
 			{tabs.length < MAX_NUMBER_OF_TABS ?
 				<div className={tab} onClick={addTab}>+</div>
 				: null}
-			{/* <div onClick={deleteTab}><Delete/></div> */}
 		</div>
 	)
 }
