@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/styles';
+import {MainContext} from '../../main'
 
 const useStyles = makeStyles({
   modal: {
@@ -38,21 +39,21 @@ interface CloseProp {
   title?: string;
   confirm?: string;
   reject?: string;
-  click:any;
 }
 
 const titleModal: string = 'Ви хочете остаточно закрити замовлення?';
 const modalConfirm: string = 'Так';
 const modalReject: string = 'Ні';
 
-const ModalClose = ({ title = titleModal, confirm = modalConfirm, reject = modalReject, click }: CloseProp) => {
+const ModalClose = ({ title = titleModal, confirm = modalConfirm, reject = modalReject}: CloseProp) => {
   const clss = useStyles();
+  const {setType, confirmClose} = useContext(MainContext)
   return (
     <div className={clss.modal}>
       <div className={clss.title}>{title}</div>
       <div className={clss.btns}>
-        <div className={clss.btn}>{confirm}</div>
-        <div onClick={click} className={clss.btn}>{reject}</div>
+        <div onClick={confirmClose} className={clss.btn}>{confirm}</div>
+        <div onClick={setType(null)} className={clss.btn}>{reject}</div>
       </div>
     </div>
   )
