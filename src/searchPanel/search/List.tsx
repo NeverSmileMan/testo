@@ -40,7 +40,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function List({ input }: { input: string }) {
     const classes = useStyles();
-    const [{ filter, data = null }, setState] = useState({ filter: input } as { filter: string, data: IItem[] | null});
+    const [{ filter, data = null }, setState] = useState(
+        { filter: input } as { filter: string, data: IItem[] | null}
+    );
 
     useEffect(() => {
         if (!input) {
