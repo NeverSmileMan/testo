@@ -1,14 +1,20 @@
 import { IConfig, config, IEnv } from './data/config';
 import { IOrdersControl, OrdersControl } from './OrdersControl';
 import { AppStateTypes } from './types/types';
+import { ThemesNames } from '../themes/themes';
 
 export interface IAppState {
     onStateChange: (callback: () => void) => void;
     setEnvironment: (rect: DOMRect) => void;
     getEnvironment: () => IEnv;
-    getStateType: () => AppStateTypes;
+    getStatePartial: () => IAppStatePartial;
     getOrdersControlInstance: () => IOrdersControl;
-    getConfigPar: (par: keyof IConfig) => IConfig[keyof IConfig];
+    getConfig: () => IConfig;
+}
+
+export interface IAppStatePartial {
+    state: AppStateTypes,
+    theme: ThemesNames,
 }
 
 class AppState implements IAppState {
@@ -40,13 +46,17 @@ class AppState implements IAppState {
         return this._env;
     }
 
-    getStateType() {
-        return this._state;
+    getStatePartial() {
+        const state = {
+            state: this._state,
+            theme: this._config.themeName,
+        };
+        return state;
     }
 
     private _onStateChange() {
         if (this._callbackOnStateChange) {
-            setTimeout(() => this._callbackOnStateChange!(), 500);
+            setTimeout(() => this._callbackOnStateChange!(), 1000);
         }
     }
 
@@ -54,8 +64,8 @@ class AppState implements IAppState {
         return this._ordersControl;
     }
 
-    getConfigPar(par: keyof IConfig) {
-        return this._config[par];
+    getConfig() {
+        return this._config;
     }
 
     __changeTheme() {
