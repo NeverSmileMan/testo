@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Mode, State } from '../../data.structure/types/types';
 import ModalService from '../../data.structure/ModalService';
-import { StyledComponentProps, createStyles, withStyles, Theme } from '@material-ui/core/styles';
+import { WithStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
+import { StyledComponentProps } from '@material-ui/styles';
 
 const styles = createStyles((theme: Theme) => ({
     btn: {
@@ -34,7 +35,7 @@ export interface IControlButtonProps {
         isActive: Function;
         getState: Function;
     },
-    ModalComponent: React.FunctionComponent<any>;
+    ModalComponent: React.ComponentType<any> & StyledComponentProps;
     IconComponent: React.FunctionComponent<any>;
     text: string;
 }
@@ -58,7 +59,7 @@ function createControlButton(props: IControlButtonProps) {
         else modalService.showModal(null);
     }
 
-    function ControlButton(props: StyledComponentProps) {
+    function ControlButton(props: WithStyles) {
         const [{ mode }, setState] = useState({ mode: Mode.BUTTON });
 
         useEffect(() => changeState(setState), []);
@@ -66,7 +67,7 @@ function createControlButton(props: IControlButtonProps) {
         useEffect(() => showModal(mode), [mode]);
 
         const isActive = object.isActive();
-        const className = props.classes?.btn + ' ' + (isActive ? '' : props.classes?.disabled);
+        const className = props.classes.btn + ' ' + (isActive ? '' : props.classes.disabled);
 
         return (
             <div
