@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { makeStyles, ThemeProvider, createMuiTheme, Theme } from '@material-ui/core/styles';
 import { ActiveInputService } from './services/ActiveInputService';
 import KeyboardGrid from './keyboard/keyboard';
@@ -12,6 +12,10 @@ import Tablo from './plugs/Tablo';
 //-----
 
 const useStyles = makeStyles({
+	appWrap: {
+		width: '100%',
+		height: '100%',
+	},
   scale: {
     width: '100%',
     height: '15.8854%',
@@ -53,8 +57,9 @@ const useStyles = makeStyles({
       padding: 0,
       fontFamily: 'Arial',
       fontSize: '24px',
-    }
-  },
+		},
+	},
+
 });
 
 type ThemesObj = {
@@ -92,13 +97,29 @@ themes.fora = createMuiTheme({
     },
   },
 });
+/* для onKeyDown*/
+const arr_symb = ['!','@','#','$','*','(',')','_','`','^',';',':','[',']','{','}','<','>','\\','|','/',',','.',"'",'"','ContextMenu','№','%','&','?','-','+','=','~','Alt','Control','Meta','Shift','Enter','Escape','Tab','CapsLock','Delete','Insert','Home','End','PageUp','PageDown','Pause','ScrollLock','NumLock','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','F1','F2','F3','F4','F5','F6','F7','F8','F9','F10','F11','F12'];
+const set_symb = new Set(arr_symb);
 
 function App() {
   const classes = useStyles();
   const [theme, setTheme] = useState(themes.default);
 
+	const onKey = useCallback(
+		(e: React.KeyboardEvent) => {
+			if (e.key === 'Backspace') {
+				ActiveInputService.delete(1);
+			} else if (set_symb.has(e.key)) {
+				e.preventDefault();
+			} else {
+				ActiveInputService.add(e.key);
+			}
+		},
+	[],
+)
+
   return (
-    <>
+    <div className={classes.appWrap} onKeyDown={onKey} tabIndex={-1}>
       <ThemeProvider theme={theme}>
         <div className={classes.scale}>
           <div style={{ display: 'inlie-block' }}>
@@ -118,7 +139,7 @@ function App() {
           </div>
         </div>
       </ThemeProvider>
-    </>
+    </div>
   );
 }
 
