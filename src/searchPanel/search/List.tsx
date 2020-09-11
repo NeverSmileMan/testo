@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import itemsData from './itemsData';
+import itemsData, { IItem } from './itemsData';
 
 const useStyles = makeStyles((theme: Theme) => ({
     'list': {
@@ -38,15 +38,28 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-function List() {
+function List({ input }: { input: string }) {
     const classes = useStyles();
-    const [state, setState] = useState(true);
+    const [{ filter, data = null }, setState] = useState(
+        { filter: input } as { filter: string, data: IItem[] | null}
+    );
 
-    const itemsArray = itemsData as any as { plu: string, name: string }[];
+    useEffect(() => {
+        if (!input) {
+            setState(() => ({ filter: '', data: null }));
+            return;
+        }
 
-    if (!itemsArray) return null;
+        if (input === filter) return;
+
+        const data = itemsData.filter(item => item.name.toUpperCase().includes(input.toUpperCase()));
+
+        setState(() => ({ filter: input, data }));
+    }, [input]);
+
+    if (!data) return null;
     
-    const items = itemsArray.map((item, i) => 
+    const items = data.map((item, i) => 
         <li key={i} data-item-index={i}>
             <span>{item.plu}</span>
             <span>{item.name}</span>
@@ -54,8 +67,8 @@ function List() {
     );
 
     return (
-        <div className={classes.list} onClick={() => setState((state) => !state)}>
-            {items.length && state ?
+        <div className={classes.list}>
+            {items.length ?
 
                 <ul>
                     {items}
