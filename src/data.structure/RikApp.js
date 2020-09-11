@@ -9,7 +9,8 @@ let weight = '';
 let timer;
 
 window.addEventListener('keypress', (event) => {
-
+    //console.log(event.keyCode);
+    
     if (event.keyCode >= 48 && event.keyCode <= 57) {
         clearTimeout(timer);
         weight += event.key;
@@ -19,10 +20,11 @@ window.addEventListener('keypress', (event) => {
             weight = '';
             timer = null;
         }, 500);
+        return;
     }
-    if (event.keyCode === 116) app.__changeTheme();
-    if (event.keyCode === 122) weights.__setStable(+event.key);
-    //console.log(event.keyCode);
+    if (event.keyCode === 116) { app.__changeTheme(); return; }
+    if (event.keyCode === 122) { weights.__setStable(+event.key); return; }
+    
 });
 
 // class RikApp {
