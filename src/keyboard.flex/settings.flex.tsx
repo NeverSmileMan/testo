@@ -11,9 +11,9 @@ const arr_num = ['7','8','9','4','5','6','1','2','3','0'];
 export const keyBoardFlex: Keyboard = {
 	alphabet:{
 		keys: {
-			en: arr_EN,
-			ru: arr_RU,
 			uk: arr_UK,
+			ru: arr_RU,
+			en: arr_EN,
 		},
 		action: 'add',
 		options: {
