@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import ModalTara from './modal.tara';
 import ModalPrint from './modal.print';
 import ModalClose from './modal.close';
+import {MainContext} from '../../main'
 
 
 
@@ -18,20 +19,22 @@ const useStyles = makeStyles({
 })
 interface Prop {
   type: string;
-  click: any;
+  click: () => any;
 }
-const ModalWindow = ({ type, click }: Prop) => {
-  const modalType: { [key: string]: any } = {
-    tara: () => (<ModalTara click={click}/>),
+const ModalWindow = () => {
+  const modal: { [key: string]: any } = {
+    tara: () => (<ModalTara/>),
     print: () => (<ModalPrint />),
-    close: () => (<ModalClose click={click}/>),
+    close: () => (<ModalClose/>),
   }
   const cls = useStyles();
+  const {modalType} = useContext(MainContext)
+  
   return (
     <>
       <div className={cls.back}>
         {
-          modalType[type] && modalType[type]()
+          modalType && modal[modalType] && modal[modalType]()
         }
       </div>
     </>
