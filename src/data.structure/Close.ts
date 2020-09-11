@@ -8,6 +8,7 @@ export interface IClose {
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     doClose: (confirm?: boolean) => void;
+    do: (confirm?: boolean) => void;
     getState: () => State;
 }
 
@@ -43,6 +44,10 @@ export class Close implements IClose {
 
     isActive() {
         return this._state === State.ENABLED || false;
+    }
+
+    do(confirm?: boolean) {
+        this.doClose(confirm);
     }
 
     doClose(confirm?: boolean) {

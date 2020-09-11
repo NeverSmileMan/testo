@@ -8,6 +8,7 @@ export interface IPrint {
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     doPrint: (confirm?: boolean) => void;
+    do: (confirm?: boolean) => void;
     getState: () => State;
 }
 
@@ -43,6 +44,10 @@ export class Print implements IPrint {
 
     isActive() {
         return this._state === State.ENABLED || false;
+    }
+
+    do(confirm?: boolean) {
+        this.doPrint(confirm);
     }
 
     doPrint(confirm?: boolean) {

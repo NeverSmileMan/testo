@@ -6,6 +6,7 @@ import ActiveInputService, { IActiveInputService } from './ActiveInputService';
 
 export interface ITara {
     doTara: () => void;
+    do: () => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     getState: () => State;
@@ -74,6 +75,10 @@ export class Tara implements ITara {
         if (value) this._state = State.ENABLED;
         else this._state = State.DISABLED;
         this._onStateChange();
+    }
+
+    do() {
+        this.doTara();
     }
 
     doTara() {

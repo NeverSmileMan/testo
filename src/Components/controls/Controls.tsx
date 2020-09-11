@@ -1,27 +1,24 @@
 import React from 'react';
-import TaraButton from './TaraButton';
-import PrintButton from './PrintButton';
-import CloseButton from './NewCloseButton';
-import { makeStyles } from '@material-ui/styles';
+import Buttons from './NewButtons';
+import { withStyles, createStyles, Theme, WithStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const styles = createStyles((theme: Theme) => ({
     controls: {
         width: '8%',
         display: 'flex',
         flexDirection: 'column',
     },
-});
+}));
 
-function Controls() {
-    const classes = useStyles();
+function Controls({ classes }: WithStyles) {
 
     return (
         <div className={`${classes.controls} controls`}>
-            <TaraButton />
-            <PrintButton />
-            <CloseButton />
+            <Buttons.TaraButton />
+            <Buttons.PrintButton />
+            <Buttons.CloseButton />
         </div>
     );
 }
 
-export default Controls;
+export default withStyles(styles)(Controls);
