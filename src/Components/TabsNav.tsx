@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import app from '../data.structure/App';
-import tabControl from '../data.structure/TabControl';
+import tabControl from '../data.structure/OrderControl';
 import { makeStyles } from '@material-ui/core/styles';
 import { Theme } from '@material-ui/core';
 

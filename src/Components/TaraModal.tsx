@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 
 const ModalTara = () => {
     const classes = useStyles();
-    console.log(classes);
+
     return (
         <div className={classes.container}>
             <TaraDisplay containerClassName='display'/>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TabControl from '../data.structure/TabControl';
+import TabControl from '../data.structure/OrderControl';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 

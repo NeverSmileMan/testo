@@ -9,7 +9,7 @@ import ActiveInputService, { IActiveInputService } from './ActiveInputService';
 import EventEmitter from 'events';
 import { State, Mode } from './types';
 
-export interface ITabControl {
+export interface IOrderControl {
     order?: IOrder;
     setOrder: (order: IOrder) => void;
     delItem: () => void;
@@ -28,7 +28,7 @@ export interface ITabControl {
 
 type TabControlEvents = 'stateChange';
 
-class TabControl implements ITabControl {
+class OrderControl implements IOrderControl {
     private _weights: IWeights;
     private _message: IMessage;
     private _selectedItemIndex: number | null = null;
@@ -166,7 +166,6 @@ class TabControl implements ITabControl {
         }
 
         if (this._weights.getWeight() <= 0.040) {
-            console.log(this._weights.getWeight());
             this._throwMessage(MessageCode.WEIGHTS_IS_SMALL);
             return;
         }
@@ -180,11 +179,11 @@ class TabControl implements ITabControl {
     }
 }
 
-let instance: ITabControl;
+let instance: IOrderControl;
 
 export function getInstance() {
     if (!instance) {
-        instance = new TabControl();
+        instance = new OrderControl();
     }
     return instance;
 }

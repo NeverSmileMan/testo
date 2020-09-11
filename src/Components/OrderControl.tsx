@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import OrderInfo from './OrderInfo';
 import Search from './Search';
 import OrderItems from './OrderItems';
-import TabControl from '../data.structure/TabControl';
+import TabControl from '../data.structure/OrderControl';
 import { Mode } from '../data.structure/types';
 import ModalService from '../data.structure/ModalService';
 import TabControlModal from './TabControlModal';

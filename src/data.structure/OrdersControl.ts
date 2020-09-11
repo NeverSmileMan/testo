@@ -1,4 +1,4 @@
-import TabControl, { ITabControl } from './TabControl';
+import TabControl, { IOrderControl } from './OrderControl';
 import { IOrder, Order } from './Order';
 import Close, { IClose } from './Close';
 import Print, { IPrint } from './Print';
@@ -16,7 +16,7 @@ export class OrdersControl implements IOrdersControl {
     private _maxOrdersCount: number;
     private _orders: Map<number, IOrder> = new Map();
     private _ordersFreeNums: boolean[];
-    private _orderControl: ITabControl;
+    private _orderControl: IOrderControl;
     private _print: IPrint;
     private _close: IClose;
     private _callbackOnChange?: () => void;

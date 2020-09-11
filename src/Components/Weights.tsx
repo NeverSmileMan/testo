@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import WeightsObject from '../data.structure/Weights';
 import { makeStyles } from '@material-ui/core/styles';
-import Tablo from './weights/Tablo';
+import Tablo from './weights/WeightsDisplay';
 
 const useStyle = makeStyles({
     'weights': {
