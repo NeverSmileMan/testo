@@ -1,12 +1,15 @@
 import React from 'react';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles,
+} from '@material-ui/core/styles';
 import TabsNav from './tabs.panel/TabsNav';
 import Message from './tabs.panel/Message';
 import HomeButton from './tabs.panel/HomeButton';
 import OrderControl from './orders/OrderControl';
 import Controls from './controls/Controls';
-import { makeStyles } from '@material-ui/core/styles';
 
-const useStyle = makeStyles({
+const styles = createStyles((theme: Theme) => ({
     'orders': {
         '& .tabs-panel': {
             height: '14%',
@@ -17,14 +20,17 @@ const useStyle = makeStyles({
             display: 'flex',
         },
     },
-});
+}));
 
-function Orders() {
-    const classes = useStyle();
-    const className = classes.orders + ' orders';
+interface Props {
+    containerClassName: string;
+}
+
+function Orders({ containerClassName, classes }: Props & WithStyles ) {
+
+    const className = `${containerClassName} ${classes.orders}`;
     return (
         <div className={className}>
-            {/* <div className='head title'>ORDERS</div> */}
             <div className='tabs-panel'>
                 <TabsNav />
                 <Message />
@@ -38,4 +44,4 @@ function Orders() {
     );
 }
 
-export default Orders;
+export default withStyles(styles)(Orders);

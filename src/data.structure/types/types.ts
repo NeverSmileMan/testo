@@ -10,7 +10,7 @@ export enum State {
     READY,
 }
 
-export enum AppStateTypes {
+export enum AppState {
     INIT,
     RUN,
     STOP,

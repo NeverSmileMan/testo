@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import KeyboardObject from '../../data.structure/Keyboard';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles,
+} from '@material-ui/core/styles';
 import { 
     KeyboardLayoutOptionsEN, KeyboardLayoutOptionsUA,
     KeyboardLayoutOptionsNUMS, KeyboardLayoutOptionsFUNC
 } from './KeyboardOptions';
 import KeyboardLayout from './KeyboardLayout';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const styles = createStyles((theme: Theme) => ({
     'keyboard': {
         display: 'flex',
         padding: '0.5rem',
@@ -65,15 +68,20 @@ const KeyboardLayoutUA = KeyboardLayout({ options: KeyboardLayoutOptionsUA });
 const KeyboardLayoutEN = KeyboardLayout({ options: KeyboardLayoutOptionsEN });
 const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsNUMS });
 
-function Keyboard() {
-    const classes = useStyles();
+
+interface Props {
+    containerClassName: string;
+}
+
+function Keyboard({ containerClassName, classes }: Props & WithStyles ) {
+
     const [lang, setLang] = useState('UA');
     const [diffKeys] = useState(() => getDiffKeys(setLang));
     const [KeyboardLayoutFUNC] = useState(() =>
         KeyboardLayout({ options: KeyboardLayoutOptionsFUNC, diffKeys: diffKeys })
     );
 
-    const className = classes.keyboard + ' keyboard';
+    const className = `${containerClassName} ${classes.keyboard}`;
     return (
         <div className={className} onClick={onClick}>
             <div className='letters'>
@@ -90,4 +98,4 @@ function Keyboard() {
     );
 }
 
-export default Keyboard;
+export default withStyles(styles)(Keyboard);

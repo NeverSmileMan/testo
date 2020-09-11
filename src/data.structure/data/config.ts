@@ -10,7 +10,7 @@ export const config: IConfig = {
     themeName: 'silpo', //''default',
 }
 
-export interface IEnv {
+export interface IEnvironment {
     displayWidth: number;
     displayHeight: number;
 }

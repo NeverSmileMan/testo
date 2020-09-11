@@ -3,9 +3,12 @@ import Weights from './weights/Weights';
 import Orders from './Orders';
 import Keyboard from './keyboard/KeyboardMain';
 import Modal from './Modal';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles,
+} from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const styles = createStyles((theme: Theme) => ({
     'main': {
         width: 1366 + 10 + 'px',
         height: 768 + 10 + 'px',
@@ -44,18 +47,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-function Main() {
-
-    const { main } = useStyles();
-
+function Main({ classes }: WithStyles ) {
     return (
-        <div className={main}>
-            <Weights />
-            <Orders />
-            <Keyboard />
+        <div className={classes.main}>
+            <Weights containerClassName='weights'/>
+            <Orders containerClassName='orders' />
+            <Keyboard containerClassName='keyboard'/>
             <Modal />
         </div>
     );
 }
 
-export default Main;
+export default withStyles(styles)(Main);

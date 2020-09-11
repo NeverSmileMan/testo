@@ -1,5 +1,5 @@
-import TabControl, { IOrderControl } from './OrderControl';
-import { IOrder, Order } from './Order';
+import OrderControl, { IOrderControl } from './OrderControl';
+import { Order, IOrder } from './Order';
 import Close, { IClose } from './Close';
 import Print, { IPrint } from './Print';
 import { Printer } from './Printer';
@@ -7,13 +7,12 @@ import { Printer } from './Printer';
 export interface IOrdersControl {
     canCreateOrder: () => boolean;
     createOrder: () => void;
-    onChange: (callback: () => void) => void;
-    getOrders: () => Map<number, IOrder>;
     selectOrder: (orderNumber: number) => void;
+    getOrders: () => Map<number, IOrder>;    
+    onChange: (callback: () => void) => void;
 }
 
 export class OrdersControl implements IOrdersControl {
-    private _maxOrdersCount: number;
     private _orders: Map<number, IOrder> = new Map();
     private _ordersFreeNums: boolean[];
     private _orderControl: IOrderControl;
@@ -21,11 +20,10 @@ export class OrdersControl implements IOrdersControl {
     private _close: IClose;
     private _callbackOnChange?: () => void;
     
-    constructor(maxOrdersCount: number) {
-        this._maxOrdersCount = maxOrdersCount;
-        this._orderControl = TabControl.getInstance();
+    constructor(private _maxOrdersCount: number) {
+        this._orderControl = OrderControl.getInstance();
         this._orderControl.on('stateChange', this._onOrderChange.bind(this));
-        this._ordersFreeNums = Array(maxOrdersCount).fill(true);
+        this._ordersFreeNums = Array(this._maxOrdersCount).fill(true);
         this._print = Print.getInstance();
         this._print.onPrint(this._printOrder.bind(this));        
         this._close = Close.getInstance();
@@ -33,28 +31,33 @@ export class OrdersControl implements IOrdersControl {
         this._setCurrentOrder();
     }
 
+    canCreateOrder() {
+        return this._orders.size < this._maxOrdersCount;
+    }
+
+    createOrder() {
+        if (!this.canCreateOrder()) return;
+        const orderNumber = this._ordersFreeNums.findIndex(item => item) + 1;
+        this._ordersFreeNums[orderNumber - 1] = false;
+        const order: IOrder = new Order(orderNumber);
+        this._orders.set(orderNumber, order);
+        this._setCurrentOrder(orderNumber);
+    }
+
     selectOrder(orderNumber: number) {
         this._setCurrentOrder(orderNumber);
     }
 
-    private _onOrderChange(init?: boolean) {
-        const itemsCount = this._orderControl.getItemsCount();
+    getOrders() {
+        return this._orders;
+    }
 
-        if ((init && itemsCount > 0) || itemsCount === 1) {
-            this._print.setActive(true);
-            this._close.setActive(true);
-            return;
-        }
+    onChange(callback: () => void) {
+        this._callbackOnChange = callback;
+    }
 
-        if (itemsCount === 0) {
-            this._print.setActive(false);
-            const ordersCount = this._orders.size;
-            const orderNumber = this._orderControl.getOrderNumber();
-            if (ordersCount === 1 && orderNumber === 1) {
-                this._close.setActive(false);
-            } else this._close.setActive(true);
-        }
-
+    private _onChange() {
+        if (this._callbackOnChange) this._callbackOnChange();
     }
 
     private _setCurrentOrder(orderNumber?: number) {
@@ -78,19 +81,6 @@ export class OrdersControl implements IOrdersControl {
         this._setCurrentOrder(firstOrderNumber);
     }
 
-    canCreateOrder() {
-        return this._orders.size < this._maxOrdersCount;
-    }
-
-    createOrder() {
-        if (!this.canCreateOrder()) return;
-        const orderNumber = this._ordersFreeNums.findIndex(item => item) + 1;
-        this._ordersFreeNums[orderNumber - 1] = false;
-        const order: IOrder = new Order(orderNumber);
-        this._orders.set(orderNumber, order);
-        this._setCurrentOrder(orderNumber);
-    }
-
     private _closeOrder() {
         const orderNumber = this._orderControl.getOrderNumber();
         this._orders.delete(orderNumber);
@@ -103,17 +93,32 @@ export class OrdersControl implements IOrdersControl {
         this._close.doClose();
     }
 
-    getOrders() {
-        return this._orders;
-    }
+    private _onOrderChange(init?: boolean) {
+        const itemsCount = this._orderControl.getItemsCount();
 
-    onChange(callback: () => void) {
-        this._callbackOnChange = callback;
-    }
+        if ((init && itemsCount > 0) || itemsCount === 1) {
+            this._print.setActive(true);
+            this._close.setActive(true);
+            return;
+        }
 
-    private _onChange() {
-        if (this._callbackOnChange) this._callbackOnChange();
+        if (itemsCount === 0) {
+            this._print.setActive(false);
+            const ordersCount = this._orders.size;
+            const orderNumber = this._orderControl.getOrderNumber();
+            if (ordersCount === 1 && orderNumber === 1) {
+                this._close.setActive(false);
+            } else this._close.setActive(true);
+        }
     }
 }
 
-export default OrdersControl;
+let instance: OrdersControl;
+
+export function getInstance(maxOrdersCount: number) {
+    if (!instance)
+        instance = new OrdersControl(maxOrdersCount);
+    return instance;
+}
+
+export default { getInstance };

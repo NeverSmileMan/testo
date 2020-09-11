@@ -7,11 +7,11 @@ import { IKeyboardOptions } from '../../functions/keyboardFunc';
 
 export const KeyboardLayoutOptionsEN: IKeyboardOptions = {
     keyboardSet: keyboardSetEN.setKeys,
-    keyCountByRow: [9, 10, 8],
-    k1: 0.4, k2: 1, k3: 0.7,
+    keyCountByRow: [10, 9, 8],
+    k1: 0.7, k2: 0.55, k3: 0.7,
     differentKeys: {
         'SPACE': {
-            width: 2,
+            width: 3,
             content: ' ',
         },
     },

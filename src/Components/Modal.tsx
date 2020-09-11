@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ModalService from '../data.structure/ModalService';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles,
+} from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const styles = createStyles((theme: Theme) => ({
     'modal': {
         display: 'flex',
         justifyContent: 'center',
@@ -15,12 +18,11 @@ const useStyles = makeStyles({
         left: '0px',
         top: '15.9%',
     }
-});
+}));
 
 const modalService = ModalService.getInstance();
 
-function Modal(): React.ReactElement | null {
-    const classes = useStyles();
+function Modal({ classes }: WithStyles ) {
     const [, setState] = useState({});
     
     useEffect(() => {
@@ -37,4 +39,4 @@ function Modal(): React.ReactElement | null {
     );
 }
 
-export default Modal;
+export default withStyles(styles)(Modal);

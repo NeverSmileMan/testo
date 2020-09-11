@@ -1,37 +1,29 @@
-import React, { useState } from 'react';
-//import WeightsObject from '../../data.structure/Weights';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles,
+} from '@material-ui/core/styles';
 import WeightsDisplay from './WeightsDisplay';
 
-const useStyle = makeStyles({
+const styles = createStyles((theme: Theme) => ({
     'weights': {
         backgroundColor: '#e4e4e4',
     }
-});
+}));
 
-//const weights = WeightsObject.getInstance();
+interface Props {
+    containerClassName: string;
+}
 
-function Weights() {
-    const classes = useStyle();
+function Weights({ containerClassName, classes }: Props & WithStyles ) {
 
-    // const [, setState] = useState({});
-
-    // useState(() => {
-    //     weights.on('stateChange', () =>
-    //         setState({}))
-    // });
-
-    const className = classes.weights + ' weights';
+    const className = `${containerClassName} ${classes.weights}`;
 
     return (
         <div className={className}>
-            {/* <div className='title'>WEIGHTS</div>
-            <div><span>Weight: </span>{weights.getWeight()}</div> 
-            <div><span>Tara: </span>{weights.getTara()}</div>
-            <div><span>Sum: </span>{weights.getSum()}</div> */}
             <WeightsDisplay />
         </div>
     );
 }
 
-export default Weights;
+export default withStyles(styles)(Weights);

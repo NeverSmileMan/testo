@@ -1,28 +1,35 @@
-import React, { useState, useLayoutEffect } from 'react';
-import AppObject, { IAppStatePartial} from './data.structure/App';
-import { AppStateTypes } from './data.structure/types/types';
-import SetEnvironment from './components/SetEnvironment';
-import Main from './components/Main';
+import React, { useState } from 'react';
 import 'fontsource-roboto';
-import './functions/rikAppTest.js';
+import App from './data.structure/App';
+import { AppState } from './data.structure/types/types';
 import { ThemeProvider } from '@material-ui/core';
 import themes from './themes/themes';
+import SetEnvironment from './components/SetEnvironment';
+import Main from './components/Main';
+import './functions/rikAppTest.js';
 
-const app = AppObject.getInstance();
+const app = App.getInstance();
+function changeState() {
+    const state = app.getState();
+    const themeName = app.getConfig().themeName;
+    return { state, themeName }
+}
 
-function App() {
-    const [{ state, theme }, setState] = useState(() => {
-        app.onStateChange(() => setState(() => app.getStatePartial()));
-        return app.getStatePartial();
+function AppComponent() {
+    const [{ state, themeName }, setState] = useState(() => {
+        app.onChange(
+            () => setState(() => changeState())
+        );
+        return changeState();
     });
 
     return (
-        state === AppStateTypes.INIT ?
+        state === AppState.INIT ?
             <SetEnvironment /> : (
-            <ThemeProvider theme={themes[theme]}>
+            <ThemeProvider theme={themes[themeName]}>
                 <Main />
             </ThemeProvider>
     ));
 }
 
-export default App;
+export default AppComponent;
