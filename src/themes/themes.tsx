@@ -16,6 +16,8 @@ themes.default = createMuiTheme({
         },
         secondary: {
             main: '#d7d7d7',
+            dark: 'gray',
+            light: '#e4e4e4',
         },
     },
 });
@@ -28,6 +30,8 @@ themes.silpo = createMuiTheme({
         },
         secondary: {
             main: '#d7d7d7',
+            dark: 'gray',
+            light: '#e4e4e4',
         },
     },
 });
@@ -39,7 +43,9 @@ themes.fora = createMuiTheme({
             light: '#9db682',
         },
         secondary: {
-            main: '#ef036',
+            main: '#d7d7d7',
+            dark: 'gray',
+            light: '#e4e4e4',
         },
     },
 });

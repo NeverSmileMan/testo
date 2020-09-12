@@ -44,10 +44,14 @@ const onClick = () => {
 
 function OrderInfo() {
     const classes = useStyles();
-    const [, setState] = useState({});
+    const [, setState] = useState(() => {
+        tabControl.onChange(() =>
+            setState({}));
+            return {};
+    });
 
     useState(() => {
-        tabControl.on('stateChange', () =>
+        tabControl.onChange(() =>
             setState({}))
     });
 

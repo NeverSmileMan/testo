@@ -25,7 +25,7 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     }
 };
 
-const KeyboardLayoutTARAFIX = KeyboardLayout({ options: KeyboardLayoutOptionsTARAFIX, keyStyleName: 'taraFix' });
+const KeyboardLayoutTARAFIX = KeyboardLayout({ options: KeyboardLayoutOptionsTARAFIX, keyClassName: 'taraFix' });
 
 function Keyboard({ containerClassName}: { containerClassName: string }) {
     const classes = useStyles();

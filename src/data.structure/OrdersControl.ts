@@ -19,10 +19,10 @@ export class OrdersControl implements IOrdersControl {
     private _print: IPrint;
     private _close: IClose;
     private _callbackOnChange?: () => void;
-    
+
     constructor(private _maxOrdersCount: number) {
         this._orderControl = OrderControl.getInstance();
-        this._orderControl.on('stateChange', this._onOrderChange.bind(this));
+        this._orderControl.onChange(this._onOrderChange.bind(this));
         this._ordersFreeNums = Array(this._maxOrdersCount).fill(true);
         this._print = Print.getInstance();
         this._print.onPrint(this._printOrder.bind(this));        
@@ -90,7 +90,7 @@ export class OrdersControl implements IOrdersControl {
 
     private _printOrder() {
         new Printer(this._orderControl.getOrder());
-        this._close.doClose();
+        this._close.doAction();
     }
 
     private _onOrderChange(init?: boolean) {

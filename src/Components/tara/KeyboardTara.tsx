@@ -31,8 +31,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsTaraNUMS, keyStyleName: 'taraNums' });
-const KeyboardLayoutFUNC = KeyboardLayout({ options: KeyboardLayoutOptionsTaraFUNC, keyStyleName: 'taraFunc' });
+const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsTaraNUMS, keyClassName: 'taraNums' });
+const KeyboardLayoutFUNC = KeyboardLayout({ options: KeyboardLayoutOptionsTaraFUNC, keyClassName: 'taraFunc' });
 function KeyboardTara({ containerClassName }: { containerClassName: string }) {
     const classes = useStyles();
 

@@ -1,46 +1,41 @@
 import React, { useState } from 'react';
 import TabControl from '../../data.structure/OrderControl';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
-// const useStyle = makeStyles({
-//     'order-items': {
-//         backgroundColor: 'grey',
-//         //width: '100%',
-//         flex: '1 0 0',
-//     }
-// });
-
-const useStyles = makeStyles((theme: Theme) => ({
-    'order-items': {
-        backgroundColor: '#e4e4e4', //theme.palette.primary.main,
-        borderLeft: 'solid 3px ' + theme.palette.primary.main,
-        borderBottom: 'solid 3px ' + theme.palette.primary.main,
-        borderRight: 'solid 3px ' + theme.palette.primary.main,
-        flex: '1 0 0',
-        //position: 'absolute',
-        // top: '17%',
-        // left: '0px',
-        // width: '100%',
-        // height: '83%',
+const styles = createStyles((theme: Theme) => ({
+    'wrapper': {
+        height: '100%',
+        backgroundColor: theme.palette.secondary.light,
+        border: 'solid 3px ' + theme.palette.primary.main,
+        borderTop: 'none',
         overflowY: 'auto',
-        fontSize: '0.9em',
         '& ul': {
             listStyle: 'none',
             margin: '0px',
             padding: '0px',
         },
         '& li': {
-            borderBottom: 'solid 1px gray',
+            fontSize: '1.2rem',
+            borderBottom: 'solid 1px ' + theme.palette.secondary.dark,
             paddingLeft: '10px',
             paddingRight: '10px',
             backgroundColor: 'white',
+            '&:first-child': {
+                borderTop: 'solid 1px ' + theme.palette.secondary.dark,
+            }
         },
-        '& span:first-child': {
+        '& span': { 
             display: 'inline-block',
-            width: '50px',
+            '&:first-child': {
+                width: '100px',
+                marginRight: '2rem',
+            },
+            '& nth-child(2)': {
+                width: '250px',
+            },
         },
         '& .selected': {
-            backgroundColor: 'grey', //theme.palette.primary.main,
+            backgroundColor: theme.palette.secondary.dark,
             color: 'white',
         },
     },
@@ -55,21 +50,28 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     itemIndex && Number.parseInt(itemIndex) >=0 && tabControl.selectItem(+itemIndex);
 }
 
-function OrderItems() {
-    const classes = useStyles();
+function OrderItems({ classes }: WithStyles) {
+
     const [, setState] = useState({});
 
     useState(() => {
-        tabControl.on('stateChange', () =>
+        tabControl.onChange(() =>
             setState({}))
     });
 
     const selectedItemIndex = tabControl.getSelectedItemIndex();
     const items = tabControl.getItems().map((item, i) =>
-        <li key={i} data-item-index={i} className={(selectedItemIndex === i && 'selected') || ''}>{item.name}</li>);
+        <li 
+            key={i}
+            data-item-index={i}
+            className={selectedItemIndex === i && 'selected' || ''}>
+            
+            <span>{item.plu}</span>
+            <span>{item.name}</span>
+        </li>);
 
     return (
-        <div className={classes['order-items']} onClick={onClick}>
+        <div className={classes.wrapper} onClick={onClick}>
             <ul>
                 {items}
             </ul>
@@ -77,4 +79,4 @@ function OrderItems() {
     );
 }
 
-export default OrderItems;
+export default withStyles(styles)(OrderItems);

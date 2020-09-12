@@ -9,9 +9,9 @@ let weight = '';
 let timer;
 
 window.addEventListener('keypress', (event) => {
-    //console.log(event.keyCode);
+    console.log(event.code);
     
-    if (event.keyCode >= 48 && event.keyCode <= 57) {
+    if (event.code.match(/Digit/)) {
         clearTimeout(timer);
         weight += event.key;
         weights.__setWeight(+weight / 1000);
@@ -22,8 +22,8 @@ window.addEventListener('keypress', (event) => {
         }, 500);
         return;
     }
-    if (event.keyCode === 116) { app.__changeTheme(); return; }
-    if (event.keyCode === 122) { weights.__setStable(+event.key); return; }
+    if (event.code === 'KeyT') { app.__changeTheme(); return; }
+    if (event.code === 'KeyZ') { weights.__setStable(+event.key); return; }
     
 });
 

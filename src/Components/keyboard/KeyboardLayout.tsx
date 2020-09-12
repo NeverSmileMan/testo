@@ -7,18 +7,18 @@ import { withStyles, WithStyles, createStyles, ClassKeyInferable } from '@materi
 interface keyboardLayoutProps {
     options: IKeyboardOptions;
     diffKeys?: IDifferentKeys;
-    keyStyleName?: string;
+    keyClassName?: string;
 }
 
-function KeyboardLayout({ options, diffKeys = {}, keyStyleName }: keyboardLayoutProps) {
+function KeyboardLayout({ options, diffKeys = {}, keyClassName }: keyboardLayoutProps) {
 
     Object.assign(options.differentKeys, diffKeys);
     const sizeOfElements = getSizeOfElements(options);
     const sizeOfElementsInUnits = getSizeOfElementsInUnits(sizeOfElements);
-    const styles = createStyles(getKeyboardStyles(sizeOfElementsInUnits, keyStyleName));
+    const styles = createStyles(getKeyboardStyles(sizeOfElementsInUnits));
 
     const { keyCountByRow, keyboardSet, differentKeys } = options;
-    const keys = KeyboardKeys({ keyboardSet, differentKeys, sizeOfElements });
+    const keys = KeyboardKeys({ keyboardSet, differentKeys, sizeOfElements, keyClassName });
     
     const rows = keyCountByRow.map((count, i) =>
         <div className={`row-${i + 1}`} key={i}>

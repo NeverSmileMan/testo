@@ -14,14 +14,16 @@ const styles = createStyles((theme: Theme) => ({
         height: 768 + 10 + 'px',
         border: '10px solid grey',
         position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
         '& .weights': {
-            height: '15.9%',
+            height: '16%',
         },
         '& .orders': {
-            height: '58.9%',
+            flex: '1 0 0',
         },
         '& .keyboard': {
-            height: '25.2%',
+            height: '25%',
         },
     },
     '@global': {

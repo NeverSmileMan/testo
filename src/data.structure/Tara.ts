@@ -5,12 +5,11 @@ import EventEmitter from 'events';
 import ActiveInputService, { IActiveInputService } from './ActiveInputService';
 
 export interface ITara {
-    doTara: () => void;
-    do: () => void;
+    doAction: () => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     getState: () => State;
-    on: (event: TaraEvents, callback: () => void) => void;
+    onChange: (callback: () => void) => void;
     off: (event: TaraEvents, callback: () => void) => void;
 }
 
@@ -33,8 +32,8 @@ export class Tara implements ITara {
         this._keyboard = ActiveInputService.getInstance();
     }
 
-    on(event: TaraEvents, callback: () => void) {
-        this._emitter.on(event, callback);
+    onChange(callback: () => void) {
+        this._emitter.on('stateChange', callback);
     }
 
     off(event: TaraEvents, callback: () => void) {
@@ -63,7 +62,7 @@ export class Tara implements ITara {
         }
         this._tara = value / 1000;
         this._input.clearValue();
-        this.doTara();
+        this.doAction();
     }
 
     isActive() {
@@ -77,11 +76,7 @@ export class Tara implements ITara {
         this._onStateChange();
     }
 
-    do() {
-        this.doTara();
-    }
-
-    doTara() {
+    doAction() {
         if (this._state === State.PENDING) {
             this._state = State.ENABLED;
             this._onStateChange();                                    

@@ -5,13 +5,13 @@ import { WithStyles, createStyles, withStyles, Theme } from '@material-ui/core/s
 import { StyledComponentProps } from '@material-ui/styles';
 
 const styles = createStyles((theme: Theme) => ({
-    btn: {
+    'wrapper': {
         flex: '1 0 0',
-        borderRadius: '0 .4em .4em 0',
-        color: '#fff',
-        alignItems: 'center',
+        borderRadius: '0 .4rem .4rem 0',
+        color: 'white',
         display: 'flex',
         justifyContent: 'center',
+        alignItems: 'center',
         flexDirection: 'column',
         backgroundColor: theme.palette.primary.main,
         '&:first-child': {
@@ -30,8 +30,8 @@ const modalService = ModalService.getInstance();
 
 export interface IControlButtonProps {
     object: {
-        do: Function;
-        on: Function;
+        doAction: Function;
+        onChange: Function;
         isActive: Function;
         getState: Function;
     },
@@ -44,11 +44,11 @@ function createControlButton(props: IControlButtonProps) {
     const { object, ModalComponent, IconComponent, text } = props;
 
     const onClick = () => {
-        object.do();
+        object.doAction();
     }
 
     function changeState(setState: React.Dispatch<() => { mode: Mode}>) {
-        object.on('stateChange', () =>
+        object.onChange(() =>
             setState(() => ({ mode: object.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON }))
         );
     }
@@ -59,7 +59,7 @@ function createControlButton(props: IControlButtonProps) {
         else modalService.showModal(null);
     }
 
-    function ControlButton(props: WithStyles) {
+    function ControlButton({ classes }: WithStyles) {
         const [{ mode }, setState] = useState({ mode: Mode.BUTTON });
 
         useEffect(() => changeState(setState), []);
@@ -67,7 +67,7 @@ function createControlButton(props: IControlButtonProps) {
         useEffect(() => showModal(mode), [mode]);
 
         const isActive = object.isActive();
-        const className = props.classes.btn + ' ' + (isActive ? '' : props.classes.disabled);
+        const className = `${classes.wrapper} ${isActive ? '' : classes.disabled}`;
 
         return (
             <div

@@ -7,23 +7,23 @@ import { MessageCode } from './data/messagesInfo';
 import ActiveInputService, { IActiveInputService } from './ActiveInputService';
 
 import EventEmitter from 'events';
-import { State, Mode } from './types/types';
+import { State } from './types/types';
 
 export interface IOrderControl {
-    order?: IOrder;
+    //order?: IOrder;
     setOrder: (order: IOrder) => void;
-    delItem: () => void;
     getOrder: () => IOrder;
+    getOrderNumber: () => number;     
+    delItem: () => void;
     getItems: () => IItemAmount[];
-    getItemsCount: () => number;
-    getOrderNumber: () => number;
-    getTotal: () => number;
     selectItem: (index: number) => void;
     isSelected: () => boolean;
-    getSelectedItemIndex: () => number | null;
-    on: (event: TabControlEvents, callback: () => void) => void;
+    getSelectedItemIndex: () => number | null;    
+    getItemsCount: () => number;
+    getTotal: () => number;
+    onChange: (callback: () => void) => void;
     off: (event: TabControlEvents, callback: () => void) => void;
-    getMode: () => Mode | null;
+    getState: () => State;
 }
 
 type TabControlEvents = 'stateChange';
@@ -37,6 +37,7 @@ class OrderControl implements IOrderControl {
     private _emitter: EventEmitter;
     private _keyboard: IActiveInputService;
     private _state: State = State.ENABLED;
+    private __counter: number = 0;
 
     constructor() {
         this._message = Message.getInstance();
@@ -138,8 +139,9 @@ class OrderControl implements IOrderControl {
         return this._order!.orderNumber;
     }
 
-    on(event: TabControlEvents, callback: () => void) {
-        this._emitter.on(event, callback);
+    onChange(callback: () => void) { //event: TabControlEvents,
+        console.log('SET CALLBACK', ++this.__counter);
+        this._emitter.on('stateChange', callback);
     }
 
     off(event: TabControlEvents, callback: () => void) {
@@ -173,9 +175,8 @@ class OrderControl implements IOrderControl {
         this._throwMessage(null);
     }
 
-    getMode() {
-        if (this._state === State.PENDING) return Mode.MODAL;
-        return null;
+    getState() {
+        return this._state;
     }
 }
 

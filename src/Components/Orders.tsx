@@ -12,12 +12,14 @@ import Controls from './controls/Controls';
 const styles = createStyles((theme: Theme) => ({
     'wrapper': {
         height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
         '& .tabs-panel': {
             height: '14%',
             display: 'flex',
         },
         '& .order-panel': {
-            height: '86%',
+            flex: '1 0 0',
             display: 'flex',
         },
     },

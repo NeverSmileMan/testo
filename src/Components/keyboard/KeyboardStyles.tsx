@@ -16,7 +16,7 @@ export interface IKeyAttr {
     'data-key'?: string;
 }
 
-export function getKeyboardLayoutStyles(sizeOfElementsInUnits: ISizeOfElementsInUnits) {
+export function getKeyboardStyles(sizeOfElementsInUnits: ISizeOfElementsInUnits) {
     return (theme: Theme) => ({
         'layout': {
             height: '100%',
@@ -34,40 +34,6 @@ export function getKeyboardLayoutStyles(sizeOfElementsInUnits: ISizeOfElementsIn
             '& .row-2': {},
             '& .row-3': {},
             '& .row-4': {},
-        },
-    });
-}
-
-export function getKeyboardKeyStyles(sizeOfElementsInUnits: ISizeOfElementsInUnits, keyStyleName?: string) {
-
-    if (keyStyleName === 'taraFix') {
-        return (theme: Theme) => ({
-            'layout': {
-                '& .key': {
-                    color: 'black',
-                    border: '2px solid',
-                    borderColor: theme.palette.primary.main,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: '0.7rem',
-                    fontSize: '1.5rem',
-                    background:'#e4e4e4', 
-                    overflow: 'hidden',
-                    fontWeight: 400,
-                    height: '100%',
-                    width: sizeOfElementsInUnits.keyWidth,
-                    marginRight: sizeOfElementsInUnits.keySpace,
-                    '&:last-child': {
-                        marginRight: '0px',
-                    },
-                },
-            }, 
-        });
-    }
-
-    return (theme: Theme) => ({
-        'layout': {
             '& .key': {
                 border: '1px solid',
                 borderColor: theme.palette.primary.main,
@@ -86,13 +52,16 @@ export function getKeyboardKeyStyles(sizeOfElementsInUnits: ISizeOfElementsInUni
                     marginRight: '0px',
                 },
             },
-        }, 
+            '& .taraFunc': {
+                borderWidth: '2px',
+                color: 'white',
+                background: theme.palette.primary.main,
+            },
+            '& .taraFix': {
+                borderWidth: '2px',
+                borderRadius: '0.7rem',
+                fontSize: '1.5rem',
+            },
+        },
     });
-}
-
-export function getKeyboardStyles(sizeOfElementsInUnits: ISizeOfElementsInUnits, keyStyleName?: string) {
-    const KeyboardLayoutStyles = getKeyboardLayoutStyles(sizeOfElementsInUnits);
-    const KeyboardKeyStyles = getKeyboardKeyStyles(sizeOfElementsInUnits, keyStyleName);
-    return (theme: Theme) =>
-        ({ layout: Object.assign(KeyboardLayoutStyles(theme)['layout'], KeyboardKeyStyles(theme)['layout']) });
 }

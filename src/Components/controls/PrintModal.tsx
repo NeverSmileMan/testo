@@ -1,76 +1,77 @@
 import React from 'react';
 import PrintObject from '../../data.structure/Print';
-import { makeStyles } from '@material-ui/styles';
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles({
+const styles = createStyles((theme: Theme) => ({
     modal: {
-      backgroundColor: 'lightgrey',
-      width: '40%',
-      height: '300px',
-      borderRadius: '10px',
-      fontSize: '30px',
-      display: 'flex',
-      justifyContent: 'center',
-      flexDirection: 'column',
-      opacity: '1',
-      margin: '0 auto',
-      //transform: 'translateY(50%)',
+        backgroundColor: 'lightgrey',
+        width: '40%',
+        height: '300px',
+        borderRadius: '10px',
+        fontSize: '30px',
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        opacity: '1',
+        margin: '0 auto',
     },
     title: {
-      padding: '40px',
-      textAlign: 'center',
+        padding: '40px',
+        textAlign: 'center',
     },
     btns: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
     },
     btn: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '50px',
-      width: '90px',
-      border: '1px solid #000',
-      borderRadius: '8px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '50px',
+        width: '90px',
+        border: '1px solid #000',
+        borderRadius: '8px',
     }
-  })
-  interface PrintProp {
-    title?: string;
-    confirm?: string;
-    reject?: string;
-  }
-
-const titleModal: string = 'Роздрукувати замовлення?';
-const modalConfirm: string = 'Так';
-const modalReject: string = 'Ні';
+}));
 
 const print = PrintObject.getInstance();
 
 const onClickTrue = () => {
-    print.doPrint(true);
+    print.doAction(true);
 };
 
 const onClickFalse = () => {
-    print.doPrint(false);
+    print.doAction(false);
 };
 
-function PrintModal({ title = titleModal, confirm = modalConfirm, reject = modalReject }: PrintProp) {
-    const clss = useStyles();
+interface Props {
+    title?: string;
+    confirm?: string;
+    reject?: string;
+};
+
+function PrintModal({
+    title = 'Роздрукувати замовлення?',
+    confirm = 'ТАК',
+    reject = 'НІ',
+    classes
+}: Props & WithStyles) {
     return (
-        // <div
-        //     className='print modal'
-        //     onClick={onClick}>
-        //     PRINT MODAL
-        // </div>
-        <div className={clss.modal}>
-        <div className={clss.title}>{title}</div>
-        <div className={clss.btns}>
-            <div className={clss.btn} onClick={onClickTrue}>{confirm}</div>
-            <div className={clss.btn} onClick={onClickFalse}>{reject}</div>
+        <div className={classes.modal}>
+            <div className={classes.title}>
+                {title}
+            </div>
+            <div className={classes.btns}>
+                <div className={classes.btn} onClick={onClickTrue}>
+                    {confirm}
+                </div>
+                <div className={classes.btn} onClick={onClickFalse}>
+                    {reject}
+                </div>
+            </div>
         </div>
-    </div>
     );
 }
 
-export default PrintModal;
+export default withStyles(styles)(PrintModal);

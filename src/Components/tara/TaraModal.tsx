@@ -1,10 +1,10 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/styles';
+import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 import TaraDisplay from './TaraDisplay';
 import KeyboardTara from './KeyboardTara';
 import KeyboardTaraFix from './KeyboardTaraFix';
 
-const useStyles = makeStyles({
+const styles = createStyles({
     'container': {
         display: 'flex',
         flexDirection: 'column',
@@ -28,9 +28,7 @@ const useStyles = makeStyles({
     },
 });
 
-const ModalTara = () => {
-    const classes = useStyles();
-
+function TaraModal ({ classes }: WithStyles) {
     return (
         <div className={classes.container}>
             <TaraDisplay containerClassName='display'/>
@@ -40,4 +38,4 @@ const ModalTara = () => {
     );
 };
 
-export default ModalTara;
+export default TaraModal;

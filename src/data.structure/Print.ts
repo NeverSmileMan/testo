@@ -3,12 +3,11 @@ import EventEmitter from 'events';
 
 export interface IPrint {
     onPrint: (callback: () => void) => void;
-    on: (event: PrintEvents, callback: () => void) => void;
+    onChange: (callback: () => void) => void;
     off: (event: PrintEvents, callback: () => void) => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
-    doPrint: (confirm?: boolean) => void;
-    do: (confirm?: boolean) => void;
+    doAction: (confirm?: boolean) => void;
     getState: () => State;
 }
 
@@ -27,8 +26,8 @@ export class Print implements IPrint {
         this._callbackOnPrint = callback;
     }
 
-    on(event: PrintEvents, callback: () => void) {
-        this._emitter.on(event, callback);
+    onChange(callback: () => void) {
+        this._emitter.on('stateChange', callback);
     }
 
     off(event: PrintEvents, callback: () => void) {
@@ -39,28 +38,24 @@ export class Print implements IPrint {
         if (this._state === State.PENDING) return;
         if (value) this._state = State.ENABLED;
         else this._state = State.DISABLED;
-        this._onStateChange();
+        this._onChange();
     }
 
     isActive() {
         return this._state === State.ENABLED || false;
     }
 
-    do(confirm?: boolean) {
-        this.doPrint(confirm);
-    }
-
-    doPrint(confirm?: boolean) {
+    doAction(confirm?: boolean) {
         if (this._state === State.PENDING) {
             this._state = State.ENABLED;
-            this._onStateChange();
+            this._onChange();
             if (confirm) this._onPrint();
             return;
         }
 
         if (!this.isActive()) return;    
         this._state = State.PENDING;
-        this._onStateChange();
+        this._onChange();
     }
 
     getState() {
@@ -71,7 +66,7 @@ export class Print implements IPrint {
         if (this._callbackOnPrint) this._callbackOnPrint();
     }
 
-    private _onStateChange() {
+    private _onChange() {
         this._emitter.emit('stateChange');
     }
 }

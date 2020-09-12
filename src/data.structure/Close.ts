@@ -3,12 +3,11 @@ import EventEmitter from 'events';
 
 export interface IClose {
     onClose: (callback: () => void) => void;
-    on: (event: CloseEvents, callback: () => void) => void;
+    onChange: (callback: () => void) => void;
     off: (event: CloseEvents, callback: () => void) => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
-    doClose: (confirm?: boolean) => void;
-    do: (confirm?: boolean) => void;
+    doAction: (confirm?: boolean) => void;
     getState: () => State;
 }
 
@@ -27,8 +26,9 @@ export class Close implements IClose {
         this._callbackOnClose = callback;
     }
 
-    on(event: CloseEvents, callback: () => void) {
-        this._emitter.on(event, callback);
+    onChange(callback: () => void) {
+        console.log(callback);
+        this._emitter.on('stateChange', callback);
     }
 
     off(event: CloseEvents, callback: () => void) {
@@ -46,11 +46,7 @@ export class Close implements IClose {
         return this._state === State.ENABLED || false;
     }
 
-    do(confirm?: boolean) {
-        this.doClose(confirm);
-    }
-
-    doClose(confirm?: boolean) {
+    doAction(confirm?: boolean) {
         if (this._state === State.PENDING) {
             if (confirm) {
                 this._state = State.DISABLED;

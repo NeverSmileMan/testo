@@ -38,25 +38,25 @@ const styles = createStyles((theme: Theme) => ({
 const close = CloseObject.getInstance();
 
 const onClickTrue = () => {
-    close.doClose(true);
+    close.doAction(true);
 };
 
 const onClickFalse = () => {
-    close.doClose(false);
+    close.doAction(false);
 };
 
-type Props = {
+interface Props {
     title?: string;
     confirm?: string;
     reject?: string;
-} & WithStyles;
+};
 
 function CloseModal({
     title = 'Ви хочете остаточно закрити замовлення?',
     confirm = 'ТАК',
     reject = 'НІ',
     classes
-}: Props): React.ReactElement {
+}: Props & WithStyles) {
     return (
         <div className={classes.modal}>
             <div className={classes.title}>{title}</div>

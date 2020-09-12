@@ -6,9 +6,10 @@ interface Props {
     keyboardSet: string[];
     differentKeys: IDifferentKeys;
     sizeOfElements: ISizeOfElements;
+    keyClassName?: string;
 }
 
-function KeyboardKeys({ keyboardSet, differentKeys, sizeOfElements }: Props): React.ReactElement[] {
+function KeyboardKeys({ keyboardSet, differentKeys, sizeOfElements, keyClassName }: Props): React.ReactElement[] {
 
     const keys = keyboardSet.map((key, i) => {
 
@@ -31,7 +32,7 @@ function KeyboardKeys({ keyboardSet, differentKeys, sizeOfElements }: Props): Re
 
             return (
                 <div
-                    className='key'
+                    className={`key ${keyClassName}`}
                     key={i}
                     style={style}
                     {...attr}>

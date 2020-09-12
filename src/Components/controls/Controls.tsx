@@ -13,7 +13,7 @@ const styles = createStyles((theme: Theme) => ({
 function Controls({ classes }: WithStyles) {
 
     return (
-        <div className={`${classes.controls} controls`}>
+        <div className={classes.controls}>
             <Buttons.TaraButton />
             <Buttons.PrintButton />
             <Buttons.CloseButton />
