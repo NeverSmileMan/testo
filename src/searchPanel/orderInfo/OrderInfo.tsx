@@ -44,7 +44,7 @@ const calc = React.useCallback(()=>{
     let x : any;
   if (props.value.length) props.value.forEach((item : any) => w.push(item.cost));
   if (props.value.length) x = w.reduce((acc : any, cur : any)=> acc + cur);
-  return x;
+  return x.toFixed(2);
 }, [ props])
 
 
@@ -56,7 +56,7 @@ const calc = React.useCallback(()=>{
                     <DeleteForeverIcon fontSize='small'/>
                 </div> :
                 <div className={classes.total}>
-                   { props.value.length  ? <>{calc()}</>: <>{null}</>}
+                   { props.value.length  ? <>{calc()}</>: <>{(0).toFixed(2)}</>}
                 </div>
             }
         </div>
