@@ -40,7 +40,7 @@ function Tabs(props: any) {
 	                                               tab={tab}
 																								 active={activeTab === props.tabs[index].tabNumber}
 																								 index={props.tabs[index].tabNumber}
-	                                               key={index}/>
+	                                               key={props.tabs[index].tabNumber}/>
 	)
 	return (
 		<div className={header_tabs}>

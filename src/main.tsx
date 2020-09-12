@@ -92,6 +92,11 @@ export default function Main() {
 		deleteTab,
 	] = useTabs(setError, setModalType, ScalePlug);
 
+  console.log('tabItems',tabItems,
+  'activeTab',activeTab,
+  'activeItem',	 activeItem,	
+)
+
 	const confirmClose = () => {
 		setType(null)();
 		deleteTab();
@@ -255,17 +260,26 @@ function useTabs(
 
 	const deleteTab = useCallback(() => {
     if (tabItems.length === 1) {
-      tabItems[activeTab].items = [];
+      tabItems[activeTab] = {
+        tabNumber: 0,
+        tara: -1,
+        items: [],
+      }
       return;
     }
-    setTabItems(tabItems.filter((item) => item.tabNumber !== activeTab));
 		setFreeTabNumbers((prevState) => {
       prevState[activeTab] = false;
 			return prevState;
     });
-
-      setActiveTab(tabItems.length-2);//логика выбора активной вкладки после закрытия текущей
     
+    
+    setActiveTab(freeTabNumbers.lastIndexOf(true));//логика выбора активной вкладки после закрытия текущей
+
+    setTabItems(()=>tabItems.filter((item) => item.tabNumber !== activeTab));
+
+    
+    
+
 	}, [tabItems, activeTab, freeTabNumbers]); //&&&&
 
 	const getTabNumber = useCallback(() => {
