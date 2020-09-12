@@ -44,6 +44,7 @@ export default function AddedItemsTable({ values, onClick, active }: any): React
 					addUnits={{ amount: item.type === 'ваговий' ? 'г.' : 'шт.' }}
 					active={active}
 					key={i}
+					onClick={onClick}
 				/>
 			))}
 		</div>

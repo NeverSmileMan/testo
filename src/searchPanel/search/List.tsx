@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import itemsData, { IItem } from './itemsData';
+import {MainContext} from '../../main';
+
 
 const useStyles = makeStyles((theme: Theme) => ({
     'list': {
@@ -42,6 +44,9 @@ function List({ input }: { input: string }) {
     const classes = useStyles();
     const [{ filter, data = null }, setState] = useState({ filter: input } as { filter: string, data: IItem[] | null});
 
+const context = React.useContext(MainContext);
+
+
     useEffect(() => {
         if (!input) {
             setState(() => ({ filter: '', data: null }));
@@ -58,8 +63,10 @@ function List({ input }: { input: string }) {
     if (!data) return null;
     
     const items = data.map((item, i) => 
-        <li key={i} data-item-index={i}>
-            <span>{item.plu}</span>
+        <li key={i} data-item-index={i} onClick={()=>{
+            context.addItem(item) 
+        }} > {/****** плохАААААААААА!!! *****/}
+            <span>{item.code}</span>
             <span>{item.name}</span>
         </li>
     );
@@ -68,7 +75,7 @@ function List({ input }: { input: string }) {
         <div className={classes.list}>
             {items.length ?
 
-                <ul>
+                <ul >
                     {items}
                 </ul> :
 

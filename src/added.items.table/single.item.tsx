@@ -19,6 +19,7 @@ interface Props {
 	active: Item | null;
 	changeRule: ChangeRule; //переназвать
 	addUnits: AddUnits;
+	onClick: any;
 }
 
 type ChangeRule = {
@@ -67,15 +68,19 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 );
 
-export default function SingleItem({ item, columns, changeRule = {}, addUnits = {}, active }: Props): ReactElement {
+export default function SingleItem({ item, columns, changeRule = {}, addUnits = {}, active, onClick }: Props): ReactElement {
 	const classes = useStyles();
 
-	const onClick = useCallback(() => {
-		// триггер метода на удаление товара
-	}, [item]);
+	const onClick_ = useCallback(() => {
+		if (active === item) {
+			onClick(null);
+		} else {
+			onClick(item);
+		}
+	}, [item, active]);
 
 	return (
-		<div onClick={onClick} className={`${classes.row} ${active === item ? classes.row : ''}`}>
+		<div onClick={onClick_} className={`${classes.row} ${active === item ? classes.active : ''}`}>
 			{columns.map((i: keyof Item, index) => (
 				<div key={index} className={`${classes.font} ${index ? classes.nthCol : classes.firstCol}`}>
 					{/* значение */ changeRule[i] ? <span>{changeRule[i]}</span> : <span>{item[i]}</span>}

@@ -29,20 +29,23 @@ const styles = makeStyles({
 	}
 })
 
-const Tabs: FC = () => {
+function Tabs(props: any) {
+	
+	const {addTab, setActiveTab, activeTab} = useContext(MainContext)
 
-	const {addTab, setActive, tabs, activeTab} = useContext(MainContext)
+// console.log(activeTab,props.tabs[activeTab])
+
 	const {header_tabs, tab} = styles()
-	const viewTabs = tabs.map((tab, index) => <Tab setActive={setActive}
+	const viewTabs = props.tabs.map((tab: any, index: any) => <Tab setActive={setActiveTab}
 	                                               tab={tab}
-	                                               index={index}
-	                                               active={activeTab === index}
+																								 active={activeTab === props.tabs[index].tabNumber}
+																								 index={props.tabs[index].tabNumber}
 	                                               key={index}/>
 	)
 	return (
 		<div className={header_tabs}>
 			{viewTabs}
-			{tabs.length < MAX_NUMBER_OF_TABS ?
+			{props.tabs.length < MAX_NUMBER_OF_TABS ?
 				<div className={tab} onClick={addTab}>+</div>
 				: null}
 		</div>
