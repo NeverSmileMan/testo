@@ -33,14 +33,13 @@ function Tabs(props: any) {
 	
 	const {addTab, setActiveTab, activeTab} = useContext(MainContext)
 
-// console.log(activeTab,props.tabs[activeTab])
 
 	const {header_tabs, tab} = styles()
 	const viewTabs = props.tabs.map((tab: any, index: any) => <Tab setActive={setActiveTab}
-	                                               tab={tab}
-																								 active={activeTab === props.tabs[index].tabNumber}
-																								 index={props.tabs[index].tabNumber}
-	                                               key={props.tabs[index].tabNumber}/>
+																														tab={tab}
+																														index={index}
+																														active={activeTab === index}
+																														key={index}/>
 	)
 	return (
 		<div className={header_tabs}>

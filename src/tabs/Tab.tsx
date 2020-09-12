@@ -62,7 +62,7 @@ const Tab: FC<PropsTab> = ({tab, setActive, active, index}) => {
 	return <div id={`${index}`}
 	            onClick={()=>setActive(index)}
 	            className={`${tab_style} ${active ? tab_active : ''}`}>
-		{tab.tabNumber+1}
+		{tab.tabNumber}
 	</div>
 
 }

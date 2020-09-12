@@ -92,11 +92,6 @@ export default function Main() {
 		deleteTab,
 	] = useTabs(setError, setModalType, ScalePlug);
 
-  console.log('tabItems',tabItems,
-  'activeTab',activeTab,
-  'activeItem',	 activeItem,	
-)
-
 	const confirmClose = () => {
 		setType(null)();
 		deleteTab();
@@ -187,7 +182,7 @@ function useTabs(
 ] {
 	const [tabItems, setTabItems] = useState<TabItems[]>([
 		{
-			tabNumber: 0,
+			tabNumber: 1,
 			tara: -1,
 			items: [],
 		},
@@ -247,50 +242,43 @@ function useTabs(
 	const print = useCallback(() => {}, []);
 	const close = useCallback(() => {}, []);
 
-	const addTab = useCallback(() => {
-    const number = getTabNumber();
-		tabItems.push({
-			tabNumber: number,
+  const addTab = useCallback(() => {
+    const num = freeTabNumbers.findIndex(item => !item) + 1
+    setFreeTabNumbers((prevState) => {
+      prevState[num - 1] = true;
+      return prevState
+    })
+    setTabItems((prevState) => [...prevState, {
+			tabNumber: num,
 			tara: -1,
 			items: [],
-    });
-    setTabItems([...tabItems]);
-    setActiveTab(number);
-	}, [tabItems]);
+		}])
+    setActiveTab(tabItems.length)
+  }, [tabItems, freeTabNumbers])
 
-	const deleteTab = useCallback(() => {
+  const deleteTab = useCallback(() => {
+    console.log('1>', 'we a here')
     if (tabItems.length === 1) {
-      tabItems[activeTab] = {
-        tabNumber: 0,
-        tara: -1,
-        items: [],
+      if (tabItems[0].tabNumber === 1) return
+      else {
+        setFreeTabNumbers((prevState) => {
+          prevState[0] = true;
+          return prevState
+        })
+        setTabItems((prevState) => [...prevState, {
+          tabNumber: 1,
+          tara: -1,
+          items: [],
+        }] )
       }
-      return;
     }
-		setFreeTabNumbers((prevState) => {
-      prevState[activeTab] = false;
-			return prevState;
-    });
-    
-    
-    setActiveTab(                  );//логика выбора активной вкладки после закрытия текущей
-
-    setTabItems(()=>tabItems.filter((item) => item.tabNumber !== activeTab));
-
-    
-    
-
-	}, [tabItems, activeTab, freeTabNumbers]); //&&&&
-
-	const getTabNumber = useCallback(() => {
-		const num = freeTabNumbers.findIndex((item) => !item);
-		setFreeTabNumbers((prevState) => {
-			prevState[num] = true;
-			return prevState;
-		});
-
-		return num;
-	}, [freeTabNumbers]);
+    setFreeTabNumbers((prevState) => {
+      prevState[tabItems[activeTab].tabNumber - 1] = false;
+      return prevState
+    })
+    setTabItems((prevState) => prevState.filter((value, index) => index !== activeTab));
+    setActiveTab((prevTabNum) => prevTabNum ? prevTabNum - 1 : 0);
+  }, [tabItems, activeTab])
 
 	return [tabItems, activeTab, activeItem, setActiveTab, setActiveItem, addItem, deleteItem, addTab, deleteTab];
 }
@@ -298,49 +286,4 @@ function useTabs(
 
 
 
-const [modalType, setModalType] = useState(null as string | null);
-const setType = (type: string | null): any => () => setModalType(type)
 
-const [tabs, setTabs] = useState([{tabNumber: 1} as ITab])
-const [activeTab, setActiveTab] = useState(0)
-
-const [chooseFreeNumber, setChooseFreeNumber] = useState(() => {
-  const arr = Array(MAX_NUMBER_OF_TABS).fill(false)
-  arr[0] = true
-  return arr
-})
-const setActive = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-  const activeEl = +(e.target as Element).id
-  setActiveTab(activeEl)
-}, [tabs, activeTab])
-const addTab = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-  const num = chooseFreeNumber.findIndex(item => !item) + 1
-  setChooseFreeNumber((prevState) => {
-    prevState[num - 1] = true;
-    return prevState
-  })
-  setTabs((prevState) => [...prevState, {tabNumber: num}])
-  setActiveTab(tabs.length)
-
-}, [tabs, chooseFreeNumber])
-
-
-const deleteTab = useCallback(() => {
-  console.log('1>', 'we a here')
-  if (tabs.length === 1) {
-    if (tabs[0].tabNumber === 1) return
-    else {
-      setChooseFreeNumber((prevState) => {
-        prevState[0] = true;
-        return prevState
-      })
-      setTabs((prevState) => [...prevState, {tabNumber: 1}] )
-    }
-  }
-  setChooseFreeNumber((prevState) => {
-    prevState[tabs[activeTab].tabNumber - 1] = false;
-    return prevState
-  })
-  setTabs((prevState) => prevState.filter((value, index) => index !== activeTab));
-  setActiveTab((prevTabNum) => prevTabNum ? prevTabNum - 1 : 0);
-}, [tabs, activeTab])
