@@ -10,7 +10,8 @@ import OrderControl from './orders/OrderControl';
 import Controls from './controls/Controls';
 
 const styles = createStyles((theme: Theme) => ({
-    'orders': {
+    'wrapper': {
+        height: '100%',
         '& .tabs-panel': {
             height: '14%',
             display: 'flex',
@@ -22,15 +23,9 @@ const styles = createStyles((theme: Theme) => ({
     },
 }));
 
-interface Props {
-    containerClassName: string;
-}
-
-function Orders({ containerClassName, classes }: Props & WithStyles ) {
-
-    const className = `${containerClassName} ${classes.orders}`;
+function Orders({ classes }: WithStyles ) {
     return (
-        <div className={className}>
+        <div className={classes.wrapper}>
             <div className='tabs-panel'>
                 <TabsNav />
                 <Message />

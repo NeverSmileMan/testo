@@ -50,9 +50,15 @@ const styles = createStyles((theme: Theme) => ({
 function Main({ classes }: WithStyles ) {
     return (
         <div className={classes.main}>
-            <Weights containerClassName='weights'/>
-            <Orders containerClassName='orders' />
-            <Keyboard containerClassName='keyboard'/>
+            <div className='weights'>
+                <Weights />
+            </div>
+            <div className='orders'>
+                <Orders />
+            </div>
+            <div className='keyboard'>
+                <Keyboard />
+            </div>
             <Modal />
         </div>
     );

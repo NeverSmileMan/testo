@@ -86,7 +86,6 @@ class OrderControl implements IOrderControl {
 
         this._weights.setPrice(item.price, item.name);
         const newItem: IItemAmount = new ItemAmount(item, this._weights.getSum());
-        //const newItem: IItemAmount = new ItemAmount(item, 10);
         this._order!.items.push(newItem);
         this._setTotal(newItem.sum);
         this.selectItem(null);
@@ -155,6 +154,7 @@ class OrderControl implements IOrderControl {
         if (this._state === State.PENDING) {
             if (this._weights.getWeight() <= 0) {
                 this._state = State.ENABLED;
+                this._weights.setPrice(null);
                 this._onChange();
             }
             return;

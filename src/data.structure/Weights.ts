@@ -13,7 +13,7 @@ export interface IWeights {
     getSum: () => number;
     setTara: (value: number) => void;
     getTara: () => number;
-    setPrice: (value: number, title: string) => void;
+    setPrice: (value: number | null, title?: string) => void;
     getWeight: () => number;
     on: (event: WeightsEvents, callback: () => void) => void;
     off: (event: WeightsEvents, callback: () => void) => void;
@@ -63,9 +63,9 @@ export class Weights implements IWeights{
         return this._tara;
     }
 
-    setPrice(value: number, title: string) {
-        this._price = value;
-        this._title = title;
+    setPrice(value: number | null, title: string = '') {
+        this._price = value || 0;
+        this._title = title || '';
         this._onStateChange()
     }
 

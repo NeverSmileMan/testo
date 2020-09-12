@@ -19,7 +19,6 @@ export interface IKeyAttr {
 export function getKeyboardLayoutStyles(sizeOfElementsInUnits: ISizeOfElementsInUnits) {
     return (theme: Theme) => ({
         'layout': {
-            flex: '1 0 0',
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
@@ -89,4 +88,11 @@ export function getKeyboardKeyStyles(sizeOfElementsInUnits: ISizeOfElementsInUni
             },
         }, 
     });
+}
+
+export function getKeyboardStyles(sizeOfElementsInUnits: ISizeOfElementsInUnits, keyStyleName?: string) {
+    const KeyboardLayoutStyles = getKeyboardLayoutStyles(sizeOfElementsInUnits);
+    const KeyboardKeyStyles = getKeyboardKeyStyles(sizeOfElementsInUnits, keyStyleName);
+    return (theme: Theme) =>
+        ({ layout: Object.assign(KeyboardLayoutStyles(theme)['layout'], KeyboardKeyStyles(theme)['layout']) });
 }

@@ -11,24 +11,21 @@ import {
 import KeyboardLayout from './KeyboardLayout';
 
 const styles = createStyles((theme: Theme) => ({
-    'keyboard': {
+    'wrapper': {
+        height: '100%',
         display: 'flex',
         padding: '0.5rem',
-        paddingLeft: '0.5rem',
         paddingRight: '1rem',
         '& .letters': {
             width: '60%',
-            display: 'flex',
             marginRight: '2%',
         },
         '& .nums': {
             flex: '1 0 0',
-            display: 'flex',
             marginRight: '1.8%',
         },
         '& .func': {
             width: '15%',
-            display: 'flex',
         },
     },
 }));
@@ -42,48 +39,38 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     key && keyboard.onClick(key);
 };
 
-const getLangHandler = (setLang: React.Dispatch<(lang: string) => string>) =>
-    (event: React.MouseEvent<HTMLDivElement>) => {
-        const target = event.target as HTMLDivElement;
-        const currentLang = target.dataset['nextLang'];
-        if (!currentLang) return;
-        setLang(() => currentLang);
-        const nextLang = currentLang === 'UA' ? 'EN' : 'UA';
-        target.setAttribute('data-next-lang', nextLang);
+let setLang: React.Dispatch<(lang: string) => string>;
+
+const langHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLDivElement;
+    const currentLang = target.dataset['nextLang'];
+    if (!currentLang) return;
+    setLang(() => currentLang);
+    const nextLang = currentLang === 'UA' ? 'EN' : 'UA';
+    target.setAttribute('data-next-lang', nextLang);
 };
 
-const getDiffKeys = (setLang: React.Dispatch<(lang: string) => string>) => {
-    return {
-        'LANG': {
-            content: 'EN',
-            attr: {
-                onClick: getLangHandler(setLang),
-                'data-next-lang': 'EN',
-            },
+const DiffKeys = {
+    'LANG': {
+        content: 'EN',
+        attr: {
+            onClick: langHandler,
+            'data-next-lang': 'EN',
         },
-    };
+    },
 };
 
 const KeyboardLayoutUA = KeyboardLayout({ options: KeyboardLayoutOptionsUA });
 const KeyboardLayoutEN = KeyboardLayout({ options: KeyboardLayoutOptionsEN });
 const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsNUMS });
+const KeyboardLayoutFUNC = KeyboardLayout({ options: KeyboardLayoutOptionsFUNC, diffKeys: DiffKeys })
 
+function Keyboard({ classes }: WithStyles ) {
+    let lang;
+    [lang, setLang] = useState('UA');
 
-interface Props {
-    containerClassName: string;
-}
-
-function Keyboard({ containerClassName, classes }: Props & WithStyles ) {
-
-    const [lang, setLang] = useState('UA');
-    const [diffKeys] = useState(() => getDiffKeys(setLang));
-    const [KeyboardLayoutFUNC] = useState(() =>
-        KeyboardLayout({ options: KeyboardLayoutOptionsFUNC, diffKeys: diffKeys })
-    );
-
-    const className = `${containerClassName} ${classes.keyboard}`;
     return (
-        <div className={className} onClick={onClick}>
+        <div className={classes.wrapper} onClick={onClick}>
             <div className='letters'>
                 {lang === 'UA' && <KeyboardLayoutUA />}
                 {lang === 'EN' && <KeyboardLayoutEN />}

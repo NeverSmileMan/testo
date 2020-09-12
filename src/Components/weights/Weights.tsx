@@ -6,21 +6,14 @@ import {
 import WeightsDisplay from './WeightsDisplay';
 
 const styles = createStyles((theme: Theme) => ({
-    'weights': {
-        backgroundColor: '#e4e4e4',
+    'wrapper': {
+        height: '100%',
     }
 }));
 
-interface Props {
-    containerClassName: string;
-}
-
-function Weights({ containerClassName, classes }: Props & WithStyles ) {
-
-    const className = `${containerClassName} ${classes.weights}`;
-
+function Weights({ classes }: WithStyles ) {
     return (
-        <div className={className}>
+        <div className={classes.wrapper}>
             <WeightsDisplay />
         </div>
     );

@@ -1,8 +1,8 @@
 import React from 'react';
 import { getSizeOfElements, getSizeOfElementsInUnits, IKeyboardOptions } from '../../functions/keyboardFunc';
-import { getKeyboardKeyStyles, getKeyboardLayoutStyles, IDifferentKeys } from './KeyboardStyles';
+import { getKeyboardStyles, IDifferentKeys } from './KeyboardStyles';
 import KeyboardKeys from './KeyboardKeys';
-import { withStyles, createStyles } from '@material-ui/styles';
+import { withStyles, WithStyles, createStyles, ClassKeyInferable } from '@material-ui/styles';
 
 interface keyboardLayoutProps {
     options: IKeyboardOptions;
@@ -15,8 +15,7 @@ function KeyboardLayout({ options, diffKeys = {}, keyStyleName }: keyboardLayout
     Object.assign(options.differentKeys, diffKeys);
     const sizeOfElements = getSizeOfElements(options);
     const sizeOfElementsInUnits = getSizeOfElementsInUnits(sizeOfElements);
-    const stylesLayout = createStyles(getKeyboardLayoutStyles(sizeOfElementsInUnits));
-    const stylesKey = createStyles(getKeyboardKeyStyles(sizeOfElementsInUnits, keyStyleName));
+    const styles = createStyles(getKeyboardStyles(sizeOfElementsInUnits, keyStyleName));
 
     const { keyCountByRow, keyboardSet, differentKeys } = options;
     const keys = KeyboardKeys({ keyboardSet, differentKeys, sizeOfElements });
@@ -27,17 +26,15 @@ function KeyboardLayout({ options, diffKeys = {}, keyStyleName }: keyboardLayout
         </div>
     );
     
-    function Layout(props: { classes: { [key: string]: string } }) {
-        const className = props.classes.layout;
+    function Layout({ classes }: WithStyles<ClassKeyInferable<{}, any>>) {
         return (
-            <div className={className}>
+            <div className={classes.layout}>
                 {rows}
             </div>
         );
     };
 
-    return withStyles(stylesKey)(
-            withStyles(stylesLayout)(Layout));
+    return withStyles(styles)(Layout);
 };
     
 export default KeyboardLayout;
