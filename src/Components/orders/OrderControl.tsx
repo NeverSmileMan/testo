@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import OrderInfo from './OrderInfo';
-import Search from './../search/Search';
-import OrderItems from './OrderItems';
-import TabControl from '../../data.structure/OrderControl';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles } from '@material-ui/core/styles';
+import OrderControlObject from '../../data.structure/OrderControl';
 import { Mode, State } from '../../data.structure/types/types';
 import ModalService from '../../data.structure/ModalService';
+import OrderInfo from './OrderInfo';
+import Search from '../search/Search';
+import OrderItems from './OrderItems';
 import OrderControlModal from './OrderControlModal';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
 const styles = createStyles((theme: Theme) => ({
     'wrapper': {
@@ -24,13 +26,14 @@ const styles = createStyles((theme: Theme) => ({
     },
 }));
 
-const tabControl = TabControl.getInstance();
+const orderControl = OrderControlObject.getInstance();
 const modalService = ModalService.getInstance();
 
-function changeState(setState: React.Dispatch<() => Mode | null>) {
-    tabControl.onChange(() =>
-        setState(() => tabControl.getState() === State.PENDING ? Mode.MODAL : null)
-    );
+let setState: React.Dispatch<() => Mode | null>;
+function changeState() {
+    const getMode = () => orderControl.getState() === State.PENDING ? Mode.MODAL : null;
+    orderControl.onChange(() => setState(getMode));
+    return getMode();
 }
 
 function showModal(mode: Mode | null) {
@@ -40,14 +43,13 @@ function showModal(mode: Mode | null) {
 }
 
 function OrderControl({ classes }: WithStyles) {
-    const [mode, setState] = useState(null as (Mode | null));
-    
-    useEffect(() => changeState(setState), []);
+    let mode: Mode | null;
+    [mode, setState] = useState(changeState);
     
     useEffect(() => showModal(mode), [mode]);
 
     return (
-        <div className={classes['wrapper']}>
+        <div className={classes.wrapper}>
             <div className='search-panel'>
                 <Search />
                 <OrderInfo />

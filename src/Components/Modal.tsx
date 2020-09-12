@@ -1,35 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import ModalService from '../data.structure/ModalService';
+import React, { useState } from 'react';
 import {
     createStyles, Theme,
     withStyles, WithStyles,
 } from '@material-ui/core/styles';
+import ModalService from '../data.structure/ModalService';
 
 const styles = createStyles((theme: Theme) => ({
     'modal': {
+        position: 'absolute',
+        zIndex: 1000,
+        top: '16%',
+        width: '100%',           
+        height: '84%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '84.1%',
-        width: '100%',
-        zIndex: 9999,
-        position: 'absolute',
-        background: 'rgba(0, 0, 0, 0.5)',
-        left: '0px',
-        top: '15.9%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
     }
 }));
 
 const modalService = ModalService.getInstance();
 
+let setState: React.Dispatch<{}>;
+const changeState = () => {
+    modalService.onShowModal(() => setState({}));
+    return {};
+}
+
 function Modal({ classes }: WithStyles ) {
-    const [, setState] = useState({});
-    
-    useEffect(() => {
-        modalService.onShowModal(() => {
-            setState({});
-        });
-    }, []);
+    [, setState] = useState(changeState);
 
     const content = modalService.getContent();
     return (content ? 
