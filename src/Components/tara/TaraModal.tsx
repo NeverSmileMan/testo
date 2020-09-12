@@ -5,7 +5,7 @@ import KeyboardTara from './KeyboardTara';
 import KeyboardTaraFix from './KeyboardTaraFix';
 
 const styles = createStyles({
-    'container': {
+    'wrapper': {
         display: 'flex',
         flexDirection: 'column',
         flexWrap: 'wrap',
@@ -30,7 +30,7 @@ const styles = createStyles({
 
 function TaraModal ({ classes }: WithStyles) {
     return (
-        <div className={classes.container}>
+        <div className={classes.wrapper}>
             <TaraDisplay containerClassName='display'/>
             <KeyboardTara containerClassName='keyboardTara'/>
             <KeyboardTaraFix containerClassName='keyboardTaraFix'/>
@@ -38,4 +38,4 @@ function TaraModal ({ classes }: WithStyles) {
     );
 };
 
-export default TaraModal;
+export default withStyles(styles)(TaraModal);
