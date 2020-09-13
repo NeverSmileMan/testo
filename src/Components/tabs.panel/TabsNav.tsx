@@ -1,67 +1,68 @@
 import React, { useState } from 'react';
-import app from '../../data.structure/App';
-import tabControl from '../../data.structure/OrderControl';
-import { makeStyles } from '@material-ui/core/styles';
-import { Theme } from '@material-ui/core';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles } from '@material-ui/core/styles';
+import OrdersControl, { IOrders } from '../../data.structure/OrdersControl';
 
-const useStyles = makeStyles((theme: Theme) => ({
-    'tabs-nav': {
+
+const styles = createStyles((theme: Theme) => ({
+    'wrapper': {
         width: '55%',
         paddingTop: '.4rem',
         display: 'flex',
-        '& [class*=tab]': {
+        '& .tab': {
             marginRight: '.2rem',
             width: '15%',
-            height: '100%',
             borderRadius: '.3rem .3rem 0 0',
-            fontSize: '1.2em',
-            fontWeight: 'bolder',
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#e4e4e4',
-            color: '#333',
-            border: 'none',
+            backgroundColor: theme.palette.secondary.light,
+            color: theme.palette.secondary.dark,
             cursor: 'pointer',
         },
-        '& .tab-active': {
+        '& .active': {
             backgroundColor: theme.palette.primary.main,
-            color: '#fff',
-            outline: 'none',
+            color: 'white',
         },
     },
 }));
 
-const ordersControl = app.getInstance().getOrdersControlInstance();
-const currentOrderControl = tabControl.getInstance();
+const ordersControl = OrdersControl.getInstance();
 
-const createOrder = () => {
-    ordersControl.createOrder();
-}
+const createOrder = () => ordersControl.createOrder();
 
 const selectOrder = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
     const tabElem: HTMLDivElement | null = target.closest('[data-order-number]');
-    const orderNumber = tabElem?.dataset['orderNumber'];
+    const orderNumber = tabElem?.dataset.orderNumber;
     orderNumber && Number.parseInt(orderNumber) && ordersControl.selectOrder(+orderNumber);
 }
 
-function TabsNav() {
-    const classes = useStyles();
-    const [, setState] = useState({});
+const getState = () => ({
+    ordersNumbers: [...ordersControl.getOrders().keys()],
+    currentOrderNumber: ordersControl.getCurrentOrder().orderNumber,
+    canCreate: ordersControl.canCreateOrder(),
+});
 
-    useState(() => {
-        ordersControl.onChange(() =>
-            setState({}))
-    });
+let setState: React.Dispatch<{}>;
 
-    const orders = ordersControl.getOrders();
-    const currentOrderNumber = currentOrderControl.getOrderNumber();
-    const canCreate = ordersControl.canCreateOrder();
+const changeState = () => {
+    ordersControl.onChange(() =>
+            setState({}));
+    return {};
+};
 
-    const tabs = Array.from(orders.keys()).map(orderNumber =>
+function TabsNav({ classes }: WithStyles) {
+    [, setState] = useState(changeState);
+
+    const { ordersNumbers, currentOrderNumber, canCreate } = getState();
+
+    const tabs = ordersNumbers.map(orderNumber =>
         <div 
-            className={`tab${(orderNumber === currentOrderNumber && '-active') || ''}`}
+            className={`tab ${orderNumber === currentOrderNumber && 'active' || ''}`}
             key={orderNumber}
             data-order-number={orderNumber}
             onClick={selectOrder}>
@@ -70,7 +71,7 @@ function TabsNav() {
     );
 
     return (
-        <div className={classes['tabs-nav']}>
+        <div className={classes.wrapper}>
             {tabs}
             {canCreate ?
                 <div 
@@ -84,17 +85,4 @@ function TabsNav() {
     );
 }
 
-export default TabsNav;
-
-// import TabControl from '../data.structure/TabControl';
-
-// const tabControl = TabControl.getInstance();
-
-// const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
-//     const target = event.target as HTMLElement;
-//     const itemElem: HTMLElement | null = target.closest('[data-item-index]');
-//     const itemIndex = itemElem?.dataset['itemIndex'];
-//     itemIndex && Number.parseInt(itemIndex) >=0 && tabControl.selectItem(+itemIndex);
-// }
-
-// function OrderItems() {
+export default withStyles(styles)(TabsNav);

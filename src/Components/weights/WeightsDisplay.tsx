@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles } from '@material-ui/core/styles';
+import Weights from '../../data.structure/Weights';
 
-import WeightsObject from '../../data.structure/Weights';
-const weights = WeightsObject.getInstance();
+const weights = Weights.getInstance();
 
-const useStyles = makeStyles((theme: Theme) => ({
-    grid: {
-        width: '100%', 
+const styles = createStyles((theme: Theme) => ({
+    'grid': {
         height: '100%',
         display: 'grid',
         gridTemplateColumns: 'repeat(4, 1fr)',
         gridTemplateRows: '25% 75%',
-        backgroundColor: '#e4e4e4',
+        backgroundColor: theme.palette.secondary.light,
         border: '1px solid white',
         color: theme.palette.primary.main,
         '& .val, span': {
@@ -56,20 +57,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 }));
 
-export default function Tablo() {
-  const classes = useStyles();
+function WeightsDisplay({ classes }: WithStyles) {
 
-// const [title, setTitle] = React.useState();
-// const [tara, setTara] = React.useState();
-// const [weight, setWeight] = React.useState();
-// const [price, setPrice] = React.useState();
-// const [total, setTotal] = React.useState();
-
-    const [, setState] = useState({});
-
-    useState(() => {
-        weights.on('stateChange', () =>
-            setState({}))
+    const [, setState] = useState(() => {
+        weights.onChange(() =>
+            setState({}));
+        return {};
     });
 
     return (
@@ -102,3 +95,5 @@ export default function Tablo() {
         </div>
     );
 }
+
+export default withStyles(styles)(WeightsDisplay);

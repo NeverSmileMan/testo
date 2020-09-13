@@ -6,7 +6,7 @@ import {
 import TabsNav from './tabs.panel/TabsNav';
 import Message from './tabs.panel/Message';
 import HomeButton from './tabs.panel/HomeButton';
-import OrderControl from './orders/OrderControl';
+import OrderControl from './order.control/OrderControl';
 import Controls from './controls/Controls';
 
 const styles = createStyles((theme: Theme) => ({

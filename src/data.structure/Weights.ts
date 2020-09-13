@@ -1,4 +1,5 @@
 import EventEmitter from 'events';
+import { EventType } from './types/types';
 
 export interface IWeights {
 
@@ -15,24 +16,17 @@ export interface IWeights {
     getTara: () => number;
     setPrice: (value: number | null, title?: string) => void;
     getWeight: () => number;
-    on: (event: WeightsEvents, callback: () => void) => void;
-    off: (event: WeightsEvents, callback: () => void) => void;
-    __setWeight: (value: number) => void;
-    __getPrice: () => number;
-    __getTitle: () => string;
-    __setStable: (isStable: boolean) => void;
+    onChange: (callback: () => void) => void;
+    off: (event: EventType, callback: () => void) => void;
 }
 
-type WeightsEvents = 'stateChange';
-
-export class Weights implements IWeights{
+export class Weights implements IWeights {
     private _emitter: EventEmitter;
-    private _isStable: boolean = true; //false
+    protected _isStable: boolean = true; //false
     private _tara: number = 0;
-    private _price: number = 0;
-    private _weight: number = 0;
-    private _title: string = '';
-    private _callbackOnStateChange?: () => void;
+    protected _price: number = 0;
+    protected _weight: number = 0;
+    protected _title: string = '';
 
     /* Характеристики вагів: */
     public readonly minWeight: number = 0.04;
@@ -56,7 +50,7 @@ export class Weights implements IWeights{
 
     setTara(value: number) {
         this._tara = value;
-        this._onStateChange();
+        this._onChange();
     }
 
     getTara(): number {
@@ -66,37 +60,43 @@ export class Weights implements IWeights{
     setPrice(value: number | null, title: string = '') {
         this._price = value || 0;
         this._title = title || '';
-        this._onStateChange()
+        this._onChange()
     }
 
     getWeight(): number {
         return this._weight - this._tara;
     }
 
-    on(event: WeightsEvents, callback: () => void) {
+    onChange(callback: () => void) {
+        this._emitter.on(EventType.STATE_CHANGE, callback);
+    }
+
+    off(event: EventType, callback: () => void) {
         this._emitter.on(event, callback);
     }
 
-    off(event: WeightsEvents, callback: () => void) {
-        this._emitter.on(event, callback);
+    protected _onChange() {
+        this._emitter.emit(EventType.STATE_CHANGE);
     }
+}
 
-    private setStable(isStable: boolean) {
-        this._isStable = isStable;
-        this._onStateChange();
-    }
-    private _onStateChange() {
-        this._emitter.emit('stateChange');
-    }
+interface IWeightsTest extends IWeights {
+    __setWeight: (value: number) => void;
+    __getPrice: () => number;
+    __getTitle: () => string;
+    __setStable: (isStable: boolean) => void;
+}
+
+class WeightsTest extends Weights implements IWeightsTest {
 
     __setWeight(value: number) {
         this._weight = value;
-        this._onStateChange();
+        this._onChange();
     }
 
-    __setStable(isStable: boolean) {
-        this._isStable = !this._isStable;
-        this._onStateChange();
+    __setStable(isStable?: boolean) {
+        this._isStable = isStable === undefined ? !this._isStable : isStable;
+        this._onChange();
     }
 
     __getPrice() {
@@ -108,11 +108,11 @@ export class Weights implements IWeights{
     }
 }
 
-let instance: IWeights;
+let instance: IWeightsTest;
 
 export function getInstance() {
     if (!instance)
-        instance = new Weights();
+        instance = new WeightsTest();
     return instance;
 }
 

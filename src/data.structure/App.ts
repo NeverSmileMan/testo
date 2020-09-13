@@ -1,13 +1,13 @@
 import { IConfig, config, IEnvironment } from './data/config';
-import OrdersControl, { IOrdersControl } from './OrdersControl';
+import OrdersControl from './OrdersControl';
 import { AppState } from './types/types';
 
 export interface IApp {
-    onChange: (callback: () => void) => void;
     setEnvironment: (rect: DOMRect) => void;
     getEnvironment: () => IEnvironment;
     getState: () => AppState;
     getConfig: () => IConfig;
+    onChange: (callback: () => void) => void;
 }
 
 class App implements IApp {
@@ -15,22 +15,11 @@ class App implements IApp {
     private _state: AppState = AppState.INIT;
     protected _config: IConfig;
     private _env: IEnvironment = {} as IEnvironment;
-    private _ordersControl: IOrdersControl;
     private _callbackOnChange?: () => void;
 
     constructor() {
         this._config = config;
-        this._ordersControl = OrdersControl.getInstance(config.maxOrdersCount);
-    }
-
-    onChange(callback: () => void) {
-        this._callbackOnChange = callback;
-    }
-
-    protected _onChange() {
-        if (this._callbackOnChange) {
-            setTimeout(() => this._callbackOnChange!(), 1000);
-        }
+        OrdersControl.getInstance(config.maxOrdersCount);
     }
 
     setEnvironment(rect: DOMRect) {
@@ -50,16 +39,26 @@ class App implements IApp {
         return this._state;
     }
 
-    getOrdersControlInstance() {
-        return this._ordersControl;
-    }
-
     getConfig() {
         return this._config;
     }
+
+    onChange(callback: () => void) {
+        this._callbackOnChange = callback;
+    }
+
+    protected _onChange() {
+        if (this._callbackOnChange) {
+            setTimeout(() => this._callbackOnChange!(), 1000);
+        }
+    }
 }
 
-class AppTest extends App {
+interface IAppTest extends IApp {
+    __changeTheme: () => void;
+}
+
+class AppTest extends App implements IAppTest {
     __changeTheme() {
         console.log('THEME');
         let themeName = this._config.themeName;
@@ -71,7 +70,7 @@ class AppTest extends App {
     }
 }
 
-let instance: App;
+let instance: IAppTest;
 
 export function getInstance() {
     if (!instance)

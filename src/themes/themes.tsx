@@ -1,10 +1,10 @@
 import { createMuiTheme, Theme } from '@material-ui/core';
 
+export type ThemesNames = 'default' | 'silpo' | 'fora';
+
 type IThemes = {
     [key in ThemesNames]: Theme;
 }
-
-export type ThemesNames = 'default' | 'silpo' | 'fora';
 
 const themes: IThemes = {} as IThemes;
 

@@ -4,16 +4,19 @@ import Close, { IClose } from './Close';
 import Print, { IPrint } from './Print';
 import { Printer } from './Printer';
 
+export type IOrders = Map<number, IOrder>;
+
 export interface IOrdersControl {
     canCreateOrder: () => boolean;
     createOrder: () => void;
     selectOrder: (orderNumber: number) => void;
-    getOrders: () => Map<number, IOrder>;    
+    getCurrentOrder: () => IOrder;
+    getOrders: () => IOrders;    
     onChange: (callback: () => void) => void;
 }
 
 export class OrdersControl implements IOrdersControl {
-    private _orders: Map<number, IOrder> = new Map();
+    private _orders: IOrders = new Map();
     private _ordersFreeNums: boolean[];
     private _orderControl: IOrderControl;
     private _print: IPrint;
@@ -27,7 +30,7 @@ export class OrdersControl implements IOrdersControl {
         this._print = Print.getInstance();
         this._print.onPrint(this._printOrder.bind(this));        
         this._close = Close.getInstance();
-        this._close.onClose(this._closeOrder.bind(this));
+        this._close.onClose(this._deleteOrder.bind(this));
         this._setCurrentOrder();
     }
 
@@ -46,6 +49,10 @@ export class OrdersControl implements IOrdersControl {
 
     selectOrder(orderNumber: number) {
         this._setCurrentOrder(orderNumber);
+    }
+
+    getCurrentOrder() {
+        return this._orderControl.getOrder();
     }
 
     getOrders() {
@@ -81,7 +88,7 @@ export class OrdersControl implements IOrdersControl {
         this._setCurrentOrder(firstOrderNumber);
     }
 
-    private _closeOrder() {
+    private _deleteOrder() {
         const orderNumber = this._orderControl.getOrderNumber();
         this._orders.delete(orderNumber);
         this._ordersFreeNums[orderNumber - 1] = true;
@@ -115,7 +122,7 @@ export class OrdersControl implements IOrdersControl {
 
 let instance: OrdersControl;
 
-export function getInstance(maxOrdersCount: number) {
+export function getInstance(maxOrdersCount: number = 1) {
     if (!instance)
         instance = new OrdersControl(maxOrdersCount);
     return instance;

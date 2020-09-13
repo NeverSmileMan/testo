@@ -1,5 +1,5 @@
 import Weights, { IWeights } from './Weights';
-import { State } from './types/types';
+import { State, EventType } from './types/types';
 import Input, { IInputNumber } from './Input';
 import EventEmitter from 'events';
 import ActiveInputService, { IActiveInputService } from './ActiveInputService';
@@ -10,10 +10,8 @@ export interface ITara {
     isActive: () => boolean;
     getState: () => State;
     onChange: (callback: () => void) => void;
-    off: (event: TaraEvents, callback: () => void) => void;
+    off: (event: EventType, callback: () => void) => void;
 }
-
-type TaraEvents = 'stateChange';
 
 export class Tara implements ITara {
     private _emitter: EventEmitter;
@@ -26,17 +24,17 @@ export class Tara implements ITara {
     constructor() {
         this._emitter = new EventEmitter();
         this._weights = Weights.getInstance();
-        this._weights.on('stateChange', this._onWeightsStateChange.bind(this));
+        this._weights.onChange(this._onWeightsStateChange.bind(this));
         this._input = Input.getInputNumberInstance();
         this._input.onSelect(this._setAdditionalTara.bind(this));
         this._keyboard = ActiveInputService.getInstance();
     }
 
     onChange(callback: () => void) {
-        this._emitter.on('stateChange', callback);
+        this._emitter.on(EventType.STATE_CHANGE, callback);
     }
 
-    off(event: TaraEvents, callback: () => void) {
+    off(event: EventType, callback: () => void) {
         this._emitter.off(event, callback);
     }
 
@@ -105,7 +103,7 @@ export class Tara implements ITara {
     }
 
     private _onStateChange() {
-        this._emitter.emit('stateChange');
+        this._emitter.emit(EventType.STATE_CHANGE);
     }
 }
 

@@ -25,9 +25,9 @@ const styles = createStyles((theme: Theme) => ({
             boxShadow: 'inset 0 0 0.3rem #e4e4e4',
         },
         '& div:-webkit-scrollbar-thumb': {
-            background: '#fff',
+            background: 'white',
             borderRadius: '0 1rem 1rem 0',
-            border: '1px solid gray',
+            border: '1px solid ' +  theme.palette.secondary.dark,
             borderLeft: 'none' ,
         },
     },

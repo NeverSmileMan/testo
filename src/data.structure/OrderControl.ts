@@ -7,10 +7,9 @@ import { MessageCode } from './data/messagesInfo';
 import ActiveInputService, { IActiveInputService } from './ActiveInputService';
 
 import EventEmitter from 'events';
-import { State } from './types/types';
+import { State, EventType } from './types/types';
 
 export interface IOrderControl {
-    //order?: IOrder;
     setOrder: (order: IOrder) => void;
     getOrder: () => IOrder;
     getOrderNumber: () => number;     
@@ -22,11 +21,9 @@ export interface IOrderControl {
     getItemsCount: () => number;
     getTotal: () => number;
     onChange: (callback: () => void) => void;
-    off: (event: TabControlEvents, callback: () => void) => void;
+    off: (event: EventType, callback: () => void) => void;
     getState: () => State;
 }
-
-type TabControlEvents = 'stateChange';
 
 class OrderControl implements IOrderControl {
     private _weights: IWeights;
@@ -37,12 +34,12 @@ class OrderControl implements IOrderControl {
     private _emitter: EventEmitter;
     private _keyboard: IActiveInputService;
     private _state: State = State.ENABLED;
-    private __counter: number = 0;
+    //private __counter: number = 0;
 
     constructor() {
         this._message = Message.getInstance();
         this._weights = Weights.getInstance();
-        this._weights.on('stateChange', this._onWeightsChange.bind(this));
+        this._weights.onChange(this._onWeightsChange.bind(this));
         this._keyboard = ActiveInputService.getInstance();
         this._input = InputObject.getInputListInstance();
         this._keyboard.setActiveInput(this._input);
@@ -140,16 +137,16 @@ class OrderControl implements IOrderControl {
     }
 
     onChange(callback: () => void) { //event: TabControlEvents,
-        console.log('SET CALLBACK', ++this.__counter);
-        this._emitter.on('stateChange', callback);
+        //console.log('SET CALLBACK', ++this.__counter);
+        this._emitter.on(EventType.STATE_CHANGE, callback);
     }
 
-    off(event: TabControlEvents, callback: () => void) {
+    off(event: EventType, callback: () => void) {
         this._emitter.on(event, callback);
     }
 
     private _onChange() {
-        this._emitter.emit('stateChange');
+        this._emitter.emit(EventType.STATE_CHANGE);
     }
 
     private _onWeightsChange() {
