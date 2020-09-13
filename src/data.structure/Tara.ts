@@ -19,7 +19,7 @@ export class Tara implements ITara {
     private _tara: number = 0;
     private _state: State = State.ENABLED; //??
     private _input: IInputNumber;
-    private _keyboard: IActiveInputService;
+    // private _keyboard: IActiveInputService;
 
     constructor() {
         this._emitter = new EventEmitter();
@@ -27,7 +27,7 @@ export class Tara implements ITara {
         this._weights.onChange(this._onWeightsStateChange.bind(this));
         this._input = Input.getInputNumberInstance();
         this._input.onSelect(this._setAdditionalTara.bind(this));
-        this._keyboard = ActiveInputService.getInstance();
+        // this._keyboard = ActiveInputService.getInstance();
     }
 
     onChange(callback: () => void) {
@@ -93,7 +93,7 @@ export class Tara implements ITara {
 
         if (!this.isActive()) return;
         this._state = State.PENDING;
-        this._keyboard.setActiveInput(this._input);
+        // this._keyboard.setActiveInput(this._input);
         this._onStateChange();
         return;
     }

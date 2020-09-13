@@ -1,25 +1,19 @@
 import React from 'react';
-import KeyboardObject from '../../data.structure/Keyboard';
-import KeyboardLayout from '../keyboard/KeyboardLayout';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { 
+    createStyles, Theme,
+    withStyles, WithStyles } from '@material-ui/core/styles';
 import { 
     KeyboardLayoutOptionsTaraNUMS,
     KeyboardLayoutOptionsTaraFUNC,
 } from '../keyboard/KeyboardOptions';
+import Keyboard from '../../data.structure/Keyboard';
+import KeyboardLayout from '../keyboard/KeyboardLayout';
 
-const keyboard = KeyboardObject.getInstance();
-
-const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLElement;
-    const keyElem: HTMLElement | null = target.closest('[data-key]');
-    const key = keyElem?.dataset['key'];
-    key && keyboard.onClick(key);
-};
-
-const useStyles = makeStyles((theme: Theme) => ({
-    'keyboard': {
-        backgroundColor: '#f5f5f5',
-        borderRadius: '0 0 10px 10px',
+const styles = createStyles((theme: Theme) => ({
+    'wrapper': {
+        height: '100%',
+        backgroundColor: theme.palette.secondary.light,
+        borderRadius: '0 0 0.5rem 0.5rem',
         display: 'flex',
         padding: '0.5rem',
         '& .nums': {
@@ -30,16 +24,28 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
     },
 }));
+const keyboard = Keyboard.getInstance();
 
-const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsTaraNUMS, keyClassName: 'taraNums' });
-const KeyboardLayoutFUNC = KeyboardLayout({ options: KeyboardLayoutOptionsTaraFUNC, keyClassName: 'taraFunc' });
-function KeyboardTara({ containerClassName }: { containerClassName: string }) {
-    const classes = useStyles();
+const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    const target = event.target as HTMLElement;
+    const keyElem: HTMLElement | null = target.closest('[data-key]');
+    const key = keyElem?.dataset['key'];
+    key && keyboard.onClick(key);
+};
 
-    const className = `${classes.keyboard} ${containerClassName}`;
+const KeyboardLayoutNUMS = KeyboardLayout({
+    options: KeyboardLayoutOptionsTaraNUMS,
+    keyClassName: 'taraNums',
+});
+const KeyboardLayoutFUNC = KeyboardLayout({
+    options: KeyboardLayoutOptionsTaraFUNC,
+    keyClassName: 'taraFunc',
+});
+
+function KeyboardTara({ classes }: WithStyles) {
 
     return (
-        <div className={className} onClick={onClick}>
+        <div className={classes.wrapper} onClick={onClick}>
             <div className='nums'>
                 <KeyboardLayoutNUMS />
             </div>
@@ -50,4 +56,4 @@ function KeyboardTara({ containerClassName }: { containerClassName: string }) {
     );
 }
 
-export default KeyboardTara;
+export default withStyles(styles)(KeyboardTara);

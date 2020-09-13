@@ -67,7 +67,7 @@ function OrderInfo({ classes }: WithStyles) {
                     <DeleteForeverIcon />
                 </div> :
                 <div className='total'>
-                    <span>{total}</span>
+                    {total}
                 </div>
             }
         </div>

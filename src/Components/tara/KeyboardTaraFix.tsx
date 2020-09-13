@@ -1,18 +1,21 @@
 import React from 'react';
-import KeyboardObject from '../../data.structure/Keyboard';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { 
+    createStyles, Theme,
+    withStyles, WithStyles } from '@material-ui/core/styles';
+import Keyboard from '../../data.structure/Keyboard';
 import { KeyboardLayoutOptionsTARAFIX } from '../keyboard/KeyboardOptions';
 import KeyboardLayout from '../keyboard/KeyboardLayout';
 
-const useStyles = makeStyles((theme: Theme) => ({
-    'keyboard': {
-        backgroundColor: '#f5f5f5',
-        borderRadius: '10px',
+const styles = createStyles((theme: Theme) => ({
+    'wrapper': {
+        height: '100%',
+        backgroundColor: theme.palette.secondary.light,
+        borderRadius: '0.5rem',
         padding: '1rem 0.5rem',
     },
 }));
 
-const keyboard = KeyboardObject.getInstance();
+const keyboard = Keyboard.getInstance();
 
 const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
@@ -25,16 +28,18 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     }
 };
 
-const KeyboardLayoutTARAFIX = KeyboardLayout({ options: KeyboardLayoutOptionsTARAFIX, keyClassName: 'taraFix' });
+const KeyboardLayoutTARAFIX = KeyboardLayout({
+    options: KeyboardLayoutOptionsTARAFIX,
+    keyClassName: 'taraFix',
+});
 
-function Keyboard({ containerClassName}: { containerClassName: string }) {
-    const classes = useStyles();
-    const className = `${classes.keyboard} ${containerClassName}`;
+function KeyboardTaraFix({ classes }: WithStyles) {
+
     return (
-        <div className={className} onClick={onClick}>
+        <div className={classes.wrapper} onClick={onClick}>
             <KeyboardLayoutTARAFIX />
         </div>
     );
 }
 
-export default Keyboard;
+export default withStyles(styles)(KeyboardTaraFix);

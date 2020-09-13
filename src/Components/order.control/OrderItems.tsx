@@ -17,7 +17,7 @@ const styles = createStyles((theme: Theme) => ({
             padding: '0px',
         },
         '& li': {
-            fontSize: '1.2rem',
+            fontSize: '1.1rem',
             borderBottom: 'solid 1px ' + theme.palette.secondary.dark,
             paddingLeft: '10px',
             paddingRight: '10px',

@@ -1,4 +1,4 @@
-import { IList, List } from "./List";
+import List, { IList } from "./List";
 import { IItem } from './Item';
 import ActiveInputService, { IActiveInputService } from "./ActiveInputService";
 

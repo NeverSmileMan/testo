@@ -3,15 +3,15 @@ import itemsData from './data/items';
 
 export interface IList {
     onSelect: (callback: (item: IItem) => void) => void;
-    onUpdate: (callback: () => void) => void;
+    onChange: (callback: () => void) => void;
     selectItem: (index: number) => void;
     getItems: () => IItem[] | null;
     setFilter: (filter: string) => void;
 }
 
-export class List implements IList {
+class List implements IList {
     private _callbackOnSelect?: (item: IItem) => void;
-    private _callbackOnUpdate?: () => void;
+    private _callbackOnChange?: () => void;
     private _items: IItem[] | null = null;
     private _itemsData: IItem[];
     
@@ -37,12 +37,12 @@ export class List implements IList {
         this._callbackOnSelect = callback;
     }
 
-    onUpdate(callback: () => void) {
-        this._callbackOnUpdate = callback;
+    onChange(callback: () => void) {
+        this._callbackOnChange = callback;
     }
 
     private _onUpdate() {
-        if (this._callbackOnUpdate) this._callbackOnUpdate();   
+        if (this._callbackOnChange) this._callbackOnChange();   
     }
 
     private _onSelect(item: IItem) {
@@ -54,3 +54,5 @@ export class List implements IList {
     }
 
 }
+
+export default List;

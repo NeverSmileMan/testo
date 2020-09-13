@@ -6,7 +6,7 @@ const styles = createStyles((theme: Theme) => ({
         display: 'flex',
         justifyContent: 'center',
         color: 'white',
-        fontSize: '2rem',
+        fontSize: '1.5rem',
     }
 }));
 

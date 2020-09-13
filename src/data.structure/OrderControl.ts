@@ -4,7 +4,7 @@ import InputObject, { IInput } from './Input';
 import { IOrder } from './Order';
 import Message, { IMessage } from './Message';
 import { MessageCode } from './data/messagesInfo';
-import ActiveInputService, { IActiveInputService } from './ActiveInputService';
+// import ActiveInputService, { IActiveInputService } from './ActiveInputService';
 
 import EventEmitter from 'events';
 import { State, EventType } from './types/types';
@@ -32,7 +32,7 @@ class OrderControl implements IOrderControl {
     private _input: IInput;
     private _order?: IOrder;
     private _emitter: EventEmitter;
-    private _keyboard: IActiveInputService;
+    //private _keyboard: IActiveInputService;
     private _state: State = State.ENABLED;
     //private __counter: number = 0;
 
@@ -40,9 +40,9 @@ class OrderControl implements IOrderControl {
         this._message = Message.getInstance();
         this._weights = Weights.getInstance();
         this._weights.onChange(this._onWeightsChange.bind(this));
-        this._keyboard = ActiveInputService.getInstance();
+        //this._keyboard = ActiveInputService.getInstance();
         this._input = InputObject.getInputListInstance();
-        this._keyboard.setActiveInput(this._input);
+        //this._keyboard.setActiveInput(this._input);
         this._input.onSelect(this._addItem.bind(this));
         this._emitter = new EventEmitter();
     }

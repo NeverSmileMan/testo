@@ -1,50 +1,57 @@
 import React, { useState } from 'react';
-import InputObject from '../../data.structure/Input';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles,
+} from '@material-ui/core/styles';
+import Input from '../../data.structure/Input';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const styles = createStyles((theme: Theme) => ({
     'list': {
         backgroundColor: theme.palette.primary.light,
-        //opacity: '0.8',
-        borderLeft: 'solid 3px ' + theme.palette.primary.main,
-        borderBottom: 'solid 3px ' + theme.palette.primary.main,
+        border: 'solid 3px ' + theme.palette.primary.main,
+        borderTop: 'none',
+        borderRight: 'none',
         position: 'absolute',
         top: '17%',
         left: '0px',
         width: 'calc(100% - 3px)',
         height: '83%',
         overflowY: 'auto',
-        fontSize: '0.9em',
         '& ul': {
             listStyle: 'none',
             margin: '0px',
             padding: '0px',
-            //overflowY: 'auto',
-            //verticalAlign: 'baseline',
         },
         '& li': {
-            borderBottom: 'solid 1px gray',
+            fontSize: '1.1rem',
+            borderBottom: 'solid 1px ' + theme.palette.secondary.dark,
             paddingLeft: '10px',
             paddingRight: '10px',
             backgroundColor: 'white',
-            lineHeight: '1.5rem',
         },
-        '& span:first-child': {
+        '& span': { 
             display: 'inline-block',
-            width: '50px',
+            '&:first-child': {
+                width: '100px',
+                marginRight: '2rem',
+            },
+            '& nth-child(2)': {
+                width: '250px',
+            },
         },
         '& .not-found': {
             height: '100%',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            color: 'white',
+            color: theme.palette.primary.main,
+            fontSize: '1.5rem',
             fontWeight: 'bold',
         },
     },
 }));
 
-const list = InputObject.getInputListInstance().getListInstance();
+const list = Input.getInputListInstance().getListInstance();
 
 const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
@@ -53,15 +60,18 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     itemIndex && list.selectItem(+itemIndex);
 }
 
-function List() {
-    const classes = useStyles();
-    const [, setState] = useState({});
+let setState: React.Dispatch<{}>;
 
-    useState(() => {
-        list.onUpdate(() => {
-            setState({});
-        });
-    });
+const changeState = () => {
+    list.onChange(() =>
+        setState({})
+    );
+    return {};
+};
+
+function List({ classes }: WithStyles) {
+
+    [, setState] = useState(changeState);
 
     const itemsArray = list.getItems();
 
@@ -75,19 +85,17 @@ function List() {
     );
 
     return (
-        <div className={`${classes.list} list`} onClick={onClick}>
+        <div className={classes.list} onClick={onClick}>
             {items.length?
-
                 <ul>
                     {items}
                 </ul> :
-
                 <div className='not-found'>
-                    НІЧОГО НЕ ЗНАЙДЕНО
+                    ЗБІГИ ВІДСУТНІ
                 </div>
             }
         </div>
     );
 }
 
-export default List;
+export default withStyles(styles)(List);

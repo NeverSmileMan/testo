@@ -1,36 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import KeyboardObject from '../../data.structure/Keyboard';
-import InputObject from '../../data.structure/Input';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles,
+} from '@material-ui/core/styles';
 import ActiveInputService from '../../data.structure/ActiveInputService';
+import Input from '../../data.structure/Input';
 
-const keyboard = KeyboardObject.getInstance();
-
-// const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
-//     keyboard.onClick('CLEAR');
-//     keyboard.onClick('ENTER');
-// };
-
-const input = InputObject.getInputNumberInstance();
-const activeInputService = ActiveInputService.getInstance();
-const ifFocus = () => activeInputService.ifActiveInput(input);
-const getValue = () => (input.getValue() / 1000).toFixed(3);
-
-function changeState(setState: React.Dispatch<(state: boolean) => boolean>) {
-    input.onFocusChange(() => setState(ifFocus));
-    return () => activeInputService.delActiveInput(input);
-}
-
-function changeRef(ref: React.RefObject<HTMLDivElement>) {
-    if (ref.current) ref.current.innerHTML = getValue();
-    input.onChange(() => {
-        if (ref.current) 
-            ref.current.innerHTML = getValue();
-    });
-}
-
-const useStyle = makeStyles((theme: Theme) => ({
-    'display': {
+const styles = createStyles((theme: Theme) => ({
+    'wrapper': {
+        height: '100%',
         backgroundColor: theme.palette.primary.main,
         padding: '1rem 1.5rem 0.3rem',
         borderRadius: '10px 10px 0 0',
@@ -70,23 +48,35 @@ const useStyle = makeStyles((theme: Theme) => ({
     },
 }));
 
-function TaraDisplay({ containerClassName }: { containerClassName: string}) {
-    const classes = useStyle();
-    const [isFocus, setState] = useState(ifFocus);
-    const ref: React.RefObject<HTMLDivElement> = useRef(null);
+const input = Input.getInputNumberInstance();
+const activeInputService = ActiveInputService.getInstance();
+const ifFocus = () => activeInputService.ifActiveInput(input);
+const getValue = () => (input.getValue() / 1000).toFixed(3);
+
+let setState: React.Dispatch<() => boolean>;
+let isFocus: boolean;
+let ref: React.RefObject<HTMLDivElement>;
+function changeState() {
+    input.onFocusChange(() => setState(ifFocus));
+    input.onChange(() => {
+        if (ref.current) 
+            ref.current.innerHTML = getValue();
+    });
+    return ifFocus();
+}
+
+function TaraDisplay({ classes }: WithStyles) {
+    [isFocus, setState] = useState(changeState);
+    ref = useRef(null);
 
     useEffect(() => {
-        changeRef(ref);
-        return changeState(setState);
-    }, []);
+        if (ref.current) ref.current.innerHTML = getValue();
+        activeInputService.setActiveInput(input);
+        return () => activeInputService.delActiveInput(input);
+    });
     
-    const className = `${classes.display} ${containerClassName}`;
     return (
-        <div className={className}>
-            {/* <div className='head'>
-                <div>Тара</div>
-                <div onClick={onClick}>&#10005;</div>
-            </div> */}
+        <div className={classes.wrapper}>
             <div
                 ref={ref}
                 className={'input ' + (isFocus ? 'focus' : '')}>
@@ -95,4 +85,4 @@ function TaraDisplay({ containerClassName }: { containerClassName: string}) {
     );
 };
 
-export default TaraDisplay;
+export default withStyles(styles)(TaraDisplay);

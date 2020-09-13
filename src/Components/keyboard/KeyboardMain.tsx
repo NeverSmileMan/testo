@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import KeyboardObject from '../../data.structure/Keyboard';
 import {
     createStyles, Theme,
     withStyles, WithStyles,
 } from '@material-ui/core/styles';
+import Keyboard from '../../data.structure/Keyboard';
 import { 
     KeyboardLayoutOptionsEN, KeyboardLayoutOptionsUA,
     KeyboardLayoutOptionsNUMS, KeyboardLayoutOptionsFUNC
@@ -30,7 +30,7 @@ const styles = createStyles((theme: Theme) => ({
     },
 }));
 
-const keyboard = KeyboardObject.getInstance();
+const keyboard = Keyboard.getInstance();
 
 const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
@@ -63,9 +63,12 @@ const DiffKeys = {
 const KeyboardLayoutUA = KeyboardLayout({ options: KeyboardLayoutOptionsUA });
 const KeyboardLayoutEN = KeyboardLayout({ options: KeyboardLayoutOptionsEN });
 const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsNUMS });
-const KeyboardLayoutFUNC = KeyboardLayout({ options: KeyboardLayoutOptionsFUNC, diffKeys: DiffKeys })
+const KeyboardLayoutFUNC = KeyboardLayout({
+    options: KeyboardLayoutOptionsFUNC,
+    diffKeys: DiffKeys,
+});
 
-function Keyboard({ classes }: WithStyles ) {
+function KeyboardMain({ classes }: WithStyles ) {
     let lang;
     [lang, setLang] = useState('UA');
 
@@ -85,4 +88,4 @@ function Keyboard({ classes }: WithStyles ) {
     );
 }
 
-export default withStyles(styles)(Keyboard);
+export default withStyles(styles)(KeyboardMain);
