@@ -4,8 +4,6 @@ import {
     withStyles, WithStyles } from '@material-ui/core/styles';
 import Weights from '../../data.structure/Weights';
 
-const weights = Weights.getInstance();
-
 const styles = createStyles((theme: Theme) => ({
     'grid': {
         height: '100%',
@@ -31,63 +29,67 @@ const styles = createStyles((theme: Theme) => ({
         '& .title': {
             gridColumn: '1/4',
             gridRow: '1',
-            border: '1px solid white',
             display: 'flex',
         },
         '& .tara': {
             gridColumn: '1/2',
             gridRow: '2',
-            border: '1px solid white',
         },
         '& .weight': {
             gridColumn: '2/3',
             gridRow: '2',
-            border: '1px solid white',
         },
         '& .price': {
             gridColumn: '3/4',
             gridRow: '2',
-            border: '1px solid white',
         },
         '& .total': {
             gridColumn: '4/5',
             gridRow: '1/3',
+        },
+        '& .border': {
             border: '1px solid white',
         },
     },
 }));
 
+const weights = Weights.getInstance();
+
+let setState: React.Dispatch<{}>;
+const changeState = () => {
+    weights.onChange(
+        () => setState({})
+    );
+    return {};
+};
+
 function WeightsDisplay({ classes }: WithStyles) {
 
-    const [, setState] = useState(() => {
-        weights.onChange(() =>
-            setState({}));
-        return {};
-    });
+    [, setState] = useState(changeState);
 
     return (
-        <div className={classes.grid }>
-            <div className='title xxx'>title
+        <div className={classes.grid + ' border'}>
+            <div className='title border'>title
                 <span className='val'>
                     {weights.__getTitle()}
                 </span>
             </div>
-            <div className='tara'>tara
+            <div className='tara border'>tara
                 <div className='val'>
                     {weights.getTara().toFixed(3)}
                 </div>
             </div>
-            <div className='weight'>weight
+            <div className='weight border'>weight
                 <div className='val'>
                     {weights.getWeight().toFixed(3)}
                 </div>
             </div>
-            <div className='price'>price
+            <div className='price border'>price
                 <div className='val'>
                     {weights.__getPrice().toFixed(2)}
                 </div>
             </div>
-            <div className='total'>total
+            <div className='total border'>total
                 <div className='val'>
                     {weights.getSum().toFixed(2)}
                 </div>

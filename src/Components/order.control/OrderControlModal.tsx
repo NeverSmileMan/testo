@@ -1,5 +1,7 @@
 import React from 'react';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles } from '@material-ui/core/styles';
 
 const styles = createStyles((theme: Theme) => ({
     title: {
@@ -7,7 +9,7 @@ const styles = createStyles((theme: Theme) => ({
         justifyContent: 'center',
         color: 'white',
         fontSize: '1.5rem',
-    }
+    },
 }));
 
 interface Prop {

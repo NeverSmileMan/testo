@@ -3,7 +3,6 @@ import {
     createStyles, Theme,
     withStyles, WithStyles } from '@material-ui/core/styles';
 import HomeIcon from '@material-ui/icons/Home';
-import themes from '../../themes/themes';
 
 const styles = createStyles((theme: Theme) => ({
     'wrapper': {

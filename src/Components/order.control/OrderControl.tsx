@@ -30,6 +30,7 @@ const orderControl = OrderControlObject.getInstance();
 const modalService = ModalService.getInstance();
 
 let setState: React.Dispatch<() => Mode | null>;
+let mode: Mode | null;
 function changeState() {
     const getMode = () => orderControl.getState() === State.PENDING ? Mode.MODAL : null;
     orderControl.onChange(() => setState(getMode));
@@ -43,7 +44,7 @@ function showModal(mode: Mode | null) {
 }
 
 function OrderControl({ classes }: WithStyles) {
-    let mode: Mode | null;
+    
     [mode, setState] = useState(changeState);
     
     useEffect(() => showModal(mode), [mode]);

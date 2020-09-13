@@ -29,7 +29,6 @@ const styles = createStyles((theme: Theme) => ({
     },
 }));
 
-// console.log('TABS NAV MODULE');
 const ordersControl = OrdersControl.getInstance();
 
 const createOrder = () => ordersControl.createOrder();
@@ -50,8 +49,9 @@ const getState = () => ({
 let setState: React.Dispatch<{}>;
 
 const changeState = () => {
-    ordersControl.onChange(() =>
-            setState({}));
+    ordersControl.onChange(
+        () => setState({})
+    );
     return {};
 };
 

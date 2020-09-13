@@ -40,8 +40,8 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
 };
 
 let setLang: React.Dispatch<(lang: string) => string>;
-
-const langHandler = (event: React.MouseEvent<HTMLDivElement>) => {
+let lang: string;
+const changeLang = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLDivElement;
     const currentLang = target.dataset['nextLang'];
     if (!currentLang) return;
@@ -54,7 +54,7 @@ const DiffKeys = {
     'LANG': {
         content: 'EN',
         attr: {
-            onClick: langHandler,
+            onClick: changeLang,
             'data-next-lang': 'EN',
         },
     },
@@ -69,7 +69,6 @@ const KeyboardLayoutFUNC = KeyboardLayout({
 });
 
 function KeyboardMain({ classes }: WithStyles ) {
-    let lang;
     [lang, setLang] = useState('UA');
 
     return (

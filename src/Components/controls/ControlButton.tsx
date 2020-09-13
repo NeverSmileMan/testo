@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import {
+    WithStyles, createStyles,
+    withStyles, Theme } from '@material-ui/core/styles';
+import { StyledComponentProps } from '@material-ui/styles';
 import { Mode, State } from '../../data.structure/types/types';
 import ModalService from '../../data.structure/ModalService';
-import { WithStyles, createStyles, withStyles, Theme } from '@material-ui/core/styles';
-import { StyledComponentProps } from '@material-ui/styles';
 
 const styles = createStyles((theme: Theme) => ({
     'wrapper': {
@@ -47,10 +49,16 @@ function createControlButton(props: IControlButtonProps) {
         object.doAction();
     }
 
-    function changeState(setState: React.Dispatch<() => { mode: Mode}>) {
-        object.onChange(() =>
-            setState(() => ({ mode: object.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON }))
-        );
+    const getState = () => ({
+        mode: object.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON,
+        isActive: object.isActive(),
+    });
+    let setState: React.Dispatch<() => { mode: Mode, isActive: boolean }>;
+    let mode: Mode;
+    let isActive: boolean;
+    function changeState() {
+        object.onChange(() => setState(() => getState()))
+        return getState();
     }
 
     function showModal(mode: Mode) {
@@ -60,13 +68,10 @@ function createControlButton(props: IControlButtonProps) {
     }
 
     function ControlButton({ classes }: WithStyles) {
-        const [{ mode }, setState] = useState({ mode: Mode.BUTTON });
-
-        useEffect(() => changeState(setState), []);
+        [{ mode, isActive }, setState] = useState(changeState);
 
         useEffect(() => showModal(mode), [mode]);
 
-        const isActive = object.isActive();
         const className = `${classes.wrapper} ${isActive ? '' : classes.disabled}`;
 
         return (

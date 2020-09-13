@@ -14,10 +14,11 @@ const styles = createStyles((theme: Theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        padding: '0 1.5rem',
         '& .input': {
             flex: '1 0 0',
-            paddingLeft: '20px',
-            paddingRight: '20px',
+            paddingLeft: '1.5rem',
+            paddingRight: '1.5rem',
             backgroundColor: 'white',
             borderRadius: '100px',
             fontSize: '1.2rem',
@@ -41,7 +42,7 @@ const styles = createStyles((theme: Theme) => ({
 const input = Input.getInputListInstance();
 const activeInputService = ActiveInputService.getInstance();
 const ifFocus = () => activeInputService.ifActiveInput(input);
-const getValue = () => '&nbsp;' + input.getValue().replace(/ /g, '&nbsp;');
+const getValue = () => input.getValue().replace(/ /g, '&nbsp;');
 
 let setState: React.Dispatch<() => boolean>;
 let ref: React.RefObject<HTMLDivElement>;

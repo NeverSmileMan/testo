@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import {
     createStyles, Theme,
     withStyles, WithStyles } from '@material-ui/core/styles';
-import TabControl from '../../data.structure/OrderControl';
+import OrderControl from '../../data.structure/OrderControl';
+import { IItemAmount } from '../../data.structure/Item';
 
 const styles = createStyles((theme: Theme) => ({
     'wrapper': {
@@ -19,8 +20,8 @@ const styles = createStyles((theme: Theme) => ({
         '& li': {
             fontSize: '1.1rem',
             borderBottom: 'solid 1px ' + theme.palette.secondary.dark,
-            paddingLeft: '10px',
-            paddingRight: '10px',
+            paddingLeft: '2rem',
+            paddingRight: '2rem',
             backgroundColor: 'white',
             '&:first-child': {
                 borderTop: 'solid 1px ' + theme.palette.secondary.dark,
@@ -29,11 +30,11 @@ const styles = createStyles((theme: Theme) => ({
         '& span': { 
             display: 'inline-block',
             '&:first-child': {
-                width: '100px',
+                width: '10%',
                 marginRight: '2rem',
             },
-            '& nth-child(2)': {
-                width: '250px',
+            '&:nth-child(2)': {
+                width: '55%',
             },
         },
         '& .selected': {
@@ -43,26 +44,40 @@ const styles = createStyles((theme: Theme) => ({
     },
 }));
 
-const tabControl = TabControl.getInstance();
+const orderControl = OrderControl.getInstance();
 
 const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
     const itemElem: HTMLElement | null = target.closest('[data-item-index]');
     const itemIndex = itemElem?.dataset['itemIndex'];
-    itemIndex && Number.parseInt(itemIndex) >=0 && tabControl.selectItem(+itemIndex);
+    itemIndex && Number.parseInt(itemIndex) >=0 && orderControl.selectItem(+itemIndex);
 }
+
+interface IState {
+    selectedItemIndex: number | null,
+    orderItems: IItemAmount[],
+}
+
+const getState = () => ({
+    selectedItemIndex: orderControl.getSelectedItemIndex(),
+    orderItems: orderControl.getItems(),
+});
+
+let setState: React.Dispatch<() => IState>;
+let state: IState;
+const changeState = () => {
+    orderControl.onChange(
+        () => setState(() => getState())
+    );
+    return getState();
+};
 
 function OrderItems({ classes }: WithStyles) {
 
-    const [, setState] = useState({});
+    [state, setState] = useState(changeState);
 
-    useState(() => {
-        tabControl.onChange(() =>
-            setState({}))
-    });
-
-    const selectedItemIndex = tabControl.getSelectedItemIndex();
-    const items = tabControl.getItems().map((item, i) =>
+    const selectedItemIndex = state.selectedItemIndex;
+    const items = state.orderItems.map((item, i) =>
         <li 
             key={i}
             data-item-index={i}

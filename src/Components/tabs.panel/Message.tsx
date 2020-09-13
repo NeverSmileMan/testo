@@ -35,15 +35,20 @@ const styles = createStyles((theme: Theme) => ({
 
 const message = MessageObject.getInstance();
 
+const getState = () => message.getMessage();
+
+let setState: React.Dispatch<() => IMessageInfo | null>;
+let messageInfo: IMessageInfo | null;
+const changeState = () => {
+    message.onMessage(
+        () => setState(() => getState())
+    );
+    return getState();
+};
+
 function Message({ classes }: WithStyles) {
 
-    const [, setState] = useState<{}>(() => {
-        message.onMessage(() =>
-            setState({}));
-        return {};
-    });
-
-    const messageInfo: IMessageInfo | null = message.getMessage();
+    [messageInfo, setState] = useState(changeState);
 
     const className = `message ${messageInfo?.type === MessageType.ERROR ? 'error' : ''}`;
 

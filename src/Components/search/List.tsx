@@ -25,18 +25,21 @@ const styles = createStyles((theme: Theme) => ({
         '& li': {
             fontSize: '1.1rem',
             borderBottom: 'solid 1px ' + theme.palette.secondary.dark,
-            paddingLeft: '10px',
-            paddingRight: '10px',
+            paddingLeft: '2rem',
+            paddingRight: '2rem',
             backgroundColor: 'white',
+            '&:first-child': {
+                borderTop: 'solid 1px ' + theme.palette.secondary.dark,
+            }
         },
         '& span': { 
             display: 'inline-block',
             '&:first-child': {
-                width: '100px',
+                width: '10%',
                 marginRight: '2rem',
             },
-            '& nth-child(2)': {
-                width: '250px',
+            '&:nth-child(2)': {
+                width: '55%',
             },
         },
         '& .not-found': {
@@ -61,10 +64,9 @@ const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
 }
 
 let setState: React.Dispatch<{}>;
-
 const changeState = () => {
-    list.onChange(() =>
-        setState({})
+    list.onChange(
+        () => setState({})
     );
     return {};
 };
