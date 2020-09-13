@@ -1,6 +1,5 @@
 import List, { IList } from "./List";
 import { IItem } from './Item';
-import ActiveInputService, { IActiveInputService } from "./ActiveInputService";
 
 export interface IInput {
     pressKey: (key: string) => void;
@@ -25,15 +24,10 @@ export interface IInputList extends IInput {
 }
 
 export class Input implements IInput {
-    private _keyboard: IActiveInputService;
     protected _value: string = '';
     private _callbackOnFocusChange?: () => void;
     protected _callbackOnChange?: (value: string) => void;
     protected _callbackOnSelect?: (value: any) => void;
-    
-    constructor() {
-        this._keyboard = ActiveInputService.getInstance();
-    }
 
     protected _addSymbol(value: string) {
         this._value += value;
@@ -127,7 +121,7 @@ export class InputList extends Input implements IInputList {
     }
 
     protected _onSelect(item: IItem){
-        if (!item) return; //ENTER
+        if (!item) return; //ENTER ??
         if (this._callbackOnSelect) this._callbackOnSelect(item);
     }
 

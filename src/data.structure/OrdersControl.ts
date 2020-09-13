@@ -123,9 +123,7 @@ export class OrdersControl implements IOrdersControl {
 let instance: OrdersControl;
 
 export function getInstance(maxOrdersCount: number = 1) {
-    // console.log('ORDERS INSTANCE', maxOrdersCount);
     if (!instance) {
-        // console.log('ORDERS NEW INSTANCE');
         instance = new OrdersControl(maxOrdersCount);
     }
     return instance;

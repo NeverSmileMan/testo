@@ -1,17 +1,15 @@
-import { State } from './types/types';
+import { State, EventType } from './types/types';
 import EventEmitter from 'events';
 
 export interface IClose {
     onClose: (callback: () => void) => void;
     onChange: (callback: () => void) => void;
-    off: (event: CloseEvents, callback: () => void) => void;
+    off: (event: EventType, callback: () => void) => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     doAction: (confirm?: boolean) => void;
     getState: () => State;
 }
-
-type CloseEvents = 'stateChange';
 
 export class Close implements IClose {
     private _emitter: EventEmitter;
@@ -27,11 +25,10 @@ export class Close implements IClose {
     }
 
     onChange(callback: () => void) {
-        //console.log(callback);
-        this._emitter.on('stateChange', callback);
+        this._emitter.on(EventType.STATE_CHANGE, callback);
     }
 
-    off(event: CloseEvents, callback: () => void) {
+    off(event: EventType, callback: () => void) {
         this._emitter.off(event, callback);
     }
 
@@ -39,7 +36,7 @@ export class Close implements IClose {
         if (this._state === State.PENDING) return;
         if (value) this._state = State.ENABLED;
         else this._state = State.DISABLED;
-        this._onStateChange();
+        this._onChange();
     }
 
     isActive() {
@@ -54,13 +51,13 @@ export class Close implements IClose {
             } else {
                 this._state = State.ENABLED;
             }
-            this._onStateChange();
+            this._onChange();
             return;
         }
 
         if (!this.isActive()) return;
         this._state = State.PENDING;
-        this._onStateChange();
+        this._onChange();
     }
 
     getState() {
@@ -71,8 +68,8 @@ export class Close implements IClose {
         if (this._callbackOnClose) this._callbackOnClose();
     }
 
-    private _onStateChange() {
-        this._emitter.emit('stateChange');
+    private _onChange() {
+        this._emitter.emit(EventType.STATE_CHANGE);
     }
 }
 

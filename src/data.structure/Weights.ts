@@ -22,7 +22,7 @@ export interface IWeights {
 
 export class Weights implements IWeights {
     private _emitter: EventEmitter;
-    protected _isStable: boolean = true; //false
+    protected _isStable: boolean = true;
     private _tara: number = 0;
     protected _price: number = 0;
     protected _weight: number = 0;
@@ -71,12 +71,12 @@ export class Weights implements IWeights {
         this._emitter.on(EventType.STATE_CHANGE, callback);
     }
 
-    off(event: EventType, callback: () => void) {
-        this._emitter.on(event, callback);
-    }
-
     protected _onChange() {
         this._emitter.emit(EventType.STATE_CHANGE);
+    }
+    
+    off(event: EventType, callback: () => void) {
+        this._emitter.on(event, callback);
     }
 }
 
