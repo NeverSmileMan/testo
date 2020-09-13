@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import {
     createStyles, Theme,
     withStyles, WithStyles } from '@material-ui/core/styles';
-import OrdersControl, { IOrders } from '../../data.structure/OrdersControl';
-
+import OrdersControl from '../../data.structure/OrdersControl';
 
 const styles = createStyles((theme: Theme) => ({
     'wrapper': {

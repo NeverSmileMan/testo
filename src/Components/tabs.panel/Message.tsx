@@ -1,29 +1,28 @@
 import React, { useState } from 'react';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles } from '@material-ui/core/styles';
 import MessageObject from '../../data.structure/Message';
 import { IMessageInfo, MessageType } from '../../data.structure/data/messagesInfo';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 
-const useStyle = makeStyles((theme: Theme) => ({
-    'message-wrapper': {
+const styles = createStyles((theme: Theme) => ({
+    'wrapper': {
         flex: '1 0 0',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'stretch',
         padding: '0.5rem',
-    },
-    'message': {
-        flex: '1 0 0',
-        borderRadius: '.4rem',
-        fontSize: '0.8rem',
-        border: '1px solid grey',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    'error': {
-        color: 'white',
-        background: theme.palette.primary.main,
-        animation: '$error 300ms ',
+        '& .message': {
+            height: '100%',
+            borderRadius: '.4rem',
+            fontSize: '0.8rem',
+            border: '1px solid ' + theme.palette.secondary.dark,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        '& .error': {
+            color: 'white',
+            background: theme.palette.primary.main,
+            animation: '$error 300ms',
+        },
     },
     '@keyframes error': {
         '0%': {opacity: 0},
@@ -36,27 +35,25 @@ const useStyle = makeStyles((theme: Theme) => ({
 
 const message = MessageObject.getInstance();
 
-function Message() {
-    const classes = useStyle();
-    const [, setState] = useState({});
+function Message({ classes }: WithStyles) {
 
-    useState(() => {
-        message.onMessage(() => {
-            setState({});
-        });
+    const [, setState] = useState<{}>(() => {
+        message.onMessage(() =>
+            setState({}));
+        return {};
     });
 
     const messageInfo: IMessageInfo | null = message.getMessage();
 
-    const className = classes.message + ' ' + (messageInfo?.type === MessageType.ERROR ? classes.error : '');
+    const className = `message ${messageInfo?.type === MessageType.ERROR ? 'error' : ''}`;
 
     return (
-        <div className={classes['message-wrapper']}>
+        <div className={classes.wrapper}>
             <div className={className}>
-                {messageInfo ? messageInfo.text : ''}
+                {messageInfo && messageInfo.text}
             </div>
         </div>
     );
 }
 
-export default Message;
+export default withStyles(styles)(Message);

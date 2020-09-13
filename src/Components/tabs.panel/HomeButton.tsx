@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles } from '@material-ui/core/styles';
 import HomeIcon from '@material-ui/icons/Home';
+import themes from '../../themes/themes';
 
-const useStyle = makeStyles({
-    'home': {
+const styles = createStyles((theme: Theme) => ({
+    'wrapper': {
         width: '12%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '100%',
-        color: 'grey', //'#e4e4e4',
+        color: theme.palette.secondary.dark,
     },
-});
+}));
 
-function HomeButton() {
-    const classes = useStyle();
-    const [, setState] = useState({});
-
+function HomeButton({ classes }: WithStyles) {
     return (
-        <div className={classes.home}>
+        <div className={classes.wrapper}>
 			<HomeIcon fontSize="large" />
         </div>
     );
 }
 
-export default HomeButton;
+export default withStyles(styles)(HomeButton);

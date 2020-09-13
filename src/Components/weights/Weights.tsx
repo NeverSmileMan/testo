@@ -8,7 +8,7 @@ import WeightsDisplay from './WeightsDisplay';
 const styles = createStyles((theme: Theme) => ({
     'wrapper': {
         height: '100%',
-    }
+    },
 }));
 
 function Weights({ classes }: WithStyles ) {
