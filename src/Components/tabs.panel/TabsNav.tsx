@@ -29,6 +29,7 @@ const styles = createStyles((theme: Theme) => ({
     },
 }));
 
+// console.log('TABS NAV MODULE');
 const ordersControl = OrdersControl.getInstance();
 
 const createOrder = () => ordersControl.createOrder();

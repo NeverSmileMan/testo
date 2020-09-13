@@ -34,16 +34,18 @@ const styles = createStyles((theme: Theme) => ({
     },
 }));
 
+// console.log('APP MODULE');
 const app = App.getInstance();
+
+const getState = () => ({
+    state: app.getState(),
+    themeName: app.getConfig().themeName,
+});
 
 let setState: React.Dispatch<
     () => { state: AppState, themeName: ThemesNames}>;
 
 function changeState() {
-    const getState = () => ({
-        state: app.getState(),
-        themeName: app.getConfig().themeName,
-    });
     app.onChange(() => setState(getState));
     return getState();
 }

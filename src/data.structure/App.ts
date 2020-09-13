@@ -73,8 +73,11 @@ class AppTest extends App implements IAppTest {
 let instance: IAppTest;
 
 export function getInstance() {
-    if (!instance)
+    // console.log('APP INSTANCE');
+    if (!instance) {
+        // console.log('APP NEW INSTANCE');
         instance = new AppTest();
+    }
     return instance;
 }
 

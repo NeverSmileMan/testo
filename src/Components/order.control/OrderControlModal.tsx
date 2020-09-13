@@ -5,8 +5,8 @@ const styles = createStyles((theme: Theme) => ({
     title: {
         display: 'flex',
         justifyContent: 'center',
-        color: '#fff',
-        fontSize: '40px',
+        color: 'white',
+        fontSize: '2rem',
     }
 }));
 

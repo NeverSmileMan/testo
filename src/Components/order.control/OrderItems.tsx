@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import {
+    createStyles, Theme,
+    withStyles, WithStyles } from '@material-ui/core/styles';
 import TabControl from '../../data.structure/OrderControl';
-import { createStyles, Theme, withStyles, WithStyles } from '@material-ui/core/styles';
 
 const styles = createStyles((theme: Theme) => ({
     'wrapper': {

@@ -27,7 +27,7 @@ export class Close implements IClose {
     }
 
     onChange(callback: () => void) {
-        console.log(callback);
+        //console.log(callback);
         this._emitter.on('stateChange', callback);
     }
 

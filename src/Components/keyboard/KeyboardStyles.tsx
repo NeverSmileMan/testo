@@ -35,7 +35,7 @@ export function getKeyboardStyles(sizeOfElementsInUnits: ISizeOfElementsInUnits)
             '& .row-3': {},
             '& .row-4': {},
             '& .key': {
-                color: 'black', //theme.palette.secondary.dark,
+                color: 'white', //'black', //theme.palette.secondary.dark,
                 border: '1px solid',
                 borderColor: theme.palette.primary.main,
                 display: 'flex',
@@ -43,7 +43,7 @@ export function getKeyboardStyles(sizeOfElementsInUnits: ISizeOfElementsInUnits)
                 justifyContent: 'center',
                 borderRadius: '0.3rem',
                 fontSize: '1.1rem',
-                background: theme.palette.secondary.light,
+                background: theme.palette.secondary.dark, //theme.palette.secondary.light,
                 overflow: 'hidden',
                 fontWeight: 600,
                 height: '100%',

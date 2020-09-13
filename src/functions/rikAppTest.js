@@ -23,7 +23,7 @@ window.addEventListener('keypress', (event) => {
         return;
     }
     if (event.code === 'KeyT') { app.__changeTheme(); return; }
-    if (event.code === 'KeyZ') { weights.__setStable(+event.key); return; }
+    if (event.code === 'KeyZ') { weights.__setStable(); return; }
     
 });
 

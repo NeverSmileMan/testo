@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         backgroundColor: 'white',
         borderRadius: '100px',
         flex: '1 0 0',
-        fontSize: '1rem',
+        fontSize: '1.2rem',
     },
     'focus': {
         '&:after': {
