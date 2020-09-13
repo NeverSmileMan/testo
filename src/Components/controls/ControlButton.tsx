@@ -57,7 +57,7 @@ function createControlButton(props: IControlButtonProps) {
     let mode: Mode;
     let isActive: boolean;
     function changeState() {
-        object.onChange(() => setState(() => getState()))
+        object.onChange(() => setState(getState));
         return getState();
     }
 

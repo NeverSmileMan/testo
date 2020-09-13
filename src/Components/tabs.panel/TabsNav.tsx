@@ -46,23 +46,23 @@ const getState = () => ({
     canCreate: ordersControl.canCreateOrder(),
 });
 
-let setState: React.Dispatch<{}>;
-
+let setState: React.Dispatch<typeof getState>;
+let state;
 const changeState = () => {
     ordersControl.onChange(
-        () => setState({})
+        () => setState(getState)
     );
-    return {};
+    return getState();
 };
 
 function TabsNav({ classes }: WithStyles) {
-    [, setState] = useState(changeState);
+    [state, setState] = useState(changeState);
 
-    const { ordersNumbers, currentOrderNumber, canCreate } = getState();
+    const { ordersNumbers, currentOrderNumber, canCreate } = state;
 
     const tabs = ordersNumbers.map(orderNumber =>
-        <div 
-            className={`tab ${orderNumber === currentOrderNumber && 'active' || ''}`}
+        <div
+            className={`tab ${orderNumber === currentOrderNumber ? 'active' : ''}`}
             key={orderNumber}
             data-order-number={orderNumber}
             onClick={selectOrder}>

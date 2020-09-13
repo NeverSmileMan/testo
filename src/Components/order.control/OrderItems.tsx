@@ -81,7 +81,7 @@ function OrderItems({ classes }: WithStyles) {
         <li 
             key={i}
             data-item-index={i}
-            className={selectedItemIndex === i && 'selected' || ''}>
+            className={selectedItemIndex === i ? 'selected' : ''}>
             
             <span>{item.plu}</span>
             <span>{item.name}</span>
