@@ -1,15 +1,8 @@
 import React, { useContext } from 'react';
 import Buttons from './ControlButtons';
-import { withStyles, createStyles, Theme, WithStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import styles from '../../styles/controls/CloseModal';
 import { OrdersControlContext } from '../Orders';
-
-const styles = createStyles((theme: Theme) => ({
-    controls: {
-        width: '8%',
-        display: 'flex',
-        flexDirection: 'column',
-    },
-}));
 
 type Props = {
     callbacks: {
