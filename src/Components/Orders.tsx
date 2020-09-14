@@ -30,7 +30,7 @@ const getStateOrder = (): IStateOrder => ({
     orderMode: ordersControl.getState() === State.PENDING ? Mode.MODAL : null,
 });
 
-export const OrderControlContext = createContext<IStateOrder>(getStateOrder());
+export const OrderControlContext = createContext<IStateOrder>({} as IStateOrder);
 let setStateOrder: React.Dispatch<() => IStateOrder>;
 let stateOrder: IStateOrder;
 function changeStateOrder() {

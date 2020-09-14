@@ -1,25 +1,30 @@
-import React, { useState } from 'react';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-import styles from '../styles/Modal';
-import ModalService from '../data.structure/ModalService';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-const modalService = ModalService.getInstance();
+class Modal extends React.Component {
+    modal: HTMLDivElement;
+    modalRoot: HTMLElement | null;
+    constructor(props: React.PropsWithChildren<{}>) {
+        super(props);
+        this.modalRoot = document.getElementById('modal-root');
+        this.modal = document.createElement('div');
+        this.modal.id = 'modal';
+    }
 
-let setState: React.Dispatch<{}>;
-const changeState = () => {
-    modalService.onShowModal(() => setState({}));
-    return {};
+    componentDidMount() {
+        this.modalRoot?.appendChild(this.modal);
+    }
+
+    componentWillUnmount() {
+        this.modalRoot?.removeChild(this.modal);
+    }
+
+    render() {
+        return ReactDOM.createPortal(
+            this.props.children,
+            this.modal
+        );
+    }
 }
 
-function Modal({ classes }: WithStyles ) {
-    [, setState] = useState(changeState);
-
-    const content = modalService.getContent();
-    return (content ? 
-        <div className={classes.modal}>
-            {content}
-        </div> : null
-    );
-}
-
-export default withStyles(styles)(Modal);
+export default Modal;

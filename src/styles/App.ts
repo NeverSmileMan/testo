@@ -23,6 +23,17 @@ const styles = createStyles((theme: Theme) => ({
             border: '1px solid gray',
             borderLeft: 'none' ,
         },
+        '#modal': {
+            position: 'absolute',
+            zIndex: 1000,
+            top: '16%',
+            width: '100%',           
+            height: '84%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        },
     },
 }));
 

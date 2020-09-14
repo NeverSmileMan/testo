@@ -107,6 +107,7 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
                 this._currentOrder = order;
                 // this._orderControl.setOrder(order);
                 this._onOrderChange(true);
+                this._onChange();
                 this._onChangeOrders();
                 return;
             }

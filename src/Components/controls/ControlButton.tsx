@@ -4,9 +4,10 @@ import {
 import styles from '../../styles/controls/ControlButton';
 import { StyledComponentProps } from '@material-ui/styles';
 import { Mode, State } from '../../data.structure/types/types';
-import ModalService from '../../data.structure/ModalService';
+// import ModalService from '../../data.structure/ModalService';
+import Modal from '../Modal';
 
-const modalService = ModalService.getInstance();
+// const modalService = ModalService.getInstance();
 
 export interface IControlButtonProps {
     object: {
@@ -38,11 +39,11 @@ function createControlButton(props: IControlButtonProps) {
         return getMode();
     }
 
-    function showModal(mode: Mode) {
-        if (mode === Mode.MODAL)
-            modalService.showModal(<ModalComponent />);
-        else modalService.showModal(null);
-    }
+    // function showModal(mode: Mode) {
+    //     if (mode === Mode.MODAL)
+    //         modalService.showModal(<ModalComponent />);
+    //     else modalService.showModal(null);
+    // }
 
     type Props = {
         isActive?: boolean;
@@ -52,18 +53,24 @@ function createControlButton(props: IControlButtonProps) {
     function ControlButton({ classes, isActive, onAction }: Props) {
         [{ mode }, setState] = useState(changeState);
         useState(() => object.onAction(onAction));
-        useEffect(() => showModal(mode), [mode]);
+        // useEffect(() => showModal(mode), [mode]);
+        // isActive && object.setActive(isActive);
         useEffect(() => { isActive && object.setActive(isActive)}, [isActive]);
         const className = `${classes.wrapper} ${object.isActive() ? '' : classes.disabled}`;
 
-        return (
+        return (<>
             <div
                 className={className}
                 onClick={onClick}>
                 <IconComponent />
                 <div>{text}</div>
             </div>
-        );
+            {mode === Mode.MODAL ?
+            <Modal>
+                <ModalComponent />
+            </Modal> : null
+            }
+        </>);
     }
 
     return withStyles(styles)(ControlButton);

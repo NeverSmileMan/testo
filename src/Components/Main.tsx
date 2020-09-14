@@ -4,7 +4,7 @@ import styles from '../styles/Main';
 import WeightsDisplay from './weights/WeightsDisplay';
 import Orders from './Orders';
 import Keyboard from './keyboard/KeyboardMain';
-import Modal from './Modal';
+// import Modal from './Modal';
 
 function Main({ classes }: WithStyles ) {
     return (
@@ -19,7 +19,8 @@ function Main({ classes }: WithStyles ) {
                 <div className='keyboard'>
                     <Keyboard />
                 </div>
-                <Modal />
+                <div id='modal-root'></div>
+                {/* <Modal /> */}
             </div>
         </div>
     );
