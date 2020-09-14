@@ -5,6 +5,7 @@ import EventEmitter from 'events';
 
 export interface ITara {
     doAction: () => void;
+    onAction: () => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     getState: () => State;
@@ -27,6 +28,10 @@ export class Tara implements ITara {
         this._input = Input.getInputNumberInstance();
         this._input.onSelect(this._setAdditionalTara.bind(this));
 
+    }
+
+    onAction() {
+        return;
     }
 
     onChange(callback: () => void) {

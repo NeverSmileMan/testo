@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext, useCallback } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/order.control/OrderControl';
-import OrderControlObject from '../../data.structure/OrderControl';
+import OrdersControl from '../../data.structure/OrdersControlNew';
 import { Mode, State } from '../../data.structure/types/types';
 import ModalService from '../../data.structure/ModalService';
 import OrderInfo from './OrderInfo';
@@ -11,7 +11,7 @@ import OrderControlModal from './OrderControlModal';
 import { IOrdersControl } from '../../data.structure/OrdersControl';
 import { IItem, IItemAmount } from '../../data.structure/Item';
 
-const orderControl = OrderControlObject.getInstance();
+const orderControl = OrdersControl.getInstance();
 const modalService = ModalService.getInstance();
 
 interface IState {
@@ -31,9 +31,6 @@ const getState = (): IState => ({
 export const OprderControlContext = createContext(getState());
 
 const getMode = () => orderControl.getState() === State.PENDING ? Mode.MODAL : null;
-const delItem = () => orderControl.delItem();
-const addItem = (item: IItem) => orderControl.addItem(item);
-const selectItem = (index: number | null) => orderControl.selectItem(index);
 
 let setState: React.Dispatch<(state: IState) => IState>;
 let state: IState;
@@ -51,9 +48,14 @@ function showModal(mode: Mode | null) {
 
 type Props = {
     value: { ordersControl: IOrdersControl };
+    callbacks: {
+        delItem: () => void,
+        addItem: (item: IItem) => void,
+        selectItem: (index: number | null) => void,
+    };
 } & WithStyles;
 
-function OrderControl({ classes, value }: Props) {
+function OrderControl({ classes, value, callbacks }: Props) {
     [state, setState] = useState(changeState);
     
     const order = value.ordersControl.getCurrentOrder();
@@ -75,11 +77,11 @@ function OrderControl({ classes, value }: Props) {
         <OprderControlContext.Provider value={state}>
             <div className={classes.wrapper}>
                 <div className='search-panel'>
-                    <Search onSelect={addItem} />
-                    <OrderInfo onClick={delItem} />
+                    <Search onSelect={callbacks.addItem} />
+                    <OrderInfo onClick={callbacks.delItem} />
                 </div>
                 <div className='order-items'>
-                    <OrderItems onSelect={selectItem} />
+                    <OrderItems onSelect={callbacks.selectItem} />
                 </div>
             </div>
         </OprderControlContext.Provider>

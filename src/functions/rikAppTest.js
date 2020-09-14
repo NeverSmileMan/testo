@@ -9,7 +9,7 @@ let weight = '';
 let timer;
 
 window.addEventListener('keypress', (event) => {
-    console.log(event.code);
+    // console.log(event.code);
     
     if (event.code.match(/Digit/)) {
         clearTimeout(timer);

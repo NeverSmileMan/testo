@@ -1,5 +1,5 @@
 import { IConfig, config, IEnvironment } from './data/config';
-import OrdersControl from './OrdersControl';
+import OrdersControl from './OrdersControlNew';
 import { AppState } from './types/types';
 
 export interface IApp {

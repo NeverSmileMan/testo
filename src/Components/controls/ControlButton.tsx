@@ -1,41 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import {
-    WithStyles, createStyles,
-    withStyles, Theme } from '@material-ui/core/styles';
+    WithStyles, withStyles } from '@material-ui/core/styles';
+import styles from '../../styles/controls/ControlButton';
 import { StyledComponentProps } from '@material-ui/styles';
 import { Mode, State } from '../../data.structure/types/types';
 import ModalService from '../../data.structure/ModalService';
-
-const styles = createStyles((theme: Theme) => ({
-    'wrapper': {
-        flex: '1 0 0',
-        borderRadius: '0 .4rem .4rem 0',
-        color: 'white',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-        backgroundColor: theme.palette.primary.main,
-        '&:first-child': {
-            marginBottom: '2px',
-        },
-        '&:last-child ': {
-            marginTop: '2px',
-        },
-    },
-    'disabled': {
-        backgroundColor: theme.palette.primary.light,
-    },
-}));
 
 const modalService = ModalService.getInstance();
 
 export interface IControlButtonProps {
     object: {
         doAction: Function;
+        onAction: Function;
         onChange: Function;
         isActive: Function;
         getState: Function;
+        setActive: (isActive: boolean) => void;
     },
     ModalComponent: React.ComponentType<any> & StyledComponentProps;
     IconComponent: React.FunctionComponent<any>;
@@ -49,16 +29,13 @@ function createControlButton(props: IControlButtonProps) {
         object.doAction();
     }
 
-    const getState = () => ({
-        mode: object.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON,
-        isActive: object.isActive(),
-    });
-    let setState: React.Dispatch<() => { mode: Mode, isActive: boolean }>;
+    const getMode = () => ({ mode: object.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON });
+
+    let setState: React.Dispatch<() => { mode: Mode }>;
     let mode: Mode;
-    let isActive: boolean;
     function changeState() {
-        object.onChange(() => setState(getState));
-        return getState();
+        object.onChange(() => setState(getMode));
+        return getMode();
     }
 
     function showModal(mode: Mode) {
@@ -67,12 +44,17 @@ function createControlButton(props: IControlButtonProps) {
         else modalService.showModal(null);
     }
 
-    function ControlButton({ classes }: WithStyles) {
-        [{ mode, isActive }, setState] = useState(changeState);
+    type Props = {
+        isActive?: boolean;
+        onAction?: () => void;
+    } & WithStyles;
 
+    function ControlButton({ classes, isActive, onAction }: Props) {
+        [{ mode }, setState] = useState(changeState);
+        useState(() => object.onAction(onAction));
         useEffect(() => showModal(mode), [mode]);
-
-        const className = `${classes.wrapper} ${isActive ? '' : classes.disabled}`;
+        useEffect(() => { isActive && object.setActive(isActive)});
+        const className = `${classes.wrapper} ${object.isActive() ? '' : classes.disabled}`;
 
         return (
             <div

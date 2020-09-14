@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Buttons from './ControlButtons';
 import { withStyles, createStyles, Theme, WithStyles } from '@material-ui/core/styles';
+import { OrdersControlContext } from '../Orders';
 
 const styles = createStyles((theme: Theme) => ({
     controls: {
@@ -10,13 +11,18 @@ const styles = createStyles((theme: Theme) => ({
     },
 }));
 
-function Controls({ classes }: WithStyles) {
+type Props = {
+    deleteOrder: () => void;
+    printOrder: () => void;
+} & WithStyles;
 
+function Controls({ classes, deleteOrder, printOrder }: Props) {
+    const { printIsActive, closeIsActive } = useContext(OrdersControlContext);
     return (
         <div className={classes.controls}>
             <Buttons.TaraButton />
-            <Buttons.PrintButton />
-            <Buttons.CloseButton />
+            <Buttons.PrintButton isActive={printIsActive} onAction={printOrder}/>
+            <Buttons.CloseButton isActive={closeIsActive} onAction={deleteOrder}/>
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/tabs.panel/TabsNav';
-import { IOrdersControl } from '../../data.structure/OrdersControl';
+import { IOrdersControl } from '../../data.structure/OrdersControlNew';
 
 const selectOrder = (event: React.MouseEvent<HTMLDivElement>, selectOrder: (orderNumber: number) => void) => {
     const target = event.target as HTMLElement;

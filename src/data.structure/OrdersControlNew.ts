@@ -1,4 +1,4 @@
-import OrderControl, { IOrderControl } from './OrderControl';
+import { OrderControl, IOrderControl } from './OrderControlNew';
 import { Order, IOrder } from './Order';
 import Close, { IClose } from './Close';
 import Print, { IPrint } from './Print';
@@ -6,33 +6,64 @@ import { Printer } from './Printer';
 
 export type IOrders = Map<number, IOrder>;
 
-export interface IOrdersControl {
+// export interface IOrderControl {
+//     setOrder: (order: IOrder) => void;
+//     getOrder: () => IOrder;
+//     getOrderNumber: () => number;     
+//     delItem: () => void;
+//     getItems: () => IItemAmount[];
+//     selectItem: (index: number | null) => void;
+//     isSelected: () => boolean;
+//     getSelectedItemIndex: () => number | null;    
+//     // getItemsCount: () => number;
+//     getTotal: () => number;
+//     onChange: (callback: () => void) => void;
+//     off: (event: EventType, callback: () => void) => void;
+//     getState: () => State;
+//     addItem: (item: IItem) => void;
+// }
+
+export interface IOrdersControl extends IOrderControl{
     canCreateOrder: () => boolean;
     createOrder: () => void;
     selectOrder: (orderNumber: number) => void;
     getCurrentOrder: () => IOrder | null;
     getOrders: () => IOrders;    
-    onChange: (callback: () => void) => void;
+    onChangeOrders: (callback: () => void) => void;
+
+    printIsActive: boolean;
+    closeIsActive: boolean;
+    printOrder: () => void;
+    deleteOrder: () => void;
 }
 
-export class OrdersControl implements IOrdersControl {
-    private _currentOrder: IOrder | null = null;
+export class OrdersControl extends OrderControl implements IOrdersControl {
+    // private _currentOrder: IOrder | null = null;
     private _orders: IOrders = new Map();
     private _ordersFreeNums: boolean[];
-    private _orderControl: IOrderControl;
-    private _print: IPrint;
-    private _close: IClose;
-    private _callbackOnChange?: () => void;
+    // private _orderControl: IOrderControl;
+    //private _print: IPrint;
+    //private _close: IClose;  
+    private _callbackOnChangeOrders?: () => void;
+
+    printIsActive: boolean = false;
+    closeIsActive: boolean = false;
 
     constructor(private _maxOrdersCount: number) {
-        this._orderControl = OrderControl.getInstance();
-        this._orderControl.onChange(this._onOrderChange.bind(this));
+        super();
+        // this._orderControl = OrderControl.getInstance();
+        // this._orderControl.onChange(this._onOrderChange.bind(this));
         this._ordersFreeNums = Array(this._maxOrdersCount).fill(true);
-        this._print = Print.getInstance();
+        //this._print = Print.getInstance();
         //this._print.onPrint(this._printOrder.bind(this));      
-        this._close = Close.getInstance();
+        //this._close = Close.getInstance();
         //this._close.onClose(this._deleteOrder.bind(this));
         this._setCurrentOrder();
+    }
+
+    protected _onChange() {
+        super._onChange();
+        this._onOrderChange(); 
     }
 
     canCreateOrder() {
@@ -60,12 +91,12 @@ export class OrdersControl implements IOrdersControl {
         return this._orders;
     }
 
-    onChange(callback: () => void) {
-        this._callbackOnChange = callback;
+    onChangeOrders(callback: () => void) {
+        this._callbackOnChangeOrders = callback;
     }
 
-    private _onChange() {
-        if (this._callbackOnChange) this._callbackOnChange();
+    private _onChangeOrders() {
+        if (this._callbackOnChangeOrders) this._callbackOnChangeOrders();
     }
 
     private _setCurrentOrder(orderNumber?: number) {
@@ -76,7 +107,7 @@ export class OrdersControl implements IOrdersControl {
                 this._currentOrder = order;
                 // this._orderControl.setOrder(order);
                 this._onOrderChange(true);
-                this._onChange();
+                this._onChangeOrders();
                 return;
             }
         }
@@ -90,7 +121,7 @@ export class OrdersControl implements IOrdersControl {
         this._setCurrentOrder(firstOrderNumber);
     }
 
-    private _deleteOrder() {
+    deleteOrder() {
         const orderNumber = this._currentOrder?.orderNumber;
         if (!orderNumber) return;
         this._orders.delete(orderNumber);
@@ -98,27 +129,35 @@ export class OrdersControl implements IOrdersControl {
         this._setCurrentOrder();
     }
 
-    private _printOrder() {
-        new Printer(this._orderControl.getOrder());
-        this._close.doAction();
+    printOrder() {
+        new Printer(this.getOrder());
+        //this._close.doAction(); ????????
     }
 
     private _onOrderChange(init?: boolean) {
         const itemsCount = this._currentOrder?.items.length || 0;
 
         if ((init && itemsCount > 0) || itemsCount === 1) {
-            this._print.setActive(true);
-            this._close.setActive(true);
+            //this._print.setActive(true);
+            this.printIsActive = true;
+            //this._close.setActive(true);
+            this.closeIsActive = true;
+            this._onChangeOrders(); //???
             return;
         }
 
         if (itemsCount === 0) {
-            this._print.setActive(false);
+            //this._print.setActive(false);
             const ordersCount = this._orders.size;
             const orderNumber = this._currentOrder?.orderNumber;
             if (ordersCount === 1 && orderNumber === 1) {
-                this._close.setActive(false);
-            } else this._close.setActive(true);
+                //this._close.setActive(false);
+                this.closeIsActive = false;
+            } else {
+                //this._close.setActive(true);
+                this.closeIsActive = true;
+            }
+            this._onChangeOrders(); //???
         }
     }
 }

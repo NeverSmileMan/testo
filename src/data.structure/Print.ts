@@ -2,7 +2,7 @@ import { State, EventType } from './types/types';
 import EventEmitter from 'events';
 
 export interface IPrint {
-    onPrint: (callback: () => void) => void;
+    onAction: (callback: () => void) => void;
     onChange: (callback: () => void) => void;
     off: (event: EventType, callback: () => void) => void;
     setActive: (value: boolean) => void;
@@ -20,7 +20,7 @@ export class Print implements IPrint {
         this._emitter = new EventEmitter();
     }
 
-    onPrint(callback: () => void) {
+    onAction(callback: () => void) {
         this._callbackOnPrint = callback;
     }
 
@@ -51,7 +51,7 @@ export class Print implements IPrint {
             return;
         }
 
-        if (!this.isActive()) return;    
+        if (!this.isActive()) return;
         this._state = State.PENDING;
         this._onChange();
     }

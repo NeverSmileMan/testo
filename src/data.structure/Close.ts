@@ -2,7 +2,7 @@ import { State, EventType } from './types/types';
 import EventEmitter from 'events';
 
 export interface IClose {
-    onClose: (callback: () => void) => void;
+    onAction: (callback: () => void) => void;
     onChange: (callback: () => void) => void;
     off: (event: EventType, callback: () => void) => void;
     setActive: (value: boolean) => void;
@@ -20,7 +20,7 @@ export class Close implements IClose {
         this._emitter = new EventEmitter();
     }
     
-    onClose(callback: () => void) {
+    onAction(callback: () => void) {
         this._callbackOnClose = callback;
     }
 
