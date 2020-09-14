@@ -4,14 +4,17 @@ import styles from '../../styles/search/Search';
 import ActiveInputService from '../../data.structure/ActiveInputService';
 import Input from '../../data.structure/Input';
 import List from './List';
-import { IOrderControl } from '../../data.structure/OrderControl';
+import { IItem } from '../../data.structure/Item';
 
 const input = Input.getInputListInstance();
 const activeInputService = ActiveInputService.getInstance();
+
 const ifFocus = () => ({isFocus: activeInputService.ifActiveInput(input) });
 const getValue = () => input.getValue().replace(/ /g, '&nbsp;');
-const onSelect = input._onSelect.bind(input);
+const onListSelect = input._onSelect.bind(input);
+
 let setState: React.Dispatch<(isFocus: { isFocus: boolean }) => { isFocus: boolean }>;
+let isFocus: boolean;
 let ref: React.RefObject<HTMLDivElement>;
 function changeState() {
     input.onFocusChange(() => setState(ifFocus));
@@ -24,16 +27,14 @@ function changeState() {
 }
 
 type Props = {
-    value: { orderControl: IOrderControl };
+    onSelect: (item: IItem) => void;
 } & WithStyles;
 
-function Search({ classes, value }: Props) {
-    let isFocus;
+function Search({ classes, onSelect }: Props) {
     [{ isFocus }, setState] = useState(changeState);
     ref = useRef(null);
 
-    const { orderControl } = value;
-    useState(() => input.onSelect(orderControl.addItem.bind(orderControl)));
+    useState(() => input.onSelect(onSelect));
 
     useEffect(() => {
         if (ref.current) ref.current.innerHTML = getValue();
@@ -41,13 +42,12 @@ function Search({ classes, value }: Props) {
         return () => activeInputService.delActiveInput(input);
     }, []);
 
-    console.log('INPUT>' + input.getValue() + '<')
     return (
         <div className={classes.wrapper}>
             <div ref={ref}
                 className={`input ${isFocus ? 'focus' : ''}`}>
             </div>
-            <List filter={input.getValue()} onSelect={onSelect}/>
+            <List filter={input.getValue()} onSelect={onListSelect}/>
         </div>
     );
 }

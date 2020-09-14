@@ -1,48 +1,28 @@
-import React, { useState } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/order.control/OrderItems';
-import OrderControl from '../../data.structure/OrderControl';
-import { IItemAmount } from '../../data.structure/Item';
+import { OprderControlContext } from './OrderControl';
 
-const orderControl = OrderControl.getInstance();
-
-const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+const selectItem = (event: React.MouseEvent<HTMLDivElement>, selectItem: (index: number) => void) => {
     const target = event.target as HTMLElement;
     const itemElem: HTMLElement | null = target.closest('[data-item-index]');
     const itemIndex = itemElem?.dataset['itemIndex'];
-    itemIndex && Number.parseInt(itemIndex) >=0 && orderControl.selectItem(+itemIndex);
+    itemIndex && Number.parseInt(itemIndex) >=0 && selectItem(+itemIndex);
 }
 
-interface IState {
-    selectedItemIndex: number | null,
-    orderItems: IItemAmount[],
-}
+type Props = {
+    onSelect: (index: number | null) => void;
+} & WithStyles;
 
-const getState = () => ({
-    selectedItemIndex: orderControl.getSelectedItemIndex(),
-    orderItems: orderControl.getItems(),
-});
+function OrderItems({ classes, onSelect }: Props) {
+    const { orderItems, selectedItemIndex } = useContext(OprderControlContext);
+    const onClick = useCallback((event) => selectItem(event, onSelect), []);
 
-let setState: React.Dispatch<() => IState>;
-let state: IState;
-const changeState = () => {
-    orderControl.onChange(
-        () => setState(() => getState())
-    );
-    return getState();
-};
-
-function OrderItems({ classes }: WithStyles) {
-
-    [state, setState] = useState(changeState);
-
-    const selectedItemIndex = state.selectedItemIndex;
-    const items = state.orderItems.map((item, i) =>
+    const items = orderItems.map((item, i) =>
         <li 
             key={i}
             data-item-index={i}
             className={selectedItemIndex === i ? 'selected' : ''}>
-            
             <span>{item.plu}</span>
             <span>{item.name}</span>
         </li>);

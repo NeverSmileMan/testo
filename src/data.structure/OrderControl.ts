@@ -14,10 +14,10 @@ export interface IOrderControl {
     getOrderNumber: () => number;     
     delItem: () => void;
     getItems: () => IItemAmount[];
-    selectItem: (index: number) => void;
+    selectItem: (index: number | null) => void;
     isSelected: () => boolean;
     getSelectedItemIndex: () => number | null;    
-    getItemsCount: () => number;
+    // getItemsCount: () => number;
     getTotal: () => number;
     onChange: (callback: () => void) => void;
     off: (event: EventType, callback: () => void) => void;
@@ -111,9 +111,9 @@ class OrderControl implements IOrderControl {
         return this._order!;
     }
 
-    getItemsCount(): number {
-        return this._order!.items.length;
-    }
+    // getItemsCount(): number {
+    //     return this._order!.items.length;
+    // }
 
     getTotal(): number {
         return this._order ? this._order.total : 0;

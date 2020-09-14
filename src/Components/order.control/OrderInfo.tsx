@@ -1,22 +1,17 @@
-import React, { useCallback } from 'react';
+import React, { useContext } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/order.control/OrderInfo';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';    
-import { IOrderControl } from '../../data.structure/OrderControl';
-
-const getState = (orderControl: IOrderControl) => ({
-    isSelected: orderControl.isSelected(),
-    total: orderControl.getTotal().toFixed(2),
-});
+import { OprderControlContext } from './OrderControl';
 
 type Props = {
-    value: { orderControl: IOrderControl };
+    onClick: () => void;
 } & WithStyles;
 
-function OrderInfo({ classes, value }: Props) {
-    const { orderControl } = value; 
-    const { isSelected, total } = getState(orderControl);
-    const onClick = useCallback(() => orderControl.delItem(), []);
+function OrderInfo({ classes, onClick }: Props) {
+    
+    const { isSelected, total }= useContext(OprderControlContext);
+
     return (
         <div className={classes.wrapper}>
             {isSelected ?
