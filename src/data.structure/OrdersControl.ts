@@ -10,12 +10,13 @@ export interface IOrdersControl {
     canCreateOrder: () => boolean;
     createOrder: () => void;
     selectOrder: (orderNumber: number) => void;
-    getCurrentOrder: () => IOrder;
+    getCurrentOrder: () => IOrder | null;
     getOrders: () => IOrders;    
     onChange: (callback: () => void) => void;
 }
 
 export class OrdersControl implements IOrdersControl {
+    private _currentOrder: IOrder | null = null;
     private _orders: IOrders = new Map();
     private _ordersFreeNums: boolean[];
     private _orderControl: IOrderControl;
@@ -52,7 +53,7 @@ export class OrdersControl implements IOrdersControl {
     }
 
     getCurrentOrder() {
-        return this._orderControl.getOrder();
+        return this._currentOrder;
     }
 
     getOrders() {
@@ -72,7 +73,8 @@ export class OrdersControl implements IOrdersControl {
         if (orderNumber) {
             const order = this._orders.get(orderNumber);
             if (order) {
-                this._orderControl.setOrder(order);
+                this._currentOrder = order;
+                // this._orderControl.setOrder(order);
                 this._onOrderChange(true);
                 this._onChange();
                 return;
@@ -89,7 +91,8 @@ export class OrdersControl implements IOrdersControl {
     }
 
     private _deleteOrder() {
-        const orderNumber = this._orderControl.getOrderNumber();
+        const orderNumber = this._currentOrder?.orderNumber;
+        if (!orderNumber) return;
         this._orders.delete(orderNumber);
         this._ordersFreeNums[orderNumber - 1] = true;
         this._setCurrentOrder();
@@ -101,7 +104,7 @@ export class OrdersControl implements IOrdersControl {
     }
 
     private _onOrderChange(init?: boolean) {
-        const itemsCount = this._orderControl.getItemsCount();
+        const itemsCount = this._currentOrder?.items.length || 0;
 
         if ((init && itemsCount > 0) || itemsCount === 1) {
             this._print.setActive(true);
@@ -112,7 +115,7 @@ export class OrdersControl implements IOrdersControl {
         if (itemsCount === 0) {
             this._print.setActive(false);
             const ordersCount = this._orders.size;
-            const orderNumber = this._orderControl.getOrderNumber();
+            const orderNumber = this._currentOrder?.orderNumber;
             if (ordersCount === 1 && orderNumber === 1) {
                 this._close.setActive(false);
             } else this._close.setActive(true);

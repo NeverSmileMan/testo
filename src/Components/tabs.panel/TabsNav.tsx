@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/tabs.panel/TabsNav';
-import OrdersControl from '../../data.structure/OrdersControl';
+import OrdersControl, { IOrdersControl } from '../../data.structure/OrdersControl';
 
 const ordersControl = OrdersControl.getInstance();
 
@@ -14,26 +14,30 @@ const selectOrder = (event: React.MouseEvent<HTMLDivElement>) => {
     orderNumber && Number.parseInt(orderNumber) && ordersControl.selectOrder(+orderNumber);
 }
 
-const getState = () => ({
+const getState = (ordersControl: IOrdersControl) => ({
     ordersNumbers: [...ordersControl.getOrders().keys()],
-    currentOrderNumber: ordersControl.getCurrentOrder().orderNumber,
+    currentOrderNumber: ordersControl.getCurrentOrder()?.orderNumber,
     canCreate: ordersControl.canCreateOrder(),
 });
 
-let setState: React.Dispatch<typeof getState>;
-let state;
-const changeState = () => {
-    ordersControl.onChange(
-        () => setState(getState)
-    );
-    return getState();
-};
+// let setState: React.Dispatch<typeof getState>;
+// let state;
+// const changeState = () => {
+//     ordersControl.onChange(
+//         () => setState(getState)
+//     );
+//     return getState();
+// };
 
-function TabsNav({ classes }: WithStyles) {
-    [state, setState] = useState(changeState);
+type Props = {
+    value: { ordersControl: IOrdersControl };
+} & WithStyles;
 
-    const { ordersNumbers, currentOrderNumber, canCreate } = state;
+function TabsNav({ classes, value }: Props) {
+    // [state, setState] = useState(changeState);
 
+    // const { ordersNumbers, currentOrderNumber, canCreate } = state;
+    const { ordersNumbers, currentOrderNumber, canCreate } = getState(value.ordersControl);
     const tabs = ordersNumbers.map(orderNumber =>
         <div
             className={`tab ${orderNumber === currentOrderNumber ? 'active' : ''}`}

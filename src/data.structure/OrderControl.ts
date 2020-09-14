@@ -104,7 +104,7 @@ class OrderControl implements IOrderControl {
     }
 
     getItems(): IItemAmount[] {
-        return this._order!.items;
+        return this._order ? this._order.items : [];
     }
 
     getOrder(): IOrder {
@@ -116,7 +116,7 @@ class OrderControl implements IOrderControl {
     }
 
     getTotal(): number {
-        return this._order!.total;
+        return this._order ? this._order.total : 0;
     }
 
     getMessage() {

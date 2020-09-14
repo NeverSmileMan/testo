@@ -8,13 +8,14 @@ import OrderInfo from './OrderInfo';
 import Search from '../search/Search';
 import OrderItems from './OrderItems';
 import OrderControlModal from './OrderControlModal';
+import { IOrdersControl } from '../../data.structure/OrdersControl';
 
 const orderControl = OrderControlObject.getInstance();
 const modalService = ModalService.getInstance();
 export const OprderControlContext = createContext({ orderControl });
 const getMode = () => orderControl.getState() === State.PENDING ? Mode.MODAL : null;
 
-let setState: React.Dispatch<() => { orderControl: IOrderControl }>;
+let setState: React.Dispatch<(state: { orderControl: IOrderControl }) => { orderControl: IOrderControl }>;
 let state: { orderControl: IOrderControl };
 
 function changeState() {
@@ -28,13 +29,25 @@ function showModal(mode: Mode | null) {
     else modalService.showModal(null);
 }
 
-function OrderControl({ classes }: WithStyles) {
+type Props = {
+    value: { ordersControl: IOrdersControl };
+} & WithStyles;
+
+function OrderControl({ classes, value }: Props) {
     
     [state, setState] = useState(changeState);
-    
+    const order = value.ordersControl.getCurrentOrder();
     const mode = getMode();
     useEffect(() => showModal(mode), [mode]);
 
+    useEffect(() => {
+        setState((state) => {
+            if (!order) return state;
+            order && state.orderControl.setOrder(order);
+            return { ...state };
+        });
+    }, [order]);
+    if (!order) return null;
     return (
         <OprderControlContext.Provider value={state}>
             <div className={classes.wrapper}>
