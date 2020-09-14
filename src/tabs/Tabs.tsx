@@ -1,7 +1,7 @@
-import React, {FC, useCallback, useState, useContext} from "react";
+import React, {useContext} from "react";
 import Tab from "./Tab";
 import {makeStyles} from "@material-ui/styles";
-import {MainContext} from '../main';
+import {MainContext, TabItems} from '../main';
 
 export const MAX_NUMBER_OF_TABS = 6;
 
@@ -29,25 +29,25 @@ const styles = makeStyles({
 	}
 })
 
-function Tabs(props: any) {
-	
+function Tabs({tabs}: any) {
+
 	const {addTab, setActiveTab, activeTab} = useContext(MainContext)
 
-
 	const {header_tabs, tab} = styles()
-	const viewTabs = props.tabs.map((tab: any, index: any) => <Tab setActive={setActiveTab}
-																														tab={tab}
-																														index={index}
-																														active={activeTab === index}
-																														key={index}/>
+	const viewTabs = tabs.map((tab: TabItems, index: number) => <Tab setActive={setActiveTab}
+	                                                            tab={tab}
+	                                                            index={index}
+	                                                            active={activeTab === index}
+	                                                            key={index}/>
 	)
 	return (
 		<div className={header_tabs}>
 			{viewTabs}
-			{props.tabs.length < MAX_NUMBER_OF_TABS ?
+			{tabs.length < MAX_NUMBER_OF_TABS ?
 				<div className={tab} onClick={addTab}>+</div>
 				: null}
 		</div>
 	)
 }
+
 export default Tabs;

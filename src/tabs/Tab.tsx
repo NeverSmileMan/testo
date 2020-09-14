@@ -1,33 +1,11 @@
-import React, {FC, useState} from "react";
+import React, {FC} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {MAX_NUMBER_OF_TABS} from "./Tabs";
 import {createStyles, Theme} from "@material-ui/core/";
-
-enum ItemType {
-	WEIGHT,
-	PIECE,
-}
-
-export interface Item {
-	plu: number;
-	name: string;
-	price: number;
-	type: ItemType;
-}
-
-export interface ITab {
-	tabNumber: number;
-	tara?: number;
-	addItem?: (value: Item) => void;
-	deleteItem?: (value: Item) => void;
-	getTotal?: () => number;
-	getTara?: () => number;
-	active?: boolean
-}
-
+import {TabItems} from "../main";
 
 interface PropsTab {
-	tab: ITab;
+	tab: TabItems;
 	setActive: (val: number) => void;
 	active: boolean
 	index: number

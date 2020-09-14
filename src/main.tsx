@@ -148,7 +148,7 @@ export default function Main() {
 
 
 
-interface TabItems {
+export interface TabItems {
 	tabNumber: number;
 	tara: number;
 	items: AddedItem[];
