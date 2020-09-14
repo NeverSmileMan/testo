@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import Buttons from './ControlButtons';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
-import styles from '../../styles/controls/CloseModal';
+import styles from '../../styles/controls/Controls';
 import { OrdersControlContext } from '../Orders';
 
 type Props = {

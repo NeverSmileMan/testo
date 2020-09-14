@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
-import styles from '../../styles/controls/CloseModal';
+import styles from '../../styles/controls/PrintModal';
 import Print from '../../data.structure/Print';
 
 const print = Print.getInstance();
