@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles ((theme: Theme) => createStyles({
-    btn: ({ borderColor, colorBtn, textColor}: StyleProp) => ({
+const useStyles = makeStyles((theme: Theme) => createStyles({
+    btn: ({ borderColor, colorBtn, textColor }: StyleProp) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -16,7 +16,7 @@ const useStyles = makeStyles ((theme: Theme) => createStyles({
         gridColumnStart: '1',
         gridColumnEnd: '3',
     },
-    backLigth:{
+    backLigth: {
         filter: 'brightness(150%)',
     }
 }))
@@ -28,20 +28,23 @@ interface StyleProp {
 interface Prop extends StyleProp {
     btnName?: string | any;
     nameClass?: string;
+    onClick?: () => any;
 }
-enum Cls {
-    btn,
-    btn0,
-    backLigth
-}
-
-const WeightBtn = ({ btnName, borderColor = 'none', textColor='#000', colorBtn = '#e4e4e4', nameClass }: Prop) => {
-    const cls:Record<string, string> = useStyles({ borderColor, colorBtn, textColor});
+const rnjnd = (): any => { console.log('click') }
+const WeightBtn = ({ 
+    btnName, 
+    borderColor = 'none', 
+    textColor = '#000', 
+    colorBtn = '#e4e4e4', 
+    nameClass, 
+    onClick = rnjnd }: Prop) => {
+    const cls: Record<string, string> = useStyles({ borderColor, colorBtn, textColor });
     const namedClass = nameClass && cls[nameClass]
-        ? `${cls.btn} ${cls[nameClass]}` 
+        ? `${cls.btn} ${cls[nameClass]}`
         : `${cls.btn}`
     return (
-        <div className={namedClass}>{btnName}</div>
+        <div onClick={onClick()} className={namedClass}>{btnName}</div>
+        // <div className={namedClass}>{btnName}</div>
     )
 }
 

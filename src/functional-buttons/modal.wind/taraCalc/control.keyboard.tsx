@@ -13,8 +13,10 @@ const useStyle = makeStyles({
         fontSize: '50px',
     }
 })
-
-const ControlKeyboard = () => {
+interface Prop {
+    onClick?: ()=> any;
+}
+const ControlKeyboard = ({onClick}:Prop) => {
     const theme = useTheme<Theme>();
     const control = [<span>&#8592;</span>, <span>&#10003;</span>];
     const { controlContainer } = useStyle()
@@ -30,6 +32,7 @@ const ControlKeyboard = () => {
                         nameClass={'backLigth'} />)
                 }
                 return (<WeightBtn
+                onClick={()=>onClick}
                 key={index}
                 btnName={val}
                 textColor='#fff'
