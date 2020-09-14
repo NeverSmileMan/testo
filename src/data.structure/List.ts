@@ -2,16 +2,13 @@ import { IItem } from './Item';
 import itemsData from './data/items';
 
 export interface IList {
-    onSelect: (callback: (item: IItem) => void) => void;
-    onChange: (callback: () => void) => void;
-    selectItem: (index: number) => void;
+    onChange: (callback: (items: IItem[] | null) => void) => void;
     getItems: () => IItem[] | null;
     setFilter: (filter: string) => void;
 }
 
 class List implements IList {
-    private _callbackOnSelect?: (item: IItem) => void;
-    private _callbackOnChange?: () => void;
+    private _callbackOnChange?: (items: IItem[] | null) => void;
     private _items: IItem[] | null = null;
     private _itemsData: IItem[];
     
@@ -22,31 +19,19 @@ class List implements IList {
     setFilter(filter: string) {
         if (!filter) this._items = null;
         else this._search(filter);
-        this._onUpdate();
+        this._onChange();
     }
     
     getItems() {
         return this._items;
     }
 
-    selectItem(index: number) {
-        this._onSelect(this._items![index]);
-    }
-
-    onSelect(callback: (item: IItem) => void) {
-        this._callbackOnSelect = callback;
-    }
-
-    onChange(callback: () => void) {
+    onChange(callback: (items: IItem[] | null) => void) {
         this._callbackOnChange = callback;
     }
 
-    private _onUpdate() {
-        if (this._callbackOnChange) this._callbackOnChange();   
-    }
-
-    private _onSelect(item: IItem) {
-        if (this._callbackOnSelect) this._callbackOnSelect(item);
+    private _onChange() {
+        if (this._callbackOnChange) this._callbackOnChange(this._items);   
     }
 
     private _search(filter: string) {
@@ -55,4 +40,12 @@ class List implements IList {
 
 }
 
-export default List;
+let instance: IList;
+function getInstance() {
+    if (!instance) {
+        instance = new List();
+    }
+    return instance;
+}
+
+export default { getInstance };

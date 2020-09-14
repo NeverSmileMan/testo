@@ -1,4 +1,3 @@
-import List, { IList } from "./List";
 import { IItem } from './Item';
 
 export interface IInput {
@@ -19,7 +18,6 @@ export interface IInputNumber extends IInput {
 
 export interface IInputList extends IInput {
     getValue: () => string;
-    getListInstance: () => IList;
     onSelect: (callback: (item: IItem) => void) => void;
 }
 
@@ -107,30 +105,14 @@ export class Input implements IInput {
 }
 
 export class InputList extends Input implements IInputList {
-    private _list: IList;
 
-    constructor() {
-        super();
-        this._list = new List();
-        this._list.onSelect(this._onSelect.bind(this));
-    }
-
-    protected _onChange() {
-        this._list.setFilter(this._value);
-        super._onChange(); 
-    }
-
-    protected _onSelect(item: IItem){
+    _onSelect(item: IItem) {
         if (!item) return; //ENTER ??
         if (this._callbackOnSelect) this._callbackOnSelect(item);
     }
 
     getValue() {
         return this._value;
-    }
-
-    getListInstance() {
-        return this._list;
     }
 }
 

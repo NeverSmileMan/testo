@@ -22,6 +22,7 @@ export interface IOrderControl {
     onChange: (callback: () => void) => void;
     off: (event: EventType, callback: () => void) => void;
     getState: () => State;
+    addItem: (item: IItem) => void;
 }
 
 class OrderControl implements IOrderControl {
@@ -39,7 +40,7 @@ class OrderControl implements IOrderControl {
         this._weights.onChange(this._onWeightsChange.bind(this));
         this._onWeightsChange();
         this._input = Input.getInputListInstance();
-        this._input.onSelect(this._addItem.bind(this));
+        //this._input.onSelect(this._addItem.bind(this));
         this._emitter = new EventEmitter();
     }
 
@@ -67,7 +68,7 @@ class OrderControl implements IOrderControl {
         return this._selectedItemIndex;
     }
 
-    private _addItem(item: IItem) {
+    addItem(item: IItem) {
         if (!this._weights.isStable()) {
             this._throwMessage(MessageCode.WEIGHTS_NOT_STABLE);
             return;

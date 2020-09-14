@@ -1,34 +1,41 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/search/List';
-import Input from '../../data.structure/Input';
+import ListObject from '../../data.structure/List';
+import { IItem } from '../../data.structure/Item';
 
-const list = Input.getInputListInstance().getListInstance();
+const list = ListObject.getInstance();
 
-const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
+const onItemSelect = (event: React.MouseEvent<HTMLDivElement>, onSelect: (item: IItem) => void) => {
     const target = event.target as HTMLElement;
     const itemElem: HTMLElement | null = target.closest('[data-item-index]');
     const itemIndex = itemElem?.dataset['itemIndex'];
-    itemIndex && list.selectItem(+itemIndex);
+    itemIndex && onSelect(list.getItems()![+itemIndex]);
 }
 
-let setState: React.Dispatch<{}>;
+let setState: React.Dispatch<() => (IItem[] | null)>;
+    let itemsArray: IItem[] | null;
 const changeState = () => {
     list.onChange(
-        () => setState({})
+        (itemsArray) => setState(() => itemsArray)
     );
-    return {};
+    return null;
 };
 
-function List({ classes }: WithStyles) {
+type Props = {
+    filter: string;
+    onSelect: (item: IItem) => void;
+} & WithStyles;
 
-    [, setState] = useState(changeState);
+function List({ classes, filter, onSelect }: Props) {
+    [itemsArray, setState] = useState<IItem[] | null>(changeState);
 
-    const itemsArray = list.getItems();
+    const onClick = useCallback((event) => onItemSelect(event, onSelect), []);
+    useEffect(() => list.setFilter(filter), [filter]);
 
     if (!itemsArray) return null;
     
-    const items = itemsArray.map((item, i) => 
+    const items = itemsArray.map((item, i) =>
         <li key={i} data-item-index={i}>
             <span>{item.plu}</span>
             <span>{item.name}</span>
