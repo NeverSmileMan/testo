@@ -12,17 +12,19 @@ const styles = createStyles((theme: Theme) => ({
 }));
 
 type Props = {
-    deleteOrder: () => void;
-    printOrder: () => void;
+    callbacks: {
+        deleteOrder: () => void;
+        printOrder: () => void;
+    }
 } & WithStyles;
 
-function Controls({ classes, deleteOrder, printOrder }: Props) {
+function Controls({ classes, callbacks }: Props) {
     const { printIsActive, closeIsActive } = useContext(OrdersControlContext);
     return (
         <div className={classes.controls}>
             <Buttons.TaraButton />
-            <Buttons.PrintButton isActive={printIsActive} onAction={printOrder}/>
-            <Buttons.CloseButton isActive={closeIsActive} onAction={deleteOrder}/>
+            <Buttons.PrintButton isActive={printIsActive} onAction={callbacks.printOrder}/>
+            <Buttons.CloseButton isActive={closeIsActive} onAction={callbacks.deleteOrder}/>
         </div>
     );
 }

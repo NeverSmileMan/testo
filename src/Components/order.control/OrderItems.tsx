@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/order.control/OrderItems';
-import { OprderControlContext } from './OrderControl';
+import { OrderControlContext } from '../Orders';
 
 const selectItem = (event: React.MouseEvent<HTMLDivElement>, selectItem: (index: number) => void) => {
     const target = event.target as HTMLElement;
@@ -15,7 +15,7 @@ type Props = {
 } & WithStyles;
 
 function OrderItems({ classes, onSelect }: Props) {
-    const { orderItems, selectedItemIndex } = useContext(OprderControlContext);
+    const { orderItems, selectedItemIndex } = useContext(OrderControlContext);
     const onClick = useCallback((event) => selectItem(event, onSelect), []);
 
     const items = orderItems.map((item, i) =>

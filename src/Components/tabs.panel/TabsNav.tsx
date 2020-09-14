@@ -1,13 +1,15 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/tabs.panel/TabsNav';
 import { IOrdersControl } from '../../data.structure/OrdersControlNew';
+import { OrdersControlContext } from '../Orders';
 
-const selectOrder = (event: React.MouseEvent<HTMLDivElement>, selectOrder: (orderNumber: number) => void) => {
+const onSelect = (event: React.MouseEvent<HTMLDivElement>, selectOrder: (orderNumber: number) => void) => {
     const target = event.target as HTMLElement;
     const tabElem: HTMLDivElement | null = target.closest('[data-order-number]');
     const orderNumber = tabElem?.dataset.orderNumber;
     orderNumber && Number.parseInt(orderNumber) && selectOrder(+orderNumber);
+    console.log('SELECT');
 }
 
 const createOrder = (createOrder: () => void) => createOrder();
@@ -19,24 +21,27 @@ const getState = (ordersControl: IOrdersControl) => ({
 });
 
 type Props = {
-    value: { ordersControl: IOrdersControl };
+    // value: { ordersControl: IOrdersControl };
+    callbacks: {
+        createOrder: () => void;
+        selectOrder: (orderNumber: number) => void;
+    };
 } & WithStyles;
 
-function TabsNav({ classes, value }: Props) {
+function TabsNav({ classes, callbacks }: Props) {
     
-    const { ordersControl } = value;
+    // const { ordersControl } = value;
 
-    const select = useCallback((event) => selectOrder(event, ordersControl.selectOrder.bind(ordersControl)), []);
-    const create = useCallback(() => createOrder(ordersControl.createOrder.bind(ordersControl)), []);
+    const selectOrder = useCallback((event) => onSelect(event, callbacks.selectOrder), []);
     
-    const { ordersNumbers, currentOrderNumber, canCreate } = getState(ordersControl);
+    const { ordersNumbers, currentOrderNumber, canCreate } = useContext(OrdersControlContext);
     
     const tabs = ordersNumbers.map(orderNumber =>
         <div
             className={`tab ${orderNumber === currentOrderNumber ? 'active' : ''}`}
             key={orderNumber}
             data-order-number={orderNumber}
-            onClick={select}>
+            onClick={selectOrder}>
             {orderNumber}
         </div>
     );
@@ -47,7 +52,7 @@ function TabsNav({ classes, value }: Props) {
             {canCreate ?
                 <div 
                     className='tab'
-                    onClick={create}>
+                    onClick={callbacks.createOrder}>
                     +
                 </div>
                 : null

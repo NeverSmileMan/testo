@@ -130,7 +130,7 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
     }
 
     printOrder() {
-        new Printer(this.getOrder());
+        new Printer(this.getCurrentOrder()!);
         //this._close.doAction(); ????????
     }
 

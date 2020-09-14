@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext, useCallback } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/order.control/OrderControl';
 import OrdersControl from '../../data.structure/OrdersControlNew';
@@ -10,6 +10,8 @@ import OrderItems from './OrderItems';
 import OrderControlModal from './OrderControlModal';
 import { IOrdersControl } from '../../data.structure/OrdersControl';
 import { IItem, IItemAmount } from '../../data.structure/Item';
+import { OrdersControlContext } from '../Orders';
+import { OrderControlContext } from '../Orders';
 
 const orderControl = OrdersControl.getInstance();
 const modalService = ModalService.getInstance();
@@ -28,7 +30,7 @@ const getState = (): IState => ({
     selectedItemIndex: orderControl.getSelectedItemIndex(),
 });
 
-export const OprderControlContext = createContext(getState());
+// export const OprderControlContext = createContext(getState());
 
 const getMode = () => orderControl.getState() === State.PENDING ? Mode.MODAL : null;
 
@@ -47,7 +49,7 @@ function showModal(mode: Mode | null) {
 }
 
 type Props = {
-    value: { ordersControl: IOrdersControl };
+    //value: { ordersControl: IOrdersControl };
     callbacks: {
         delItem: () => void,
         addItem: (item: IItem) => void,
@@ -55,26 +57,26 @@ type Props = {
     };
 } & WithStyles;
 
-function OrderControl({ classes, value, callbacks }: Props) {
+function OrderControl({ classes, callbacks }: Props) {
     [state, setState] = useState(changeState);
     
-    const order = value.ordersControl.getCurrentOrder();
+    const { order } = useContext(OrdersControlContext);
+    const { orderMode } = useContext(OrderControlContext);
+    // useEffect(() => {
+    //     setState((state) => {
+    //         if (!order) return state;
+    //         order && orderControl.setOrder(order);
+    //         return { ...state };
+    //     });
+    // }, [order]);
 
-    useEffect(() => {
-        setState((state) => {
-            if (!order) return state;
-            order && orderControl.setOrder(order);
-            return { ...state };
-        });
-    }, [order]);
-
-    const mode = getMode();
-    useEffect(() => showModal(mode), [mode]);
+    // const mode = getMode();
+    useEffect(() => showModal(orderMode), [orderMode]);
 
     if (!order) return null;
 
     return (
-        <OprderControlContext.Provider value={state}>
+        // <OprderControlContext.Provider value={state}>
             <div className={classes.wrapper}>
                 <div className='search-panel'>
                     <Search onSelect={callbacks.addItem} />
@@ -84,7 +86,7 @@ function OrderControl({ classes, value, callbacks }: Props) {
                     <OrderItems onSelect={callbacks.selectItem} />
                 </div>
             </div>
-        </OprderControlContext.Provider>
+        // </OprderControlContext.Provider>
     );
 }
 

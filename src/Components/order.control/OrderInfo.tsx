@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/order.control/OrderInfo';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';    
-import { OprderControlContext } from './OrderControl';
+import { OrderControlContext } from '../Orders';
 
 type Props = {
     onClick: () => void;
@@ -10,7 +10,7 @@ type Props = {
 
 function OrderInfo({ classes, onClick }: Props) {
     
-    const { isSelected, total }= useContext(OprderControlContext);
+    const { isSelected, total }= useContext(OrderControlContext);
 
     return (
         <div className={classes.wrapper}>

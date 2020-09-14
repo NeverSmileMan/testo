@@ -53,7 +53,7 @@ function createControlButton(props: IControlButtonProps) {
         [{ mode }, setState] = useState(changeState);
         useState(() => object.onAction(onAction));
         useEffect(() => showModal(mode), [mode]);
-        useEffect(() => { isActive && object.setActive(isActive)});
+        useEffect(() => { isActive && object.setActive(isActive)}, [isActive]);
         const className = `${classes.wrapper} ${object.isActive() ? '' : classes.disabled}`;
 
         return (

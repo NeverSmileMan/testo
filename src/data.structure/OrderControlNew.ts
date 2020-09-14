@@ -10,8 +10,8 @@ import { State, EventType } from './types/types';
 
 export interface IOrderControl {
     setOrder: (order: IOrder) => void;
-    getOrder: () => IOrder;
-    getOrderNumber: () => number;     
+    // getOrder: () => IOrder;
+    getOrderNumber: () => number | null;     
     delItem: () => void;
     getItems: () => IItemAmount[];
     selectItem: (index: number | null) => void;
@@ -107,9 +107,9 @@ export class OrderControl implements IOrderControl {
         return this._currentOrder ? this._currentOrder.items : [];
     }
 
-    getOrder(): IOrder {
-        return this._currentOrder!;
-    }
+    // getOrder(): IOrder {
+    //     return this._currentOrder!;
+    // }
 
     // getItemsCount(): number {
     //     return this._order!.items.length;
@@ -127,8 +127,8 @@ export class OrderControl implements IOrderControl {
         this._currentOrder!.total += value;
     }
 
-    getOrderNumber(): number {
-        return this._currentOrder!.orderNumber;
+    getOrderNumber() {
+        return this._currentOrder ? this._currentOrder.orderNumber : null;
     }
 
     onChange(callback: () => void) {
