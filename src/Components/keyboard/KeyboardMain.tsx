@@ -26,6 +26,7 @@ const changeLang = (event: React.MouseEvent<HTMLDivElement>) => {
     setLang(() => currentLang);
     const nextLang = currentLang === 'UA' ? 'EN' : 'UA';
     target.setAttribute('data-next-lang', nextLang);
+    target.innerHTML = nextLang;
 };
 
 const DiffKeys = {
