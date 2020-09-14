@@ -34,15 +34,14 @@ function Tabs({tabs}: any) {
 	const {addTab, setActiveTab, activeTab} = useContext(MainContext)
 
 	const {header_tabs, tab} = styles()
-	const viewTabs = tabs.map((tab: TabItems, index: number) => <Tab setActive={setActiveTab}
-	                                                            tab={tab}
-	                                                            index={index}
-	                                                            active={activeTab === index}
-	                                                            key={index}/>
-	)
 	return (
 		<div className={header_tabs}>
-			{viewTabs}
+			{tabs.map((tab: TabItems, index: number) => <Tab setActive={setActiveTab}
+			                                                 tab={tab}
+			                                                 index={index}
+			                                                 active={activeTab === index}
+			                                                 key={index}/>
+			)}
 			{tabs.length < MAX_NUMBER_OF_TABS ?
 				<div className={tab} onClick={addTab}>+</div>
 				: null}
