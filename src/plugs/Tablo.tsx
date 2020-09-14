@@ -52,7 +52,7 @@ export default function Tablo() {
   const [tara, setTara] = React.useState();
 const [title, setTitle] = React.useState();
 const [price, setPrice] = React.useState();
-const [weight, setWeight] = React.useState();
+const [weight, setWeight] = React.useState<any>();
 const [total, setTotal] = React.useState();
 
 ScalePlug.setFuncs( setTara, setTitle, setPrice, setWeight, setTotal);
@@ -72,9 +72,9 @@ ScalePlug.setFuncs( setTara, setTitle, setPrice, setWeight, setTotal);
         {tara}
         </div>
       </div>
-      <div className={classes.weight }>
+      <div className={classes.weight } onClick={()=>setWeight(Math.floor(Math.random()*100+41))}>
        weight
-        <div style={{fontSize: '25px', marginLeft: '25%'}}>
+        <div style={{fontSize: '25px', marginLeft: '25%'}} >
         {weight}
         </div>
       </div>
