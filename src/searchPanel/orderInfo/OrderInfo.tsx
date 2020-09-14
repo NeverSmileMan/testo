@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function OrderInfo(props: any) {
 	const classes = useStyles();
-	console.log(props)
 	const calc = React.useCallback((data: string) => {
 		let w: any = [];
 		let x: any;
