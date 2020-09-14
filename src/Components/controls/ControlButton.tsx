@@ -59,7 +59,7 @@ function createControlButton(props: IControlButtonProps) {
             </div>
             {mode === Mode.MODAL ?
             <Modal>
-                <ModalComponent />
+                <ModalComponent object={object} />
             </Modal> : null
             }
         </>);

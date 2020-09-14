@@ -1,30 +1,24 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/controls/CloseModal';
-import Close from '../../data.structure/Close';
-
-const close = Close.getInstance();
-
-const onClickTrue = () => {
-    close.doAction(true);
-};
-
-const onClickFalse = () => {
-    close.doAction(false);
-};
+import { IClose } from '../../data.structure/Close';
 
 interface Props {
     title?: string;
     confirm?: string;
     reject?: string;
+    object: IClose;
 };
 
 function CloseModal({
     title = 'Ви хочете остаточно закрити замовлення?',
     confirm = 'ТАК',
     reject = 'НІ',
-    classes
+    classes,
+    object,
 }: Props & WithStyles) {
+    const onClickTrue = useCallback(() => object.doAction(true), []);
+    const onClickFalse = useCallback(() => object.doAction(true), []);
     return (
         <div className={classes.wrapper}>
             <div className='title'>

@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/Orders';
-import OrdersControl, { IOrdersControl } from '../data.structure/OrdersControlNew';
+import OrdersControl, { IOrdersControl } from '../data.structure/OrdersControl';
 import TabsNav from './tabs.panel/TabsNav';
 import Message from './tabs.panel/Message';
 import HomeButton from './tabs.panel/HomeButton';
@@ -11,7 +11,24 @@ import { IItem, IItemAmount } from '../data.structure/Item';
 import { IOrder } from '../data.structure/Order';
 import { Mode, State } from '../data.structure/types/types';
 
+export const OrderControlContext = createContext<IStateOrder>({} as IStateOrder);
+export const OrdersControlContext = createContext<IState>({} as IState);
+
 const ordersControl = OrdersControl.getInstance();
+
+const callbacksControls = {
+    deleteOrder: () => ordersControl.deleteOrder(),
+    printOrder: () => ordersControl.printOrder(),
+};
+const callbacksOrder = {
+    delItem: () => ordersControl.delItem(),
+    addItem: (item: IItem) => ordersControl.addItem(item),
+    selectItem: (index: number | null) => ordersControl.selectItem(index),
+};
+const callbacksTabs = {
+    selectOrder: (orderNumber: number) => ordersControl.selectOrder(orderNumber),
+    createOrder: () => ordersControl.createOrder(),
+}
 
 interface IStateOrder {
     isSelected: boolean,
@@ -22,7 +39,6 @@ interface IStateOrder {
 }
 
 const getStateOrder = (): IStateOrder => ({
-    //order: ordersControl.getOrder(),
     isSelected: ordersControl.isSelected(),
     total: ordersControl.getTotal().toFixed(2),
     orderItems: ordersControl.getItems(),
@@ -30,20 +46,12 @@ const getStateOrder = (): IStateOrder => ({
     orderMode: ordersControl.getState() === State.PENDING ? Mode.MODAL : null,
 });
 
-export const OrderControlContext = createContext<IStateOrder>({} as IStateOrder);
 let setStateOrder: React.Dispatch<() => IStateOrder>;
 let stateOrder: IStateOrder;
 function changeStateOrder() {
     ordersControl.onChange(() => setStateOrder(getStateOrder));
     return getStateOrder();
 }
-
-
-
-
-
-
-
 
 interface IState {
     order: IOrder | null;
@@ -64,26 +72,9 @@ const getState = () => ({
     currentOrderNumber: ordersControl.getOrderNumber(),
     canCreate: ordersControl.canCreateOrder(),
 });
-const callbacksControls = {
-    deleteOrder: () => ordersControl.deleteOrder(),
-    printOrder: () => ordersControl.printOrder(),
-};
-const callbacksOrder = {
-    delItem: () => ordersControl.delItem(),
-    addItem: (item: IItem) => ordersControl.addItem(item),
-    selectItem: (index: number | null) => ordersControl.selectItem(index),
-};
-const callbacksTabs = {
-    selectOrder: (orderNumber: number) => ordersControl.selectOrder(orderNumber),
-    createOrder: () => ordersControl.createOrder(),
-}
-
-export const OrdersControlContext = createContext<IState>(getState());
-
 
 let setState: React.Dispatch<() => IState>;
 let state: IState;
-
 function changeState(): IState {
     ordersControl.onChangeOrders(() => setState(getState));
     return getState();

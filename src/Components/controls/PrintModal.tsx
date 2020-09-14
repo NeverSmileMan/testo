@@ -1,30 +1,24 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/controls/PrintModal';
-import Print from '../../data.structure/Print';
-
-const print = Print.getInstance();
-
-const onClickTrue = () => {
-    print.doAction(true);
-};
-
-const onClickFalse = () => {
-    print.doAction(false);
-};
+import { IPrint } from '../../data.structure/Print';
 
 interface Props {
     title?: string;
     confirm?: string;
     reject?: string;
+    object: IPrint,
 };
 
 function PrintModal({
     title = 'Роздрукувати замовлення?',
     confirm = 'ТАК',
     reject = 'НІ',
-    classes
+    classes,
+    object,
 }: Props & WithStyles) {
+    const onClickTrue = useCallback(() => object.doAction(true), []);
+    const onClickFalse = useCallback(() => object.doAction(true), []);
     return (
         <div className={classes.wrapper}>
             <div className='title'>

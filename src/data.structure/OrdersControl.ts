@@ -1,38 +1,38 @@
-import OrderControl, { IOrderControl } from './OrderControl';
+import { OrderControl, IOrderControl } from './OrderControl';
 import { Order, IOrder } from './Order';
-import Close, { IClose } from './Close';
-import Print, { IPrint } from './Print';
 import { Printer } from './Printer';
 
 export type IOrders = Map<number, IOrder>;
 
-export interface IOrdersControl {
+export interface IOrdersControl extends IOrderControl{
     canCreateOrder: () => boolean;
     createOrder: () => void;
     selectOrder: (orderNumber: number) => void;
     getCurrentOrder: () => IOrder | null;
-    getOrders: () => IOrders;    
-    onChange: (callback: () => void) => void;
+    getOrders: () => IOrders;
+    onChangeOrders: (callback: () => void) => void;
+    printIsActive: boolean;
+    closeIsActive: boolean;
+    printOrder: () => void;
+    deleteOrder: () => void;
 }
 
-export class OrdersControl implements IOrdersControl {
-    private _currentOrder: IOrder | null = null;
+export class OrdersControl extends OrderControl implements IOrdersControl {
     private _orders: IOrders = new Map();
-    private _ordersFreeNums: boolean[];
-    private _orderControl: IOrderControl;
-    private _print: IPrint;
-    private _close: IClose;
-    private _callbackOnChange?: () => void;
+    private _ordersFreeNums: boolean[]; 
+    private _callbackOnChangeOrders?: () => void;
+    printIsActive: boolean = false;
+    closeIsActive: boolean = false;
 
     constructor(private _maxOrdersCount: number) {
-        this._orderControl = OrderControl.getInstance();
-        this._orderControl.onChange(this._onOrderChange.bind(this));
+        super();
         this._ordersFreeNums = Array(this._maxOrdersCount).fill(true);
-        this._print = Print.getInstance();
-        //this._print.onPrint(this._printOrder.bind(this));      
-        this._close = Close.getInstance();
-        //this._close.onClose(this._deleteOrder.bind(this));
         this._setCurrentOrder();
+    }
+
+    protected _onChange() {
+        super._onChange();
+        this._onOrderChange();
     }
 
     canCreateOrder() {
@@ -60,12 +60,12 @@ export class OrdersControl implements IOrdersControl {
         return this._orders;
     }
 
-    onChange(callback: () => void) {
-        this._callbackOnChange = callback;
+    onChangeOrders(callback: () => void) {
+        this._callbackOnChangeOrders = callback;
     }
 
-    private _onChange() {
-        if (this._callbackOnChange) this._callbackOnChange();
+    private _onChangeOrders() {
+        if (this._callbackOnChangeOrders) this._callbackOnChangeOrders();
     }
 
     private _setCurrentOrder(orderNumber?: number) {
@@ -74,9 +74,9 @@ export class OrdersControl implements IOrdersControl {
             const order = this._orders.get(orderNumber);
             if (order) {
                 this._currentOrder = order;
-                // this._orderControl.setOrder(order);
-                this._onOrderChange(true);
                 this._onChange();
+                this._onOrderChange(true);
+                this._onChangeOrders();
                 return;
             }
         }
@@ -90,7 +90,7 @@ export class OrdersControl implements IOrdersControl {
         this._setCurrentOrder(firstOrderNumber);
     }
 
-    private _deleteOrder() {
+    deleteOrder() {
         const orderNumber = this._currentOrder?.orderNumber;
         if (!orderNumber) return;
         this._orders.delete(orderNumber);
@@ -98,27 +98,30 @@ export class OrdersControl implements IOrdersControl {
         this._setCurrentOrder();
     }
 
-    private _printOrder() {
-        new Printer(this._orderControl.getOrder());
-        this._close.doAction();
+    printOrder() {
+        new Printer(this.getCurrentOrder()!);
+        //this._close.doAction(); ????????
     }
 
     private _onOrderChange(init?: boolean) {
-        const itemsCount = this._currentOrder?.items.length || 0;
+        const itemsCount = this.getItemsCount();
 
         if ((init && itemsCount > 0) || itemsCount === 1) {
-            this._print.setActive(true);
-            this._close.setActive(true);
+            this.printIsActive = true;
+            this.closeIsActive = true;
+            !init && this._onChangeOrders();
             return;
         }
 
         if (itemsCount === 0) {
-            this._print.setActive(false);
             const ordersCount = this._orders.size;
             const orderNumber = this._currentOrder?.orderNumber;
             if (ordersCount === 1 && orderNumber === 1) {
-                this._close.setActive(false);
-            } else this._close.setActive(true);
+                this.closeIsActive = false;
+            } else {
+                this.closeIsActive = true;
+            }
+            !init && this._onChangeOrders();
         }
     }
 }
