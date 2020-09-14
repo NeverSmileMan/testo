@@ -1,23 +1,7 @@
 import React, { useState } from 'react';
-import {
-    createStyles, Theme,
-    withStyles, WithStyles,
-} from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import styles from '../styles/Modal';
 import ModalService from '../data.structure/ModalService';
-
-const styles = createStyles((theme: Theme) => ({
-    'modal': {
-        position: 'absolute',
-        zIndex: 1000,
-        top: '16%',
-        width: '100%',           
-        height: '84%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    }
-}));
 
 const modalService = ModalService.getInstance();
 

@@ -1,34 +1,12 @@
 import React, { useState } from 'react';
-import {
-    createStyles, Theme,
-    withStyles, WithStyles,
-} from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import styles from '../../styles/keyboard/KeyboardMain';
 import Keyboard from '../../data.structure/Keyboard';
 import { 
     KeyboardLayoutOptionsEN, KeyboardLayoutOptionsUA,
     KeyboardLayoutOptionsNUMS, KeyboardLayoutOptionsFUNC
 } from './KeyboardOptions';
 import KeyboardLayout from './KeyboardLayout';
-
-const styles = createStyles((theme: Theme) => ({
-    'wrapper': {
-        height: '100%',
-        display: 'flex',
-        padding: '0.5rem',
-        paddingRight: '1rem',
-        '& .letters': {
-            width: '60%',
-            marginRight: '2%',
-        },
-        '& .nums': {
-            flex: '1 0 0',
-            marginRight: '1.8%',
-        },
-        '& .func': {
-            width: '15%',
-        },
-    },
-}));
 
 const keyboard = Keyboard.getInstance();
 

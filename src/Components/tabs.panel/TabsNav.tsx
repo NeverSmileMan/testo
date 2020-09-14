@@ -1,33 +1,7 @@
 import React, { useState } from 'react';
-import {
-    createStyles, Theme,
-    withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import styles from '../../styles/tabs.panel/TabsNav';
 import OrdersControl from '../../data.structure/OrdersControl';
-
-const styles = createStyles((theme: Theme) => ({
-    'wrapper': {
-        width: '55%',
-        paddingTop: '.4rem',
-        display: 'flex',
-        '& .tab': {
-            marginRight: '.2rem',
-            width: '15%',
-            borderRadius: '.3rem .3rem 0 0',
-            fontSize: '1.2rem',
-            fontWeight: 'bold',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: theme.palette.secondary.light,
-            color: theme.palette.secondary.dark,
-            cursor: 'pointer',
-        },
-        '& .active': {
-            backgroundColor: theme.palette.primary.main,
-            color: 'white',
-        },
-    },
-}));
 
 const ordersControl = OrdersControl.getInstance();
 

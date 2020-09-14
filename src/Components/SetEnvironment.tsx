@@ -1,22 +1,7 @@
 import React from 'react';
-import {
-    createStyles, Theme,
-    withStyles, WithStyles,
-} from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import styles from '../styles/SetEnvironment';
 import App from '../data.structure/App';
-
-const styles = createStyles((theme: Theme) => ({
-    'wrapper': {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 1366 + 10 + 'px',
-        height: 768 + 10 + 'px',
-        background: 'rgba(0, 0, 0, 0.5)',
-        color: 'white',
-        fontSize: '5rem',
-    },
-}));
 
 const app = App.getInstance();
 

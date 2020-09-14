@@ -1,43 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-    createStyles, Theme,
-    withStyles, WithStyles,
-} from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import styles from '../../styles/search/Search';
 import ActiveInputService from '../../data.structure/ActiveInputService';
 import Input from '../../data.structure/Input';
 import List from './List';
-
-const styles = createStyles((theme: Theme) => ({
-    'wrapper': {
-        backgroundColor: theme.palette.primary.main,
-        width: '70%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: '0 1.5rem',
-        '& .input': {
-            flex: '1 0 0',
-            paddingLeft: '1.5rem',
-            paddingRight: '1.5rem',
-            backgroundColor: 'white',
-            borderRadius: '100px',
-            fontSize: '1.2rem',
-            fontWeight: 'bold',
-        },
-        '& .focus:after': {
-            content: "''",
-            paddingLeft: '3px',
-            animation: '$cursor 1s infinite',
-            background: theme.palette.secondary.dark,
-            opacity: 0,
-        },
-    },
-    '@keyframes cursor': {
-        '0%': {opacity: 0},
-        '40%': {opacity: 1},
-        '100%': {opacity: 0},
-    },
-}));
 
 const input = Input.getInputListInstance();
 const activeInputService = ActiveInputService.getInstance();

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-    createStyles, Theme,
-    withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import styles from '../../styles/order.control/OrderControl';
 import OrderControlObject from '../../data.structure/OrderControl';
 import { Mode, State } from '../../data.structure/types/types';
 import ModalService from '../../data.structure/ModalService';
@@ -9,22 +8,6 @@ import OrderInfo from './OrderInfo';
 import Search from '../search/Search';
 import OrderItems from './OrderItems';
 import OrderControlModal from './OrderControlModal';
-
-const styles = createStyles((theme: Theme) => ({
-    'wrapper': {
-        flex: '1 0 0',
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'relative',
-        '& .search-panel': {
-            height: '17%',
-            display: 'flex',
-        },
-        '& .order-items': {
-            flex: '1 0 0',
-        },
-    },
-}));
 
 const orderControl = OrderControlObject.getInstance();
 const modalService = ModalService.getInstance();

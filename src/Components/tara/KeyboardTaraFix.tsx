@@ -1,19 +1,9 @@
 import React from 'react';
-import { 
-    createStyles, Theme,
-    withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import styles from '../../styles/tara/KeyboardTaraFix';
 import Keyboard from '../../data.structure/Keyboard';
 import { KeyboardLayoutOptionsTARAFIX } from '../keyboard/KeyboardOptions';
 import KeyboardLayout from '../keyboard/KeyboardLayout';
-
-const styles = createStyles((theme: Theme) => ({
-    'wrapper': {
-        height: '100%',
-        backgroundColor: theme.palette.secondary.light,
-        borderRadius: '0.5rem',
-        padding: '1rem 0.5rem',
-    },
-}));
 
 const keyboard = Keyboard.getInstance();
 

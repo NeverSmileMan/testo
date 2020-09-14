@@ -1,41 +1,8 @@
 import React, { useState } from 'react';
-import {
-    createStyles, Theme,
-    withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import styles from '../../styles/order.control/OrderInfo';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';    
 import OrderControl from '../../data.structure/OrderControl';
-
-const styles = createStyles((theme: Theme) => ({
-    'wrapper': {
-        flex: '1 0 0',
-        backgroundColor: theme.palette.primary.main,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        '& .delete': {
-            width: '2rem',
-            height: '2rem',
-            borderRadius: '100px',
-            background: 'white',
-            color: theme.palette.error.main,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            cursor: 'pointer',
-        },
-        '& .total': {
-            textAlign: 'center',
-            paddingLeft: '20px',
-            paddingRight: '20px',     
-            backgroundColor: 'white',
-            borderRadius: '100px',
-            color: theme.palette.primary.main,
-            minWidth: '100px',
-            fontWeight: 'bold',
-            fontSize: '1.2rem',
-        }
-    },
-}));
 
 const orderControl = OrderControl.getInstance();
 

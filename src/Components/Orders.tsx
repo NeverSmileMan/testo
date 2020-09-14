@@ -1,29 +1,11 @@
 import React from 'react';
-import {
-    createStyles, Theme,
-    withStyles, WithStyles,
-} from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import styles from '../styles/Orders';
 import TabsNav from './tabs.panel/TabsNav';
 import Message from './tabs.panel/Message';
 import HomeButton from './tabs.panel/HomeButton';
 import OrderControl from './order.control/OrderControl';
 import Controls from './controls/Controls';
-
-const styles = createStyles((theme: Theme) => ({
-    'wrapper': {
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        '& .tabs-panel': {
-            height: '14%',
-            display: 'flex',
-        },
-        '& .order-panel': {
-            flex: '1 0 0',
-            display: 'flex',
-        },
-    },
-}));
 
 function Orders({ classes }: WithStyles ) {
     return (

@@ -1,40 +1,14 @@
 import React, { useState } from 'react';
-import 'fontsource-roboto';
 import { ThemeProvider } from '@material-ui/core';
-import { createStyles, Theme, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import themes, { ThemesNames } from './themes/themes';
+import styles from './styles/App';
 import App from './data.structure/App';
 import { AppState } from './data.structure/types/types';
 import SetEnvironment from './components/SetEnvironment';
 import Main from './components/Main';
 import './functions/rikAppTest.js';
 
-const styles = createStyles((theme: Theme) => ({
-    '@global': {
-        'html, body': {
-            fontSize: '18px',
-            fontFamily: 'Roboto',
-            margin: '0',
-        },
-        '*': {
-            boxSizing: 'border-box',
-        },
-        '::-webkit-scrollbar': {
-            width: '2.2rem',
-        },
-        '::-webkit-scrollbar-track': {
-            boxShadow: 'inset 0 0 0.3rem #e4e4e4',
-        },
-        '::-webkit-scrollbar-thumb': {
-            background: '#fff',
-            borderRadius: '0 1rem 1rem 0',
-            border: '1px solid gray',
-            borderLeft: 'none' ,
-        },
-    },
-}));
-
-// console.log('APP MODULE');
 const app = App.getInstance();
 
 const getState = () => ({

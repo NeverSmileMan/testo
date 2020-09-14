@@ -1,6 +1,6 @@
 import React from 'react';
 import { getSizeOfElements, getSizeOfElementsInUnits, IKeyboardOptions } from '../../functions/keyboardFunc';
-import { getKeyboardStyles, IDifferentKeys } from './KeyboardStyles';
+import getKeyboardStyles, { IDifferentKeys } from './KeyboardStyles';
 import KeyboardKeys from './KeyboardKeys';
 import { withStyles, WithStyles, createStyles, ClassKeyInferable } from '@material-ui/styles';
 
@@ -15,7 +15,7 @@ function KeyboardLayout({ options, diffKeys = {}, keyClassName }: keyboardLayout
     Object.assign(options.differentKeys, diffKeys);
     const sizeOfElements = getSizeOfElements(options);
     const sizeOfElementsInUnits = getSizeOfElementsInUnits(sizeOfElements);
-    const styles = createStyles(getKeyboardStyles(sizeOfElementsInUnits));
+    const styles = getKeyboardStyles(sizeOfElementsInUnits);
 
     const { keyCountByRow, keyboardSet, differentKeys } = options;
     const keys = KeyboardKeys({ keyboardSet, differentKeys, sizeOfElements, keyClassName });

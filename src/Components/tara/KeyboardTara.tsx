@@ -1,7 +1,6 @@
 import React from 'react';
-import { 
-    createStyles, Theme,
-    withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import styles from '../../styles/tara/KeyboardTara';
 import { 
     KeyboardLayoutOptionsTaraNUMS,
     KeyboardLayoutOptionsTaraFUNC,
@@ -9,21 +8,6 @@ import {
 import Keyboard from '../../data.structure/Keyboard';
 import KeyboardLayout from '../keyboard/KeyboardLayout';
 
-const styles = createStyles((theme: Theme) => ({
-    'wrapper': {
-        height: '100%',
-        backgroundColor: theme.palette.secondary.light,
-        borderRadius: '0 0 0.5rem 0.5rem',
-        display: 'flex',
-        padding: '0.5rem',
-        '& .nums': {
-            width: '80%',
-        },
-        '& .func': {
-            flex: '1 0 0',
-        },
-    },
-}));
 const keyboard = Keyboard.getInstance();
 
 const onClick = (event: React.MouseEvent<HTMLDivElement>) => {

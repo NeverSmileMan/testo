@@ -1,4 +1,4 @@
-import { createStyles, Theme } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core/styles';
 import { ISizeOfElementsInUnits } from '../../functions/keyboardFunc';
 import React from 'react';
 
@@ -17,7 +17,7 @@ export interface IKeyAttr {
 }
 
 export function getKeyboardStyles(sizeOfElementsInUnits: ISizeOfElementsInUnits) {
-    return createStyles((theme: Theme) => ({
+    return (theme: Theme) => ({
         'layout': {
             height: '100%',
             display: 'flex',
@@ -64,7 +64,5 @@ export function getKeyboardStyles(sizeOfElementsInUnits: ISizeOfElementsInUnits)
                 fontSize: '1.2rem',
             },
         },
-    }));
+    });
 }
-
-export default getKeyboardStyles;
