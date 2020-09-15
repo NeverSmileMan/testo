@@ -12,6 +12,7 @@ import {MAX_NUMBER_OF_TABS} from './tabs/Tabs';
 import {ActiveInputService} from './services/ActiveInputService';
 //---------plugs---------------
 import {ScalePlug} from './plugs/scale';
+import items from "./searchPanel/search/itemsData";
 //-----------------------------
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -61,16 +62,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const MainContext = createContext({
 	modalType: '' as string | null,
-	setType: (val: string | null): any => {	},
+	setType: (val: string | null): any => {
+	},
 	deleteTab: () => {
 	},
 	addTab: (e: React.MouseEvent<HTMLDivElement>) => {
 	},
-	confirmClose: () => {	},
+	confirmClose: () => {
+	},
 	setActiveTab: (val: any) => {
 	},
 	addItem: (item: any) => true as boolean,
 	activeTab: '' as any,
+	print: () => {
+	}
 });
 
 export default function Main() {
@@ -90,6 +95,8 @@ export default function Main() {
 		deleteItem,
 		addTab,
 		deleteTab,
+		setTara,
+		print
 	] = useTabs(setError, setModalType, ScalePlug);
 
 	const confirmClose = () => {
@@ -108,6 +115,7 @@ export default function Main() {
 				confirmClose,
 				addItem,
 				setActiveTab,
+				print
 			}}
 		>
 			<div className={header}>
@@ -169,6 +177,7 @@ function useTabs(
 	() => void,
 	() => void,
 	(tara: number) => void,
+	() => void,
 ] {
 	const [tabItems, setTabItems] = useState<TabItems[]>([{tabNumber: 1, tara: -1, items: [],},] as TabItems[]);
 	const [activeTab, setActiveTab] = useState<number>(0);
@@ -232,8 +241,8 @@ function useTabs(
 	}, []);
 
 	const print = useCallback(() => {
-		console.log('print')
-	}, []);
+		console.log('print', tabItems[activeTab].items)
+	}, [tabItems]);
 
 	const addTab = useCallback(() => {
 		const num = freeTabNumbers.findIndex(item => !item) + 1
@@ -273,7 +282,7 @@ function useTabs(
 		setActiveTab((prevTabNum) => prevTabNum ? prevTabNum - 1 : 0);
 	}, [tabItems, activeTab])
 
-	return [tabItems, activeTab, activeItem, setActiveTab, setActiveItem, addItem, deleteItem, addTab, deleteTab, setTara];
+	return [tabItems, activeTab, activeItem, setActiveTab, setActiveItem, addItem, deleteItem, addTab, deleteTab, setTara, print];
 }
 
 

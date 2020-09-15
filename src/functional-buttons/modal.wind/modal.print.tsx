@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/styles';
+import {MainContext} from "../../main";
 
 const useStyles = makeStyles({
     title: {
@@ -15,9 +16,10 @@ interface Prop {
 const titlePrint: string = 'Зніміть товар з вагів';
 
 const ModalPrint = ({ title = titlePrint }: Prop) => {
+    const {print} = useContext(MainContext)
     const cls = useStyles();
     return (
-        <div className={cls.title}>{title}</div>
+        <div className={cls.title} onClick={print}>{title}</div>
     )
 }
 
