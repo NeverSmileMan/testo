@@ -15,7 +15,3 @@ export enum AppState {
     RUN,
     STOP,
 }
-
-export enum EventType {
-    STATE_CHANGE = 'stateChange',
-}

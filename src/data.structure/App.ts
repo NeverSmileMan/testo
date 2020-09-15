@@ -98,13 +98,4 @@ class AppTest extends App implements IAppTest {
     }
 }
 
-let instance: IAppTest;
-
-export function getInstance() {
-    if (!instance) {
-        instance = new AppTest();
-    }
-    return instance;
-}
-
-export default { getInstance };
+export default AppTest;

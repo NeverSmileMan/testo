@@ -7,13 +7,13 @@ import App, { IStateApp } from './data.structure/App';
 import { AppState } from './data.structure/types/types';
 import SetEnvironment from './components/SetEnvironment';
 import Main from './components/Main';
-import './functions/rikAppTest.js';
-
-const app = App.getInstance();
+import rikAppTest from './functions/rikAppTest.js';
 
 let setState: React.Dispatch<() => IStateApp>;
 let state: IStateApp;
 function changeState() {
+    const app = new App();
+    rikAppTest(app);
     app.onChange(() => setState(app.getStateApp));
     return app.getStateApp();
 }
