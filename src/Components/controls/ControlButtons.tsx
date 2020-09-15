@@ -1,33 +1,29 @@
 import createControlButton, { IControlButtonProps } from './ControlButton';
-
-import Close from '../../data.structure/Close';
+import ControlButton from '../../data.structure/ControlButton';
 import CloseIcon from '@material-ui/icons/CheckCircle';
 import CloseModal from './CloseModal';
-
-import Print from '../../data.structure/Print';
 import PrintIcon from '@material-ui/icons/Print';
 import PrintModal from './PrintModal';
-
-import Tara from '../../data.structure/Tara';
+import TaraButton from '../../data.structure/TaraButton';
 import TaraIcon from '@material-ui/icons/Speed';
 import TaraModal from '../tara/TaraModal';
 
 const propsClose: IControlButtonProps = {
-    object: Close.getInstance(),
+    object: new ControlButton(),
     ModalComponent: CloseModal,
     IconComponent: CloseIcon,
     text: 'закрити',
 }
 
 const propsPrint: IControlButtonProps = {
-    object: Print.getInstance(),
+    object: new ControlButton(),
     ModalComponent: PrintModal,
     IconComponent: PrintIcon,
     text: 'друк',
 }
 
 const propsTara: IControlButtonProps = {
-    object: Tara.getInstance(),
+    object: new TaraButton(),
     ModalComponent: TaraModal,
     IconComponent: TaraIcon,
     text: 'тара',

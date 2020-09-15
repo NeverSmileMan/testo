@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/controls/PrintModal';
-import { IPrint } from '../../data.structure/Print';
+import { IControlButton } from '../../data.structure/ControlButton';
 
 interface Props {
     title?: string;
     confirm?: string;
     reject?: string;
-    object: IPrint,
+    object: IControlButton,
 };
 
 function PrintModal({

@@ -1,45 +1,20 @@
 import Weights, { IWeights } from './Weights';
-import { State, EventType } from './types/types';
+import { State } from './types/types';
 import Input, { IInputNumber } from './Input';
-import EventEmitter from 'events';
+import ControlButton, { IControlButton } from './ControlButton';
 
-export interface ITara {
-    doAction: () => void;
-    onAction: () => void;
-    setActive: (value: boolean) => void;
-    isActive: () => boolean;
-    getState: () => State;
-    onChange: (callback: () => void) => void;
-    off: (event: EventType, callback: () => void) => void;
-}
-
-export class Tara implements ITara {
-    private _emitter: EventEmitter;
+class TaraButton extends ControlButton {
     private _weights: IWeights;
     private _tara: number = 0;
-    private _state: State = State.DISABLED;
     private _input: IInputNumber;
 
     constructor() {
-        this._emitter = new EventEmitter();
+        super();
         this._weights = Weights.getInstance();
         this._weights.onChange(this._onWeightsStateChange.bind(this));
         this._onWeightsStateChange();
         this._input = Input.getInputNumberInstance();
         this._input.onSelect(this._setAdditionalTara.bind(this));
-
-    }
-
-    onAction() {
-        return;
-    }
-
-    onChange(callback: () => void) {
-        this._emitter.on(EventType.STATE_CHANGE, callback);
-    }
-
-    off(event: EventType, callback: () => void) {
-        this._emitter.off(event, callback);
     }
 
     private _setState() {
@@ -66,17 +41,6 @@ export class Tara implements ITara {
         this.doAction();
     }
 
-    isActive() {
-        return this._state === State.ENABLED || false;
-    }
-
-    setActive(value: boolean) {
-        if (this._state === State.PENDING) return;
-        if (value) this._state = State.ENABLED;
-        else this._state = State.DISABLED;
-        this._onChange();
-    }
-
     doAction() {
         if (this._state === State.PENDING) {
             this._state = State.ENABLED;
@@ -100,21 +64,6 @@ export class Tara implements ITara {
         return;
     }
 
-    getState() {
-        return this._state;
-    }
-
-    private _onChange() {
-        this._emitter.emit(EventType.STATE_CHANGE);
-    }
 }
 
-let instance: ITara;
-
-export function getInstance() {
-    if (!instance)
-        instance = new Tara();
-    return instance;
-}
-
-export default { getInstance };
+export default TaraButton;

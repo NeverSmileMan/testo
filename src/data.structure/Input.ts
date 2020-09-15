@@ -107,7 +107,7 @@ export class Input implements IInput {
 export class InputList extends Input implements IInputList {
 
     _onSelect(item: IItem) {
-        if (!item) return; //ENTER ??
+        if (!item) return;
         if (this._callbackOnSelect) this._callbackOnSelect(item);
     }
 

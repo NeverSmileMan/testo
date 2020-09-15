@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/controls/CloseModal';
-import { IClose } from '../../data.structure/Close';
+import { IControlButton } from '../../data.structure/ControlButton';
 
 interface Props {
     title?: string;
     confirm?: string;
     reject?: string;
-    object: IClose;
+    object: IControlButton;
 };
 
 function CloseModal({
