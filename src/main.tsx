@@ -1,6 +1,6 @@
-import React, {useState, createContext, useCallback} from 'react';
+import React, {createContext, useCallback, useState} from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
-import Tabs from './tabs/Tabs';
+import Tabs, {MAX_NUMBER_OF_TABS} from './tabs/Tabs';
 import Hints from './tabs/Hints';
 import HomeButton from './tabs/HomeButton';
 import GroupBtn from './functional-buttons/groupBtn';
@@ -8,11 +8,9 @@ import AddedItemsTable from './added.items.table/added.items.table';
 import Search from './searchPanel/search/Search';
 import OrderInfo from './searchPanel/orderInfo/OrderInfo';
 import ModalWindow from './functional-buttons/modal.wind/modal.wind';
-import {MAX_NUMBER_OF_TABS} from './tabs/Tabs';
 import {ActiveInputService} from './services/ActiveInputService';
 //---------plugs---------------
 import {ScalePlug} from './plugs/scale';
-import items from "./searchPanel/search/itemsData";
 //-----------------------------
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -75,7 +73,8 @@ export const MainContext = createContext({
 	addItem: (item: any) => true as boolean,
 	activeTab: '' as any,
 	showPrint: () => {
-	}
+	},
+	showTara:()=>{}
 });
 
 export default function Main() {
@@ -83,7 +82,7 @@ export default function Main() {
 	const [modalType, setModalType] = useState(null as string | null);
 	const setType = (type: string | null): any => () => setModalType(type);
 
-	const [error, setError] = useState('');
+	const [error, setError] = useState('Покладіть товар на ваги');
 
 	const [
 		tabItems,
@@ -103,9 +102,16 @@ export default function Main() {
 		setType(null)();
 		deleteTab();
 	};
+
 	const showPrint = () => {
 		setType(null)();
 		print()
+	}
+
+	const showTara = () => {
+		ScalePlug.setTara(25)
+		setTara(25)
+		setError('Вага має бути більшою за нуль')
 	}
 
 	return (
@@ -119,7 +125,8 @@ export default function Main() {
 				confirmClose,
 				addItem,
 				setActiveTab,
-				showPrint
+				showPrint,
+				showTara
 			}}
 		>
 			<div className={header}>
@@ -127,7 +134,7 @@ export default function Main() {
 					<Tabs tabs={tabItems}/>
 				</div>
 				<div className={info}>
-					<Hints error={false}/> {/** херня */}
+					<Hints error={error}/>
 					<HomeButton/>
 				</div>
 			</div>
@@ -183,7 +190,7 @@ function useTabs(
 	(tara: number) => void,
 	() => void,
 ] {
-	const [tabItems, setTabItems] = useState<TabItems[]>([{tabNumber: 1, tara: -1, items: [],},] as TabItems[]);
+	const [tabItems, setTabItems] = useState<TabItems[]>([{tabNumber: 1, tara: 0, items: [],},] as TabItems[]);
 	const [activeTab, setActiveTab] = useState<number>(0);
 	const [activeItem, setActiveItem] = useState<AddedItem | null>(null);
 	const [freeTabNumbers, setFreeTabNumbers] = useState(() => {
@@ -193,10 +200,14 @@ function useTabs(
 	});
 
 	const setTara = useCallback((tara: number) => {
+		// ScalePlug.setTara(tara)
 		tabItems[activeTab].tara = tara
 		setTabItems([...tabItems])
-	}, [tabItems]);
+	}, [tabItems, activeTab]);
 
+	const getTara = useCallback(() => {
+		return tabItems[activeTab].tara
+	}, [tabItems, activeTab]);
 
 	const addItem = useCallback((item: Item) => {
 			if (scaleService.checkStable()) {
@@ -221,7 +232,7 @@ function useTabs(
 					ActiveInputService.clear();
 					return true;
 				} else {
-					setError('Вага повинна перевищувати 40 грам');
+					setError('Вага повинна перевищувати 40 грам!');
 					return false;
 				}
 			}
@@ -240,10 +251,6 @@ function useTabs(
 	const closeOrder = useCallback(() => {
 	}, []);
 
-	const getTara = useCallback(() => {
-		return tabItems[activeTab].tara
-	}, []);
-
 	const print = useCallback(() => {
 		console.log('print', tabItems[activeTab].items)
 	}, [activeTab, tabItems]);
@@ -256,14 +263,13 @@ function useTabs(
 		})
 		setTabItems((prevState) => [...prevState, {
 			tabNumber: num,
-			tara: -1,
+			tara: 0,
 			items: [],
 		}])
 		setActiveTab(tabItems.length)
 	}, [tabItems, freeTabNumbers])
 
 	const deleteTab = useCallback(() => {
-		console.log('1>', 'we a here')
 		if (tabItems.length === 1) {
 			if (tabItems[0].tabNumber === 1) return
 			else {
@@ -273,7 +279,7 @@ function useTabs(
 				})
 				setTabItems((prevState) => [...prevState, {
 					tabNumber: 1,
-					tara: -1,
+					tara: 0,
 					items: [],
 				}])
 			}

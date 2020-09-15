@@ -1,8 +1,8 @@
-import React, {FC, useCallback, useState} from 'react';
+import React, {FC} from 'react';
 import {makeStyles} from "@material-ui/styles";
 
 export interface HintsProps {
-	error: boolean
+	error: string
 }
 
 const styles = makeStyles({
@@ -39,20 +39,18 @@ const styles = makeStyles({
 
 const Hints: FC<HintsProps> = ({error}) => {
 
-	const [state, setState] = useState('Вага товару має перевищувати 40 грам')
-	const [showErr, setShowErr] = useState(error)
 	const {hints, hints_messages, hints_error} = styles()
 
-	const showError = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-		setShowErr(true)
-		setTimeout(() => {
-			setShowErr(false)
-		}, 300)
-	},[])
+	// const showError = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+	// 	setShowErr(true)
+	// 	setTimeout(() => {
+	// 		setShowErr(false)
+	// 	}, 300)
+	// },[])
 
 	return (
 		<div className={hints}>
-			<div onClick={showError} className={`${hints_messages} ${showErr ? hints_error : ''}`}>{state}</div>
+			<div className={`${hints_messages}`}>{error}</div>
 		</div>
 	);
 };
