@@ -74,7 +74,7 @@ export const MainContext = createContext({
 	},
 	addItem: (item: any) => true as boolean,
 	activeTab: '' as any,
-	print: () => {
+	showPrint: () => {
 	}
 });
 
@@ -103,6 +103,10 @@ export default function Main() {
 		setType(null)();
 		deleteTab();
 	};
+	const showPrint = () => {
+		setType(null)();
+		print()
+	}
 
 	return (
 		<MainContext.Provider
@@ -115,7 +119,7 @@ export default function Main() {
 				confirmClose,
 				addItem,
 				setActiveTab,
-				print
+				showPrint
 			}}
 		>
 			<div className={header}>
@@ -242,7 +246,7 @@ function useTabs(
 
 	const print = useCallback(() => {
 		console.log('print', tabItems[activeTab].items)
-	}, [tabItems]);
+	}, [activeTab, tabItems]);
 
 	const addTab = useCallback(() => {
 		const num = freeTabNumbers.findIndex(item => !item) + 1
