@@ -7,6 +7,8 @@ export interface IOrder {
     total: number;
 }
 
+export type IOrders = Map<number, IOrder>;
+
 export class Order implements IOrder {
 
     public orderNumber: number;

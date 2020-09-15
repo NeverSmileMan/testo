@@ -1,90 +1,59 @@
 import React, { createContext, useState } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/Orders';
-import OrdersControl, { IOrdersControl } from '../data.structure/OrdersControl';
+import { IOrdersControl, IStateOrders } from '../data.structure/OrdersControl';
+import { IStateOrder } from '../data.structure/OrderControl';
 import TabsNav from './tabs.panel/TabsNav';
 import Message from './tabs.panel/Message';
 import HomeButton from './tabs.panel/HomeButton';
 import OrderControl from './order.control/OrderControl';
 import Controls from './controls/Controls';
-import { IItem, IItemAmount } from '../data.structure/Item';
-import { IOrder } from '../data.structure/Order';
-import { Mode, State } from '../data.structure/types/types';
+import { IItem } from '../data.structure/Item';
 
 export const OrderControlContext = createContext<IStateOrder>({} as IStateOrder);
-export const OrdersControlContext = createContext<IState>({} as IState);
+export const OrdersControlContext = createContext<IStateOrders>({} as IStateOrders);
 
-const ordersControl = OrdersControl.getInstance();
-
-const callbacksControls = {
-    deleteOrder: () => ordersControl.deleteOrder(),
-    printOrder: () => ordersControl.printOrder(),
-};
-const callbacksOrder = {
-    delItem: () => ordersControl.delItem(),
-    addItem: (item: IItem) => ordersControl.addItem(item),
-    selectItem: (index: number | null) => ordersControl.selectItem(index),
-};
-const callbacksTabs = {
-    selectOrder: (orderNumber: number) => ordersControl.selectOrder(orderNumber),
-    createOrder: () => ordersControl.createOrder(),
+function createCallbacks(object: IOrdersControl) {
+    const callbacksControls = {
+        deleteOrder: () => object.deleteOrder(),
+        printOrder: () => object.printOrder(),
+    };
+    const callbacksOrder = {
+        delItem: () => object.delItem(),
+        addItem: (item: IItem) => object.addItem(item),
+        selectItem: (index: number | null) => object.selectItem(index),
+    };
+    const callbacksTabs = {
+        selectOrder: (orderNumber: number) => object.selectOrder(orderNumber),
+        createOrder: () => object.createOrder(),
+    }
+    return { callbacksTabs, callbacksOrder, callbacksControls };
 }
-
-interface IStateOrder {
-    isSelected: boolean,
-    total: string,
-    orderItems: IItemAmount[],
-    selectedItemIndex: number | null,
-    orderMode: Mode | null,
-}
-
-const getStateOrder = (): IStateOrder => ({
-    isSelected: ordersControl.isSelected(),
-    total: ordersControl.getTotal().toFixed(2),
-    orderItems: ordersControl.getItems(),
-    selectedItemIndex: ordersControl.getSelectedItemIndex(),
-    orderMode: ordersControl.getState() === State.PENDING ? Mode.MODAL : null,
-});
 
 let setStateOrder: React.Dispatch<() => IStateOrder>;
 let stateOrder: IStateOrder;
-function changeStateOrder() {
-    ordersControl.onChange(() => setStateOrder(getStateOrder));
-    return getStateOrder();
+function changeStateOrder(object: IOrdersControl) {
+    object.onChangeOrder(() => setStateOrder(object.getStateOrder));
+    return object.getStateOrder();
 }
 
-interface IState {
-    order: IOrder | null;
-    printIsActive: boolean;
-    closeIsActive: boolean;
-    //ordersControl: IOrdersControl;
-    ordersNumbers: number[];
-    currentOrderNumber: number | null;
-    canCreate: boolean;
+let setStateOrders: React.Dispatch<() => IStateOrders>;
+let stateOrders: IStateOrders;
+function changeStateOrders(object: IOrdersControl): IStateOrders {
+    object.onChangeOrders(() => setStateOrders(object.getStateOrders));
+    return object.getStateOrders();
 }
 
-const getState = () => ({
-    order: ordersControl.getCurrentOrder(),
-    printIsActive: ordersControl.printIsActive,
-    closeIsActive: ordersControl.closeIsActive,
-    //ordersControl: ordersControl,
-    ordersNumbers: [...ordersControl.getOrders().keys()],
-    currentOrderNumber: ordersControl.getOrderNumber(),
-    canCreate: ordersControl.canCreateOrder(),
-});
+type Props = {
+    object: IOrdersControl;
+} & WithStyles;
 
-let setState: React.Dispatch<() => IState>;
-let state: IState;
-function changeState(): IState {
-    ordersControl.onChangeOrders(() => setState(getState));
-    return getState();
-}
-
-function Orders({ classes }: WithStyles ) {
-    [state, setState] = useState<IState>(changeState);
-    [stateOrder, setStateOrder] = useState<IStateOrder>(changeStateOrder)
+function Orders({ classes, object }: Props ) {
+    const [{ callbacksTabs, callbacksOrder, callbacksControls }] = useState(() => createCallbacks(object));
+    [stateOrders, setStateOrders] = useState<IStateOrders>(() => changeStateOrders(object));
+    [stateOrder, setStateOrder] = useState<IStateOrder>(() => changeStateOrder(object))
     return (
-        <OrdersControlContext.Provider value = {state}>
+        <OrdersControlContext.Provider value = {stateOrders}>
             <div className={classes.wrapper}>
                 <div className='tabs-panel'>
                     <TabsNav callbacks={callbacksTabs}/>

@@ -4,8 +4,7 @@ import Input, { IInput } from './Input';
 import { IOrder } from './Order';
 import Message, { IMessage } from './Message';
 import { MessageCode } from './data/messagesInfo';
-import EventEmitter from 'events';
-import { State, EventType } from './types/types';
+import { State, Mode } from './types/types';
 
 export interface IOrderControl {
     getOrderNumber: () => number | null;
@@ -16,10 +15,19 @@ export interface IOrderControl {
     getSelectedItemIndex: () => number | null;    
     getItemsCount: () => number | 0;
     getTotal: () => number;
-    onChange: (callback: () => void) => void;
-    off: (event: EventType, callback: () => void) => void;
+    onChangeOrder: (callback: () => void) => void;
     getState: () => State;
     addItem: (item: IItem) => void;
+    getStateOrder: () => IStateOrder;
+}
+
+export interface IStateOrder {
+    isSelected: boolean;
+    total: string;
+    orderItems: IItemAmount[];
+    selectedItemIndex: number | null;
+    orderMode: Mode | null;
+    getStateOrder: () => IStateOrder;
 }
 
 export class OrderControl implements IOrderControl {
@@ -28,8 +36,8 @@ export class OrderControl implements IOrderControl {
     private _selectedItemIndex: number | null = null;
     private _input: IInput;
     protected _currentOrder: IOrder | null = null;
-    private _emitter: EventEmitter;
     private _state: State = State.ENABLED;
+    private _callbackOnChangeOrder?: () => void;
 
     constructor() {
         this._message = Message.getInstance();
@@ -37,7 +45,18 @@ export class OrderControl implements IOrderControl {
         this._weights.onChange(this._onWeightsChange.bind(this));
         this._onWeightsChange();
         this._input = Input.getInputListInstance();
-        this._emitter = new EventEmitter();
+        this.getStateOrder = this.getStateOrder.bind(this);
+    }
+
+    getStateOrder(): IStateOrder {
+        return {
+            isSelected: this.isSelected(),
+            total: this.getTotal().toFixed(2),
+            orderItems: this.getItems(),
+            selectedItemIndex: this.getSelectedItemIndex(),
+            orderMode: this.getState() === State.PENDING ? Mode.MODAL : null,
+            getStateOrder: this.getStateOrder,
+        };
     }
 
     setOrder(order: IOrder) {
@@ -53,7 +72,7 @@ export class OrderControl implements IOrderControl {
             this._selectedItemIndex = index;
         }
         else this._selectedItemIndex = null;
-        this._onChange();
+        this._onChangeOrder();
     }
 
     isSelected() {
@@ -82,7 +101,7 @@ export class OrderControl implements IOrderControl {
         this.selectItem(null);
         this._input.clearValue();
         this._state = State.PENDING;
-        this._onChange();
+        this._onChangeOrder();
     }
 
     private _throwMessage(code: MessageCode | null) {
@@ -123,16 +142,12 @@ export class OrderControl implements IOrderControl {
         return this._currentOrder ? this._currentOrder.orderNumber : null;
     }
 
-    onChange(callback: () => void) {
-        this._emitter.on(EventType.STATE_CHANGE, callback);
+    onChangeOrder(callback: () => void) {
+        this._callbackOnChangeOrder = callback;
     }
 
-    off(event: EventType, callback: () => void) {
-        this._emitter.on(event, callback);
-    }
-
-    protected _onChange() {
-        this._emitter.emit(EventType.STATE_CHANGE);
+    protected _onChangeOrder() {
+        if (this._callbackOnChangeOrder) this._callbackOnChangeOrder();
     }
 
     private _onWeightsChange() {
@@ -140,7 +155,7 @@ export class OrderControl implements IOrderControl {
             if (this._weights.getWeight() <= 0) {
                 this._state = State.ENABLED;
                 this._weights.setPrice(null);
-                this._onChange();
+                this._onChangeOrder();
             }
             return;
         }
@@ -163,13 +178,4 @@ export class OrderControl implements IOrderControl {
     }
 }
 
-let instance: IOrderControl;
-
-export function getInstance() {
-    if (!instance) {
-        instance = new OrderControl();
-    }
-    return instance;
-}
-
-export default { getInstance };
+export default OrderControl;

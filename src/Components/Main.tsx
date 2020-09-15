@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/Main';
+import OrdersControl from '../data.structure/OrdersControl';
 import WeightsDisplay from './weights/WeightsDisplay';
 import Orders from './Orders';
 import Keyboard from './keyboard/KeyboardMain';
-// import Modal from './Modal';
 
-function Main({ classes }: WithStyles ) {
+type Props = {
+    maxOrdersCount: number;
+} & WithStyles;
+
+function Main({ classes, maxOrdersCount }: Props ) {
+    const [ordersControl] = useState(new OrdersControl(maxOrdersCount));
     return (
         <div className={classes.test_wrapper}>
             <div className={classes.main}>
@@ -14,13 +19,12 @@ function Main({ classes }: WithStyles ) {
                     <WeightsDisplay />
                 </div>
                 <div className='orders'>
-                    <Orders />
+                    <Orders object={ordersControl} />
                 </div>
                 <div className='keyboard'>
                     <Keyboard />
                 </div>
                 <div id='modal-root'></div>
-                {/* <Modal /> */}
             </div>
         </div>
     );

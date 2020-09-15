@@ -1,8 +1,6 @@
 import { OrderControl, IOrderControl } from './OrderControl';
-import { Order, IOrder } from './Order';
+import { Order, IOrder, IOrders } from './Order';
 import { Printer } from './Printer';
-
-export type IOrders = Map<number, IOrder>;
 
 export interface IOrdersControl extends IOrderControl{
     canCreateOrder: () => boolean;
@@ -15,6 +13,17 @@ export interface IOrdersControl extends IOrderControl{
     closeIsActive: boolean;
     printOrder: () => void;
     deleteOrder: () => void;
+    getStateOrders: () => IStateOrders;
+}
+
+export interface IStateOrders {
+    order: IOrder | null;
+    printIsActive: boolean;
+    closeIsActive: boolean;
+    ordersNumbers: number[];
+    currentOrderNumber: number | null;
+    canCreate: boolean;
+    getStateOrders: () => IStateOrders;
 }
 
 export class OrdersControl extends OrderControl implements IOrdersControl {
@@ -28,12 +37,25 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
         super();
         this._ordersFreeNums = Array(this._maxOrdersCount).fill(true);
         this._setCurrentOrder();
+        this.getStateOrders = this.getStateOrders.bind(this);
     }
 
     protected _onChange() {
         this._onOrderChange(false);
-        super._onChange();
+        super._onChangeOrder();
         this._onOrderChange(false);
+    }
+
+    getStateOrders() {
+        return {
+            order: this.getCurrentOrder(),
+            printIsActive: this.printIsActive,
+            closeIsActive: this.closeIsActive,
+            ordersNumbers: [...this.getOrders().keys()],
+            currentOrderNumber: this.getOrderNumber(),
+            canCreate: this.canCreateOrder(),
+            getStateOrders: this.getStateOrders,
+        };
     }
 
     canCreateOrder() {
@@ -127,13 +149,4 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
     }
 }
 
-let instance: OrdersControl;
-
-export function getInstance(maxOrdersCount: number = 1) {
-    if (!instance) {
-        instance = new OrdersControl(maxOrdersCount);
-    }
-    return instance;
-}
-
-export default { getInstance };
+export default OrdersControl;

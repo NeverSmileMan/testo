@@ -11,31 +11,36 @@ import './functions/rikAppTest.js';
 
 const app = App.getInstance();
 
+interface IStateApp {
+    state: AppState;
+    themeName: ThemesNames;
+    maxOrdersCount: number;
+    setEnvironment: (rect: DOMRect) => void;
+}
+
 const getState = () => ({
     state: app.getState(),
     themeName: app.getConfig().themeName,
+    maxOrdersCount: app.getConfig().maxOrdersCount,
+    setEnvironment: (rect: DOMRect) => app.setEnvironment(rect),
 });
 
-let setState: React.Dispatch<
-    () => { state: AppState, themeName: ThemesNames}>;
-
+let setState: React.Dispatch<() => IStateApp>;
+let state: IStateApp;
 function changeState() {
     app.onChange(() => setState(getState));
     return getState();
 }
 
 function AppComponent() {
-    let state:AppState, themeName: ThemesNames;
-    [
-        { state, themeName },
-        setState,
-    ] = useState(changeState);
+    
+    [state, setState] = useState(changeState);
 
     return (
-        state === AppState.INIT ?
-            <SetEnvironment /> : (
-            <ThemeProvider theme={themes[themeName]}>
-                <Main />
+        state.state === AppState.INIT ?
+            <SetEnvironment setEnvironment={state.setEnvironment}/> : (
+            <ThemeProvider theme={themes[state.themeName]}>
+                <Main maxOrdersCount={state.maxOrdersCount}/>
             </ThemeProvider>
     ));
 }

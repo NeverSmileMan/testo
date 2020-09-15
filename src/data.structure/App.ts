@@ -1,5 +1,4 @@
 import { IConfig, config, IEnvironment } from './data/config';
-import OrdersControl from './OrdersControl';
 import { AppState } from './types/types';
 
 export interface IApp {
@@ -19,7 +18,6 @@ class App implements IApp {
 
     constructor() {
         this._config = config;
-        OrdersControl.getInstance(config.maxOrdersCount);
     }
 
     setEnvironment(rect: DOMRect) {
