@@ -5,7 +5,7 @@ import ActiveInputService from '../../data.structure/ActiveInputService';
 import Input from '../../data.structure/Input';
 import List from './List';
 import { IItem } from '../../data.structure/Item';
-import { OrderControlContext } from '../Orders';
+import { OrderControlContext } from '../order.control/OrderControl';
 
 const input = Input.getInputListInstance();
 const activeInputService = ActiveInputService.getInstance();

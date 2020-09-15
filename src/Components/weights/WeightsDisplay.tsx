@@ -1,13 +1,20 @@
-import React, { useContext } from 'react'
+import React, { useState } from 'react'
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/weights/WeightsDisplay';
+import Weights, { IStateWeights } from '../../data.structure/Weights';
 
-import { WeightsContext } from '../Main';
+let setState: React.Dispatch<() => IStateWeights>;
+let state: IStateWeights;
+const changeState = () => {
+    const weights = Weights.getInstance();
+    weights.onChange(() => setState(weights.getStateWeights.bind(weights)));
+    return weights.getStateWeights();
+};
 
 function WeightsDisplay({ classes }: WithStyles) {
 
-    const { title, tara, weight, price, sum } = useContext(WeightsContext);
-
+    [state, setState] = useState(changeState);
+    const { title, tara, weight, price, sum } = state;
     return (
         <div className={classes.grid + ' border'}>
             <div className='title border'>title

@@ -1,8 +1,7 @@
-// import { setTimeout, clearTimeout } from 'timers';
-import { IWeightsTest } from '../data.structure/Weights';
+import Weights, { IWeightsTest } from '../data.structure/Weights';
 import { IAppTest } from '../data.structure/App';
-
-export function weightsControl(weights: IWeightsTest) {
+ 
+(function weightsControl(weights: IWeightsTest) {
 
     let weight = '';
     let timer: any;
@@ -25,7 +24,7 @@ export function weightsControl(weights: IWeightsTest) {
 
         if (event.code === 'KeyZ') { weights.__setStable(); return; }
     });
-}
+})(Weights.getInstance());
 
 export function appControl(app: IAppTest) {
     window.addEventListener('keypress', (event) => {

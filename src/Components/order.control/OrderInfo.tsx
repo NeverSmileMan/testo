@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/order.control/OrderInfo';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';    
-import { OrderControlContext } from '../Orders';
+import { OrderControlContext } from '../order.control/OrderControl';
 
 type Props = {
     onClick: () => void;

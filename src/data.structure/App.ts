@@ -1,7 +1,6 @@
 import { ThemesNames } from '../themes/themes';
 import { IConfig, config, IEnvironment } from './data/config';
 import { AppState } from './types/types';
-import Weights, { IWeightsTest } from './Weights';
 
 export interface IApp {
     setEnvironment: (rect: DOMRect) => void;
@@ -9,7 +8,6 @@ export interface IApp {
     getState: () => AppState;
     getConfig: () => IConfig;
     onChange: (callback: () => void) => void;
-    getWeightsInstance: () => IWeightsTest;
     getStateApp: () => IStateApp;
 }
 
@@ -18,7 +16,6 @@ export interface IStateApp {
     themeName: ThemesNames;
     maxOrdersCount: number;
     setEnvironment: (rect: DOMRect) => void;
-    // weights: IWeightsTest;
     getStateApp: () => IStateApp;
 }
 
@@ -27,12 +24,10 @@ class App implements IApp {
     private _state: AppState = AppState.INIT;
     protected _config: IConfig;
     private _env: IEnvironment = {} as IEnvironment;
-    private _weights: IWeightsTest;
     private _callbackOnChange?: () => void;
 
     constructor() {
         this._config = config;
-        this._weights = new Weights();
         this.getStateApp = this.getStateApp.bind(this);
     }
 
@@ -42,7 +37,6 @@ class App implements IApp {
             themeName: this.getConfig().themeName,
             maxOrdersCount: this.getConfig().maxOrdersCount,
             setEnvironment: (rect: DOMRect) => this.setEnvironment(rect),
-            // weights: this.getWeightsInstance(),
             getStateApp: this.getStateApp,
         };
     }
@@ -76,10 +70,6 @@ class App implements IApp {
         if (this._callbackOnChange) {
             setTimeout(() => this._callbackOnChange!(), 1000);
         }
-    }
-
-    getWeightsInstance() {
-        return this._weights;
     }
 }
 

@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/order.control/OrderItems';
-import { OrderControlContext } from '../Orders';
+import { OrderControlContext } from '../order.control/OrderControl';
 
 const selectItem = (event: React.MouseEvent<HTMLDivElement>, selectItem: (index: number) => void) => {
     const target = event.target as HTMLElement;

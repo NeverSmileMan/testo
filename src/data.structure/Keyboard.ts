@@ -18,7 +18,7 @@ class Keyboard implements IKeyboard {
 
 let instance: Keyboard;
 
-export function getInstance() {
+function getInstance() {
     if (!instance) {
         instance = new Keyboard();
     }
