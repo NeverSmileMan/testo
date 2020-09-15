@@ -5,25 +5,27 @@ import OrdersControl from '../data.structure/OrdersControl';
 import WeightsDisplay from './weights/WeightsDisplay';
 import Orders from './Orders';
 import Keyboard from './keyboard/KeyboardMain';
-import { IStateWeights, IWeightsTest } from '../data.structure/Weights';
+import Weights, { IStateWeights } from '../data.structure/Weights';
+import { weightsControl } from '../functions/rikAppTest';
 
 export const WeightsContext = createContext<IStateWeights>({} as IStateWeights);
 
 let setStateWeights: React.Dispatch<() => IStateWeights>;
 let stateWeights: IStateWeights;
-const changeStateWeights = (weights: IWeightsTest) => {
+const changeStateWeights = () => {
+    const weights = new Weights();
+    weightsControl(weights);
     weights.onChange(() => setStateWeights(weights.getStateWeights));
     return weights.getStateWeights();
-}
+};
 
 type Props = {
     maxOrdersCount: number;
-    weights: IWeightsTest;
 } & WithStyles;
 
-function Main({ classes, maxOrdersCount, weights }: Props ) {
+function Main({ classes, maxOrdersCount }: Props ) {
     const [ordersControl] = useState(new OrdersControl(maxOrdersCount));
-    [stateWeights, setStateWeights] = useState(() => changeStateWeights(weights));
+    [stateWeights, setStateWeights] = useState(changeStateWeights);
     return (
         <div className={classes.test_wrapper}>
             <div className={classes.main}>

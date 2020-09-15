@@ -85,7 +85,7 @@ export interface IWeightsTest extends IWeights {
     __setWeight: (value: number) => void;
     __getPrice: () => number;
     __getTitle: () => string;
-    __setStable: (isStable: boolean) => void;
+    __setStable: (isStable?: boolean) => void;
 }
 
 class WeightsTest extends Weights implements IWeightsTest {

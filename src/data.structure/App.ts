@@ -18,8 +18,8 @@ export interface IStateApp {
     themeName: ThemesNames;
     maxOrdersCount: number;
     setEnvironment: (rect: DOMRect) => void;
-    weights: IWeightsTest;
-    getStateWeights: () => IStateApp;
+    // weights: IWeightsTest;
+    getStateApp: () => IStateApp;
 }
 
 class App implements IApp {
@@ -42,8 +42,8 @@ class App implements IApp {
             themeName: this.getConfig().themeName,
             maxOrdersCount: this.getConfig().maxOrdersCount,
             setEnvironment: (rect: DOMRect) => this.setEnvironment(rect),
-            weights: this.getWeightsInstance(),
-            getStateWeights: this.getStateApp,
+            // weights: this.getWeightsInstance(),
+            getStateApp: this.getStateApp,
         };
     }
 
@@ -83,7 +83,7 @@ class App implements IApp {
     }
 }
 
-interface IAppTest extends IApp {
+export interface IAppTest extends IApp {
     __changeTheme: () => void;
 }
 

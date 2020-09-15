@@ -1,10 +1,11 @@
-import {setTimeout, clearTimeout} from 'timers';
+// import { setTimeout, clearTimeout } from 'timers';
+import { IWeightsTest } from '../data.structure/Weights';
+import { IAppTest } from '../data.structure/App';
 
-export default function rikAppTest(app) {
+export function weightsControl(weights: IWeightsTest) {
 
     let weight = '';
-    let timer;
-    const weights = app.getWeightsInstance();
+    let timer: any;
 
     window.addEventListener('keypress', (event) => {
         
@@ -21,8 +22,13 @@ export default function rikAppTest(app) {
             }, 500);
             return;
         }
-        if (event.code === 'KeyT') { app.__changeTheme(); return; }
+
         if (event.code === 'KeyZ') { weights.__setStable(); return; }
-        
+    });
+}
+
+export function appControl(app: IAppTest) {
+    window.addEventListener('keypress', (event) => {
+        if (event.code === 'KeyT') app.__changeTheme();
     });
 }
