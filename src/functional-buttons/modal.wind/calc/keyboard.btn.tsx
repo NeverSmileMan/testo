@@ -28,24 +28,24 @@ interface StyleProp {
 interface Prop extends StyleProp {
     btnName?: string | any;
     nameClass?: string;
-    onClick?: () => any;
+    onClick: ()=>any;
 }
-const rnjnd = (): any => { console.log('click') }
-const WeightBtn = ({ 
+// const rnjnd = (): any => { console.log('click') }
+const KeyboardBtn = ({ 
     btnName, 
     borderColor = 'none', 
     textColor = '#000', 
     colorBtn = '#e4e4e4', 
     nameClass, 
-    onClick = rnjnd }: Prop) => {
+    onClick }: Prop) => {
     const cls: Record<string, string> = useStyles({ borderColor, colorBtn, textColor });
     const namedClass = nameClass && cls[nameClass]
         ? `${cls.btn} ${cls[nameClass]}`
         : `${cls.btn}`
+        
     return (
-        <div onClick={onClick()} className={namedClass}>{btnName}</div>
-        // <div className={namedClass}>{btnName}</div>
+        <div onClick={onClick} className={namedClass}>{btnName}</div>
     )
 }
 
-export default WeightBtn;
+export default KeyboardBtn;

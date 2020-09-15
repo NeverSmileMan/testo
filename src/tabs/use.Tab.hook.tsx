@@ -1,0 +1,163 @@
+import React, { useState, useContext, useCallback, useEffect } from 'react';
+import { MainContext } from '../main';
+import { MAX_NUMBER_OF_TABS } from './Tabs';
+import { ActiveInputService } from '../services/ActiveInputService';
+// import { ScalePlug } from '../searchPanel/search/itemsData'
+export interface TabItems {
+  tabNumber: number;
+  tara: number;
+  items: AddedItem[];
+}
+
+interface Item {
+  code: string;
+  name: string;
+  price: number;
+  type: 'ваговий' | 'штучний'; //поменять?
+}
+interface AddedItem extends Item {
+  amount: number;
+  cost: number;
+}
+
+export function useTabs(
+  setError: any,
+  setModal: any,
+  scaleService: any,
+  CalcValue: number,
+  submitValueCalc: Function,
+
+): [
+    TabItems[],
+    number,
+    AddedItem | null,
+    React.Dispatch<React.SetStateAction<number>>,
+    React.Dispatch<React.SetStateAction<AddedItem | null>>,
+    (item: Item) => boolean,
+    () => void,
+    () => void,
+    () => void,
+    (tara: number) => void,
+    () => void,
+  ] {
+  const [tabItems, setTabItems] = useState<TabItems[]>([{ tabNumber: 1, tara: -1, items: [], },] as TabItems[]);
+  const [activeTab, setActiveTab] = useState<number>(0);
+  const [activeItem, setActiveItem] = useState<AddedItem | null>(null);
+  const [freeTabNumbers, setFreeTabNumbers] = useState(() => {
+    const arr = Array(MAX_NUMBER_OF_TABS).fill(false);
+    arr[0] = true;
+    return arr;
+  });
+
+  const setTara = useCallback((tara: number) => {
+    tabItems[activeTab].tara = tara
+    setTabItems([...tabItems])
+  }, [tabItems]);
+
+  // const { CalcValue } = useContext(MainContext);
+  // useEffect(submitValueCalc())
+  const addItem = useCallback(
+    (item: Item) => {
+      if (scaleService.checkStable()) {
+        const addedItem = { ...item } as AddedItem;
+        scaleService.setTitle(item.name);
+        scaleService.setPrice(item.price);
+        switch (item.type) {
+          case 'штучний':
+            setModal('qtyGoods');
+            addedItem.amount = CalcValue; //---------------------------- тут как?
+            addedItem.cost = addedItem.amount * item.price;
+            break;
+          case 'ваговий':
+            if (scaleService.getItemWeight() >= 40) {
+              addedItem.amount = scaleService.getItemWeight();
+              addedItem.cost = scaleService.getItemCost();
+            } else {
+              setError('Вага повинна перевищувати 40 грам');
+              return false;
+            }
+            break;
+          default:
+            setError('Невірний тип товару');
+            return false;
+        }
+        tabItems[activeTab].items.push(addedItem);
+        setTabItems([...tabItems]);
+        ActiveInputService.clear();
+        return true;
+      }
+      return false;
+    },
+    [tabItems, activeTab, CalcValue],
+  );
+
+  const deleteItem = useCallback(() => {
+    tabItems[activeTab].items = tabItems[activeTab].items.filter((item) => item !== activeItem);
+    setTabItems([...tabItems]);
+    setActiveItem(null);
+  }, [tabItems, activeItem]);
+
+  // const createOrder = useCallback(() => {}, []);
+  // const closeOrder = useCallback(() => {}, []);
+
+
+  const getTara = useCallback(() => {
+    return tabItems[activeTab].tara
+  }, []);
+
+  const print = useCallback(() => {
+    console.log('print', tabItems[activeTab].items)
+  }, [activeTab, tabItems]);
+
+  const addTab = useCallback(() => {
+    const num = freeTabNumbers.findIndex(item => !item) + 1
+    setFreeTabNumbers((prevState) => {
+      prevState[num - 1] = true;
+      return prevState
+    })
+    setTabItems((prevState) => [...prevState, {
+      tabNumber: num,
+      tara: -1,
+      items: [],
+    }])
+    setActiveTab(tabItems.length)
+  }, [tabItems, freeTabNumbers])
+
+  const deleteTab = useCallback(() => {
+    console.log('1>', 'we a here')
+    if (tabItems.length === 1) {
+      if (tabItems[0].tabNumber === 1) return
+      else {
+        setFreeTabNumbers((prevState) => {
+          prevState[0] = true;
+          return prevState
+        })
+        setTabItems((prevState) => [...prevState, {
+          tabNumber: 1,
+          tara: -1,
+          items: [],
+        }])
+      }
+    }
+    setFreeTabNumbers((prevState) => {
+      prevState[tabItems[activeTab].tabNumber - 1] = false;
+      return prevState
+    })
+    setTabItems((prevState) => prevState.filter((value, index) => index !== activeTab));
+    setActiveTab((prevTabNum) => prevTabNum ? prevTabNum - 1 : 0);
+  }, [tabItems, activeTab])
+
+  return [
+    tabItems,
+    activeTab,
+    activeItem,
+    setActiveTab,
+    setActiveItem,
+    addItem,
+    deleteItem,
+    addTab,
+    deleteTab,
+    setTara,
+    print
+  ];
+}

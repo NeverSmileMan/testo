@@ -1,5 +1,5 @@
 import React from 'react';
-import WeightBtn from './weight.btn';
+import KeyboardBtn from './keyboard.btn';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 
@@ -14,25 +14,30 @@ const useStyle = makeStyles({
     }
 })
 interface Prop {
-    onClick?: ()=> any;
+    onClick: {
+        submit: ()=>any,
+        delete: ()=>any,
+    }
 }
 const ControlKeyboard = ({onClick}:Prop) => {
     const theme = useTheme<Theme>();
     const control = [<span>&#8592;</span>, <span>&#10003;</span>];
     const { controlContainer } = useStyle()
+    
     return (
         <div className={controlContainer}>
             {control.map((val, index) => {
                 if (index===control.length-1) {
-                    return (<WeightBtn
+                    return (<KeyboardBtn
+                        onClick={()=>onClick.submit()}
                         key={index}
                         btnName={val}
                         textColor='#fff'
                         colorBtn={theme.palette.primary.main}
                         nameClass={'backLigth'} />)
                 }
-                return (<WeightBtn
-                onClick={()=>onClick}
+                return (<KeyboardBtn
+                onClick={()=>onClick.delete()}
                 key={index}
                 btnName={val}
                 textColor='#fff'
