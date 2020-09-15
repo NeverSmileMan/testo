@@ -1,5 +1,5 @@
-import React, { useState, createContext, useCallback } from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import React, {useState, createContext, useCallback} from 'react';
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Tabs from './tabs/Tabs';
 import Hints from './tabs/Hints';
 import HomeButton from './tabs/HomeButton';
@@ -8,14 +8,11 @@ import AddedItemsTable from './added.items.table/added.items.table';
 import Search from './searchPanel/search/Search';
 import OrderInfo from './searchPanel/orderInfo/OrderInfo';
 import ModalWindow from './functional-buttons/modal.wind/modal.wind';
-import { MAX_NUMBER_OF_TABS } from './tabs/Tabs';
+import {MAX_NUMBER_OF_TABS} from './tabs/Tabs';
 import {ActiveInputService} from './services/ActiveInputService';
 //---------plugs---------------
-import { ScalePlug } from './plugs/scale';
+import {ScalePlug} from './plugs/scale';
 //-----------------------------
-
-
-
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -64,17 +61,22 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const MainContext = createContext({
 	modalType: '' as string | null,
-	setType: (val: string | null): any => {},
-	deleteTab: () => {},
-	addTab: (e: React.MouseEvent<HTMLDivElement>) => {},
-	confirmClose: () => {},
-	setActiveTab: (val: any) => {},
+	setType: (val: string | null): any => {
+	},
+	deleteTab: () => {
+	},
+	addTab: (e: React.MouseEvent<HTMLDivElement>) => {
+	},
+	confirmClose: () => {
+	},
+	setActiveTab: (val: any) => {
+	},
 	addItem: (item: any) => true as boolean,
 	activeTab: '' as any,
 });
 
 export default function Main() {
-	const { tab, sideButtons, info, bodyWrap, body, header, searchPanel } = useStyles();
+	const {tab, sideButtons, info, bodyWrap, body, header, searchPanel} = useStyles();
 	const [modalType, setModalType] = useState(null as string | null);
 	const setType = (type: string | null): any => () => setModalType(type);
 
@@ -112,40 +114,29 @@ export default function Main() {
 		>
 			<div className={header}>
 				<div className={tab}>
-					<Tabs tabs={tabItems} />
+					<Tabs tabs={tabItems}/>
 				</div>
 				<div className={info}>
-					<Hints error={false} /> {/** херня */}
-					<HomeButton />
+					<Hints error={false}/> {/** херня */}
+					<HomeButton/>
 				</div>
 			</div>
 			<div className={bodyWrap}>
 				<div className={body}>
 					<div className={searchPanel}>
-						<Search />
-						<OrderInfo value={tabItems[activeTab].items} activeItem={activeItem} onClick={deleteItem} />
+						<Search/>
+						<OrderInfo value={tabItems[activeTab].items} activeItem={activeItem} onClick={deleteItem}/>
 					</div>
-					<AddedItemsTable values={tabItems[activeTab].items} onClick={setActiveItem} active={activeItem} />
+					<AddedItemsTable values={tabItems[activeTab].items} onClick={setActiveItem} active={activeItem}/>
 				</div>
 				<div className={sideButtons}>
-					<GroupBtn />
+					<GroupBtn/>
 				</div>
-				{modalType && <ModalWindow />}
+				{modalType && <ModalWindow/>}
 			</div>
 		</MainContext.Provider>
 	);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 export interface TabItems {
@@ -160,6 +151,7 @@ interface Item {
 	price: number;
 	type: 'ваговий' | 'штучний'; //поменять?
 }
+
 interface AddedItem extends Item {
 	amount: number;
 	cost: number;
@@ -172,21 +164,16 @@ function useTabs(
 ): [
 	TabItems[],
 	number,
-	AddedItem | null,
+		AddedItem | null,
 	React.Dispatch<React.SetStateAction<number>>,
 	React.Dispatch<React.SetStateAction<AddedItem | null>>,
 	(item: Item) => boolean,
 	() => void,
 	() => void,
 	() => void,
+	(tara: number) => void,
 ] {
-	const [tabItems, setTabItems] = useState<TabItems[]>([
-		{
-			tabNumber: 1,
-			tara: -1,
-			items: [],
-		},
-	] as TabItems[]);
+	const [tabItems, setTabItems] = useState<TabItems[]>([{tabNumber: 1, tara: -1, items: [],},] as TabItems[]);
 	const [activeTab, setActiveTab] = useState<number>(0);
 	const [activeItem, setActiveItem] = useState<AddedItem | null>(null);
 	const [freeTabNumbers, setFreeTabNumbers] = useState(() => {
@@ -195,10 +182,15 @@ function useTabs(
 		return arr;
 	});
 
-	const addItem = useCallback(
-		(item: Item) => {
+	const setTara = useCallback((tara: number) => {
+		tabItems[activeTab].tara = tara
+		setTabItems([...tabItems])
+	}, [tabItems]);
+
+
+	const addItem = useCallback((item: Item) => {
 			if (scaleService.checkStable()) {
-				const addedItem = { ...item } as AddedItem;
+				const addedItem = {...item} as AddedItem;
 
 				if (item.type === 'штучний') {
 					addedItem.amount = setModal('print'); //---------------------------- тут как?
@@ -216,7 +208,7 @@ function useTabs(
 
 					tabItems[activeTab].items.push(addedItem);
 					setTabItems([...tabItems]);
-          ActiveInputService.clear();
+					ActiveInputService.clear();
 					return true;
 				} else {
 					setError('Вага повинна перевищувати 40 грам');
@@ -224,8 +216,7 @@ function useTabs(
 				}
 			}
 			return false;
-		},
-		[tabItems, activeTab],
+		}, [tabItems, activeTab],
 	);
 
 	const deleteItem = useCallback(() => {
@@ -234,53 +225,58 @@ function useTabs(
 		setActiveItem(null);
 	}, [tabItems, activeItem]);
 
-	const createOrder = useCallback(() => {}, []);
-	const closeOrder = useCallback(() => {}, []);
+	const createOrder = useCallback(() => {
+	}, []);
+	const closeOrder = useCallback(() => {
+	}, []);
 
-	const setTara = useCallback(() => {}, []);
-	const getTara = useCallback(() => {}, []);
-	const print = useCallback(() => {}, []);
-	const close = useCallback(() => {}, []);
+	const getTara = useCallback(() => {
 
-  const addTab = useCallback(() => {
-    const num = freeTabNumbers.findIndex(item => !item) + 1
-    setFreeTabNumbers((prevState) => {
-      prevState[num - 1] = true;
-      return prevState
-    })
-    setTabItems((prevState) => [...prevState, {
+	}, []);
+
+	const print = useCallback(() => {
+		console.log('print')
+	}, []);
+
+	const addTab = useCallback(() => {
+		const num = freeTabNumbers.findIndex(item => !item) + 1
+		setFreeTabNumbers((prevState) => {
+			prevState[num - 1] = true;
+			return prevState
+		})
+		setTabItems((prevState) => [...prevState, {
 			tabNumber: num,
 			tara: -1,
 			items: [],
 		}])
-    setActiveTab(tabItems.length)
-  }, [tabItems, freeTabNumbers])
+		setActiveTab(tabItems.length)
+	}, [tabItems, freeTabNumbers])
 
-  const deleteTab = useCallback(() => {
-    console.log('1>', 'we a here')
-    if (tabItems.length === 1) {
-      if (tabItems[0].tabNumber === 1) return
-      else {
-        setFreeTabNumbers((prevState) => {
-          prevState[0] = true;
-          return prevState
-        })
-        setTabItems((prevState) => [...prevState, {
-          tabNumber: 1,
-          tara: -1,
-          items: [],
-        }] )
-      }
-    }
-    setFreeTabNumbers((prevState) => {
-      prevState[tabItems[activeTab].tabNumber - 1] = false;
-      return prevState
-    })
-    setTabItems((prevState) => prevState.filter((value, index) => index !== activeTab));
-    setActiveTab((prevTabNum) => prevTabNum ? prevTabNum - 1 : 0);
-  }, [tabItems, activeTab])
+	const deleteTab = useCallback(() => {
+		console.log('1>', 'we a here')
+		if (tabItems.length === 1) {
+			if (tabItems[0].tabNumber === 1) return
+			else {
+				setFreeTabNumbers((prevState) => {
+					prevState[0] = true;
+					return prevState
+				})
+				setTabItems((prevState) => [...prevState, {
+					tabNumber: 1,
+					tara: -1,
+					items: [],
+				}])
+			}
+		}
+		setFreeTabNumbers((prevState) => {
+			prevState[tabItems[activeTab].tabNumber - 1] = false;
+			return prevState
+		})
+		setTabItems((prevState) => prevState.filter((value, index) => index !== activeTab));
+		setActiveTab((prevTabNum) => prevTabNum ? prevTabNum - 1 : 0);
+	}, [tabItems, activeTab])
 
-	return [tabItems, activeTab, activeItem, setActiveTab, setActiveItem, addItem, deleteItem, addTab, deleteTab];
+	return [tabItems, activeTab, activeItem, setActiveTab, setActiveItem, addItem, deleteItem, addTab, deleteTab, setTara];
 }
 
 
