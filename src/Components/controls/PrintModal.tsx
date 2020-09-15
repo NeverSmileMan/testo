@@ -18,7 +18,7 @@ function PrintModal({
     object,
 }: Props & WithStyles) {
     const onClickTrue = useCallback(() => object.doAction(true), []);
-    const onClickFalse = useCallback(() => object.doAction(true), []);
+    const onClickFalse = useCallback(() => object.doAction(false), []);
     return (
         <div className={classes.wrapper}>
             <div className='title'>

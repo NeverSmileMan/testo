@@ -46,8 +46,8 @@ function createControlButton(props: IControlButtonProps) {
         
         useState(() => object.onAction(onAction));
 
-        useEffect(() => { isActive && object.setActive(isActive)}, [isActive]);
-        
+        useEffect(() => { !(isActive === undefined) && object.setActive(isActive) }, [isActive]);
+        //!(isActive === undefined) && object.setActive(isActive);
         const className = `${classes.wrapper} ${object.isActive() ? '' : classes.disabled}`;
 
         return (<>

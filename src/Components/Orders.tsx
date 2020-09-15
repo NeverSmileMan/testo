@@ -57,7 +57,7 @@ interface IState {
     order: IOrder | null;
     printIsActive: boolean;
     closeIsActive: boolean;
-    ordersControl: IOrdersControl;
+    //ordersControl: IOrdersControl;
     ordersNumbers: number[];
     currentOrderNumber: number | null;
     canCreate: boolean;
@@ -67,7 +67,7 @@ const getState = () => ({
     order: ordersControl.getCurrentOrder(),
     printIsActive: ordersControl.printIsActive,
     closeIsActive: ordersControl.closeIsActive,
-    ordersControl: ordersControl,
+    //ordersControl: ordersControl,
     ordersNumbers: [...ordersControl.getOrders().keys()],
     currentOrderNumber: ordersControl.getOrderNumber(),
     canCreate: ordersControl.canCreateOrder(),

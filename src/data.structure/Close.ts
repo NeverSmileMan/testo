@@ -45,13 +45,9 @@ export class Close implements IClose {
 
     doAction(confirm?: boolean) {
         if (this._state === State.PENDING) {
-            if (confirm) {
-                this._state = State.DISABLED;
-                this._onClose();
-            } else {
-                this._state = State.ENABLED;
-            }
+            this._state = State.ENABLED;
             this._onChange();
+            if (confirm) this._onClose();
             return;
         }
 

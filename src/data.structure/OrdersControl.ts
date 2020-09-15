@@ -31,8 +31,9 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
     }
 
     protected _onChange() {
+        this._onOrderChange(false);
         super._onChange();
-        this._onOrderChange();
+        this._onOrderChange(false);
     }
 
     canCreateOrder() {
@@ -105,7 +106,6 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
 
     private _onOrderChange(init?: boolean) {
         const itemsCount = this.getItemsCount();
-
         if ((init && itemsCount > 0) || itemsCount === 1) {
             this.printIsActive = true;
             this.closeIsActive = true;
@@ -121,6 +121,7 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
             } else {
                 this.closeIsActive = true;
             }
+            this.printIsActive = false;
             !init && this._onChangeOrders();
         }
     }
