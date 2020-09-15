@@ -61,14 +61,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const MainContext = createContext({
 	modalType: '' as string | null,
-	setType: (val: string | null): any => {
-	},
+	setType: (val: string | null): any => {	},
 	deleteTab: () => {
 	},
 	addTab: (e: React.MouseEvent<HTMLDivElement>) => {
 	},
-	confirmClose: () => {
-	},
+	confirmClose: () => {	},
 	setActiveTab: (val: any) => {
 	},
 	addItem: (item: any) => true as boolean,
@@ -137,7 +135,6 @@ export default function Main() {
 		</MainContext.Provider>
 	);
 }
-
 
 export interface TabItems {
 	tabNumber: number;
@@ -231,7 +228,7 @@ function useTabs(
 	}, []);
 
 	const getTara = useCallback(() => {
-
+		return tabItems[activeTab].tara
 	}, []);
 
 	const print = useCallback(() => {
