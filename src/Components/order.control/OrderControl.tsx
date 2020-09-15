@@ -31,6 +31,7 @@ function OrderControl({ classes, callbacks }: Props) {
     }, [onWeightsChange, stateWeights]);
 
     if (!order) return null;
+    
     return (<>
         <div className={classes.wrapper}>
             <div className='search-panel'>

@@ -10,7 +10,7 @@ type Props = {
 
 function OrderInfo({ classes, onClick }: Props) {
     
-    const { isSelected, total }= useContext(OrderControlContext);
+    const { isSelected, total } = useContext(OrderControlContext);
 
     return (
         <div className={classes.wrapper}>

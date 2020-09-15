@@ -2,7 +2,8 @@ import { createStyles, Theme } from '@material-ui/core/styles';
 import { ISizeOfElementsInUnits } from '../../functions/keyboardFunc';
 import React from 'react';
 
-export interface IDifferentKeys { // кнопки, які відрізняється від звичайних
+// кнопки, які відрізняється від звичайних
+export interface IDifferentKeys { 
     [key: string]: {
         width?: number;
         content?: string | React.ReactElement;
@@ -35,7 +36,7 @@ export function getKeyboardStyles(sizeOfElementsInUnits: ISizeOfElementsInUnits)
             '& .row-3': {},
             '& .row-4': {},
             '& .key': {
-                color: 'black', //theme.palette.secondary.dark,
+                color: 'black',
                 border: '1px solid',
                 borderColor: theme.palette.primary.main,
                 display: 'flex',
@@ -43,7 +44,7 @@ export function getKeyboardStyles(sizeOfElementsInUnits: ISizeOfElementsInUnits)
                 justifyContent: 'center',
                 borderRadius: '0.3rem',
                 fontSize: '1.1rem',
-                background: theme.palette.secondary.light, //theme.palette.secondary.dark
+                background: theme.palette.secondary.light,
                 overflow: 'hidden',
                 fontWeight: 600,
                 height: '100%',

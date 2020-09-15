@@ -6,33 +6,33 @@ import { WeightsContext } from '../Main';
 
 function WeightsDisplay({ classes }: WithStyles) {
 
-    const weights = useContext(WeightsContext);
+    const { title, tara, weight, price, sum } = useContext(WeightsContext);
 
     return (
         <div className={classes.grid + ' border'}>
             <div className='title border'>title
                 <span className='val'>
-                    {weights.title}
+                    {title}
                 </span>
             </div>
             <div className='tara border'>tara
                 <div className='val'>
-                    {weights.tara.toFixed(3)}
+                    {tara.toFixed(3)}
                 </div>
             </div>
             <div className='weight border'>weight
                 <div className='val'>
-                    {weights.weight.toFixed(3)}
+                    {weight.toFixed(3)}
                 </div>
             </div>
             <div className='price border'>price
                 <div className='val'>
-                    {weights.price.toFixed(2)}
+                    {price.toFixed(2)}
                 </div>
             </div>
             <div className='total border'>total
                 <div className='val'>
-                    {weights.sum.toFixed(2)}
+                    {sum.toFixed(2)}
                 </div>
             </div>
         </div>
