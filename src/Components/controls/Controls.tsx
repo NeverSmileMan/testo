@@ -12,12 +12,12 @@ type Props = {
 } & WithStyles;
 
 function Controls({ classes, callbacks }: Props) {
-    const { printIsActive, closeIsActive } = useContext(OrdersControlContext);
+    const { printIsActive, closeIsActive, doClose } = useContext(OrdersControlContext);
     return (
         <div className={classes.controls}>
             <Buttons.TaraButton />
             <Buttons.PrintButton isActive={printIsActive} onAction={callbacks.printOrder}/>
-            <Buttons.CloseButton isActive={closeIsActive} onAction={callbacks.deleteOrder}/>
+            <Buttons.CloseButton isActive={closeIsActive} onAction={callbacks.deleteOrder} doAction={doClose}/>
         </div>
     );
 }

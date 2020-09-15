@@ -8,7 +8,7 @@ import Modal from '../Modal';
 
 export interface IControlButtonProps {
     object: {
-        doAction: Function;
+        doAction: (confirm?: boolean) => void;
         onAction: Function;
         onChange: Function;
         isActive: Function;
@@ -39,15 +39,19 @@ function createControlButton(props: IControlButtonProps) {
     type Props = {
         isActive?: boolean;
         onAction?: () => void;
+        doAction?: (callback: () => void) => void;
     } & WithStyles;
 
-    function ControlButton({ classes, isActive, onAction }: Props) {
+    function ControlButton({ classes, isActive, onAction, doAction }: Props) {
         [{ mode }, setState] = useState(changeState);
         
-        useState(() => object.onAction(onAction));
+        useState(() => {
+            object.onAction(onAction);
+            if (doAction) doAction(object.doAction.bind(object));
+        });
 
         useEffect(() => { !(isActive === undefined) && object.setActive(isActive) }, [isActive]);
-        //!(isActive === undefined) && object.setActive(isActive);
+        
         const className = `${classes.wrapper} ${object.isActive() ? '' : classes.disabled}`;
 
         return (<>

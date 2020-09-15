@@ -14,6 +14,7 @@ export interface IOrdersControl extends IOrderControl{
     printOrder: () => void;
     deleteOrder: () => void;
     getStateOrders: () => IStateOrders;
+    doClose: (callback: () => void) => void;
 }
 
 export interface IStateOrders {
@@ -23,6 +24,7 @@ export interface IStateOrders {
     ordersNumbers: number[];
     currentOrderNumber: number | null;
     canCreate: boolean;
+    doClose: (callback: () => void) => void;
     getStateOrders: () => IStateOrders;
 }
 
@@ -32,6 +34,7 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
     private _callbackOnChangeOrders?: () => void;
     printIsActive: boolean = false;
     closeIsActive: boolean = false;
+    private _callbackOnClose?: () => void;
 
     constructor(private _maxOrdersCount: number) {
         super();
@@ -40,7 +43,15 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
         this.getStateOrders = this.getStateOrders.bind(this);
     }
 
-    protected _onChange() {
+    doClose(callback: () => void) {
+        this._callbackOnClose = callback;
+    }
+
+    _doClose() {
+        if (this._callbackOnClose) this._callbackOnClose();
+    }
+
+    protected _onChangeOrder() {
         this._onOrderChange(false);
         super._onChangeOrder();
         this._onOrderChange(false);
@@ -54,6 +65,7 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
             ordersNumbers: [...this.getOrders().keys()],
             currentOrderNumber: this.getOrderNumber(),
             canCreate: this.canCreateOrder(),
+            doClose: this.doClose.bind(this),
             getStateOrders: this.getStateOrders,
         };
     }
@@ -97,7 +109,7 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
             const order = this._orders.get(orderNumber);
             if (order) {
                 this._currentOrder = order;
-                this._onChange();
+                this._onChangeOrder();
                 this._onOrderChange(true);
                 this._onChangeOrders();
                 return;
@@ -123,7 +135,7 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
 
     printOrder() {
         new Printer(this.getCurrentOrder()!);
-        //this._close.doAction(); ????????
+        this._doClose();
     }
 
     private _onOrderChange(init?: boolean) {

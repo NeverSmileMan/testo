@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/search/Search';
 import ActiveInputService from '../../data.structure/ActiveInputService';
 import Input from '../../data.structure/Input';
 import List from './List';
 import { IItem } from '../../data.structure/Item';
+import { OrderControlContext } from '../Orders';
 
 const input = Input.getInputListInstance();
 const activeInputService = ActiveInputService.getInstance();
@@ -33,8 +34,11 @@ type Props = {
 function Search({ classes, onSelect }: Props) {
     [{ isFocus }, setState] = useState(changeState);
     ref = useRef(null);
-
-    useState(() => input.onSelect(onSelect));
+    const { clearInput } = useContext(OrderControlContext);
+    useState(() => {
+        input.onSelect(onSelect);
+        clearInput(input.clearValue.bind(input));
+    });
 
     useEffect(() => {
         if (ref.current) ref.current.innerHTML = getValue();
