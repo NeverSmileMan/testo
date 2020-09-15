@@ -55,7 +55,7 @@ const items: IItem[] = [
     {code: 1046, name: "Товар 146", price: 146, type: 'ваговий'},
     {code: 1047, name: "Товар 147", price: 147, type: 'ваговий'},
     {code: 1048, name: "Товар 148", price: 148, type: 'ваговий'},
-    {code: 1049, name: "Товар 149", price: 149, type: 'ваговий'},
+    {code: 1049, name: "Товар 149", price: 149, type: 'штучний'},
 ];
 
 export default items;

@@ -1,7 +1,8 @@
 import React, {useContext} from "react";
 import Tab from "./Tab";
 import {makeStyles} from "@material-ui/styles";
-import {MainContext, TabItems} from '../main';
+import {MainContext} from '../main';
+import {TabItems} from './use.Tab.hook';
 
 export const MAX_NUMBER_OF_TABS = 6;
 

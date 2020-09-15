@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import {makeStyles} from "@material-ui/styles";
 import {MAX_NUMBER_OF_TABS} from "./Tabs";
 import {createStyles, Theme} from "@material-ui/core/";
-import {TabItems} from "../main";
+import {TabItems} from "./use.Tab.hook";
 
 interface PropsTab {
 	tab: TabItems;

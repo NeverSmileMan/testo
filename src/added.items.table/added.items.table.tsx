@@ -34,20 +34,23 @@ export default function AddedItemsTable({ values, onClick, active }: any): React
 
 	return (
 		<div className={classes.bodyContainer}>
-			{values.map((item: Item, i: number) => (
-				<SingleItem
-					item={item}
-					changeRule={{
-						cost: item.cost.toFixed(2),
-						name: item.code + ' ' + item.name, //тут добавить языки
-					}}
-					columns={['name', 'amount', 'cost']}
-					addUnits={{ amount: item.type === 'ваговий' ? 'г.' : 'шт.' }}
-					active={active}
-					key={i}
-					onClick={onClick}
-				/>
-			))}
+			{values.map((item: Item, i: number) =>
+				item.amount === 0
+					? <></>
+					: (			
+						<SingleItem
+							item={item}
+							changeRule={{
+								cost: item.cost.toFixed(2),
+								name: item.code + ' ' + item.name, //тут добавить языки
+							}}
+							columns={['name', 'amount', 'cost']}
+							addUnits={{ amount: item.type === 'ваговий' ? 'г.' : 'шт.' }}
+							active={active}
+							key={i}
+							onClick={onClick}
+						/>
+					))}
 		</div>
 	);
 }

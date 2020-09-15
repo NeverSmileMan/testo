@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/styles';
 import ModalTara from './modal.tara';
 import ModalPrint from './modal.print';
 import ModalClose from './modal.close';
-import {MainContext} from '../../main'
+import ModalQtyGoods from './modal.qty.goods';
+import {MainContext} from '../../main';
 
 
 
@@ -26,6 +27,7 @@ const ModalWindow = () => {
     tara: () => (<ModalTara/>),
     print: () => (<ModalPrint />),
     close: () => (<ModalClose/>),
+    qtyGoods: () => (<ModalQtyGoods/>)
   }
   const cls = useStyles();
   const {modalType} = useContext(MainContext)
