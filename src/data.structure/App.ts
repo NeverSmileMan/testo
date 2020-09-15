@@ -1,3 +1,4 @@
+import { ThemesNames } from '../themes/themes';
 import { IConfig, config, IEnvironment } from './data/config';
 import { AppState } from './types/types';
 import Weights, { IWeightsTest } from './Weights';
@@ -9,6 +10,16 @@ export interface IApp {
     getConfig: () => IConfig;
     onChange: (callback: () => void) => void;
     getWeightsInstance: () => IWeightsTest;
+    getStateApp: () => IStateApp;
+}
+
+export interface IStateApp {
+    state: AppState;
+    themeName: ThemesNames;
+    maxOrdersCount: number;
+    setEnvironment: (rect: DOMRect) => void;
+    weights: IWeightsTest;
+    getStateWeights: () => IStateApp;
 }
 
 class App implements IApp {
@@ -22,6 +33,18 @@ class App implements IApp {
     constructor() {
         this._config = config;
         this._weights = new Weights();
+        this.getStateApp = this.getStateApp.bind(this);
+    }
+
+    getStateApp() {
+        return {
+            state: this.getState(),
+            themeName: this.getConfig().themeName,
+            maxOrdersCount: this.getConfig().maxOrdersCount,
+            setEnvironment: (rect: DOMRect) => this.setEnvironment(rect),
+            weights: this.getWeightsInstance(),
+            getStateWeights: this.getStateApp,
+        };
     }
 
     setEnvironment(rect: DOMRect) {
