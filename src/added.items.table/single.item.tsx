@@ -8,6 +8,7 @@ interface Item {
 	name: string;
 	amount: number;
 	cost: number;
+	price: number;
 	type: ItemType;
 }
 

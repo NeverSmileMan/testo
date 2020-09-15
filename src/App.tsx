@@ -134,8 +134,8 @@ function App() {
             <Main />
           </div>
           <div className={classes.keyboardWrap}>
-            <KeyboardGrid service={ActiveInputService} keyboardLayout={keyBoard} />
-            {/* <KeyboardFlex service={ActiveInputService} keyboardLayout={keyBoardFlex}/> */}
+            {/* <KeyboardGrid service={ActiveInputService} keyboardLayout={keyBoard} /> */}
+            <KeyboardFlex service={ActiveInputService} keyboardLayout={keyBoardFlex}/>
           </div>
         </div>
       </ThemeProvider>
