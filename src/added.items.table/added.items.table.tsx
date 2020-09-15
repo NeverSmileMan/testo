@@ -6,6 +6,7 @@ export interface Item {
 	code: string;
 	name: string;
 	amount: number;
+	price: number;
 	cost: number;
 	type: 'ваговий' | 'штучний'; //поменять?
 }
