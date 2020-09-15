@@ -1,47 +1,38 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/weights/WeightsDisplay';
-import Weights from '../../data.structure/Weights';
 
-const weights = Weights.getInstance();
-
-let setState: React.Dispatch<{}>;
-const changeState = () => {
-    weights.onChange(
-        () => setState({})
-    );
-    return {};
-};
+import { WeightsContext } from '../Main';
 
 function WeightsDisplay({ classes }: WithStyles) {
 
-    [, setState] = useState(changeState);
+    const weights = useContext(WeightsContext);
 
     return (
         <div className={classes.grid + ' border'}>
             <div className='title border'>title
                 <span className='val'>
-                    {weights.__getTitle()}
+                    {weights.title}
                 </span>
             </div>
             <div className='tara border'>tara
                 <div className='val'>
-                    {weights.getTara().toFixed(3)}
+                    {weights.tara.toFixed(3)}
                 </div>
             </div>
             <div className='weight border'>weight
                 <div className='val'>
-                    {weights.getWeight().toFixed(3)}
+                    {weights.weight.toFixed(3)}
                 </div>
             </div>
             <div className='price border'>price
                 <div className='val'>
-                    {weights.__getPrice().toFixed(2)}
+                    {weights.price.toFixed(2)}
                 </div>
             </div>
             <div className='total border'>total
                 <div className='val'>
-                    {weights.getSum().toFixed(2)}
+                    {weights.sum.toFixed(2)}
                 </div>
             </div>
         </div>

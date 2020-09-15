@@ -1,6 +1,3 @@
-import EventEmitter from 'events';
-import { EventType } from './types/types';
-
 export interface IWeights {
 
     readonly minWeight: number;
@@ -17,16 +14,27 @@ export interface IWeights {
     setPrice: (value: number | null, title?: string) => void;
     getWeight: () => number;
     onChange: (callback: () => void) => void;
-    off: (event: EventType, callback: () => void) => void;
+}
+
+export interface IStateWeights {
+    isStable: boolean;
+    tara: number;
+    setTara: (value: number) => void;
+    weight: number;
+    setPrice: (value: number | null, title?: string) => void;
+    sum: number;
+    price: number;
+    title: string;
+    getStateWeights: () => IStateWeights;
 }
 
 export class Weights implements IWeights {
-    private _emitter: EventEmitter;
     protected _isStable: boolean = true;
     private _tara: number = 0;
     protected _price: number = 0;
     protected _weight: number = 0;
     protected _title: string = '';
+    private _callbackOnChange?: () => void;
 
     /* Характеристики вагів: */
     public readonly minWeight: number = 0.04;
@@ -35,10 +43,6 @@ export class Weights implements IWeights {
     public readonly maxTara: number = 6;
     public readonly minWeightResolution: number = 0.002;
     public readonly maxWeightResolution: number = 0.005;
-
-    constructor() {
-        this._emitter = new EventEmitter();
-    }
 
     isStable(): boolean {
         return this._isStable;
@@ -68,19 +72,16 @@ export class Weights implements IWeights {
     }
 
     onChange(callback: () => void) {
-        this._emitter.on(EventType.STATE_CHANGE, callback);
+        this._callbackOnChange = callback;
     }
 
     protected _onChange() {
-        this._emitter.emit(EventType.STATE_CHANGE);
-    }
-    
-    off(event: EventType, callback: () => void) {
-        this._emitter.on(event, callback);
+        if (this._callbackOnChange) this._callbackOnChange();
     }
 }
 
-interface IWeightsTest extends IWeights {
+export interface IWeightsTest extends IWeights {
+    getStateWeights: () => IStateWeights;
     __setWeight: (value: number) => void;
     __getPrice: () => number;
     __getTitle: () => string;
@@ -88,6 +89,24 @@ interface IWeightsTest extends IWeights {
 }
 
 class WeightsTest extends Weights implements IWeightsTest {
+    constructor() {
+        super();
+        this.getStateWeights = this.getStateWeights.bind(this);
+    }
+
+    getStateWeights(): IStateWeights {
+        return {
+            isStable: this.isStable(),
+            tara: this.getTara(),
+            setTara: this.setTara.bind(this),
+            weight: this.getWeight(),
+            setPrice: this.setPrice.bind(this),
+            sum: this.getSum(),
+            price: this.__getPrice(),
+            title: this.__getTitle(),
+            getStateWeights: this.getStateWeights,
+        };
+    }
 
     __setWeight(value: number) {
         this._weight = value;
@@ -108,12 +127,4 @@ class WeightsTest extends Weights implements IWeightsTest {
     }
 }
 
-let instance: IWeightsTest;
-
-export function getInstance() {
-    if (!instance)
-        instance = new WeightsTest();
-    return instance;
-}
-
-export default { getInstance };
+export default WeightsTest;

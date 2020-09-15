@@ -4,16 +4,11 @@ import { StyledComponentProps } from '@material-ui/styles';
 import styles from '../../styles/controls/ControlButton';
 import { Mode, State } from '../../data.structure/types/types';
 import Modal from '../Modal';
+import { IStateWeights } from '../../data.structure/Weights';
+import { IControlButton } from '../../data.structure/ControlButton';
 
 export interface IControlButtonProps {
-    object: {
-        doAction: (confirm?: boolean) => void;
-        onAction: Function;
-        onChange: Function;
-        isActive: Function;
-        getState: Function;
-        setActive: (isActive: boolean) => void;
-    },
+    object: IControlButton;
     ModalComponent: React.ComponentType<any> & StyledComponentProps;
     IconComponent: React.FunctionComponent<any>;
     text: string;
@@ -39,9 +34,10 @@ function createControlButton(props: IControlButtonProps) {
         isActive?: boolean;
         onAction?: () => void;
         doAction?: (callback: () => void) => void;
+        data?: IStateWeights;
     } & WithStyles;
 
-    function ControlButton({ classes, isActive, onAction, doAction }: Props) {
+    function ControlButton({ classes, isActive, onAction, doAction, data }: Props) {
         [{ mode }, setState] = useState(changeState);
         
         useState(() => {
@@ -50,7 +46,12 @@ function createControlButton(props: IControlButtonProps) {
         });
 
         useEffect(() => { !(isActive === undefined) && object.setActive(isActive) }, [isActive]);
-        
+        useEffect(() => { 
+            if (data && object.onDataChange) {
+                object.onDataChange(data);
+            }
+        }, [data]);
+
         const className = `${classes.wrapper} ${object.isActive() ? '' : classes.disabled}`;
 
         return (<>

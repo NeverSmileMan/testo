@@ -1,12 +1,14 @@
 import { State } from './types/types';
+import { IStateWeights } from './Weights';
 
 export interface IControlButton {
-    onAction: (callback: () => void) => void;
+    onAction: (callback?: () => void) => void;
     onChange: (callback: () => void) => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     doAction: (confirm?: boolean) => void;
     getState: () => State;
+    onDataChange?: (data: IStateWeights) => void;
 }
 
 class ControlButton implements IControlButton {

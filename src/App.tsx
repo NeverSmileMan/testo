@@ -8,6 +8,7 @@ import { AppState } from './data.structure/types/types';
 import SetEnvironment from './components/SetEnvironment';
 import Main from './components/Main';
 import './functions/rikAppTest.js';
+import { IWeightsTest } from './data.structure/Weights';
 
 const app = App.getInstance();
 
@@ -16,6 +17,7 @@ interface IStateApp {
     themeName: ThemesNames;
     maxOrdersCount: number;
     setEnvironment: (rect: DOMRect) => void;
+    weights: IWeightsTest;
 }
 
 const getState = () => ({
@@ -23,6 +25,7 @@ const getState = () => ({
     themeName: app.getConfig().themeName,
     maxOrdersCount: app.getConfig().maxOrdersCount,
     setEnvironment: (rect: DOMRect) => app.setEnvironment(rect),
+    weights: app.getWeightsInstance(),
 });
 
 let setState: React.Dispatch<() => IStateApp>;
@@ -40,7 +43,7 @@ function AppComponent() {
         state.state === AppState.INIT ?
             <SetEnvironment setEnvironment={state.setEnvironment}/> : (
             <ThemeProvider theme={themes[state.themeName]}>
-                <Main maxOrdersCount={state.maxOrdersCount}/>
+                <Main maxOrdersCount={state.maxOrdersCount} weights={state.weights}/>
             </ThemeProvider>
     ));
 }

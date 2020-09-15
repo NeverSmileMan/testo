@@ -1,9 +1,8 @@
-import Weights from '../data.structure/Weights';
 import App from '../data.structure/App';
 import {setTimeout, clearTimeout} from 'timers';
 
-const weights = Weights.getInstance();
 const app = App.getInstance();
+const weights = app.getWeightsInstance();
 
 let weight = '';
 let timer;

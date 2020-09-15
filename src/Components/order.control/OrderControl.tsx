@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/order.control/OrderControl';
 import { Mode } from '../../data.structure/types/types';
@@ -10,6 +10,7 @@ import Modal from '../Modal';
 import OrderControlModal from './OrderControlModal';
 import { OrdersControlContext } from '../Orders';
 import { OrderControlContext } from '../Orders';
+import { WeightsContext } from '../Main'
 
 type Props = {
     callbacks: {
@@ -22,10 +23,14 @@ type Props = {
 function OrderControl({ classes, callbacks }: Props) {
     
     const { order } = useContext(OrdersControlContext);
-    const { orderMode } = useContext(OrderControlContext);
+    const { orderMode, onWeightsChange } = useContext(OrderControlContext);
+    const stateWeights = useContext(WeightsContext);
+
+    useEffect(() => {
+        onWeightsChange(stateWeights);
+    }, [onWeightsChange, stateWeights]);
 
     if (!order) return null;
-
     return (<>
         <div className={classes.wrapper}>
             <div className='search-panel'>

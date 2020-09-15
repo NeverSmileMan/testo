@@ -27,10 +27,10 @@ const propsTara: IControlButtonProps = {
     ModalComponent: TaraModal,
     IconComponent: TaraIcon,
     text: 'тара',
-}
+};
 
 export default {
     CloseButton: createControlButton(propsClose),
     PrintButton: createControlButton(propsPrint),
     TaraButton: createControlButton(propsTara),
-}
+};

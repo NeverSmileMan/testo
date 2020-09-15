@@ -1,5 +1,6 @@
 import { IConfig, config, IEnvironment } from './data/config';
 import { AppState } from './types/types';
+import Weights, { IWeightsTest } from './Weights';
 
 export interface IApp {
     setEnvironment: (rect: DOMRect) => void;
@@ -7,6 +8,7 @@ export interface IApp {
     getState: () => AppState;
     getConfig: () => IConfig;
     onChange: (callback: () => void) => void;
+    getWeightsInstance: () => IWeightsTest;
 }
 
 class App implements IApp {
@@ -14,10 +16,12 @@ class App implements IApp {
     private _state: AppState = AppState.INIT;
     protected _config: IConfig;
     private _env: IEnvironment = {} as IEnvironment;
+    private _weights: IWeightsTest;
     private _callbackOnChange?: () => void;
 
     constructor() {
         this._config = config;
+        this._weights = new Weights();
     }
 
     setEnvironment(rect: DOMRect) {
@@ -49,6 +53,10 @@ class App implements IApp {
         if (this._callbackOnChange) {
             setTimeout(() => this._callbackOnChange!(), 1000);
         }
+    }
+
+    getWeightsInstance() {
+        return this._weights;
     }
 }
 

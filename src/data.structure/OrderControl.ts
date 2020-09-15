@@ -1,5 +1,5 @@
 import { IItem, IItemAmount, ItemAmount } from './Item';
-import Weights, { IWeights } from './Weights';
+import { IStateWeights } from './Weights';
 import { IOrder } from './Order';
 import Message, { IMessage } from './Message';
 import { MessageCode } from './data/messagesInfo';
@@ -19,6 +19,7 @@ export interface IOrderControl {
     addItem: (item: IItem) => void;
     clearInput: (callback: () => void) => void;
     getStateOrder: () => IStateOrder;
+    onWeightsChange: (weights: IStateWeights) => void;
 }
 
 export interface IStateOrder {
@@ -28,11 +29,12 @@ export interface IStateOrder {
     selectedItemIndex: number | null;
     orderMode: Mode | null;
     clearInput: (callback: () => void) => void;
+    onWeightsChange: (weights?: IStateWeights) => void;
     getStateOrder: () => IStateOrder;
 }
 
 export class OrderControl implements IOrderControl {
-    private _weights: IWeights;
+    private _weights?: IStateWeights;
     private _message: IMessage;
     private _selectedItemIndex: number | null = null;
     protected _currentOrder: IOrder | null = null;
@@ -42,9 +44,6 @@ export class OrderControl implements IOrderControl {
 
     constructor() {
         this._message = Message.getInstance();
-        this._weights = Weights.getInstance();
-        this._weights.onChange(this._onWeightsChange.bind(this));
-        this._onWeightsChange();
         this.getStateOrder = this.getStateOrder.bind(this);
     }
 
@@ -64,16 +63,17 @@ export class OrderControl implements IOrderControl {
             selectedItemIndex: this.getSelectedItemIndex(),
             orderMode: this.getState() === State.PENDING ? Mode.MODAL : null,
             clearInput: this.clearInput.bind(this),
+            onWeightsChange: this.onWeightsChange.bind(this),
             getStateOrder: this.getStateOrder,
         };
     }
 
     setOrder(order: IOrder) {
-        if (this._currentOrder) this._currentOrder.tara = this._weights.getTara();
+        if (this._currentOrder) this._currentOrder.tara = this._weights?.tara || 0;
         this._currentOrder = order;
-        this._weights.setTara(this._currentOrder.tara);
+        this._weights?.setTara(this._currentOrder.tara);
         this.selectItem(null);
-        this._onWeightsChange();
+        this.onWeightsChange();
     }
 
     selectItem(index: number | null) {
@@ -93,18 +93,18 @@ export class OrderControl implements IOrderControl {
     }
 
     addItem(item: IItem) {
-        if (!this._weights.isStable()) {
+        if (!this._weights?.isStable) {
             this._throwMessage(MessageCode.WEIGHTS_NOT_STABLE);
             return;
         }
 
-        if (this._weights.getWeight() <= 0.040) {
+        if (this._weights.weight <= 0.040) {
             this._throwMessage(MessageCode.WEIGHTS_IS_EMPTY);
             return;
         }
 
         this._weights.setPrice(item.price, item.name);
-        const newItem: IItemAmount = new ItemAmount(item, this._weights.getSum());
+        const newItem: IItemAmount = new ItemAmount(item, this._weights?.sum);
         this._currentOrder!.items.push(newItem);
         this._setTotal(newItem.sum);
         this.selectItem(null);
@@ -116,7 +116,7 @@ export class OrderControl implements IOrderControl {
     private _throwMessage(code: MessageCode | null) {
         this._message.sendMessage(code);
         if (code === MessageCode.WEIGHTS_IS_EMPTY) {
-            setTimeout(() => this._onWeightsChange(), 1000)
+            setTimeout(() => this.onWeightsChange(), 1000)
         }
     }
 
@@ -159,9 +159,10 @@ export class OrderControl implements IOrderControl {
         if (this._callbackOnChangeOrder) this._callbackOnChangeOrder();
     }
 
-    private _onWeightsChange() {
+    onWeightsChange(weights?: IStateWeights) {
+        weights && (this._weights = weights);
         if (this._state === State.PENDING) {
-            if (this._weights.getWeight() <= 0) {
+            if (this._weights && this._weights.weight <= 0) {
                 this._state = State.ENABLED;
                 this._weights.setPrice(null);
                 this._onChangeOrder();
@@ -169,12 +170,12 @@ export class OrderControl implements IOrderControl {
             return;
         }
 
-        if (!this._weights.isStable()) {
+        if (!this._weights?.isStable) {
             this._throwMessage(MessageCode.WEIGHTS_NOT_STABLE);
             return;
         }
 
-        if (this._weights.getWeight() <= 0.040) {
+        if (this._weights.weight <= 0.040) {
             this._throwMessage(MessageCode.WEIGHTS_IS_SMALL);
             return;
         }
