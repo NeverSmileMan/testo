@@ -13,7 +13,7 @@ function SetEnvironment({ classes, setEnvironment }: Props) {
         const elem: HTMLDivElement = ref.current!;
         const rect: DOMRect = elem.getBoundingClientRect();
         setEnvironment(rect);
-    }, []);
+    }, [setEnvironment]);
 
     return (
         <div ref={ref} className={classes.wrapper}>

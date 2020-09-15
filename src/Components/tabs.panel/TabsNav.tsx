@@ -19,7 +19,7 @@ type Props = {
 
 function TabsNav({ classes, callbacks }: Props) {
 
-    const selectOrder = useCallback((event) => onSelect(event, callbacks.selectOrder), []);
+    const selectOrder = useCallback((event) => onSelect(event, callbacks.selectOrder), [callbacks]);
     
     const { ordersNumbers, currentOrderNumber, canCreate } = useContext(OrdersControlContext);
     

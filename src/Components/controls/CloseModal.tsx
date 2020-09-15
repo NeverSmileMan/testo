@@ -17,8 +17,8 @@ function CloseModal({
     classes,
     object,
 }: Props & WithStyles) {
-    const onClickTrue = useCallback(() => object.doAction(true), []);
-    const onClickFalse = useCallback(() => object.doAction(false), []);
+    const onClickTrue = useCallback(() => object.doAction(true), [object]);
+    const onClickFalse = useCallback(() => object.doAction(false), [object]);
     return (
         <div className={classes.wrapper}>
             <div className='title'>

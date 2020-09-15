@@ -1,7 +1,7 @@
 import Weights, { IWeights } from './Weights';
 import { State } from './types/types';
 import Input, { IInputNumber } from './Input';
-import ControlButton, { IControlButton } from './ControlButton';
+import ControlButton from './ControlButton';
 
 class TaraButton extends ControlButton {
     private _weights: IWeights;

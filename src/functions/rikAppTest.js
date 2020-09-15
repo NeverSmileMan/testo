@@ -9,6 +9,7 @@ let weight = '';
 let timer;
 
 window.addEventListener('keypress', (event) => {
+    
     // console.log(event.code);
     
     if (event.code.match(/Digit/)) {
@@ -26,16 +27,3 @@ window.addEventListener('keypress', (event) => {
     if (event.code === 'KeyZ') { weights.__setStable(); return; }
     
 });
-
-// class RikApp {
-
-//     constructor() {
-//         this._weights = Weights.getInstance();
-//     }
-
-//     set w(value) {
-//         this._weights.__setWeight(value)
-//     }
-// }
-
-// window.rik = new RikApp();

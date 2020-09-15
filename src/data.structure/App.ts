@@ -58,7 +58,6 @@ interface IAppTest extends IApp {
 
 class AppTest extends App implements IAppTest {
     __changeTheme() {
-        console.log('THEME');
         let themeName = this._config.themeName;
         themeName = themeName === 'default' ? 'silpo' :
             themeName === 'silpo' ? 'fora' :

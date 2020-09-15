@@ -16,7 +16,7 @@ type Props = {
 
 function OrderItems({ classes, onSelect }: Props) {
     const { orderItems, selectedItemIndex } = useContext(OrderControlContext);
-    const onClick = useCallback((event) => selectItem(event, onSelect), []);
+    const onClick = useCallback((event) => selectItem(event, onSelect), [onSelect]);
 
     const items = orderItems.map((item, i) =>
         <li 

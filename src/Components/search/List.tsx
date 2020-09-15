@@ -30,7 +30,7 @@ type Props = {
 function List({ classes, filter, onSelect }: Props) {
     [itemsArray, setState] = useState<IItem[] | null>(changeState);
 
-    const onClick = useCallback((event) => onItemSelect(event, onSelect), []);
+    const onClick = useCallback((event) => onItemSelect(event, onSelect), [onSelect]);
     useEffect(() => list.setFilter(filter), [filter]);
 
     if (!itemsArray) return null;

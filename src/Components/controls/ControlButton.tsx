@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-    WithStyles, withStyles } from '@material-ui/core/styles';
+import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { StyledComponentProps } from '@material-ui/styles';
 import styles from '../../styles/controls/ControlButton';
 import { Mode, State } from '../../data.structure/types/types';
