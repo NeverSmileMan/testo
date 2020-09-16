@@ -37,7 +37,7 @@ const styles = makeStyles({
 	},
 })
 
-const Hints: FC<HintsProps> = ({error}) => {
+const Hints: FC<HintsProps> = ({error}: HintsProps) => {
 
 	const {hints, hints_messages, hints_error} = styles()
 

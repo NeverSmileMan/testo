@@ -55,7 +55,7 @@ function OrderInfo(props: any) {
 				</div> :
 				<>
 					<div className={classes.total}>
-						{props.value.length ? <>{calc('amount')}</> : <>{(0)}</>}  г.
+						{props.value.length ? <>{calc('amount')}</> : <>{(0).toFixed(3)}</>}  г.
 					</div>
 					<div className={classes.total}>
 						{props.value.length ? <>{calc('cost').toFixed(2)}</> : <>{(0).toFixed(2)}</>}
