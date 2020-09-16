@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 		flex: '1 0 0',
 		padding: '10px',
 		display: 'flex',
-		justifyContent: 'center',
+		justifyContent: 'flex-end',
 		alignItems: 'center',
 	},
 	'delete-icon': {
@@ -25,14 +25,12 @@ const useStyles = makeStyles((theme: Theme) => ({
 	},
 	'total': {
 		fontWeight: 'bold',
-		textAlign: 'center',
-		verticalAlign: 'middle',
-		paddingLeft: '20px',
-		paddingRight: '20px',
-		backgroundColor: 'white',
-		borderRadius: '100px',
-		color: theme.palette.primary.main,
+		padding: '0 10px',
+		color: 'white',
 		minWidth: '100px',
+		display: 'flex',
+		justifyContent: 'flex-end',
+		alignItems: 'center',
 	}
 }));
 
