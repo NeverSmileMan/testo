@@ -6,7 +6,6 @@ export interface IOrdersControl extends IOrderControl{
     canCreateOrder: () => boolean;
     createOrder: () => void;
     selectOrder: (orderNumber: number) => void;
-    
     getOrders: () => IOrders;
     onChangeOrders: (callback: () => void) => void;
     printIsActive: boolean;
@@ -18,7 +17,6 @@ export interface IOrdersControl extends IOrderControl{
 }
 
 export interface IStateOrders {
-    
     printIsActive: boolean;
     closeIsActive: boolean;
     ordersNumbers: number[];
@@ -39,8 +37,9 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
     constructor(private _maxOrdersCount: number) {
         super();
         this._ordersFreeNums = Array(this._maxOrdersCount).fill(true);
-        this._setCurrentOrder();
         this.getStateOrders = this.getStateOrders.bind(this);
+        this.onMessage = this.onMessage.bind(this);
+        this._setCurrentOrder();
     }
 
     doClose(callback: () => void) {
@@ -59,7 +58,6 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
 
     getStateOrders() {
         return {
-
             printIsActive: this.printIsActive,
             closeIsActive: this.closeIsActive,
             ordersNumbers: [...this.getOrders().keys()],

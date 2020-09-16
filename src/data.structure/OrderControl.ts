@@ -1,7 +1,6 @@
 import { IItem, IItemAmount, ItemAmount } from './Item';
 import Weights, { IWeightsTest } from './Weights';
 import { IOrder } from './Order';
-import Message, { IMessage } from './Message';
 import { MessageCode } from './data/messagesInfo';
 import { State, Mode } from './types/types';
 
@@ -19,6 +18,7 @@ export interface IOrderControl {
     getState: () => State;
     addItem: (item: IItem) => void;
     onReset: (callback: () => void) => void;
+    onMessage: (callback: (code: MessageCode | null) => void) => void;
     getStateOrder: () => IStateOrder;
 }
 
@@ -29,25 +29,27 @@ export interface IStateOrder {
     orderItems: IItemAmount[];
     selectedItemIndex: number | null;
     orderMode: Mode | null;
-    // onReset: (callback: () => void) => void;
     getStateOrder: () => IStateOrder;
 }
 
 export class OrderControl implements IOrderControl {
     private _weights: IWeightsTest;
-    private _message: IMessage;
     private _selectedItemIndex: number | null = null;
     protected _currentOrder: IOrder | null = null;
     private _state: State = State.ENABLED;
     private _callbackOnChangeOrder?: () => void;
     private _callbackOnReset?: () => void;
+    private _callbackOnMessage?: (code: MessageCode | null) => void;
 
     constructor() {
-        this._message = Message.getInstance();
         this._weights = Weights.getInstance();
         this._weights.onChange(this._onWeightsChange.bind(this));
         this._onWeightsChange();
         this.getStateOrder = this.getStateOrder.bind(this);
+    }
+
+    onMessage(callback: (code: MessageCode | null) => void) {
+        this._callbackOnMessage = callback;
     }
 
     onReset(callback: () => void) {
@@ -70,8 +72,6 @@ export class OrderControl implements IOrderControl {
             orderItems: this.getItems(),
             selectedItemIndex: this.getSelectedItemIndex(),
             orderMode: this.getState() === State.PENDING ? Mode.MODAL : null,
-            // onReset: this.onReset.bind(this),
-            // onWeightsChange: this.onWeightsChange.bind(this),
             getStateOrder: this.getStateOrder,
         };
     }
@@ -122,7 +122,7 @@ export class OrderControl implements IOrderControl {
     }
 
     private _throwMessage(code: MessageCode | null) {
-        this._message.sendMessage(code);
+        if (this._callbackOnMessage) this._callbackOnMessage(code);
         if (code === MessageCode.WEIGHTS_IS_EMPTY) {
             setTimeout(() => this._onWeightsChange(), 1000);
         }
@@ -145,10 +145,6 @@ export class OrderControl implements IOrderControl {
 
     getTotal(): number {
         return this._currentOrder ? this._currentOrder.total : 0;
-    }
-
-    getMessage() {
-        return this._message;
     }
 
     private _setTotal(value: number) {

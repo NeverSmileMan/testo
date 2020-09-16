@@ -19,9 +19,14 @@ type Props = {
 
 function TabsNav({ classes, callbacks }: Props) {
 
-    const selectOrder = useCallback((event) => onSelect(event, callbacks.selectOrder), [callbacks]);
+    const selectOrder = useCallback(
+        (event) => onSelect(event, callbacks.selectOrder),
+        [callbacks],
+    );
     
-    const { ordersNumbers, currentOrderNumber, canCreate } = useContext(OrdersControlContext);
+    const {
+        ordersNumbers, currentOrderNumber, canCreate,
+    } = useContext(OrdersControlContext);
     
     const tabs = ordersNumbers.map(orderNumber =>
         <div

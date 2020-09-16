@@ -3,23 +3,27 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/tabs.panel/Message';
 import MessageObject from '../../data.structure/Message';
 import { IMessageInfo, MessageType } from '../../data.structure/data/messagesInfo';
-
-const message = MessageObject.getInstance();
-
-const getState = () => message.getMessage();
+import { MessageCode } from '../../data.structure/data/messagesInfo';
 
 let setState: React.Dispatch<() => IMessageInfo | null>;
 let messageInfo: IMessageInfo | null;
-const changeState = () => {
-    message.onMessage(
-        () => setState(() => getState())
-    );
+const changeState = (callbacks: Props['callbacks']) => {
+    const message = new MessageObject();
+    const getState = message.getMessage;
+    message.onMessage(() => setState(getState));
+    callbacks.onMessage(message.sendMessage);
     return getState();
 };
 
-function Message({ classes }: WithStyles) {
+type Props = {
+    callbacks: {
+        onMessage: (callback: (code: MessageCode | null) => void) => void;
+    };
+} & WithStyles;
 
-    [messageInfo, setState] = useState(changeState);
+function Message({ classes, callbacks }: Props) {
+
+    [messageInfo, setState] = useState(() => changeState(callbacks));
 
     const className = `message ${messageInfo?.type === MessageType.ERROR ? 'error' : ''}`;
 

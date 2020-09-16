@@ -11,6 +11,9 @@ import Controls from './controls/Controls';
 export const OrdersControlContext = createContext<IStateOrders>({} as IStateOrders);
 
 function createCallbacks(object: IOrdersControl) {
+    const callbacksMessage = {
+        onMessage: object.onMessage,
+    };
     const callbacksControls = {
         deleteOrder: () => object.deleteOrder(),
         printOrder: () => object.printOrder(),
@@ -19,7 +22,7 @@ function createCallbacks(object: IOrdersControl) {
         selectOrder: (orderNumber: number) => object.selectOrder(orderNumber),
         createOrder: () => object.createOrder(),
     }
-    return { callbacksTabs, callbacksControls };
+    return { callbacksMessage, callbacksTabs, callbacksControls };
 }
 
 let setStateOrders: React.Dispatch<() => IStateOrders>;
@@ -35,14 +38,14 @@ type Props = {
 
 function Orders({ classes, maxOrdersCount}: Props ) {
     const [object] = useState(() => new OrdersControl(maxOrdersCount));
-    const [{ callbacksTabs, callbacksControls }] = useState(() => createCallbacks(object));
+    const [{ callbacksMessage, callbacksTabs, callbacksControls }] = useState(() => createCallbacks(object));
     [stateOrders, setStateOrders] = useState<IStateOrders>(() => changeStateOrders(object));
     return (
         <OrdersControlContext.Provider value = {stateOrders}>
             <div className={classes.wrapper}>
                 <div className='tabs-panel'>
                     <TabsNav callbacks={callbacksTabs}/>
-                    <Message />
+                    <Message callbacks={callbacksMessage}/>
                     <HomeButton />
                 </div>
                 <div className='order-panel'>

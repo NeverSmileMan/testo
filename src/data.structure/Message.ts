@@ -1,15 +1,23 @@
-import messagesInfo,
-    { IMessageInfo, MessageCode } from './data/messagesInfo';
+import
+    messagesInfo, {
+    IMessageInfo,
+    MessageCode,
+} from './data/messagesInfo';
 
 export interface IMessage {
     sendMessage: (code: MessageCode | null) => void;
-    onMessage: (callback: () => void) => void;
     getMessage: () => IMessageInfo | null;
+    onMessage: (callback: () => void) => void;
 }
 
 export class Message implements IMessage {
     private _code: MessageCode | null = null;
     private _callbackOnMessage?: () => void;
+
+    constructor() {
+        this.getMessage = this.getMessage.bind(this);
+        this.sendMessage = this.sendMessage.bind(this);
+    }
 
     sendMessage(code: MessageCode | null) {
         this._code = code;
@@ -25,18 +33,9 @@ export class Message implements IMessage {
     }
 
     getMessage() {
-        if (this._code === null) return null
+        if (this._code === null) return null;
         return messagesInfo[this._code];
     }
 }
 
-let instance: IMessage;
-
-export function getInstance() {
-    if (!instance) {
-        instance = new Message();
-    }
-    return instance;
-}
-
-export default { getInstance };
+export default Message;
