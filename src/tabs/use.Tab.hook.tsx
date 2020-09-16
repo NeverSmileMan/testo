@@ -76,8 +76,9 @@ export function useTabs(
 						break;
 					case 'ваговий':
 						if (scaleService.getItemWeight() >= (40 / 1000)) {
+							const price = +(scaleService.getItemWeight() * addedItem.price).toFixed(2)
 							addedItem.amount = scaleService.getItemWeight();
-							addedItem.cost = scaleService.getItemCost();
+							addedItem.cost = scaleService.getItemCost(price);
 						} else {
 							setError('Вага повинна перевищувати 40 грам');
 							return false;

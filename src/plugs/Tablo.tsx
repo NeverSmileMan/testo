@@ -57,10 +57,9 @@ export default function Tablo() {
 	const [total, setTotal] = React.useState((0).toFixed(2));
 
 
-
 	useEffect(() => {
 		ScalePlug.setFuncs(setTara, setTitle, setPrice, setWeight, setTotal);
-	}, [tara, title, price, weight, total,activeTara])
+	}, [tara, title, price, weight, total, activeTara])
 
 	const styleScale = {
 		fontSize: '2em',
