@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import Keyboard from '../data.structure/Keyboard';
-import { KeyboardLayoutOptionsFUNC } from '../components/keyboard/KeyboardOptions';
+import {
+    KeyboardLayoutOptionsEN,
+    KeyboardLayoutOptionsUA,
+    KeyboardLayoutOptionsNUMS,
+    KeyboardLayoutOptionsFUNC,
+} from '../components/keyboard/KeyboardOptions';
 import KeyboardLayout from '../components/keyboard/KeyboardLayout';
+
+export const KeyboardLayoutUA = KeyboardLayout({ options: KeyboardLayoutOptionsUA });
+export const KeyboardLayoutEN = KeyboardLayout({ options: KeyboardLayoutOptionsEN });
+export const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsNUMS });
 
 const keyboard = Keyboard.getInstance();
 

@@ -93,6 +93,11 @@ export interface IWeightsTest extends IWeights {
 
 class WeightsTest extends Weights implements IWeightsTest {
 
+    constructor() {
+        super();
+        this.getStateWeights = this.getStateWeights.bind(this);
+    }
+    
     getStateWeights(): IStateWeights {
         return {
             isStable: this.isStable(),

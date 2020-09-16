@@ -1,17 +1,13 @@
 import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/keyboard/KeyboardMain';
-import useKeyboardMain, { keyboardOnClick } from '../../hooks/KeyboardMain';
-import { 
-    KeyboardLayoutOptionsEN,
-    KeyboardLayoutOptionsUA,
-    KeyboardLayoutOptionsNUMS,
-} from './KeyboardOptions';
-import KeyboardLayout from './KeyboardLayout';
-
-const KeyboardLayoutUA = KeyboardLayout({ options: KeyboardLayoutOptionsUA });
-const KeyboardLayoutEN = KeyboardLayout({ options: KeyboardLayoutOptionsEN });
-const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsNUMS });
+import 
+    useKeyboardMain, {
+    keyboardOnClick,
+    KeyboardLayoutEN,
+    KeyboardLayoutUA,
+    KeyboardLayoutNUMS,
+} from '../../hooks/KeyboardMain';
 
 function KeyboardMain({ classes }: WithStyles ) {
     const { lang, KeyboardLayoutFUNC } =  useKeyboardMain();
