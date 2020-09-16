@@ -9,26 +9,27 @@ import List from './List';
 const activeInputService = ActiveInputService.getInstance();
 
 interface IState {
-    isFocus: boolean;
-    value: string;
-    valueHTML: string;
+    input: IInputList;
+    onListSelect: (item: IItem) => void;
 }
 
+const getState = (input: IInputList) => ({
+    isFocus: input.ifFocus(),
+    value: input.getValue(),
+    valueHTML: input.getValueHTML(),
+});
 
-let setState: React.Dispatch<() => IState>;
+let setState: React.Dispatch<(state: IState) => IState>;
 let state: IState;
 let ref: React.RefObject<HTMLDivElement>;
-function changeState(input: IInputList, callbacks: Props['callbacks']) {
-    const getState = () => ({
-        isFocus: input.ifFocus(),
-        value: input.getValue(),
-        valueHTML: input.getValueHTML(),
-    });
-    input.onFocusChange(() => setState(getState));
-    input.onChange(() => setState(getState));
+function changeState(callbacks: Props['callbacks']) {
+    const input: IInputList = new InputList();
+    input.onFocusChange(() => setState((state) => ({ ...state })));
+    input.onChange(() => setState((state) => ({ ...state })));
     input.onSelect(callbacks.onSelect);
     callbacks.resetSearch(() => input.setValue(''));
-    return getState();
+    const onListSelect = (item: IItem) => input._onSelect(item);
+    return { input, onListSelect };
 }
 
 type Props = {
@@ -39,9 +40,8 @@ type Props = {
 } & WithStyles;
 
 function Search({ classes, callbacks }: Props) {
-    const [input] = useState(() => new InputList());
-    const onListSelect = useCallback((item: IItem) => input._onSelect(item), [input]);
-    [state, setState] = useState<IState>(() => changeState(input, callbacks));
+    [state, setState] = useState<IState>(() => changeState(callbacks));
+    const { input, onListSelect } = state;
     ref = useRef(null);
 
     useEffect(() => {
@@ -49,12 +49,12 @@ function Search({ classes, callbacks }: Props) {
         return () => activeInputService.delActiveInput(input);
     }, [input]);
     
-    const { isFocus, value, valueHTML } = state;
+    const { isFocus, value, valueHTML } = getState(input);
 
     useEffect(() => {
         if (ref.current) ref.current.innerHTML = valueHTML;
     }, [valueHTML]);
-
+    
     return (
         <div className={classes.wrapper}>
             <div ref={ref}

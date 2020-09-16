@@ -4,6 +4,7 @@ export interface IInput {
     pressKey: (key: string) => void;
     setValue: (value: string) => void;
     getValue: () => string | number;
+    getValueHTML: () => string;
     setFocus: () => void;
     blurFocus: () => void;
     onChange: (callback: (value: string) => void) => void;
@@ -20,6 +21,7 @@ export interface IInputNumber extends IInput {
 export interface IInputList extends IInput {
     getValue: () => string;
     onSelect: (callback: (item: IItem) => void) => void;
+    _onSelect: (item: IItem) => void;
 }
 
 export class Input implements IInput {
@@ -49,7 +51,11 @@ export class Input implements IInput {
     }
 
     getValue() {
-        return this._value as any;
+        return this._value as string | number;
+    }
+
+    getValueHTML() {
+        return (' ' + this.getValue()).replace(/ /g, '&nbsp;');
     }
 
     setFocus() {
