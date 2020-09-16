@@ -1,36 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/tabs.panel/Message';
-import MessageObject from '../../data.structure/Message';
-import { IMessageInfo, MessageType } from '../../data.structure/data/messagesInfo';
+import { MessageType } from '../../data.structure/data/messagesInfo';
 import { MessageCode } from '../../data.structure/data/messagesInfo';
+import useMessage from '../../hooks/Message';
 
-let setState: React.Dispatch<() => IMessageInfo | null>;
-let messageInfo: IMessageInfo | null;
-const changeState = (callbacks: Props['callbacks']) => {
-    const message = new MessageObject();
-    const getState = message.getMessage;
-    message.onMessage(() => setState(getState));
-    callbacks.onMessage(message.sendMessage);
-    return getState();
-};
-
-type Props = {
+export type Props = {
     callbacks: {
         onMessage: (callback: (code: MessageCode | null) => void) => void;
     };
 } & WithStyles;
 
 function Message({ classes, callbacks }: Props) {
-
-    [messageInfo, setState] = useState(() => changeState(callbacks));
-
-    const className = `message ${messageInfo?.type === MessageType.ERROR ? 'error' : ''}`;
-
+    const { type, text } = useMessage(callbacks);
+    const className = `message ${type === MessageType.ERROR ? 'error' : ''}`;
     return (
         <div className={classes.wrapper}>
             <div className={className}>
-                {messageInfo && messageInfo.text}
+                {text}
             </div>
         </div>
     );

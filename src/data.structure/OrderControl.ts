@@ -44,12 +44,12 @@ export class OrderControl implements IOrderControl {
     constructor() {
         this._weights = Weights.getInstance();
         this._weights.onChange(this._onWeightsChange.bind(this));
-        this._onWeightsChange();
         this.getStateOrder = this.getStateOrder.bind(this);
     }
 
     onMessage(callback: (code: MessageCode | null) => void) {
         this._callbackOnMessage = callback;
+        this._onWeightsChange();
     }
 
     onReset(callback: () => void) {
@@ -122,7 +122,9 @@ export class OrderControl implements IOrderControl {
     }
 
     private _throwMessage(code: MessageCode | null) {
-        if (this._callbackOnMessage) this._callbackOnMessage(code);
+        if (this._callbackOnMessage) { 
+            this._callbackOnMessage(code);
+        }
         if (code === MessageCode.WEIGHTS_IS_EMPTY) {
             setTimeout(() => this._onWeightsChange(), 1000);
         }
