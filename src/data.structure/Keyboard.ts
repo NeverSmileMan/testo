@@ -8,6 +8,7 @@ class Keyboard implements IKeyboard {
     private _input?: IInput | null;
 
     onClick(key: string) {
+        
         this._input?.pressKey(key);
     }
 
