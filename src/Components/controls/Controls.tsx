@@ -3,7 +3,6 @@ import Buttons from './ControlButtons';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/controls/Controls';
 import { OrdersControlContext } from '../Orders';
-// import { WeightsContext } from '../Main';
 
 type Props = {
     callbacks: {
@@ -14,7 +13,6 @@ type Props = {
 
 function Controls({ classes, callbacks }: Props) {
     const { printIsActive, closeIsActive, doClose } = useContext(OrdersControlContext);
-    // const stateWeights = useContext(WeightsContext);
     return (
         <div className={classes.controls}>
             <Buttons.TaraButton />

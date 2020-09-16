@@ -4,7 +4,6 @@ import { StyledComponentProps } from '@material-ui/styles';
 import styles from '../../styles/controls/ControlButton';
 import { Mode, State } from '../../data.structure/types/types';
 import Modal from '../Modal';
-// import { IStateWeights } from '../../data.structure/Weights';
 import { IControlButton } from '../../data.structure/ControlButton';
 
 export interface IControlButtonProps {
@@ -46,11 +45,6 @@ function createControlButton(props: IControlButtonProps) {
         });
 
         useEffect(() => { !(isActive === undefined) && object.setActive(isActive) }, [isActive]);
-        // useEffect(() => { 
-        //     if (data && object.onDataChange) {
-        //         object.onDataChange(data);
-        //     }
-        // }, [data]);
 
         const className = `${classes.wrapper} ${object.isActive() ? '' : classes.disabled}`;
 

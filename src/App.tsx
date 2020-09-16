@@ -9,22 +9,23 @@ import SetEnvironment from './components/SetEnvironment';
 import Main from './components/Main';
 import { appControl } from './functions/rikAppTest';
 
-let setState: React.Dispatch<() => IStateApp>;
-let state: IStateApp;
-function changeState() {
+let setStateApp: React.Dispatch<() => IStateApp>;
+let stateApp: IStateApp;
+function createStateApp() {
     const app = new App();
     appControl(app);
-    app.onChange(() => setState(app.getStateApp));
+    app.onChange(() => setStateApp(app.getStateApp));
     return app.getStateApp();
 }
 
 function AppComponent() {
-    [state, setState] = useState(changeState);
+    [stateApp, setStateApp] = useState(createStateApp);
+    const { setEnvironment, themeName, maxOrdersCount} = stateApp;
     return (
-        state.state === AppState.INIT ?
-            <SetEnvironment setEnvironment={state.setEnvironment}/> : (
-            <ThemeProvider theme={themes[state.themeName]}>
-                <Main maxOrdersCount={state.maxOrdersCount} />
+        stateApp.state === AppState.INIT ?
+            <SetEnvironment setEnvironment={setEnvironment}/> : (
+            <ThemeProvider theme={themes[themeName]}>
+                <Main maxOrdersCount={maxOrdersCount} />
             </ThemeProvider>
     ));
 }

@@ -46,7 +46,10 @@ const useOrders = (maxOrdersCount: number) => {
 
 function Orders({ classes, maxOrdersCount}: Props ) {;
     const { 
-        orders, stateOrders, callbacksMessage, callbacksTabs, callbacksControls } = useOrders(maxOrdersCount);
+        orders, stateOrders,
+        callbacksMessage, callbacksTabs, callbacksControls,
+    } = useOrders(maxOrdersCount);
+    
     return (
         <OrdersControlContext.Provider value = {stateOrders}>
             <div className={classes.wrapper}>
