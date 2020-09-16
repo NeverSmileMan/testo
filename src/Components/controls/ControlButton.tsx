@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 import { StyledComponentProps } from '@material-ui/styles';
 import styles from '../../styles/controls/ControlButton';
-import { Mode, State } from '../../data.structure/types/types';
+import { Mode } from '../../data.structure/types/types';
 import Modal from '../Modal';
 import { IControlButton } from '../../data.structure/ControlButton';
+import getHookControlButton from '../../hooks/ControlButton';
 
 export interface IControlButtonProps {
     object: IControlButton;
@@ -15,38 +16,19 @@ export interface IControlButtonProps {
 
 function createControlButton(props: IControlButtonProps) {
     const { object, ModalComponent, IconComponent, text } = props;
-
-    const onClick = () => {
-        object.doAction();
-    }
-
-    const getMode = () => ({ mode: object.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON });
-
-    let setState: React.Dispatch<() => { mode: Mode }>;
-    let mode: Mode;
-    function changeState() {
-        object.onChange(() => setState(getMode));
-        return getMode();
-    }
+    const { onClick, setActive, useControlButton } = getHookControlButton(object);
 
     type Props = {
         isActive?: boolean;
         onAction?: () => void;
         doAction?: (callback: () => void) => void;
-        // data?: IStateWeights;
     } & WithStyles;
 
     function ControlButton({ classes, isActive, onAction, doAction }: Props) {
-        [{ mode }, setState] = useState(changeState);
-        
-        useState(() => {
-            object.onAction(onAction);
-            if (doAction) doAction(object.doAction.bind(object));
-        });
+        const { mode, currentIsActive } = useControlButton(onAction, doAction);
+        useEffect(() => setActive(isActive), [isActive]);
 
-        useEffect(() => { !(isActive === undefined) && object.setActive(isActive) }, [isActive]);
-
-        const className = `${classes.wrapper} ${object.isActive() ? '' : classes.disabled}`;
+        const className = `${classes.wrapper} ${currentIsActive ? '' : classes.disabled}`;
 
         return (<>
             <div
