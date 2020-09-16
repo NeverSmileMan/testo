@@ -2,34 +2,44 @@ import React, { useState, useEffect, useRef } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/tara/TaraDisplay';
 import ActiveInputService from '../../data.structure/ActiveInputService';
-import Input from '../../data.structure/Input';
+import { InputNumber, IInputNumber, IStateInputNumber } from '../../data.structure/Input';
 
-const input = Input.getInputNumberInstance();
 const activeInputService = ActiveInputService.getInstance();
-const ifFocus = () => activeInputService.ifActiveInput(input);
-const getValue = () => (input.getValue() / 1000).toFixed(3);
 
-let setState: React.Dispatch<() => boolean>;
-let isFocus: boolean;
+let setState: React.Dispatch<() => IStateInputNumber>;
+let state: IStateInputNumber;
 let ref: React.RefObject<HTMLDivElement>;
-function changeState() {
-    input.onFocusChange(() => setState(ifFocus));
-    input.onChange(() => {
-        if (ref.current) 
-            ref.current.innerHTML = getValue();
-    });
-    return ifFocus();
+
+const changeState = (input: IInputNumber, onSelect: Props['onSelect']) => {
+    const getState = input.getStateInput;
+    input.onFocusChange(() => setState(getState));
+    input.onChange(() => setState(getState));
+    input.onSelect(onSelect);
+    return getState();
 }
 
-function TaraDisplay({ classes }: WithStyles) {
-    [isFocus, setState] = useState(changeState);
+const attachInput = (input: IInputNumber) => {
+    activeInputService.setActiveInput(input);
+    return () => activeInputService.delActiveInput(input);
+};
+
+const refreshInput = (valueHTML: string) => {
+    if (ref.current) ref.current.innerHTML = valueHTML;
+};
+
+type Props = {
+    onSelect: (value: number) => void;
+} & WithStyles;
+
+function TaraDisplay({ classes, onSelect }: Props) {
+    const [input] = useState(() => new InputNumber());
+    [state, setState] = useState<IStateInputNumber>(() => changeState(input, onSelect));
     ref = useRef(null);
 
-    useEffect(() => {
-        if (ref.current) ref.current.innerHTML = getValue();
-        activeInputService.setActiveInput(input);
-        return () => activeInputService.delActiveInput(input);
-    });
+    const { isFocus, valueHTML } = state;
+
+    useEffect(() => attachInput(input), [input]);
+    useEffect(() => refreshInput(valueHTML), [valueHTML]);
     
     return (
         <div className={classes.wrapper}>

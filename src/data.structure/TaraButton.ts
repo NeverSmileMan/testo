@@ -1,12 +1,14 @@
 import { IStateWeights } from './Weights';
 import { State } from './types/types';
 import Weights, { IWeightsTest } from './Weights';
-import Input, { IInputNumber } from './Input';
-import ControlButton from './ControlButton';
+import ControlButton, { IControlButton } from './ControlButton';
 
-class TaraButton extends ControlButton {
+export interface ITaraButton extends IControlButton {
+    setAdditionalTara: (value: number) => void;
+}
+
+class TaraButton extends ControlButton implements ITaraButton {
     private _tara: number = 0;
-    private _input: IInputNumber;
     private _weights: IWeightsTest;
 
     constructor() {
@@ -14,8 +16,7 @@ class TaraButton extends ControlButton {
         this._weights = Weights.getInstance();
         this._weights.onChange(this._onWeightsChange.bind(this));
         this._onWeightsChange();
-        this._input = Input.getInputNumberInstance();
-        this._input.onSelect(this._setAdditionalTara.bind(this));
+        this.setAdditionalTara = this.setAdditionalTara.bind(this)
     }
 
     private _setState() {
@@ -27,9 +28,7 @@ class TaraButton extends ControlButton {
     }
 
     onDataChange(data: IStateWeights) {
-        // this._weights = data;
-        // this._setState();
-        // this._onChange();
+
     }
 
     private _onWeightsChange() {
@@ -42,9 +41,9 @@ class TaraButton extends ControlButton {
         this._weights.setTara(currentTara + value);
     }
 
-    private _setAdditionalTara(value: number) {
+    setAdditionalTara(value: number) {
         this._tara = value / 1000;
-        this._input.setValue('');
+        // this._input.setValue('');
         this.doAction();
     }
 

@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/search/Search';
 import ActiveInputService from '../../data.structure/ActiveInputService';
-import { InputList, IInputList, IStateInput } from '../../data.structure/Input';
+import { InputList, IInputList, IStateInputList } from '../../data.structure/Input';
 import { IItem } from '../../data.structure/Item';
 import List from './List';
 
 const activeInputService = ActiveInputService.getInstance();
 
-let setState: React.Dispatch<() => IStateInput>;
-let state: IStateInput;
+let setState: React.Dispatch<() => IStateInputList>;
+let state: IStateInputList;
 let ref: React.RefObject<HTMLDivElement>;
 
 const changeState = (input: IInputList, callbacks: Props['callbacks']) => {
@@ -40,7 +40,7 @@ type Props = {
 function Search({ classes, callbacks }: Props) {
     const [input] = useState(() => new InputList());
     const onListSelect = useCallback(input._onSelect, [input]);
-    [state, setState] = useState<IStateInput>(() => changeState(input, callbacks));
+    [state, setState] = useState<IStateInputList>(() => changeState(input, callbacks));
     ref = useRef(null);
 
     const { isFocus, value, valueHTML } = state;

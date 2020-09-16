@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/search/Search';
 import ActiveInputService from '../../data.structure/ActiveInputService';
-import { InputList, IInputList, IStateInput } from '../../data.structure/Input';
+import { InputList, IInputList, IStateInputList } from '../../data.structure/Input';
 import { IItem } from '../../data.structure/Item';
 import List from './List';
 

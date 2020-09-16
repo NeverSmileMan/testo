@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/tara/TaraModal';
 import TaraDisplay from './TaraDisplay';
 import KeyboardTara from './KeyboardTara';
 import KeyboardTaraFix from './KeyboardTaraFix';
+import { ITaraButton } from '../../data.structure/TaraButton';
 
-function TaraModal ({ classes }: WithStyles) {
+type Props = {
+    object: ITaraButton;
+} & WithStyles;
+
+function TaraModal ({ classes, object }: Props) {
+    const onTaraSelect = useCallback(object.setAdditionalTara, [object]);
     return (
         <div className={classes.wrapper}>
             <div className='display'>
-                <TaraDisplay />
+                <TaraDisplay onSelect={onTaraSelect}/>
             </div>
             <div className='keyboardTara'>
                 <KeyboardTara />

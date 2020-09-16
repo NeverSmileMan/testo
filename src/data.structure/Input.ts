@@ -14,12 +14,18 @@ export interface IInput {
     getStateInput: () => {};
 }
 
+export interface IStateInputNumber {
+    isFocus: boolean;
+    valueHTML: string;
+}
+
 export interface IInputNumber extends IInput {
     getValue: () => number;
     onSelect: (callback: (value: number) => void) => void;
+    getStateInput: () => IStateInputNumber;
 }
 
-export interface IStateInput {
+export interface IStateInputList {
     isFocus: boolean;
     value: string;
     valueHTML: string;
@@ -29,7 +35,7 @@ export interface IInputList extends IInput {
     getValue: () => string;
     onSelect: (callback: (item: IItem) => void) => void;
     _onSelect: (item: IItem) => void;
-    getStateInput: () => IStateInput;
+    getStateInput: () => IStateInputList;
 }
 
 export class Input implements IInput {
@@ -72,7 +78,7 @@ export class Input implements IInput {
     }
 
     getValueHTML() {
-        return (' ' + this.getValue()).replace(/ /g, '&nbsp;');
+        return `&{this.getValue()}`;
     }
 
     setFocus() {
@@ -153,9 +159,24 @@ export class InputList extends Input implements IInputList {
     getValue() {
         return this._value;
     }
+
+    getValueHTML() {
+        return (' ' + this.getValue()).replace(/ /g, '&nbsp;');
+    }
 }
 
 export class InputNumber extends Input implements IInputNumber {
+
+    getStateInput() {
+        return {
+            isFocus: this.ifFocus(),
+            valueHTML: this.getValueHTML(),
+        };
+    }
+
+    getValueHTML() {
+        return (this.getValue() / 1000).toFixed(3);
+    }
 
     protected _onChange() {
         if (!this._value || String(this.getValue()) === this._value) {
@@ -178,21 +199,4 @@ export class InputNumber extends Input implements IInputNumber {
     }
 }
 
-// let inputList: InputList;
-let inputNumber: InputNumber;
-
-// function getInputListInstance() {
-//     if (!inputList) {
-//         inputList = new InputList();
-//     }
-//     return inputList;
-// }
-
-function getInputNumberInstance() {
-    if (!inputNumber) {
-        inputNumber = new InputNumber();
-    }
-    return inputNumber;
-}
-
-export default { getInputNumberInstance };
+export default {};
