@@ -1,30 +1,11 @@
 import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/tara/KeyboardTara';
-import { 
-    KeyboardLayoutOptionsTaraNUMS,
-    KeyboardLayoutOptionsTaraFUNC,
-} from '../keyboard/KeyboardOptions';
-import Keyboard from '../../data.structure/Keyboard';
-import KeyboardLayout from '../keyboard/KeyboardLayout';
-
-const keyboard = Keyboard.getInstance();
-
-const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLElement;
-    const keyElem: HTMLElement | null = target.closest('[data-key]');
-    const key = keyElem?.dataset['key'];
-    key && keyboard.onClick(key);
-};
-
-const KeyboardLayoutNUMS = KeyboardLayout({
-    options: KeyboardLayoutOptionsTaraNUMS,
-    keyClassName: 'taraNums',
-});
-const KeyboardLayoutFUNC = KeyboardLayout({
-    options: KeyboardLayoutOptionsTaraFUNC,
-    keyClassName: 'taraFunc',
-});
+import {
+    KeyboardLayoutNUMS,
+    KeyboardLayoutFUNC,
+    onClickTara as onClick,
+} from '../../hooks/KeyboardTara';
 
 function KeyboardTara({ classes }: WithStyles) {
 
