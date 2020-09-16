@@ -13,7 +13,7 @@ let state: IStateInput;
 let ref: React.RefObject<HTMLDivElement>;
 
 const changeState = (input: IInputList, callbacks: Props['callbacks']) => {
-    const getState = input.getStateInput.bind(input);
+    const getState = input.getStateInput;
     input.onFocusChange(() => setState(getState));
     input.onChange(() => setState(getState));
     input.onSelect(callbacks.onSelect);
@@ -39,7 +39,7 @@ type Props = {
 
 function Search({ classes, callbacks }: Props) {
     const [input] = useState(() => new InputList());
-    const onListSelect = useCallback((item: IItem) => input._onSelect(item), [input]);
+    const onListSelect = useCallback(input._onSelect, [input]);
     [state, setState] = useState<IStateInput>(() => changeState(input, callbacks));
     ref = useRef(null);
 

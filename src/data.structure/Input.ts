@@ -41,15 +41,11 @@ export class Input implements IInput {
 
     constructor() {
         this.getStateInput = this.getStateInput.bind(this);
+        this._onSelect = this._onSelect.bind(this);
     }
 
     getStateInput() {
         return {};
-        // return {
-        //     isFocus: this.ifFocus(),
-        //     value: this.getValue(),
-        //     valueHTML: this.getValueHTML(),
-        // };
     }
 
     protected _addSymbol(value: string) {
@@ -81,13 +77,11 @@ export class Input implements IInput {
 
     setFocus() {
         this._isFocus = true;
-        // this._onChange();
         this._onFocusChange();
     }
 
     blurFocus() {
         this._isFocus = false;
-        // this._onChange();
         this._onFocusChange();
     }
 
