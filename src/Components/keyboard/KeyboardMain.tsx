@@ -1,57 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/keyboard/KeyboardMain';
-import Keyboard from '../../data.structure/Keyboard';
+import useKeyboardMain, { keyboardOnClick } from '../../hooks/KeyboardMain';
 import { 
-    KeyboardLayoutOptionsEN, KeyboardLayoutOptionsUA,
-    KeyboardLayoutOptionsNUMS, KeyboardLayoutOptionsFUNC
+    KeyboardLayoutOptionsEN,
+    KeyboardLayoutOptionsUA,
+    KeyboardLayoutOptionsNUMS,
 } from './KeyboardOptions';
 import KeyboardLayout from './KeyboardLayout';
-
-const keyboard = Keyboard.getInstance();
-
-const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLElement;
-    let keyElem: HTMLElement | null = target.closest('[data-key]');
-    const key = keyElem?.dataset['key'];
-    key && keyboard.onClick(key);
-};
-
-let setLang: React.Dispatch<(lang: string) => string>;
-let lang: string;
-const changeLang = (event: React.MouseEvent<HTMLDivElement>) => {
-    const target = event.target as HTMLDivElement;
-    const currentLang = target.dataset['nextLang'];
-    if (!currentLang) return;
-    setLang(() => currentLang);
-    const nextLang = currentLang === 'UA' ? 'EN' : 'UA';
-    target.setAttribute('data-next-lang', nextLang);
-    target.innerHTML = nextLang;
-};
-
-const DiffKeys = {
-    'LANG': {
-        content: 'EN',
-        attr: {
-            onClick: changeLang,
-            'data-next-lang': 'EN',
-        },
-    },
-};
 
 const KeyboardLayoutUA = KeyboardLayout({ options: KeyboardLayoutOptionsUA });
 const KeyboardLayoutEN = KeyboardLayout({ options: KeyboardLayoutOptionsEN });
 const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsNUMS });
-const KeyboardLayoutFUNC = KeyboardLayout({
-    options: KeyboardLayoutOptionsFUNC,
-    diffKeys: DiffKeys,
-});
 
 function KeyboardMain({ classes }: WithStyles ) {
-    [lang, setLang] = useState('UA');
-
+    const { lang, KeyboardLayoutFUNC } =  useKeyboardMain();
     return (
-        <div className={classes.wrapper} onClick={onClick}>
+        <div className={classes.wrapper} onClick={keyboardOnClick}>
             <div className='letters'>
                 {lang === 'UA' && <KeyboardLayoutUA />}
                 {lang === 'EN' && <KeyboardLayoutEN />}
