@@ -2,34 +2,33 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/search/Search';
 import ActiveInputService from '../../data.structure/ActiveInputService';
-import { InputList, IInputList } from '../../data.structure/Input';
+import { InputList, IInputList, IStateInput } from '../../data.structure/Input';
 import { IItem } from '../../data.structure/Item';
 import List from './List';
 
 const activeInputService = ActiveInputService.getInstance();
 
-interface IState {
-    isFocus: boolean;
-    value: string;
-    valueHTML: string;
-}
-
-
-let setState: React.Dispatch<() => IState>;
-let state: IState;
+let setState: React.Dispatch<() => IStateInput>;
+let state: IStateInput;
 let ref: React.RefObject<HTMLDivElement>;
-function changeState(input: IInputList, callbacks: Props['callbacks']) {
-    const getState = () => ({
-        isFocus: input.ifFocus(),
-        value: input.getValue(),
-        valueHTML: input.getValueHTML(),
-    });
+
+const changeState = (input: IInputList, callbacks: Props['callbacks']) => {
+    const getState = input.getStateInput.bind(input);
     input.onFocusChange(() => setState(getState));
     input.onChange(() => setState(getState));
     input.onSelect(callbacks.onSelect);
     callbacks.resetSearch(() => input.setValue(''));
     return getState();
-}
+};
+
+const attachInput = (input: IInputList) => {
+    activeInputService.setActiveInput(input);
+    return () => activeInputService.delActiveInput(input);
+};
+
+const refreshInput = (valueHTML: string) => {
+    if (ref.current) ref.current.innerHTML = valueHTML;
+};
 
 type Props = {
     callbacks: {
@@ -41,19 +40,13 @@ type Props = {
 function Search({ classes, callbacks }: Props) {
     const [input] = useState(() => new InputList());
     const onListSelect = useCallback((item: IItem) => input._onSelect(item), [input]);
-    [state, setState] = useState<IState>(() => changeState(input, callbacks));
+    [state, setState] = useState<IStateInput>(() => changeState(input, callbacks));
     ref = useRef(null);
 
-    useEffect(() => {
-        activeInputService.setActiveInput(input);
-        return () => activeInputService.delActiveInput(input);
-    }, [input]);
-    
     const { isFocus, value, valueHTML } = state;
-
-    useEffect(() => {
-        if (ref.current) ref.current.innerHTML = valueHTML;
-    }, [valueHTML]);
+    
+    useEffect(() => attachInput(input), [input]);
+    useEffect(() => refreshInput(valueHTML), [valueHTML]);
 
     return (
         <div className={classes.wrapper}>

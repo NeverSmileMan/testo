@@ -11,6 +11,7 @@ export interface IInput {
     onSelect: (callback: (value: any) => void) => void;
     onFocusChange: (callback: () => void) => void;
     ifFocus: () => boolean;
+    getStateInput: () => {};
 }
 
 export interface IInputNumber extends IInput {
@@ -18,10 +19,17 @@ export interface IInputNumber extends IInput {
     onSelect: (callback: (value: number) => void) => void;
 }
 
+export interface IStateInput {
+    isFocus: boolean;
+    value: string;
+    valueHTML: string;
+}
+
 export interface IInputList extends IInput {
     getValue: () => string;
     onSelect: (callback: (item: IItem) => void) => void;
     _onSelect: (item: IItem) => void;
+    getStateInput: () => IStateInput;
 }
 
 export class Input implements IInput {
@@ -30,6 +38,19 @@ export class Input implements IInput {
     protected _callbackOnChange?: (value: string) => void;
     protected _callbackOnSelect?: (value: any) => void;
     private _isFocus: boolean = false;
+
+    constructor() {
+        this.getStateInput = this.getStateInput.bind(this);
+    }
+
+    getStateInput() {
+        return {};
+        // return {
+        //     isFocus: this.ifFocus(),
+        //     value: this.getValue(),
+        //     valueHTML: this.getValueHTML(),
+        // };
+    }
 
     protected _addSymbol(value: string) {
         this._value += value;
@@ -121,6 +142,14 @@ export class Input implements IInput {
 }
 
 export class InputList extends Input implements IInputList {
+
+    getStateInput() {
+        return {
+            isFocus: this.ifFocus(),
+            value: this.getValue(),
+            valueHTML: this.getValueHTML(),
+        };
+    }
 
     _onSelect(item: IItem) {
         if (!item) return;
