@@ -45,7 +45,6 @@ export const ScalePlug = {
 	},
 
 	getItemCost(total: any) {
-		// const total = (Math.floor(Math.random() * 1000) + 10) / 100;
 		this.setTotal(total);
 		return total;
 	},
