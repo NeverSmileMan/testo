@@ -20,13 +20,14 @@ class ActiveInputService {
     setActiveInput(input: IInput | null) {
         if (input) this._inputs.add(input);
         const currentInput = this._activeInput;
-        this._activeInput = input;       
+        this._activeInput = input;     
         currentInput?.blurFocus();
         this._keyboard.setActiveInput(input);
         this._activeInput?.setFocus();
     }
 
     delActiveInput(input: IInput) {
+        input.blurFocus();
         this._inputs.delete(input);
         const nextInput = this._inputs.values().next().value || null;
         this.setActiveInput(nextInput);

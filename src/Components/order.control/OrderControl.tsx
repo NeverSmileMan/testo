@@ -18,6 +18,7 @@ function createCallbacks(object: IOrdersControl) {
         delItem: () => object.delItem(),
         addItem: (item: IItem) => object.addItem(item),
         selectItem: (index: number | null) => object.selectItem(index),
+        onReset: (callback: () => void) => object.onReset(callback),
     };
     return callbacksOrder;
 }
@@ -34,7 +35,9 @@ type Props = {
 } & WithStyles;
 
 function OrderControl({ classes, object }: Props) {
-    const [callbacksOrder] = useState(() => createCallbacks(object));
+    const [{
+        addItem, delItem,
+        selectItem, onReset }] = useState(() => createCallbacks(object));
     [stateOrder, setStateOrder] = useState<IStateOrder>(() => changeStateOrder(object));
     const { order, orderMode } = stateOrder;
 
@@ -44,11 +47,11 @@ function OrderControl({ classes, object }: Props) {
         <OrderControlContext.Provider value = {stateOrder}>
             <div className={classes.wrapper}>
                 <div className='search-panel'>
-                    <Search onSelect={callbacksOrder.addItem} />
-                    <OrderInfo onClick={callbacksOrder.delItem} />
+                    <Search callbacks={{ onSelect: addItem, resetSearch: onReset }}/>
+                    <OrderInfo onClick={delItem} />
                 </div>
                 <div className='order-items'>
-                    <OrderItems onSelect={callbacksOrder.selectItem} />
+                    <OrderItems onSelect={selectItem} />
                 </div>
             </div>
         </OrderControlContext.Provider>

@@ -2,13 +2,14 @@ import { IItem } from './Item';
 
 export interface IInput {
     pressKey: (key: string) => void;
-    clearValue: () => void;
+    setValue: (value: string) => void;
     getValue: () => string | number;
     setFocus: () => void;
     blurFocus: () => void;
     onChange: (callback: (value: string) => void) => void;
     onSelect: (callback: (value: any) => void) => void;
     onFocusChange: (callback: () => void) => void;
+    ifFocus: () => boolean;
 }
 
 export interface IInputNumber extends IInput {
@@ -26,6 +27,7 @@ export class Input implements IInput {
     private _callbackOnFocusChange?: () => void;
     protected _callbackOnChange?: (value: string) => void;
     protected _callbackOnSelect?: (value: any) => void;
+    private _isFocus: boolean = false;
 
     protected _addSymbol(value: string) {
         this._value += value;
@@ -37,9 +39,13 @@ export class Input implements IInput {
         this._onChange();
     }
 
-    clearValue() {
-        this._value = '';
+    setValue(value: string = '') {
+        this._value = value;
         this._onChange();
+    }
+
+    ifFocus() {
+        return this._isFocus;
     }
 
     getValue() {
@@ -47,10 +53,14 @@ export class Input implements IInput {
     }
 
     setFocus() {
+        this._isFocus = true;
+        // this._onChange();
         this._onFocusChange();
     }
 
     blurFocus() {
+        this._isFocus = false;
+        // this._onChange();
         this._onFocusChange();
     }
 
@@ -89,7 +99,7 @@ export class Input implements IInput {
                     this._delSymbol();
                     break;
                 case "CLEAR":
-                    this.clearValue();
+                    this.setValue('');
                     break;
                 case "ENTER":
                     this._onSelect();
@@ -139,15 +149,15 @@ export class InputNumber extends Input implements IInputNumber {
     }
 }
 
-let inputList: InputList;
+// let inputList: InputList;
 let inputNumber: InputNumber;
 
-function getInputListInstance() {
-    if (!inputList) {
-        inputList = new InputList();
-    }
-    return inputList;
-}
+// function getInputListInstance() {
+//     if (!inputList) {
+//         inputList = new InputList();
+//     }
+//     return inputList;
+// }
 
 function getInputNumberInstance() {
     if (!inputNumber) {
@@ -156,4 +166,4 @@ function getInputNumberInstance() {
     return inputNumber;
 }
 
-export default { getInputListInstance, getInputNumberInstance };
+export default { getInputNumberInstance };

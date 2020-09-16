@@ -13,6 +13,7 @@ class TaraButton extends ControlButton {
         super();
         this._weights = Weights.getInstance();
         this._weights.onChange(this._onWeightsChange.bind(this));
+        this._onWeightsChange();
         this._input = Input.getInputNumberInstance();
         this._input.onSelect(this._setAdditionalTara.bind(this));
     }
@@ -43,7 +44,7 @@ class TaraButton extends ControlButton {
 
     private _setAdditionalTara(value: number) {
         this._tara = value / 1000;
-        this._input.clearValue();
+        this._input.setValue('');
         this.doAction();
     }
 

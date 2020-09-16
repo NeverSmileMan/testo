@@ -18,7 +18,7 @@ export interface IOrderControl {
     onChangeOrder: (callback: () => void) => void;
     getState: () => State;
     addItem: (item: IItem) => void;
-    clearInput: (callback: () => void) => void;
+    onReset: (callback: () => void) => void;
     getStateOrder: () => IStateOrder;
 }
 
@@ -29,7 +29,7 @@ export interface IStateOrder {
     orderItems: IItemAmount[];
     selectedItemIndex: number | null;
     orderMode: Mode | null;
-    clearInput: (callback: () => void) => void;
+    // onReset: (callback: () => void) => void;
     getStateOrder: () => IStateOrder;
 }
 
@@ -40,25 +40,26 @@ export class OrderControl implements IOrderControl {
     protected _currentOrder: IOrder | null = null;
     private _state: State = State.ENABLED;
     private _callbackOnChangeOrder?: () => void;
-    private _callbackOnClearInput?: () => void;
+    private _callbackOnReset?: () => void;
 
     constructor() {
         this._message = Message.getInstance();
         this._weights = Weights.getInstance();
         this._weights.onChange(this._onWeightsChange.bind(this));
+        this._onWeightsChange();
         this.getStateOrder = this.getStateOrder.bind(this);
     }
 
-    clearInput(callback: () => void) {
-        this._callbackOnClearInput = callback;
+    onReset(callback: () => void) {
+        this._callbackOnReset = callback;
     }
 
     getCurrentOrder() {
         return this._currentOrder;
     }
     
-    _clearInput() {
-        if (this._callbackOnClearInput) this._callbackOnClearInput();
+    _onReset() {
+        if (this._callbackOnReset) this._callbackOnReset();
     }
 
     getStateOrder(): IStateOrder {
@@ -69,7 +70,7 @@ export class OrderControl implements IOrderControl {
             orderItems: this.getItems(),
             selectedItemIndex: this.getSelectedItemIndex(),
             orderMode: this.getState() === State.PENDING ? Mode.MODAL : null,
-            clearInput: this.clearInput.bind(this),
+            // onReset: this.onReset.bind(this),
             // onWeightsChange: this.onWeightsChange.bind(this),
             getStateOrder: this.getStateOrder,
         };
@@ -115,7 +116,7 @@ export class OrderControl implements IOrderControl {
         this._currentOrder!.items.push(newItem);
         this._setTotal(newItem.sum);
         this.selectItem(null);
-        this._clearInput();
+        this._onReset();
         this._state = State.PENDING;
         this._onChangeOrder();
     }
