@@ -1,27 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/search/List';
-import ListObject from '../../data.structure/List';
 import { IItem } from '../../data.structure/Item';
-
-let setState: React.Dispatch<() => (IItem[] | null)>;
-let itemsArray: IItem[] | null;
-let onItemSelect: (event: React.MouseEvent<HTMLDivElement>) => void;
-let setFilter: (filter: string) => void;
-const changeState = (onSelect: (item: IItem) => void) => {
-    const list = new ListObject();
-    onItemSelect = (event) => {
-        const target = event.target as HTMLElement;
-        const itemElem: HTMLElement | null = target.closest('[data-item-index]');
-        const itemIndex = itemElem?.dataset['itemIndex'];
-        itemIndex && onSelect(list.getItems()![+itemIndex]);
-    }
-    setFilter = list.setFilter.bind(list);
-    list.onChange(
-        (itemsArray) => setState(() => itemsArray)
-    );
-    return null;
-};
+import useList from '../../hooks/List';
 
 type Props = {
     filter: string;
@@ -29,9 +10,8 @@ type Props = {
 } & WithStyles;
 
 function List({ classes, filter, onSelect }: Props) {
-    [itemsArray, setState] = useState<IItem[] | null>(() => changeState(onSelect));
-
-    useEffect(() => setFilter(filter), [filter]);
+    const { itemsArray, setFilter, onItemSelect } = useList(onSelect);
+    useEffect(() => setFilter(filter), [setFilter, filter]);
 
     if (!itemsArray) return null;
     
