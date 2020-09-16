@@ -4,7 +4,7 @@ import styles from '../../styles/order.control/OrderControl';
 import { Mode } from '../../data.structure/types/types';
 import { IItem } from '../../data.structure/Item';
 import { IStateOrder } from '../../data.structure/OrderControl';
-import { IOrdersControl } from '../../data.structure/OrdersControl';
+import { IOrderControl } from '../../data.structure/OrderControl';
 import Search from '../search/Search';
 import OrderInfo from './OrderInfo';
 import OrderItems from './OrderItems';
@@ -13,33 +13,40 @@ import OrderControlModal from './OrderControlModal';
 
 export const OrderControlContext = createContext<IStateOrder>({} as IStateOrder);
 
-function createCallbacks(object: IOrdersControl) {
+function createCallbacks(orders: IOrderControl) {
     const callbacksOrder = {
-        delItem: () => object.delItem(),
-        addItem: (item: IItem) => object.addItem(item),
-        selectItem: (index: number | null) => object.selectItem(index),
-        onReset: (callback: () => void) => object.onReset(callback),
+        delItem: () => orders.delItem(),
+        addItem: (item: IItem) => orders.addItem(item),
+        selectItem: (index: number | null) => orders.selectItem(index),
+        onReset: (callback: () => void) => orders.onReset(callback),
     };
     return callbacksOrder;
 }
 
-let setStateOrder: React.Dispatch<() => IStateOrder>;
-let stateOrder: IStateOrder;
-function changeStateOrder(object: IOrdersControl) {
-    object.onChangeOrder(() => setStateOrder(object.getStateOrder));
+function changeStateOrder(object: IOrderControl, setStateOrder: React.Dispatch<() => IStateOrder>): IStateOrder {
+    object.onChangeOrder(setStateOrder);
     return object.getStateOrder();
 }
 
 type Props = {
-    object: IOrdersControl;
+    orders: IOrderControl;
 } & WithStyles;
 
-function OrderControl({ classes, object }: Props) {
+const useOrder = (orders: IOrderControl) => {
     const [{
         addItem, delItem,
-        selectItem, onReset }] = useState(() => createCallbacks(object));
-    [stateOrder, setStateOrder] = useState<IStateOrder>(() => changeStateOrder(object));
+        selectItem, onReset }] = useState(() => createCallbacks(orders));
+    const [, setStateOrder] = useState({} as IStateOrder);
+    const [stateOrder] = useState<IStateOrder>(() => changeStateOrder(orders, setStateOrder));
     const { order, orderMode } = stateOrder;
+    return { order, orderMode, stateOrder, addItem, delItem, selectItem, onReset};
+};
+
+function OrderControl({ classes, orders }: Props) {
+    const {
+        order, orderMode, stateOrder,
+        addItem, delItem, selectItem, onReset,
+    } = useOrder(orders);
 
     if (!order) return null;
     

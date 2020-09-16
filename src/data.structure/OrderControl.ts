@@ -14,7 +14,7 @@ export interface IOrderControl {
     getSelectedItemIndex: () => number | null;    
     getItemsCount: () => number | 0;
     getTotal: () => number;
-    onChangeOrder: (callback: () => void) => void;
+    onChangeOrder: (callback: (getState: () => IStateOrder) => void) => void;
     getState: () => State;
     addItem: (item: IItem) => void;
     onReset: (callback: () => void) => void;
@@ -37,7 +37,7 @@ export class OrderControl implements IOrderControl {
     private _selectedItemIndex: number | null = null;
     protected _currentOrder: IOrder | null = null;
     private _state: State = State.ENABLED;
-    private _callbackOnChangeOrder?: () => void;
+    private _callbackOnChangeOrder?: (getState: () => IStateOrder) => void;
     private _callbackOnReset?: () => void;
     private _callbackOnMessage?: (code: MessageCode | null) => void;
 
@@ -155,12 +155,12 @@ export class OrderControl implements IOrderControl {
         return this._currentOrder ? this._currentOrder.orderNumber : null;
     }
 
-    onChangeOrder(callback: () => void) {
+    onChangeOrder(callback: (getState: () => IStateOrder) => void) {
         this._callbackOnChangeOrder = callback;
     }
 
     protected _onChangeOrder() {
-        if (this._callbackOnChangeOrder) this._callbackOnChangeOrder();
+        if (this._callbackOnChangeOrder) this._callbackOnChangeOrder(this.getStateOrder);
     }
 
     private _onWeightsChange() {

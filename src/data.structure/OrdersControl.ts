@@ -7,7 +7,7 @@ export interface IOrdersControl extends IOrderControl{
     createOrder: () => void;
     selectOrder: (orderNumber: number) => void;
     getOrders: () => IOrders;
-    onChangeOrders: (callback: () => void) => void;
+    onChangeOrders: (callback: (getState: () => IStateOrders) => void) => void;
     printIsActive: boolean;
     closeIsActive: boolean;
     printOrder: () => void;
@@ -29,7 +29,7 @@ export interface IStateOrders {
 export class OrdersControl extends OrderControl implements IOrdersControl {
     private _orders: IOrders = new Map();
     private _ordersFreeNums: boolean[]; 
-    private _callbackOnChangeOrders?: () => void;
+    private _callbackOnChangeOrders?: (getState: () => IStateOrders) => void;
     printIsActive: boolean = false;
     closeIsActive: boolean = false;
     private _callbackOnClose?: () => void;
@@ -90,12 +90,12 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
         return this._orders;
     }
 
-    onChangeOrders(callback: () => void) {
+    onChangeOrders(callback: (getState: () => IStateOrders) => void) {
         this._callbackOnChangeOrders = callback;
     }
 
     private _onChangeOrders() {
-        if (this._callbackOnChangeOrders) this._callbackOnChangeOrders();
+        if (this._callbackOnChangeOrders) this._callbackOnChangeOrders(this.getStateOrders);
     }
 
     private _setCurrentOrder(orderNumber?: number) {

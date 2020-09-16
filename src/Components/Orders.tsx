@@ -10,36 +10,41 @@ import Controls from './controls/Controls';
 
 export const OrdersControlContext = createContext<IStateOrders>({} as IStateOrders);
 
-function createCallbacks(object: IOrdersControl) {
+function createCallbacks(orders: IOrdersControl) {
     const callbacksMessage = {
-        onMessage: object.onMessage,
+        onMessage: orders.onMessage,
     };
     const callbacksControls = {
-        deleteOrder: () => object.deleteOrder(),
-        printOrder: () => object.printOrder(),
+        deleteOrder: () => orders.deleteOrder(),
+        printOrder: () => orders.printOrder(),
     };
     const callbacksTabs = {
-        selectOrder: (orderNumber: number) => object.selectOrder(orderNumber),
-        createOrder: () => object.createOrder(),
+        selectOrder: (orderNumber: number) => orders.selectOrder(orderNumber),
+        createOrder: () => orders.createOrder(),
     }
     return { callbacksMessage, callbacksTabs, callbacksControls };
 }
 
-let setStateOrders: React.Dispatch<() => IStateOrders>;
-let stateOrders: IStateOrders;
-function changeStateOrders(object: IOrdersControl): IStateOrders {
-    object.onChangeOrders(() => setStateOrders(object.getStateOrders));
-    return object.getStateOrders();
+function changeStateOrders(orders: IOrdersControl, setStateOrders: React.Dispatch<() => IStateOrders>): IStateOrders {
+    orders.onChangeOrders(setStateOrders);
+    return orders.getStateOrders();
 }
 
 type Props = {
     maxOrdersCount: number;
 } & WithStyles;
 
-function Orders({ classes, maxOrdersCount}: Props ) {
-    const [object] = useState(() => new OrdersControl(maxOrdersCount));
-    const [{ callbacksMessage, callbacksTabs, callbacksControls }] = useState(() => createCallbacks(object));
-    [stateOrders, setStateOrders] = useState<IStateOrders>(() => changeStateOrders(object));
+const useOrders = (maxOrdersCount: number) => {
+    const [orders] = useState(() => new OrdersControl(maxOrdersCount) as IOrdersControl);
+    const [, setState] = useState({} as IStateOrders);
+    const [stateOrders] = useState(() => changeStateOrders(orders, setState));
+    const [{ callbacksMessage, callbacksTabs, callbacksControls }] = useState(() => createCallbacks(orders));
+    return { orders, stateOrders, callbacksMessage, callbacksTabs, callbacksControls };
+};
+
+function Orders({ classes, maxOrdersCount}: Props ) {;
+    const { 
+        orders, stateOrders, callbacksMessage, callbacksTabs, callbacksControls } = useOrders(maxOrdersCount);
     return (
         <OrdersControlContext.Provider value = {stateOrders}>
             <div className={classes.wrapper}>
@@ -49,7 +54,7 @@ function Orders({ classes, maxOrdersCount}: Props ) {
                     <HomeButton />
                 </div>
                 <div className='order-panel'>
-                    <OrderControl object={object}/>
+                    <OrderControl orders={orders}/>
                     <Controls callbacks={callbacksControls} />
                 </div>
             </div>
