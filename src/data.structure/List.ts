@@ -35,17 +35,11 @@ class List implements IList {
     }
 
     private _search(filter: string) {
-        this._items = this._itemsData.filter(item => item.name.includes(filter));
+        this._items = this._itemsData.filter(
+            item => item.name.toUpperCase().includes(filter)
+        );
     }
 
 }
 
-let instance: IList;
-function getInstance() {
-    if (!instance) {
-        instance = new List();
-    }
-    return instance;
-}
-
-export default { getInstance };
+export default List;

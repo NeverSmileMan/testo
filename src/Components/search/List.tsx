@@ -1,21 +1,22 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/search/List';
 import ListObject from '../../data.structure/List';
 import { IItem } from '../../data.structure/Item';
 
-const list = ListObject.getInstance();
-
-const onItemSelect = (event: React.MouseEvent<HTMLDivElement>, onSelect: (item: IItem) => void) => {
-    const target = event.target as HTMLElement;
-    const itemElem: HTMLElement | null = target.closest('[data-item-index]');
-    const itemIndex = itemElem?.dataset['itemIndex'];
-    itemIndex && onSelect(list.getItems()![+itemIndex]);
-}
-
 let setState: React.Dispatch<() => (IItem[] | null)>;
-    let itemsArray: IItem[] | null;
-const changeState = () => {
+let itemsArray: IItem[] | null;
+let onItemSelect: (event: React.MouseEvent<HTMLDivElement>) => void;
+let setFilter: (filter: string) => void;
+const changeState = (onSelect: (item: IItem) => void) => {
+    const list = new ListObject();
+    onItemSelect = (event) => {
+        const target = event.target as HTMLElement;
+        const itemElem: HTMLElement | null = target.closest('[data-item-index]');
+        const itemIndex = itemElem?.dataset['itemIndex'];
+        itemIndex && onSelect(list.getItems()![+itemIndex]);
+    }
+    setFilter = list.setFilter.bind(list);
     list.onChange(
         (itemsArray) => setState(() => itemsArray)
     );
@@ -28,10 +29,9 @@ type Props = {
 } & WithStyles;
 
 function List({ classes, filter, onSelect }: Props) {
-    [itemsArray, setState] = useState<IItem[] | null>(changeState);
+    [itemsArray, setState] = useState<IItem[] | null>(() => changeState(onSelect));
 
-    const onClick = useCallback((event) => onItemSelect(event, onSelect), [onSelect]);
-    useEffect(() => list.setFilter(filter), [filter]);
+    useEffect(() => setFilter(filter), [filter]);
 
     if (!itemsArray) return null;
     
@@ -43,7 +43,7 @@ function List({ classes, filter, onSelect }: Props) {
     );
 
     return (
-        <div className={classes.list} onClick={onClick}>
+        <div className={classes.list} onClick={onItemSelect}>
             {items.length?
                 <ul>
                     {items}
