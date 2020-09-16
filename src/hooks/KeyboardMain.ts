@@ -29,6 +29,7 @@ const getChangeLang = (setLang: React.Dispatch<() => string>) =>
         setLang(() => currentLang);
         const nextLang = currentLang === 'UA' ? 'EN' : 'UA';
         target.innerHTML = nextLang;
+        target.setAttribute('data-next-lang', nextLang);
     };
 
 const getKeyboardLayoutFUNC = (changeLang: React.MouseEventHandler<HTMLDivElement>) => {

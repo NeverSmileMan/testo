@@ -1,17 +1,18 @@
-import Weights, { IWeightsTest } from '../data.structure/Weights';
+import Weights from '../data.structure/Weights';
 import { IAppTest } from '../data.structure/App';
 import Keyboard from '../data.structure/Keyboard';
 
 const keyboard = Keyboard.getInstance();
+const weights = Weights.getInstance();
 
-(function weightsControl(weights: IWeightsTest) {
+function weightsControl() {
 
     let weight = '';
     let timer: any;
 
     window.addEventListener('keydown', (event) => {
         
-        console.log('PRESS:', event.code, event.key);
+        // console.log('PRESS:', event.code, event.key);
 
         if (event.shiftKey && event.code.match(/Digit/)) {
             weight += event.code.split('Digit')[1];
@@ -20,21 +21,22 @@ const keyboard = Keyboard.getInstance();
             timer = setTimeout(() => {
                 weights.__setWeight(+weight / 1000);
                 weight = '';
-                //timer = null;
             }, 500);
             return;
         }
 
         if (event.shiftKey && event.code === 'KeyZ') { weights.__setStable(); return; }
 
-        if (event.key.match(/[a-z|а-я|0-9]/))
+        if (!event.shiftKey)
             keyboard.onClick(event.key.toUpperCase());
 
     });
-})(Weights.getInstance());
+};
 
 export function appControl(app: IAppTest) {
     window.addEventListener('keydown', (event) => {
         if (event.shiftKey && event.code === 'KeyT') app.__changeTheme();
     });
 }
+
+weightsControl();
