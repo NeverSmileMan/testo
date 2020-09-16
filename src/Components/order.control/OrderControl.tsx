@@ -13,7 +13,7 @@ import OrderControlModal from './OrderControlModal';
 
 export const OrderControlContext = createContext<IStateOrder>({} as IStateOrder);
 
-function createCallbacks(orders: IOrderControl) {
+const createCallbacks = (orders: IOrderControl) => {
     const callbacksOrder = {
         delItem: () => orders.delItem(),
         addItem: (item: IItem) => orders.addItem(item),
@@ -23,10 +23,12 @@ function createCallbacks(orders: IOrderControl) {
     return callbacksOrder;
 }
 
-function changeStateOrder(object: IOrderControl, setStateOrder: React.Dispatch<() => IStateOrder>): IStateOrder {
+const changeStateOrder = (
+    object: IOrderControl,
+    setStateOrder: React.Dispatch<() => IStateOrder>,
+) => {
     object.onChangeOrder(setStateOrder);
-    return object.getStateOrder();
-}
+};
 
 type Props = {
     orders: IOrderControl;
@@ -36,8 +38,8 @@ const useOrder = (orders: IOrderControl) => {
     const [{
         addItem, delItem,
         selectItem, onReset }] = useState(() => createCallbacks(orders));
-    const [, setStateOrder] = useState({} as IStateOrder);
-    const [stateOrder] = useState<IStateOrder>(() => changeStateOrder(orders, setStateOrder));
+    const [stateOrder, setStateOrder] = useState(orders.getStateOrder);
+    useState(() => changeStateOrder(orders, setStateOrder));
     const { order, orderMode } = stateOrder;
     return { order, orderMode, stateOrder, addItem, delItem, selectItem, onReset};
 };

@@ -10,7 +10,7 @@ import Controls from './controls/Controls';
 
 export const OrdersControlContext = createContext<IStateOrders>({} as IStateOrders);
 
-function createCallbacks(orders: IOrdersControl) {
+const createCallbacks = (orders: IOrdersControl) => {
     const callbacksMessage = {
         onMessage: orders.onMessage,
     };
@@ -25,10 +25,12 @@ function createCallbacks(orders: IOrdersControl) {
     return { callbacksMessage, callbacksTabs, callbacksControls };
 }
 
-function changeStateOrders(orders: IOrdersControl, setStateOrders: React.Dispatch<() => IStateOrders>): IStateOrders {
+const changeStateOrders = (
+    orders: IOrdersControl,
+    setStateOrders: React.Dispatch<() => IStateOrders>,
+) => {
     orders.onChangeOrders(setStateOrders);
-    return orders.getStateOrders();
-}
+};
 
 type Props = {
     maxOrdersCount: number;
@@ -36,8 +38,8 @@ type Props = {
 
 const useOrders = (maxOrdersCount: number) => {
     const [orders] = useState(() => new OrdersControl(maxOrdersCount) as IOrdersControl);
-    const [, setState] = useState({} as IStateOrders);
-    const [stateOrders] = useState(() => changeStateOrders(orders, setState));
+    const [stateOrders, setStateOrders] = useState(orders.getStateOrders);
+    useState(() => changeStateOrders(orders, setStateOrders));
     const [{ callbacksMessage, callbacksTabs, callbacksControls }] = useState(() => createCallbacks(orders));
     return { orders, stateOrders, callbacksMessage, callbacksTabs, callbacksControls };
 };
