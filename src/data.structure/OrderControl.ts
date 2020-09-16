@@ -3,6 +3,7 @@ import Weights, { IWeightsTest } from './Weights';
 import { IOrder } from './Order';
 import { MessageCode } from './data/messagesInfo';
 import { State, Mode } from './types/types';
+import Message from './Message';
 
 export interface IOrderControl {
     getCurrentOrder: () => IOrder | null;
@@ -29,7 +30,7 @@ export interface IStateOrder {
     orderItems: IItemAmount[];
     selectedItemIndex: number | null;
     orderMode: Mode | null;
-    getStateOrder: () => IStateOrder;
+    // getStateOrder: () => IStateOrder;
 }
 
 export class OrderControl implements IOrderControl {
@@ -45,11 +46,13 @@ export class OrderControl implements IOrderControl {
         this._weights = Weights.getInstance();
         this._weights.onChange(this._onWeightsChange.bind(this));
         this.getStateOrder = this.getStateOrder.bind(this);
+        this.onMessage(Message.getInstance().sendMessage);
+        this._onWeightsChange();
     }
 
     onMessage(callback: (code: MessageCode | null) => void) {
         this._callbackOnMessage = callback;
-        this._onWeightsChange();
+        // this._onWeightsChange();
     }
 
     onReset(callback: () => void) {
@@ -72,7 +75,7 @@ export class OrderControl implements IOrderControl {
             orderItems: this.getItems(),
             selectedItemIndex: this.getSelectedItemIndex(),
             orderMode: this.getState() === State.PENDING ? Mode.MODAL : null,
-            getStateOrder: this.getStateOrder,
+            // getStateOrder: this.getStateOrder,
         };
     }
 

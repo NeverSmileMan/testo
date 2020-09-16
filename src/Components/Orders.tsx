@@ -18,7 +18,7 @@ type Props = {
 function Orders({ classes, maxOrdersCount}: Props ) {;
     const { 
         orders, stateOrders,
-        callbacksMessage, callbacksTabs, callbacksControls,
+        callbacksTabs, callbacksControls,
     } = useOrders(maxOrdersCount);
 
     return (
@@ -26,7 +26,7 @@ function Orders({ classes, maxOrdersCount}: Props ) {;
             <div className={classes.wrapper}>
                 <div className='tabs-panel'>
                     <TabsNav callbacks={callbacksTabs}/>
-                    <Message callbacks={callbacksMessage}/>
+                    <Message />
                     <HomeButton />
                 </div>
                 <div className='order-panel'>

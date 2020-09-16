@@ -23,7 +23,7 @@ export interface IStateOrders {
     currentOrderNumber: number | null;
     canCreate: boolean;
     doClose: (callback: () => void) => void;
-    getStateOrders: () => IStateOrders;
+    // getStateOrders: () => IStateOrders;
 }
 
 export class OrdersControl extends OrderControl implements IOrdersControl {
@@ -38,7 +38,8 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
         super();
         this._ordersFreeNums = Array(this._maxOrdersCount).fill(true);
         this.getStateOrders = this.getStateOrders.bind(this);
-        this.onMessage = this.onMessage.bind(this);
+        // this.onMessage(Message.getInstance().sendMessage);
+        // this.onMessage = this.onMessage.bind(this);
         this._setCurrentOrder();
     }
 
@@ -64,7 +65,7 @@ export class OrdersControl extends OrderControl implements IOrdersControl {
             currentOrderNumber: this.getOrderNumber(),
             canCreate: this.canCreateOrder(),
             doClose: this.doClose.bind(this),
-            getStateOrders: this.getStateOrders,
+            // getStateOrders: this.getStateOrders,
         };
     }
 

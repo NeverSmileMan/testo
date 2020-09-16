@@ -38,4 +38,13 @@ export class Message implements IMessage {
     }
 }
 
-export default Message;
+let instance: IMessage;
+
+function getInstance() {
+    if (!instance) {
+        instance = new Message();
+    }
+    return instance;
+}
+
+export default { getInstance };

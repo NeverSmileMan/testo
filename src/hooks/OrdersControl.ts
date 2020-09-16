@@ -3,9 +3,6 @@ import { useState } from 'react';
 import OrdersControl, { IOrdersControl, IStateOrders } from '../data.structure/OrdersControl';
 
 const createCallbacks = (orders: IOrdersControl) => {
-    const callbacksMessage = {
-        onMessage: orders.onMessage,
-    };
     const callbacksControls = {
         deleteOrder: () => orders.deleteOrder(),
         printOrder: () => orders.printOrder(),
@@ -14,7 +11,7 @@ const createCallbacks = (orders: IOrdersControl) => {
         selectOrder: (orderNumber: number) => orders.selectOrder(orderNumber),
         createOrder: () => orders.createOrder(),
     }
-    return { callbacksMessage, callbacksTabs, callbacksControls };
+    return { callbacksTabs, callbacksControls };
 }
 
 const changeStateOrders = (
@@ -28,8 +25,8 @@ const useOrders = (maxOrdersCount: number) => {
     const [orders] = useState(() => new OrdersControl(maxOrdersCount) as IOrdersControl);
     const [stateOrders, setStateOrders] = useState(orders.getStateOrders);
     useState(() => changeStateOrders(orders, setStateOrders));
-    const [{ callbacksMessage, callbacksTabs, callbacksControls }] = useState(() => createCallbacks(orders));
-    return { orders, stateOrders, callbacksMessage, callbacksTabs, callbacksControls };
+    const [callbacks] = useState(() => createCallbacks(orders));
+    return { orders, stateOrders, ...callbacks };
 };
 
 export default useOrders;
