@@ -1,6 +1,7 @@
 export enum Mode {
     BUTTON,
     MODAL,
+    NORMAL,
 }
 
 export enum State {

@@ -17,10 +17,11 @@ type Props = {
 
 function Orders({ classes, maxOrdersCount}: Props ) {;
     const { 
-        orders, stateOrders,
-        callbacksTabs, callbacksControls,
+        stateOrders, callbacksTabs, callbacksControls,
     } = useOrders(maxOrdersCount);
 
+    const { currentOrder } = stateOrders;
+    // console.log(stateOrders);
     return (
         <OrdersControlContext.Provider value = {stateOrders}>
             <div className={classes.wrapper}>
@@ -30,7 +31,7 @@ function Orders({ classes, maxOrdersCount}: Props ) {;
                     <HomeButton />
                 </div>
                 <div className='order-panel'>
-                    <OrderControl orders={orders}/>
+                    <OrderControl order={currentOrder}/>
                     <Controls callbacks={callbacksControls} />
                 </div>
             </div>

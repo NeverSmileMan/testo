@@ -7,53 +7,69 @@ import Message from './Message';
 import IObject from './types/objects';
 
 export interface IOrderControl extends IObject<IStateOrder> {
-    getCurrentOrder: () => IOrder | null;
-    getOrderNumber: () => number | null;
+    getOrder: () => IOrder;
+    getOrderNumber: () => number;
     delItem: () => void;
     getItems: () => IItemAmount[];
     selectItem: (index: number | null) => void;
     isSelected: () => boolean;
-    getSelectedItemIndex: () => number | null;    
+    getSelectedItemIndex: () => number | null; 
     getItemsCount: () => number | 0;
     getTotal: () => number;
-    // onChangeOrder: (callback: (getState: () => IStateOrder) => void) => void;
     getState: () => State;
     addItem: (item: IItem) => void;
     onReset: (callback: () => void) => void;
     onMessage: (callback: (code: MessageCode | null) => void) => void;
-    // getStateOrder: () => IStateOrder;
+    onItemsChange: (callback: () => void) => void;
 }
 
 export interface IStateOrder {
-    order: IOrder | null;
+    order: IOrder;
     isSelected: boolean;
     total: string;
     orderItems: IItemAmount[];
     selectedItemIndex: number | null;
-    orderMode: Mode | null;
-    // getStateOrder: () => IStateOrder;
+    orderMode: Mode;
 }
 
 export class OrderControl implements IOrderControl {
-    private _weights: IWeightsTest;
+    private _weights: IWeightsTest = Weights.getInstance();
     private _selectedItemIndex: number | null = null;
-    protected _currentOrder: IOrder | null = null;
+    private _currentOrder: IOrder;
     private _state: State = State.ENABLED;
-    private _callbackOnChangeOrder?: (getState: () => IStateOrder) => void;
+    private _callbackOnChange?: (getState: () => IStateOrder) => void;
     private _callbackOnReset?: () => void;
     private _callbackOnMessage?: (code: MessageCode | null) => void;
+    private _callbackOnItemsChange?: () => void;
 
-    constructor() {
-        this._weights = Weights.getInstance();
+    constructor(order: IOrder) {
+        this._currentOrder = order;
+
         this._weights.onChange(this._onWeightsChange.bind(this));
         this.getStateObject = this.getStateObject.bind(this);
-        this.onMessage(Message.getInstance().sendMessage);
+        this.onMessage(Message.getInstance().sendMessage); //???
+        // this._onWeightsChange();
+        this._setOrder();
+    }
+
+    onItemsChange(callback: () => void) {
+        this._callbackOnItemsChange = callback;
+    }
+
+    private _onItemsChange() {
+        if (this._callbackOnItemsChange) this._callbackOnItemsChange();
+    }
+
+    private _setOrder() {
+        //if (this._currentOrder) this._currentOrder.tara = this._weights.getTara(); //??????????
+        // this._currentOrder = order;
+        this._weights?.setTara(this._currentOrder.tara);
+        this.selectItem(null); //??????????
         this._onWeightsChange();
     }
 
-    onMessage(callback: (code: MessageCode | null) => void) {
+    onMessage(callback: (code: MessageCode | null) => void) { //null ???????
         this._callbackOnMessage = callback;
-        // this._onWeightsChange();
     }
 
     onReset(callback: () => void) {
@@ -70,22 +86,17 @@ export class OrderControl implements IOrderControl {
 
     getStateObject(): IStateOrder {
         return {
-            order: this.getCurrentOrder(),
+            order: this.getOrder(),
             isSelected: this.isSelected(),
             total: this.getTotal().toFixed(2),
             orderItems: this.getItems(),
             selectedItemIndex: this.getSelectedItemIndex(),
-            orderMode: this.getState() === State.PENDING ? Mode.MODAL : null,
-            // getStateOrder: this.getStateOrder,
+            orderMode: this.getState() === State.PENDING ? Mode.MODAL : Mode.NORMAL,
         };
     }
 
-    setOrder(order: IOrder) {
-        if (this._currentOrder) this._currentOrder.tara = this._weights.getTara();
-        this._currentOrder = order;
-        this._weights?.setTara(this._currentOrder.tara);
-        this.selectItem(null);
-        this._onWeightsChange();
+    getOrder() {
+        return this._currentOrder;
     }
 
     selectItem(index: number | null) {
@@ -93,7 +104,7 @@ export class OrderControl implements IOrderControl {
             this._selectedItemIndex = index;
         }
         else this._selectedItemIndex = null;
-        this._onChangeOrder();
+        this._onChange();
     }
 
     isSelected() {
@@ -122,7 +133,8 @@ export class OrderControl implements IOrderControl {
         this.selectItem(null);
         this._onReset();
         this._state = State.PENDING;
-        this._onChangeOrder();
+        this._onChange();
+        this.getItemsCount() > 0 && this._onItemsChange();
     }
 
     private _throwMessage(code: MessageCode | null) {
@@ -158,22 +170,22 @@ export class OrderControl implements IOrderControl {
     }
 
     getOrderNumber() {
-        return this._currentOrder ? this._currentOrder.orderNumber : null;
+        return this._currentOrder.orderNumber;
     }
 
     onChange(callback: (getState: () => IStateOrder) => void) {
-        this._callbackOnChangeOrder = callback;
+        this._callbackOnChange = callback;
     }
 
-    protected _onChangeOrder() {
-        if (this._callbackOnChangeOrder) this._callbackOnChangeOrder(this.getStateObject);
+    protected _onChange() {
+        if (this._callbackOnChange) this._callbackOnChange(this.getStateObject);
     }
 
     private _onWeightsChange() {
         if (this._state === State.PENDING) {
             if (this._weights && this._weights.getWeight() <= 0) {
                 this._state = State.ENABLED;
-                this._onChangeOrder();
+                this._onChange();
                 this._weights.setPrice(null);
             }
             return;

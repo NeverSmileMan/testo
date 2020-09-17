@@ -17,7 +17,7 @@ const changeStateOrders = (
     orders: IOrdersControl,
     setStateOrders: React.Dispatch<() => IStateOrders>,
 ) => {
-    orders.onChangeOrders(setStateOrders);
+    orders.onChange(setStateOrders);
     return createCallbacks(orders);
 };
 
@@ -25,7 +25,7 @@ const useOrders = (maxOrdersCount: number) => {
     const [orders] = useState(() => new OrdersControl(maxOrdersCount));
     const [stateOrders, setStateOrders] = useState(orders.getStateOrders);
     const [methods] = useState(() => changeStateOrders(orders, setStateOrders));
-    return { orders, stateOrders, ...methods };
+    return { stateOrders, ...methods };
 };
 
 export default useOrders;
