@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Button from './button';
-import { Numeric, Key, Servise } from './keyboard.flex';
+import { Numeric, Key, Servise } from './interfaces';
 
 interface Props {
 	options: Numeric;

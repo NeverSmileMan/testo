@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, ReactNode } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Key } from './keyboard.flex';
+import { Key } from './interfaces';
 
 interface Props {
 	callback: Function;

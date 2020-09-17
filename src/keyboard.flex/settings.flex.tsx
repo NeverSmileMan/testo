@@ -1,6 +1,6 @@
 import React from 'react';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { Keyboard  } from './keyboard.flex';
+import { IKeyboard  } from './interfaces';
 
 const arr_EN = [['q','w','e','r','t','y','u','i','o','p'],['a','s','d','f','g','h','j','k','l'],['z','x','c','v','b','n','m',' ']];
 const arr_RU = [['й','ц','у','к','е','н','г','ш','щ','з','х','ъ'],['ф','ы','в','а','п','р','о','л','д','ж','э','ё'],['я','ч','с','м','и','т','ь','б','ю',' ']];
@@ -8,7 +8,7 @@ const arr_UK = [['й','ц','у','к','е','н','г','ш','щ','з','х','ї'],['
 const arr_num = ['7','8','9','4','5','6','1','2','3','0'];
 
 
-export const keyBoardFlex: Keyboard = {
+export const keyBoardFlex: IKeyboard = {
 	alphabet:{
 		keys: {
 			uk: arr_UK,

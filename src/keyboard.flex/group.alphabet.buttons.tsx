@@ -1,8 +1,8 @@
 import React, { useContext, ReactElement } from 'react';
-import { LayoutContext, Alphabet, Servise } from './keyboard.flex';
+import { LayoutContext } from './keyboard.flex';
+import { Alphabet, Servise, Key } from './interfaces';
 import Button from './button';
 import { makeStyles } from '@material-ui/styles';
-import { Key } from './keyboard.flex';
 
 const useStyles = makeStyles({
 	keyboardAlphabet: {

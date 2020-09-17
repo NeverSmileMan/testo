@@ -1,6 +1,7 @@
 import React, { ReactElement, useContext, useCallback } from 'react';
 import Button from './button';
-import { Special, LayoutContext, SpecialValue, SpecialKey, Servise } from './keyboard.flex';
+import { Special, SpecialValue, SpecialKey, Servise } from './interfaces';
+import { LayoutContext } from './keyboard.flex';
 import { makeStyles } from '@material-ui/styles';
 
 interface Props {
