@@ -66,7 +66,6 @@ type ThemesObj = {
 	[property: string] : Theme;
 }
 const themes: ThemesObj = {};
-
 themes.default = createMuiTheme({
   palette: {
     primary: {
@@ -75,6 +74,9 @@ themes.default = createMuiTheme({
     secondary: {
       main: '#d7d7d7',
     },
+  },
+  typography: {
+    fontFamily: "'Arial','Helvetica', sans-serif"
   },
 });
 themes.silpo = createMuiTheme({
@@ -86,6 +88,9 @@ themes.silpo = createMuiTheme({
       main: '#d7d7d7',
     },
   },
+  typography: {
+    fontFamily: "'Arial','Helvetica', sans-serif"
+  },
 });
 themes.fora = createMuiTheme({
   palette: {
@@ -95,6 +100,9 @@ themes.fora = createMuiTheme({
     secondary: {
       main: '#ef036',
     },
+  },
+  typography: {
+    fontFamily: "'Arial','Helvetica', sans-serif"
   },
 });
 /* для onKeyDown*/

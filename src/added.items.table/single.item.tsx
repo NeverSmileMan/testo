@@ -20,7 +20,7 @@ interface Props {
 	active: Item | null;
 	changeRule: ChangeRule; //переназвать
 	addUnits: AddUnits;
-	onClick: any;
+	onClick: (val: null | Item) => void;
 }
 
 type ChangeRule = {
@@ -60,10 +60,11 @@ const useStyles = makeStyles((theme: Theme) =>
 			paddingRight: '2em',
 		},
 		font: {
-			fontFamily: 'Arial',
+			fontFamily: theme.typography.fontFamily,
+			fontWeight: theme.typography.fontWeightRegular,
+			color: theme.palette.grey.A400,
 			fontStyle: 'normal',
 			fontSize: '0.7em',
-			color: theme.palette.grey.A400,
 			lineHeight: 'normal',
 		},
 	}),

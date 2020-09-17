@@ -28,8 +28,15 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 );
 
-export default function AddedItemsTable({ values, onClick, active }: any): ReactElement {
-	//поменять onClick
+interface Props {
+	active: Item | null;
+	onClick: React.Dispatch<React.SetStateAction<Item | null>>;
+	values: Item[];
+}
+
+
+
+export default function AddedItemsTable({ values, onClick, active }: Props): ReactElement {
 	const classes = useStyles();
 
 	return (
