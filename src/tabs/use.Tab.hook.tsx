@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { MAX_NUMBER_OF_TABS } from './Tabs';
 import { ActiveInputService } from '../services/ActiveInputService';
+import { Hints, ItemTypes } from '../custom/variables';
 
 export interface TabItems {
   tabNumber: number;
@@ -12,7 +13,7 @@ interface Item {
   code: string;
   name: string;
   price: number;
-  type: 'ваговий' | 'штучний'; //поменять?
+  type: ItemTypes;
 }
 
 interface AddedItem extends Item {
@@ -73,26 +74,26 @@ export function useTabs(
         const weightScale = scaleService.getItemWeight();
         if (weightScale >= (40 / 1000)) {
           switch (item.type) {
-            case 'штучний':
+            case ItemTypes.piece:
               if (сalcValue) {
                 addedItem.amount = сalcValue;
                 addedItem.cost = addedItem.amount * item.price;
               } else {
-                setError('Задайте кількість товару');
+                setError(Hints.PickItemsQty);
                 return false;
               }
               break;
-            case 'ваговий':
+            case ItemTypes.weights:
               const price = +(weightScale * addedItem.price).toFixed(2)
               addedItem.amount = weightScale;
               addedItem.cost = scaleService.getItemCost(price);
               break;
             default:
-              setError('Невірний тип товару');
+              setError(Hints.IncorrectItemType);
               return false;
           }
         } else {
-          setError('Вага повинна перевищувати 40 грам');
+          setError(Hints.MinWeight);
           return false;
         }
         tabItems[activeTab].items.push(addedItem);

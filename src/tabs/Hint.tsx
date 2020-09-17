@@ -37,7 +37,7 @@ const styles = makeStyles({
 	},
 })
 
-const Hints: FC<HintsProps> = ({error}: HintsProps) => {
+const Hint: FC<HintsProps> = ({error}: HintsProps) => {
 
 	const {hints, hints_messages, hints_error} = styles()
 
@@ -55,4 +55,4 @@ const Hints: FC<HintsProps> = ({error}: HintsProps) => {
 	);
 };
 
-export default Hints;
+export default Hint;

@@ -4,6 +4,7 @@ import { MainContext } from '../../../main';
 import NumberKeyboard from '../calc/numder.keyboard';
 import ControlKeyboard from '../calc/control.keyboard';
 import HeadInput from '../calc/head.input';
+import { Hints } from '../../../custom/variables';
 
 
 const useStyle = makeStyles({
@@ -28,7 +29,7 @@ const InputWeight = () => {
 
   const getWeight = useCallback((num: number): any => () => {
     const weitght = inputValue * 10 + num;
-    weitght >= 5000 ? setError('Вага не має перевищувати 5кг') : setWeihghtTara(weitght)
+    weitght >= 5000 ? setError(Hints.MaxWeight) : setWeihghtTara(weitght)
   }, [setWeihghtTara, inputValue, setError])
 
   const deleteWeight = useCallback(() => {

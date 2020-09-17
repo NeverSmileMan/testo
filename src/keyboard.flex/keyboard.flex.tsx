@@ -3,10 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import GroupAlphabetButtons from './group.alphabet.buttons';
 import GroupNumericButtons from './group.numeric.buttons';
 import GroupSpecialButtons from './group.special.buttons';
-
-//---------------------
-type Lang = 'en' | 'ru' | 'uk'; // должно импортироваться???
-//------------------
+import { Lang } from '../custom/variables';
 
 type SpicialKey = string | undefined | JSX.Element | SpecialValue;
 

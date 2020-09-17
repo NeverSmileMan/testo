@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Tabs from './tabs/Tabs';
-import Hints from './tabs/Hints';
+import Hint from './tabs/Hint';
 import HomeButton from './tabs/HomeButton';
 import GroupBtn from './functional-buttons/groupBtn';
 import AddedItemsTable from './added.items.table/added.items.table';
@@ -10,6 +10,7 @@ import OrderInfo from './searchPanel/orderInfo/OrderInfo';
 import ModalWindow from './functional-buttons/modal.wind/modal.wind';
 import { useTabs } from './tabs/use.Tab.hook';
 import { IItem } from './searchPanel/search/itemsData'
+import { Hints } from './custom/variables';
 //---------plugs---------------
 import { ScalePlug } from './plugs/scale';
 // import items from "./searchPanel/search/itemsData";
@@ -116,7 +117,7 @@ export default function Main() {
 
   const showTara = () => {
     setTara()
-    setError('Вага має бути більшою за нуль')
+    setError(Hints.PositiveWeight)
   }
 
   useEffect(() => {
@@ -150,7 +151,7 @@ export default function Main() {
           <Tabs tabs={tabItems} />
         </div>
         <div className={info}>
-          <Hints error={error} />
+          <Hint error={error} />
           <HomeButton />
         </div>
       </div>

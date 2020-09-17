@@ -1,8 +1,7 @@
 import React, { ReactElement } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import SingleItem from './single.item';
-
-type ItemType = 'ваговий' | 'штучний'; // заменить enum  импортом откуда-то
+import { ItemTypes } from '../custom/variables';
 
 export interface Item {
 	code: string;
@@ -10,7 +9,7 @@ export interface Item {
 	amount: number;
 	cost: number;
 	price: number;
-	type: ItemType;
+	type: ItemTypes;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -52,7 +51,7 @@ export default function AddedItemsTable({ values, onClick, active }: Props): Rea
 							name: item.code + ' ' + item.name, //тут добавить языки
 						}}
 						columns={['name', 'amount', 'cost']}
-						addUnits={{ amount: item.type === 'ваговий' ? 'г.' : 'шт.' }}
+						addUnits={{ amount: item.type === ItemTypes.weights ? 'г.' : 'шт.' }}
 						active={active}
 						key={i}
 						onClick={onClick}

@@ -1,0 +1,16 @@
+export enum Hints {
+	PickItemsQty = 'Задайте кількість товару',
+	IncorrectItemType = 'Невірний тип товару',
+	MinWeight = 'Вага повинна перевищувати 40 грам',
+	MaxWeight = 'Вага не має перевищувати 5кг',
+	PositiveWeight = 'Вага має бути більшою за нуль',
+}
+export enum ItemTypes {
+	weights = 'ваговий',
+	piece = 'штучний',
+}
+export enum Lang {
+	EN = 'en',
+	RU = 'ru',
+	UA = 'uk',
+}
