@@ -1,14 +1,13 @@
-type Func = React.SetStateAction<any> | null; //any?
 
 export interface ActiveInputService {
-  add: (str: string)=>void;
-  delete: (number: number)=>void;
-  clear: ()=>void;
-  setActive: (func: Func)=>void;
-  unsetActive: (func: Func)=>void;
+	add: (str: string) => void;
+	delete: (number: number) => void;
+	clear: () => void;
+	setActive: (func: React.Dispatch<React.SetStateAction<string>>) => void;
+	unsetActive: (func: React.Dispatch<React.SetStateAction<string>>) => void;
 }
 
-let activeInput = null as Func;
+let activeInput = null as React.Dispatch<React.SetStateAction<string>> | null;
 
 export const ActiveInputService : ActiveInputService = {
   add(str: string) {
@@ -20,10 +19,10 @@ export const ActiveInputService : ActiveInputService = {
   clear() {
     if (activeInput) activeInput('');
   },
-  setActive(func: Func) {
+  setActive(func: React.Dispatch<React.SetStateAction<string>>) {
     activeInput = func;
   }, 
-  unsetActive(func: Func) {
+  unsetActive(func: React.Dispatch<React.SetStateAction<string>>) {
     if (activeInput === func) {
       activeInput = null;
     }

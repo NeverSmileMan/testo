@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 function InputList() {
     const classes = useStyles();
     //const [state, setState] = useState(true);
-    const [state, setState] = useState('');
+    const [state, setState] = useState<string>('');
 
     const onClick = useCallback(() => ActiveInputService.setActive(setState), []);
 

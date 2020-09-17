@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Key } from './keyboard.flex';
 
 interface Props {
-	callback: any;
+	callback: Function;
 	value?: Key;
 	children?: ReactNode;
 	className: string;
@@ -17,9 +17,9 @@ const useStyles = makeStyles((theme: Theme) =>
 			justifyContent: 'center',
 			borderRadius: '.15rem',
 			fontSize: '1.1em',
-			background: '#e4e4e4',
+			background: theme.palette.grey[300],
 			overflow: 'hidden',
-			fontWeight: 400,
+			fontWeight: theme.typography.fontWeightMedium,
 			textTransform: 'uppercase',
 			width: '100%',
 			marginLeft: '0.15em',

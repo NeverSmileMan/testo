@@ -18,8 +18,8 @@ export interface Servise {
 	add: (str: string) => void;
 	delete: (number: number) => void;
 	clear: () => void;
-	setActive: (func: React.SetStateAction<string>) => void;
-	unsetActive: (func: React.SetStateAction<string>) => void;
+	setActive: (func: React.Dispatch<React.SetStateAction<string>>) => void;
+	unsetActive: (func: React.Dispatch<React.SetStateAction<string>>) => void;
 }
 
 export type Key = string;
@@ -33,19 +33,26 @@ export interface SpecialKey {
 	action: keyof Servise | 'none';
 }
 
+interface Options {
+	row: number;
+	col: number;
+}
+export type OptionsAlphabet = {
+	[K in Lang]: Options;
+};
 export interface Alphabet {
 	keys: Keys;
 	action: keyof Servise;
-	options: any;
+	options: Options | OptionsAlphabet;
 }
 export interface Numeric {
 	keys: Key[];
 	action: keyof Servise;
-	options: any;
+	options: Options;
 }
 export interface Special {
 	keys: SpecialKey[];
-	options: any;
+	options: Options;
 }
 export interface Keyboard {
 	alphabet: Alphabet;
@@ -97,7 +104,7 @@ const useStyles = makeStyles({
 });
 
 function getDefaultLayout<T, K extends keyof T>(obj: T) {
-  return Object.keys(obj)[0] as K;
+	return Object.keys(obj)[0] as K;
 }
 
 export default function Keyboard({ service, keyboardLayout }: Props): ReactElement {

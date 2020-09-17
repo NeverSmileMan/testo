@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Button from './button';
 import { Numeric, Key, Servise } from './keyboard.flex';
@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 );
 
-export default function GroupNumericButtons({ options, service }: Props) {
+export default function GroupNumericButtons({ options, service }: Props): ReactElement {
 	const classes = useStyles();
 
 	return (

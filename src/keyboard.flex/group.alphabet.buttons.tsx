@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
-import {LayoutContext} from './keyboard.flex';
+import React, { useContext, ReactElement } from 'react';
+import { LayoutContext, Alphabet, Servise } from './keyboard.flex';
 import Button from './button';
-import {makeStyles} from '@material-ui/styles';
-import {Key} from './keyboard.flex';
+import { makeStyles } from '@material-ui/styles';
+import { Key } from './keyboard.flex';
 
 const useStyles = makeStyles({
 	keyboardAlphabet: {
@@ -28,9 +28,13 @@ const useStyles = makeStyles({
 	},
 });
 
-export default function GroupAlphabetButtons({opts, service}: any) {
-	const layout = useContext(LayoutContext);
+interface Props {
+	opts: Alphabet;
+	service: Servise;
+}
 
+export default function GroupAlphabetButtons({ opts, service }: Props): ReactElement {
+	const layout = useContext(LayoutContext);
 	const classes = useStyles();
 
 	return (
@@ -50,7 +54,7 @@ export default function GroupAlphabetButtons({opts, service}: any) {
 							))}
 							{!(i % 2) ? <div key={`${i}o`} className={classes.offset} /> : null}
 						</div>
-							{i < opts.keys[layout.name].length - 1 ? <div key={`${i}z`} className={classes.spacer}></div> : null}
+						{i < opts.keys[layout.name].length - 1 ? <div key={`${i}z`} className={classes.spacer}></div> : null}
 					</React.Fragment>
 				);
 			})}

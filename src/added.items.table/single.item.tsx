@@ -76,7 +76,7 @@ export default function SingleItem({
 		} else {
 			onClick(item);
 		}
-	}, [item, active]);
+	}, [item, active, onClick]);
 
 	return (
 		<div onClick={onClick_} className={`${classes.row} ${active === item ? classes.active : ''}`}>
