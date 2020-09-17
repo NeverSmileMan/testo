@@ -16,7 +16,7 @@ function Search({ classes, callbacks }: Props) {
 
     const {
         isFocus, value, valueHTML, ref,
-        onListSelect, attachInput, refreshInput
+        onListSelect, attachInput, refreshInput,
     } = useSearch(callbacks);
     
     useEffect(attachInput, [attachInput]);

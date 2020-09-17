@@ -37,7 +37,7 @@ const useSearch = (callbacks: Props['callbacks']) => {
     const ref = useRef(null);
     const [methods, setMethods] = useState(() => changeState(input, setState, ref, callbacks));
     useEffect(() => methods.useNewOrder(callbacks, setMethods), [callbacks, methods]);
-    return { ...state, ...methods, ref };
+    return { ...state, ref, ...methods };
 };
 
 export default useSearch;
