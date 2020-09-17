@@ -24,13 +24,13 @@ const useStyle = makeStyles({
 const NameCalc = 'Тара'
 const InputWeight = () => {
   const { inputContainer, keyboardContainer } = useStyle();
-  const { setError, submitValueCalc} = useContext(MainContext);
+  const { changeHint, submitValueCalc} = useContext(MainContext);
   const [inputValue, setWeihghtTara] = useState(0)
 
   const getWeight = useCallback((num: number): any => () => {
     const weitght = inputValue * 10 + num;
-    weitght >= 5000 ? setError(Hints.MaxWeight) : setWeihghtTara(weitght)
-  }, [setWeihghtTara, inputValue, setError])
+    weitght >= 5000 ? changeHint(Hints.MaxWeight, true) : setWeihghtTara(weitght)
+  }, [setWeihghtTara, inputValue, changeHint])
 
   const deleteWeight = useCallback(() => {
     setWeihghtTara(Math.trunc(inputValue / 10))

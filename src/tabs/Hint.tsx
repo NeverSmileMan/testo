@@ -1,8 +1,10 @@
-import React, {FC} from 'react';
-import {makeStyles} from "@material-ui/styles";
+import React, { FC } from 'react';
+import { makeStyles } from '@material-ui/styles';
+import { Hints } from '../custom/variables';
 
 export interface HintsProps {
-	error: string
+	hint: Hints;
+	error: boolean;
 }
 
 const styles = makeStyles({
@@ -29,28 +31,20 @@ const styles = makeStyles({
 		animation: '$error 300ms ',
 	},
 	'@keyframes error': {
-		'0%': {opacity: 0},
-		'25%': {opacity: 1},
-		'50%': {opacity: 0},
-		'75%': {opacity: 1},
-		'100%': {opacity: 0},
+		'0%': { opacity: 0 },
+		'25%': { opacity: 1 },
+		'50%': { opacity: 0 },
+		'75%': { opacity: 1 },
+		'100%': { opacity: 0 },
 	},
-})
+});
 
-const Hint: FC<HintsProps> = ({error}: HintsProps) => {
-
-	const {hints, hints_messages, hints_error} = styles()
-
-	// const showError = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
-	// 	setShowErr(true)
-	// 	setTimeout(() => {
-	// 		setShowErr(false)
-	// 	}, 300)
-	// },[])
+const Hint: FC<HintsProps> = ({ hint, error }: HintsProps) => {
+	const { hints, hints_messages, hints_error } = styles();
 
 	return (
 		<div className={hints}>
-			<div className={`${hints_messages}`}>{error}</div>
+			<div className={`${hints_messages} ${error ? hints_error : ''}`}>{hint}</div>
 		</div>
 	);
 };

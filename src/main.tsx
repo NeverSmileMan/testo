@@ -11,6 +11,7 @@ import ModalWindow from './functional-buttons/modal.wind/modal.wind';
 import { useTabs } from './tabs/use.Tab.hook';
 import { IItem } from './searchPanel/search/itemsData'
 import { Hints } from './custom/variables';
+import { useHints } from './custom/hooks';
 //---------plugs---------------
 import { ScalePlug } from './plugs/scale';
 // import items from "./searchPanel/search/itemsData";
@@ -71,7 +72,7 @@ export const MainContext = createContext({
   addItem: (item: any) => true as boolean,
   activeTab: '' as any,
   showPrint: () => { },
-  setError: (() => { }) as React.Dispatch<React.SetStateAction<string>>,
+  changeHint: (str: Hints, likeError?: boolean) => {},
   submitValueCalc: (num: number) => { },
   setSelectedItem: (() => { }) as React.Dispatch<React.SetStateAction<IItem>>,
   setCalcValue: (() => { }) as React.Dispatch<React.SetStateAction<number>>,
@@ -85,12 +86,17 @@ export default function Main() {
   const [modalType, setModalType] = useState(null as string | null);
   const [selectedItem, setSelectedItem] = useState({} as IItem)
   const setType = (type: string | null): any => () => setModalType(type);
-  const [error, setError] = useState('');
   const [calcValue, setCalcValue] = useState(0);
   const submitValueCalc = (val: number) => {
     setCalcValue(val);
     setType(null)();
   };
+
+
+  const [hint, error, changeHint] = useHints();
+
+
+
 
   const [
     tabItems,
@@ -104,12 +110,15 @@ export default function Main() {
     deleteTab,
     setTara,
     print
-  ] = useTabs(setError, ScalePlug, calcValue);
+  ] = useTabs(changeHint, ScalePlug, calcValue);
 
   const confirmClose = useCallback(() => {
     setType(null)();
     deleteTab();
   }, [setType, deleteTab]);
+
+
+
   const showPrint = () => {
     setType(null)();
     print()
@@ -117,7 +126,7 @@ export default function Main() {
 
   const showTara = () => {
     setTara()
-    setError(Hints.PositiveWeight)
+    changeHint(Hints.PositiveWeight)
   }
 
   useEffect(() => {
@@ -137,7 +146,7 @@ export default function Main() {
         addItem,
         activeTab,
         showPrint,
-        setError,
+        changeHint,
         submitValueCalc,
         setSelectedItem,
         setCalcValue,
@@ -151,7 +160,7 @@ export default function Main() {
           <Tabs tabs={tabItems} />
         </div>
         <div className={info}>
-          <Hint error={error} />
+          <Hint hint={hint} error={error} />
           <HomeButton />
         </div>
       </div>

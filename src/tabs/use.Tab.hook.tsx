@@ -89,11 +89,11 @@ export function useTabs(
               addedItem.cost = scaleService.getItemCost(price);
               break;
             default:
-              setError(Hints.IncorrectItemType);
+              setError(Hints.IncorrectItemType, true);
               return false;
           }
         } else {
-          setError(Hints.MinWeight);
+          setError(Hints.MinWeight, true);
           return false;
         }
         tabItems[activeTab].items.push(addedItem);
