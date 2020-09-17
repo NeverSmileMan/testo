@@ -17,12 +17,13 @@ const styles = createStyles((theme: Theme) => ({
         },
         '& .error': {
             color: 'white',
-            animation: '$error 1200ms infinite',
+            animation: '$error 2s infinite',
         },
     },
     '@keyframes error': {
         '0%': { background: 'white' },        
-        '10%': { background: theme.palette.primary.main },
+        '50%': { background: theme.palette.primary.main },
+        '70%': { background: theme.palette.primary.main },
     },
 }));
 

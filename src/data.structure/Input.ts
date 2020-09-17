@@ -1,16 +1,26 @@
 import { IItem } from './Item';
+import IObject from './types/objects';
+import Message, { MessageCode } from './Message';
 
-export interface IInputBase {
+const message = Message.getInstance();
+
+export interface IInputBase<V extends string | number = string> extends IObject<IStateInput<V>>{
     setFocus: () => void;
     blurFocus: () => void;
     pressKey: (key: string) => void;
 }
 
-export interface IInput<V extends string | number, S extends string | number | IItem>
-    extends IInputBase
+export interface IStateInput<V = string> {
+    isFocus: boolean;
+    value: V;
+    valueHTML: string;
+}
+
+export interface IInput<V extends string | number = string, S extends string | number | IItem = string>
+    extends IInputBase<V>
 {
     setValue: (value: string) => void;
-    getValue: () => string | number;
+    getValue: () => V;
     getValueHTML: () => string;
     onChange: (callback: (getState: () => IStateInput<V>) => void) => void;
     onSelect: (callback: (value: S) => void) => void;
@@ -26,13 +36,7 @@ export interface IInputNumber extends IInput<number, number> {
     getValue: () => number;
 }
 
-export interface IStateInput<V> {
-    isFocus: boolean;
-    value: V;
-    valueHTML: string;
-}
-
-export class Input<V extends string | number, S extends string | number | IItem> implements IInput<V, S> {
+export class Input<V extends string | number = string, S extends string | number | IItem = string> implements IInput<V, S> {
     protected _value: string = '';
     protected _callbackOnChange?: (getState: () => IStateInput<V>) => void;
     protected _callbackOnSelect?: (value: S) => void;
@@ -46,7 +50,7 @@ export class Input<V extends string | number, S extends string | number | IItem>
     getStateObject() {
         return {
             isFocus: this.ifFocus(),
-            value: this.getValue(),
+            value: this.getValue() as V,
             valueHTML: `${this.getValue()}`,
         };
     }
@@ -125,7 +129,7 @@ export class Input<V extends string | number, S extends string | number | IItem>
             }
         } catch(e) {
             this._value = currentValue;
-            //throw e;
+            message.sendMessage(MessageCode.INTERNAL_ERROR, 'НЕДОПУСТИМИЙ СИМВОЛ!');
         }
     }
 }
@@ -145,11 +149,19 @@ export class InputList extends Input<string, IItem> implements IInputList {
 export class InputNumber extends Input<number, number> implements IInputNumber {
 
     getValue() {
-        return Number(this._value);
+        return Number(this._value) / 1000;
+    }
+
+    getStateObject() {
+        return {
+            isFocus: this.ifFocus(),
+            value: this.getValue(),
+            valueHTML: `${this.getValueHTML()}`,
+        };
     }
 
     getValueHTML() {
-        return (this.getValue() / 1000).toFixed(3);
+        return (this.getValue()).toFixed(3);
     }
 
     protected _onChange() {
@@ -157,6 +169,8 @@ export class InputNumber extends Input<number, number> implements IInputNumber {
             super._onChange();
             return;
         }
-        else throw new Error('Недопустимий символ');
+        else {
+            message.sendMessage(MessageCode.INTERNAL_ERROR, 'НЕДОПУСТИМЕ ЗНАЧЕННЯ!');
+        }
     }
 }

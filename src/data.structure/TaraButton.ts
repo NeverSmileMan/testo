@@ -37,7 +37,7 @@ class TaraButton extends ControlButton implements ITaraButton {
     }
 
     setAdditionalTara(value: number) {
-        this._tara = value / 1000;
+        this._tara = value;
         // this._input.setValue('');
         this.doAction();
     }

@@ -8,6 +8,7 @@ import { AppState } from './data.structure/types/types';
 import useApp from './hooks/App';
 import Main from './components/Main';
 import rikAppControl from './functions/rikAppControl';
+import ErrorBoundary from './components/errors/error';
 
 rikAppControl.runRikAppControl();
 

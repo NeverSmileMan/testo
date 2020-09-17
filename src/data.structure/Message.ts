@@ -4,8 +4,9 @@ import
     MessageCode,
 } from './data/messagesInfo';
 
+
 export interface IMessage {
-    sendMessage: (code: MessageCode | null) => void;
+    sendMessage: (code: MessageCode | null, text?: string) => void;
     getMessage: () => IMessageInfo | null;
     onMessage: (callback: (getState: () => IMessageInfo | null) => void) => void;
 }
@@ -13,14 +14,16 @@ export interface IMessage {
 export class Message implements IMessage {
     private _code: MessageCode | null = null;
     private _callbackOnMessage?: (getState: () => IMessageInfo | null) => void;
+    private _text: string = '';
 
     constructor() {
         this.getMessage = this.getMessage.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
     }
 
-    sendMessage(code: MessageCode | null) {
+    sendMessage(code: MessageCode | null, text?: string) {
         this._code = code;
+        this._text = (code && text) || '';
         this._onMessage();
     }
 
@@ -34,7 +37,9 @@ export class Message implements IMessage {
 
     getMessage() {
         if (this._code === null) return null;
-        return messagesInfo[this._code];
+        const message = { ...messagesInfo[this._code] };
+        if (this._text) message.text += ': ' + this._text;
+        return message;
     }
 }
 
@@ -48,3 +53,5 @@ function getInstance() {
 }
 
 export default { getInstance };
+
+export * from '../data.structure/data/messagesInfo';

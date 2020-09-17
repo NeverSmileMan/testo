@@ -9,8 +9,9 @@ class Keyboard implements IKeyboard {
     private _input?: IInputBase | null;
 
     onClick(key: string) {
-        if (key.match(/^([ |A-Z|А-Я|0-9|І|Ї|Є|Ё]|CLEAR|BACKSPACE|ENTER)$/))
+        if (key.match(/^([ |A-Z|А-Я|0-9|І|Ї|Є|Ё]|CLEAR|BACKSPACE|ENTER)$/)) {
             this._input?.pressKey(key);
+        }
     }
 
     setActiveInput(input: IInputBase | null) {
