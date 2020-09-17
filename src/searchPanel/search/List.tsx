@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import itemsData, { IItem } from './itemsData';
 import { MainContext } from '../../main';
@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 function List({ input }: { input: string }) {
   const classes = useStyles();
   const [{ filter, data = null }, setState] = useState({ filter: input } as { filter: string, data: IItem[] | null });
-  const { addItem, setType } = useContext(MainContext);
+  const { addItem, setType, setSelectedItem } = useContext(MainContext);
 
   useEffect(() => {
     if (!input) {
@@ -56,18 +56,24 @@ function List({ input }: { input: string }) {
   }, [input]);
 
   if (!data) return null;
-
+  const onClickItemList = (item:IItem) => {
+    if (item.type==='ваговий') {
+      addItem({item:item})
+    } else {
+      setType('qtyGoods')();
+      setSelectedItem(item)
+    }
+  }
   const items = data.map((item, i) =>
     <li
       key={i}
       data-item-index={i}
-      onClick={() => { addItem(item) }}
+      onClick={() => onClickItemList(item) }
     > {/****** плохАААААААААА!!! *****/}
       <span>{item.code}</span>
       <span>{item.name}</span>
     </li>
   );
-
   return (
     <div className={classes.list}>
       {items.length
