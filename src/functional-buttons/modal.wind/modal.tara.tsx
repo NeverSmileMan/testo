@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import FixedBtn from './calc/fixed.btn';
 import InputWeight from './tara/input.weight';
-import { MainContext } from '../../main';
 
 const useStyles = makeStyles({
     container: {
