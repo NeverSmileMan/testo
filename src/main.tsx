@@ -92,11 +92,7 @@ export default function Main() {
     setType(null)();
   };
 
-
   const [hint, error, changeHint] = useHints();
-
-
-
 
   const [
     tabItems,

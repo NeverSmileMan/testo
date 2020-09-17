@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Hints } from '../custom/variables';
 
@@ -28,19 +28,28 @@ const styles = makeStyles({
 	hints_error: {
 		color: 'white',
 		background: 'red',
-		animation: '$error 300ms ',
+		// animation: '$error 300ms ',
 	},
-	'@keyframes error': {
-		'0%': { opacity: 0 },
-		'25%': { opacity: 1 },
-		'50%': { opacity: 0 },
-		'75%': { opacity: 1 },
-		'100%': { opacity: 0 },
-	},
+	// '@keyframes error': {
+	// 	'0%': { opacity: 0 },
+	// 	'25%': { opacity: 1 },
+	// 	'50%': { opacity: 0 },
+	// 	'75%': { opacity: 1 },
+	// 	'100%': { opacity: 0 },
+	// },
 });
 
 const Hint: FC<HintsProps> = ({ hint, error }: HintsProps) => {
 	const { hints, hints_messages, hints_error } = styles();
+	const [class, setSclass] = useState('');
+
+// useEffect(() => {
+// 	effect
+// 	return () => {
+// 		cleanup
+// 	}
+// }, [error])
+
 
 	return (
 		<div className={hints}>
@@ -50,3 +59,11 @@ const Hint: FC<HintsProps> = ({ hint, error }: HintsProps) => {
 };
 
 export default Hint;
+
+
+	// const showError = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+	// 	setShowErr(true)
+	// 	setTimeout(() => {
+	// 		setShowErr(false)
+	// 	}, 300)
+	// },[])
