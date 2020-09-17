@@ -1,6 +1,7 @@
 import React from 'react';
 import { getSizeOfElements, getSizeOfElementsInUnits, IKeyboardOptions } from '../../functions/keyboardFunc';
-import getKeyboardStyles, { IDifferentKeys } from './KeyboardStyles';
+import getKeyboardStyles from '../../styles/keyboard/KeyboardStyles';
+import { IDifferentKeys } from './KeyboardOptions';
 import KeyboardKeys from './KeyboardKeys';
 import { withStyles, WithStyles, ClassKeyInferable } from '@material-ui/styles';
 

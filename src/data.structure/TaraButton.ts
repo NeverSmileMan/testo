@@ -1,4 +1,3 @@
-import { IStateWeights } from './Weights';
 import { State } from './types/types';
 import Weights, { IWeightsTest } from './Weights';
 import ControlButton, { IControlButton } from './ControlButton';
@@ -16,7 +15,7 @@ class TaraButton extends ControlButton implements ITaraButton {
         this._weights = Weights.getInstance();
         this._weights.onChange(this._onWeightsChange.bind(this));
         this._onWeightsChange();
-        this.setAdditionalTara = this.setAdditionalTara.bind(this)
+        this.setAdditionalTara = this.setAdditionalTara.bind(this);
     }
 
     private _setState() {
@@ -25,10 +24,6 @@ class TaraButton extends ControlButton implements ITaraButton {
             this._state = State.ENABLED;
         else
             this._state = State.DISABLED;
-    }
-
-    onDataChange(data: IStateWeights) {
-
     }
 
     private _onWeightsChange() {

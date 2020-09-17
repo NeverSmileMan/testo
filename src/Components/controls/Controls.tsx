@@ -14,7 +14,7 @@ type Props = {
 function Controls({ classes, callbacks }: Props) {
     const { printIsActive, closeIsActive, doClose } = useContext(OrdersControlContext);
     return (
-        <div className={classes.controls}>
+        <div className={classes.wrapper}>
             <Buttons.TaraButton />
             <Buttons.PrintButton isActive={printIsActive} onAction={callbacks.printOrder}/>
             <Buttons.CloseButton isActive={closeIsActive} onAction={callbacks.deleteOrder} doAction={doClose}/>

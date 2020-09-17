@@ -1,5 +1,5 @@
 import React from 'react';
-import { IDifferentKeys, IKeyAttr } from './KeyboardStyles';
+import { IDifferentKeys, IKeyAttr } from './KeyboardOptions';
 import { ISizeOfElements, toUnits } from '../../functions/keyboardFunc';
 
 interface Props {

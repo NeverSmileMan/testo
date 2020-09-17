@@ -1,4 +1,4 @@
-import { IDifferentKeys } from "../components/keyboard/KeyboardStyles";
+import { IDifferentKeys } from "../components/keyboard/KeyboardOptions";
 
 export interface IKeyboardOptions {
     keyboardSet: string[];

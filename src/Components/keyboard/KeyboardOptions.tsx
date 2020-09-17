@@ -1,9 +1,23 @@
-import React, {} from 'react';
+import React from 'react';
 import {
     keyboardSetEN, keyboardSetUA,
     keyboardSetNUMS, keyboardSetFUNC,
     keyboardSetTARAFIX } from '../../data.structure/data/keyboardSets';
 import { IKeyboardOptions } from '../../functions/keyboardFunc';
+
+export interface IDifferentKeys { 
+    [key: string]: {
+        width?: number;
+        content?: string | React.ReactElement;
+        attr?: IKeyAttr;
+    };
+}
+
+export interface IKeyAttr {
+    onClick?: React.EventHandler<React.MouseEvent>;
+    'data-next-lang'?: string;
+    'data-key'?: string;
+}
 
 export const KeyboardLayoutOptionsEN: IKeyboardOptions = {
     keyboardSet: keyboardSetEN.setKeys,

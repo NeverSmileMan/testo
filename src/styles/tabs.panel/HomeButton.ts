@@ -7,6 +7,7 @@ const styles = createStyles((theme: Theme) => ({
         alignItems: 'center',
         justifyContent: 'center',
         color: theme.palette.secondary.dark,
+        cursor: 'pointer',
     },
 }));
 

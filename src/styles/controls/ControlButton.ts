@@ -10,6 +10,7 @@ const styles = createStyles((theme: Theme) => ({
         alignItems: 'center',
         flexDirection: 'column',
         backgroundColor: theme.palette.primary.main,
+        cursor: 'pointer',
         '&:first-child': {
             marginBottom: '2px',
         },

@@ -5,6 +5,7 @@ const styles = createStyles((theme: Theme) => ({
         flex: '1 0 0',
         padding: '0.5rem',
         '& .message': {
+            color: theme.palette.secondary.dark,
             height: '100%',
             borderRadius: '.4rem',
             fontSize: '0.9rem',
