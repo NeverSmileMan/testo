@@ -25,7 +25,7 @@ const NameCalc = 'Кількість'
 const InputQty = () => {
   const { inputContainer, keyboardContainer } = useStyle();
   const [qtyGoods, setqtyGoods] = useState(0)
-  const {setCalcValue, setType} = useContext(MainContext);
+  const { setType, selectedItem, addItem} = useContext(MainContext);
   const getQty = useCallback((num: number): any => () => {
     setqtyGoods(qtyGoods * 10 + num)
   }, [setqtyGoods, qtyGoods])
@@ -34,15 +34,12 @@ const InputQty = () => {
     setqtyGoods(Math.trunc(qtyGoods / 10))
   }, [setqtyGoods, qtyGoods])
 
-  const submitQty = () => {
-    console.log('heramba');
-    setCalcValue(qtyGoods);
-    setType(null)();
-  };
-  
   const controlOnclick = {
     delete: deleteQty,
-    submit: submitQty,
+    submit: useCallback(() => {
+      setType(null)();
+      addItem({item:selectedItem, сalcValue:qtyGoods});
+    }, [qtyGoods, setType, addItem, selectedItem]),
   }
   return (
     <div className={inputContainer}>
