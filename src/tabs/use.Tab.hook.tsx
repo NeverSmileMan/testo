@@ -26,7 +26,7 @@ export interface ArgAddItemFunc {
 }
 
 export function useTabs(
-  setError: any,
+  setHint: (str: Hints, likeError?: boolean) => void,
   scaleService: any,
   calcValue: number,
 ): [
@@ -42,7 +42,7 @@ export function useTabs(
     () => void,
     () => void,
   ] {
-  const [tabItems, setTabItems] = useState<TabItems[]>([{ tabNumber: 1, tara: -1, items: [], },] as TabItems[]);
+  const [tabItems, setTabItems] = useState<TabItems[]>([{ tabNumber: 1, tara: 0, items: [], },] as TabItems[]);
   const [activeTab, setActiveTab] = useState<number>(0);
   const [activeItem, setActiveItem] = useState<AddedItem | null>(null);
   const [freeTabNumbers, setFreeTabNumbers] = useState(() => {
@@ -79,7 +79,7 @@ export function useTabs(
                 addedItem.amount = сalcValue;
                 addedItem.cost = addedItem.amount * item.price;
               } else {
-                setError(Hints.PickItemsQty);
+                setHint(Hints.PickItemsQty);
                 return false;
               }
               break;
@@ -89,11 +89,11 @@ export function useTabs(
               addedItem.cost = scaleService.getItemCost(price);
               break;
             default:
-              setError(Hints.IncorrectItemType, true);
+              setHint(Hints.IncorrectItemType, true);
               return false;
           }
         } else {
-          setError(Hints.MinWeight, true);
+          setHint(Hints.MinWeight, true);
           return false;
         }
         tabItems[activeTab].items.push(addedItem);
@@ -151,7 +151,7 @@ export function useTabs(
         })
         setTabItems((prevState) => [...prevState, {
           tabNumber: 1,
-          tara: -1,
+          tara: 0,
           items: [],
         }])
       }
