@@ -1,16 +1,6 @@
 import React, { ReactElement, useCallback } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-
-type ItemType = 'ваговий' | 'штучний'; // заменить enum  импортом откуда-то
-
-interface Item {
-	code: string;
-	name: string;
-	amount: number;
-	cost: number;
-	price: number;
-	type: ItemType;
-}
+import { Item } from './added.items.table';
 
 type Options = Array<Partial<keyof Item>>;
 
@@ -18,13 +8,13 @@ interface Props {
 	item: Item;
 	columns: Options;
 	active: Item | null;
-	changeRule: ChangeRule; //переназвать
+	changeRule: ChangeRule;
 	addUnits: AddUnits;
 	onClick: (val: null | Item) => void;
 }
 
 type ChangeRule = {
-	[K in keyof Partial<Item>]: number | string; //поменять?
+	[K in keyof Partial<Item>]: number | string;
 };
 
 type AddUnits = {
@@ -70,7 +60,14 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 );
 
-export default function SingleItem({ item, columns, changeRule = {}, addUnits = {}, active, onClick }: Props): ReactElement {
+export default function SingleItem({
+	item,
+	columns,
+	changeRule = {},
+	addUnits = {},
+	active,
+	onClick,
+}: Props): ReactElement {
 	const classes = useStyles();
 
 	const onClick_ = useCallback(() => {
