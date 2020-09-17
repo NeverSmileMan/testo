@@ -4,8 +4,9 @@ import { IOrder } from './Order';
 import { MessageCode } from './data/messagesInfo';
 import { State, Mode } from './types/types';
 import Message from './Message';
+import IObject from './types/objects';
 
-export interface IOrderControl {
+export interface IOrderControl extends IObject<IStateOrder> {
     getCurrentOrder: () => IOrder | null;
     getOrderNumber: () => number | null;
     delItem: () => void;
@@ -15,12 +16,12 @@ export interface IOrderControl {
     getSelectedItemIndex: () => number | null;    
     getItemsCount: () => number | 0;
     getTotal: () => number;
-    onChangeOrder: (callback: (getState: () => IStateOrder) => void) => void;
+    // onChangeOrder: (callback: (getState: () => IStateOrder) => void) => void;
     getState: () => State;
     addItem: (item: IItem) => void;
     onReset: (callback: () => void) => void;
     onMessage: (callback: (code: MessageCode | null) => void) => void;
-    getStateOrder: () => IStateOrder;
+    // getStateOrder: () => IStateOrder;
 }
 
 export interface IStateOrder {
@@ -45,7 +46,7 @@ export class OrderControl implements IOrderControl {
     constructor() {
         this._weights = Weights.getInstance();
         this._weights.onChange(this._onWeightsChange.bind(this));
-        this.getStateOrder = this.getStateOrder.bind(this);
+        this.getStateObject = this.getStateObject.bind(this);
         this.onMessage(Message.getInstance().sendMessage);
         this._onWeightsChange();
     }
@@ -67,7 +68,7 @@ export class OrderControl implements IOrderControl {
         if (this._callbackOnReset) this._callbackOnReset();
     }
 
-    getStateOrder(): IStateOrder {
+    getStateObject(): IStateOrder {
         return {
             order: this.getCurrentOrder(),
             isSelected: this.isSelected(),
@@ -160,12 +161,12 @@ export class OrderControl implements IOrderControl {
         return this._currentOrder ? this._currentOrder.orderNumber : null;
     }
 
-    onChangeOrder(callback: (getState: () => IStateOrder) => void) {
+    onChange(callback: (getState: () => IStateOrder) => void) {
         this._callbackOnChangeOrder = callback;
     }
 
     protected _onChangeOrder() {
-        if (this._callbackOnChangeOrder) this._callbackOnChangeOrder(this.getStateOrder);
+        if (this._callbackOnChangeOrder) this._callbackOnChangeOrder(this.getStateObject);
     }
 
     private _onWeightsChange() {

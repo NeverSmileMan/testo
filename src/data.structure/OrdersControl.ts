@@ -2,7 +2,7 @@ import { OrderControl, IOrderControl } from './OrderControl';
 import { Order, IOrder, IOrders } from './Order';
 import { Printer } from './Printer';
 
-export interface IOrdersControl extends IOrderControl{
+export interface IOrdersControl extends IOrderControl {
     canCreateOrder: () => boolean;
     createOrder: () => void;
     selectOrder: (orderNumber: number) => void;

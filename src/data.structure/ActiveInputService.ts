@@ -1,23 +1,23 @@
 import Keyboard, { IKeyboard } from './Keyboard';
-import { IInput } from './Input';
+import { IInputBase } from './Input';
 
 export interface IActiveInputService {
-    setActiveInput: (input: IInput | null) => void;
-    delActiveInput: (input: IInput) => void;
-    ifActiveInput: (input: IInput) => boolean;
+    setActiveInput: (input: IInputBase | null) => void;
+    delActiveInput: (input: IInputBase) => void;
+    ifActiveInput: (input: IInputBase) => boolean;
 }
 
 class ActiveInputService {
 
     private _keyboard: IKeyboard;
-    private _activeInput: IInput | null = null;
-    private _inputs: Set<IInput> = new Set();
+    private _activeInput: IInputBase | null = null;
+    private _inputs: Set<IInputBase> = new Set();
 
     constructor() {
         this._keyboard = Keyboard.getInstance();
     }
 
-    setActiveInput(input: IInput | null) {
+    setActiveInput(input: IInputBase | null) {
         if (input) this._inputs.add(input);
         const currentInput = this._activeInput;
         this._activeInput = input;     
@@ -26,14 +26,14 @@ class ActiveInputService {
         this._activeInput?.setFocus();
     }
 
-    delActiveInput(input: IInput) {
+    delActiveInput(input: IInputBase) {
         input.blurFocus();
         this._inputs.delete(input);
         const nextInput = this._inputs.values().next().value || null;
         this.setActiveInput(nextInput);
     }
 
-    ifActiveInput(input: IInput) {
+    ifActiveInput(input: IInputBase) {
         return this._activeInput === input;
     }
 }

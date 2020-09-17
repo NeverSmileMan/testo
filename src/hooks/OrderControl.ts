@@ -17,12 +17,12 @@ const changeStateOrder = (
     orders: IOrderControl,
     setStateOrder: React.Dispatch<() => IStateOrder>,
 ) => {
-    orders.onChangeOrder(setStateOrder);
+    orders.onChange(setStateOrder);
     return createCallbacks(orders);
 };
 
 const useOrder = (orders: IOrderControl) => {
-    const [stateOrder, setStateOrder] = useState(orders.getStateOrder);
+    const [stateOrder, setStateOrder] = useState(orders.getStateObject);
     const [methods] = useState(() => changeStateOrder(orders, setStateOrder));
     return { ...stateOrder, stateOrder, ...methods };
 };

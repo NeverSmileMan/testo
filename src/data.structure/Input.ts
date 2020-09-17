@@ -1,57 +1,54 @@
 import { IItem } from './Item';
 
-export interface IInput {
+export interface IInputBase {
+    setFocus: () => void;
+    blurFocus: () => void;
     pressKey: (key: string) => void;
+}
+
+export interface IInput<V extends string | number, S extends string | number | IItem>
+    extends IInputBase
+{
     setValue: (value: string) => void;
     getValue: () => string | number;
     getValueHTML: () => string;
-    setFocus: () => void;
-    blurFocus: () => void;
-    onChange: (callback: (value: string) => void) => void;
-    onSelect: (callback: (value: any) => void) => void;
-    onFocusChange: (callback: () => void) => void;
+    onChange: (callback: (getState: () => IStateInput<V>) => void) => void;
+    onSelect: (callback: (value: S) => void) => void;
     ifFocus: () => boolean;
-    getStateInput: () => {};
+    getStateObject: () => IStateInput<V>;
 }
 
-export interface IStateInputNumber {
-    isFocus: boolean;
-    valueHTML: string;
-}
-
-export interface IInputNumber extends IInput {
-    getValue: () => number;
-    onSelect: (callback: (value: number) => void) => void;
-    getStateInput: () => IStateInputNumber;
-}
-
-export interface IStateInputList {
-    isFocus: boolean;
-    value: string;
-    valueHTML: string;
-}
-
-export interface IInputList extends IInput {
-    getValue: () => string;
-    onSelect: (callback: (item: IItem) => void) => void;
+export interface IInputList extends IInput<string, IItem> {
     _onSelect: (item: IItem) => void;
-    getStateInput: () => IStateInputList;
 }
 
-export class Input implements IInput {
+export interface IInputNumber extends IInput<number, number> {
+    getValue: () => number;
+}
+
+export interface IStateInput<V> {
+    isFocus: boolean;
+    value: V;
+    valueHTML: string;
+}
+
+export class Input<V extends string | number, S extends string | number | IItem> implements IInput<V, S> {
     protected _value: string = '';
-    private _callbackOnFocusChange?: () => void;
-    protected _callbackOnChange?: (value: string) => void;
-    protected _callbackOnSelect?: (value: any) => void;
+    protected _callbackOnChange?: (getState: () => IStateInput<V>) => void;
+    protected _callbackOnSelect?: (value: S) => void;
     private _isFocus: boolean = false;
 
     constructor() {
-        this.getStateInput = this.getStateInput.bind(this);
+        this.getStateObject = this.getStateObject.bind(this);
         this._onSelect = this._onSelect.bind(this);
     }
 
-    getStateInput() {
-        return {};
+    getStateObject() {
+        return {
+            isFocus: this.ifFocus(),
+            value: this.getValue(),
+            valueHTML: `${this.getValue()}`,
+        };
     }
 
     protected _addSymbol(value: string) {
@@ -74,7 +71,7 @@ export class Input implements IInput {
     }
 
     getValue() {
-        return this._value as string | number;
+        return this._value as V;
     }
 
     getValueHTML() {
@@ -83,35 +80,27 @@ export class Input implements IInput {
 
     setFocus() {
         this._isFocus = true;
-        this._onFocusChange();
+        this._onChange();
     }
 
     blurFocus() {
         this._isFocus = false;
-        this._onFocusChange();
-    }
-
-    onFocusChange(callback: () => void) {
-        return this._callbackOnFocusChange = callback;
-    }
-
-    private _onFocusChange() {
-        if (this._callbackOnFocusChange) this._callbackOnFocusChange();
+        this._onChange();
     }
 
     protected _onChange() {
-        if (this._callbackOnChange) this._callbackOnChange(this._value);
+        if (this._callbackOnChange) this._callbackOnChange(this.getStateObject);
     }
 
     protected _onSelect(value?: any) {
-        if (this._callbackOnSelect) this._callbackOnSelect(this._value);
+        if (this._callbackOnSelect) this._callbackOnSelect(value || this.getValue());
     }
 
-    onChange(callback: (value: string) => void) {
+    onChange(callback: (getState: () => IStateInput<V>) => void) {
         this._callbackOnChange = callback;
     }
 
-    onSelect(callback: (value: any) => void) {
+    onSelect(callback: (value: S) => void) {
         this._callbackOnSelect = callback;
     }
 
@@ -141,23 +130,11 @@ export class Input implements IInput {
     }
 }
 
-export class InputList extends Input implements IInputList {
-
-    getStateInput() {
-        return {
-            isFocus: this.ifFocus(),
-            value: this.getValue(),
-            valueHTML: this.getValueHTML(),
-        };
-    }
+export class InputList extends Input<string, IItem> implements IInputList {
 
     _onSelect(item: IItem) {
         if (!item) return;
         if (this._callbackOnSelect) this._callbackOnSelect(item);
-    }
-
-    getValue() {
-        return this._value;
     }
 
     getValueHTML() {
@@ -165,13 +142,10 @@ export class InputList extends Input implements IInputList {
     }
 }
 
-export class InputNumber extends Input implements IInputNumber {
+export class InputNumber extends Input<number, number> implements IInputNumber {
 
-    getStateInput() {
-        return {
-            isFocus: this.ifFocus(),
-            valueHTML: this.getValueHTML(),
-        };
+    getValue() {
+        return Number(this._value);
     }
 
     getValueHTML() {
@@ -185,18 +159,4 @@ export class InputNumber extends Input implements IInputNumber {
         }
         else throw new Error('Недопустимий символ');
     }
-
-    protected _onSelect() {
-        if (this._callbackOnSelect) this._callbackOnSelect(this.getValue());
-    }
-
-    onSelect(callback: (value: number) => void) {
-        this._callbackOnSelect = callback;
-    }
-
-    getValue() {
-        return Number(this._value);
-    }
 }
-
-export default {};

@@ -1,19 +1,17 @@
 import React, { useState, useRef } from 'react';
 import ActiveInputService from '../data.structure/ActiveInputService';
-import { InputList, IInputList, IStateInputList } from '../data.structure/Input';
+import { InputList, IInputList, IStateInput } from '../data.structure/Input';
 import { Props } from '../components/search/Search';
 
 const changeState = (
     input: IInputList,
-    setState: React.Dispatch<() => IStateInputList>,
+    setState: React.Dispatch<() => IStateInput<string>>,
     ref: React.RefObject<HTMLDivElement>,
     callbacks: Props['callbacks'],
 ) => {
 
     const activeInputService = ActiveInputService.getInstance();
-    const getState = input.getStateInput;
-    input.onFocusChange(() => setState(getState));
-    input.onChange(() => setState(getState));
+    input.onChange(setState);
     input.onSelect(callbacks.onSelect);
     callbacks.resetSearch(() => input.setValue(''));
 
@@ -31,7 +29,7 @@ const changeState = (
 
 const useSearch = (callbacks: Props['callbacks']) => {
     const [input] = useState(() => new InputList());
-    const [state, setState] = useState(input.getStateInput);
+    const [state, setState] = useState(input.getStateObject);
     const ref = useRef(null);
     const [methods] = useState(() => changeState(input, setState, ref, callbacks));
 
