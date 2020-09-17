@@ -49,7 +49,7 @@ const Hint: FC<HintsProps> = ({ hint, error }) => {
 			setClss(`${hints_messages} ${hints_error}`);
 			x = setTimeout(() => {
 				setClss(hints_messages);
-			}, 500);
+			}, 300);
 		} else {
 			setClss(hints_messages);
 		}
@@ -66,10 +66,3 @@ const Hint: FC<HintsProps> = ({ hint, error }) => {
 };
 
 export default Hint;
-
-// const showError = useCallback(() => {
-// 	setShowErr(true)
-// 	setTimeout(() => {
-// 		setShowErr(false)
-// 	}, 300)
-// },[])
