@@ -1,26 +1,42 @@
-import { State } from './types/types';
-// import { IStateWeights } from './Weights';
+import { State, Mode } from './types/types';
 
 export interface IControlButton {
     onAction: (callback?: () => void) => void;
-    onChange: (callback: () => void) => void;
+    onChange: (callback: (getState: () => IStateControlButton) => void) => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     doAction: (confirm?: boolean) => void;
     getState: () => State;
-    // onDataChange?: (data: IStateWeights) => void;
+    getStateControlButton: () => IStateControlButton;
+}
+
+export interface IStateControlButton {
+    mode: Mode;
+    currentIsActive: boolean;
 }
 
 class ControlButton implements IControlButton {
     protected _state: State = State.DISABLED;
     private _callbackOnAction?: () => void;
-    private _callbackOnChange?: () => void;
+    private _callbackOnChange?: (getState: () => IStateControlButton) => void;
+
+    constructor() {
+        this.getStateControlButton = this.getStateControlButton.bind(this);
+        this.doAction = this.doAction.bind(this);
+    }
+
+    getStateControlButton() {
+        return {
+            mode: this.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON,
+            currentIsActive: this.isActive(),
+        };
+    }
 
     onAction(callback?: () => void) {
         this._callbackOnAction = callback;
     }
 
-    onChange(callback: () => void) {
+    onChange(callback: (getState: () => IStateControlButton) => void) {
         this._callbackOnChange = callback;
     }
 
@@ -57,7 +73,7 @@ class ControlButton implements IControlButton {
     }
 
     protected _onChange() {
-        if (this._callbackOnChange) this._callbackOnChange();
+        if (this._callbackOnChange) this._callbackOnChange(this.getStateControlButton);
     }
 }
 

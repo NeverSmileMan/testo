@@ -7,7 +7,7 @@ interface Props {
     title?: string;
     confirm?: string;
     reject?: string;
-    object: IControlButton,
+    button: IControlButton,
 };
 
 function PrintModal({
@@ -15,10 +15,10 @@ function PrintModal({
     confirm = 'ТАК',
     reject = 'НІ',
     classes,
-    object,
+    button,
 }: Props & WithStyles) {
-    const onClickTrue = useCallback(() => object.doAction(true), [object]);
-    const onClickFalse = useCallback(() => object.doAction(false), [object]);
+    const onClickTrue = useCallback(() => button.doAction(true), [button]);
+    const onClickFalse = useCallback(() => button.doAction(false), [button]);
     return (
         <div className={classes.wrapper}>
             <div className='title'>

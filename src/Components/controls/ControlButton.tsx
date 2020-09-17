@@ -8,15 +8,15 @@ import { IControlButton } from '../../data.structure/ControlButton';
 import getHookControlButton from '../../hooks/ControlButton';
 
 export interface IControlButtonProps {
-    object: IControlButton;
+    button: IControlButton;
     ModalComponent: React.ComponentType<any> & StyledComponentProps;
     IconComponent: React.FunctionComponent<any>;
     text: string;
 }
 
 function createControlButton(props: IControlButtonProps) {
-    const { object, ModalComponent, IconComponent, text } = props;
-    const { onClick, setActive, useControlButton } = getHookControlButton(object);
+    const { button, ModalComponent, IconComponent, text } = props;
+    const useControlButton  = getHookControlButton(button);
 
     type Props = {
         isActive?: boolean;
@@ -25,8 +25,12 @@ function createControlButton(props: IControlButtonProps) {
     } & WithStyles;
 
     function ControlButton({ classes, isActive, onAction, doAction }: Props) {
-        const { mode, currentIsActive } = useControlButton(onAction, doAction);
-        useEffect(() => setActive(isActive), [isActive]);
+        const { 
+            mode,  currentIsActive,
+            onClick, setActive,
+        } = useControlButton(onAction, doAction);
+
+        useEffect(() => setActive(isActive), [setActive, isActive]);
 
         const className = `${classes.wrapper} ${currentIsActive ? '' : classes.disabled}`;
 
@@ -39,7 +43,7 @@ function createControlButton(props: IControlButtonProps) {
             </div>
             {mode === Mode.MODAL ?
             <Modal>
-                <ModalComponent object={object} />
+                <ModalComponent button={button} />
             </Modal> : null
             }
         </>);

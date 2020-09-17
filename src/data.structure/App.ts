@@ -7,7 +7,7 @@ export interface IApp {
     getEnvironment: () => IEnvironment;
     getState: () => AppState;
     getConfig: () => IConfig;
-    onChange: (callback: () => void) => void;
+    onChange: (callback: (getState: () => IStateApp) => void) => void;
     getStateApp: () => IStateApp;
 }
 
@@ -16,7 +16,7 @@ export interface IStateApp {
     themeName: ThemesNames;
     maxOrdersCount: number;
     setEnvironment: (rect: DOMRect) => void;
-    getStateApp: () => IStateApp;
+    // getStateApp: () => IStateApp;
 }
 
 class App implements IApp {
@@ -24,7 +24,7 @@ class App implements IApp {
     private _state: AppState = AppState.INIT;
     protected _config: IConfig;
     private _env: IEnvironment = {} as IEnvironment;
-    private _callbackOnChange?: () => void;
+    private _callbackOnChange?: (getState: () => IStateApp) => void;
 
     constructor() {
         this._config = config;
@@ -37,7 +37,7 @@ class App implements IApp {
             themeName: this.getConfig().themeName,
             maxOrdersCount: this.getConfig().maxOrdersCount,
             setEnvironment: (rect: DOMRect) => this.setEnvironment(rect),
-            getStateApp: this.getStateApp,
+            // getStateApp: this.getStateApp,
         };
     }
 
@@ -62,13 +62,13 @@ class App implements IApp {
         return this._config;
     }
 
-    onChange(callback: () => void) {
+    onChange(callback: (getState: () => IStateApp) => void) {
         this._callbackOnChange = callback;
     }
 
     protected _onChange() {
         if (this._callbackOnChange) {
-            setTimeout(() => this._callbackOnChange!(), 1000);
+            setTimeout(() => this._callbackOnChange!(this.getStateApp), 1000);
         }
     }
 }
@@ -88,4 +88,13 @@ class AppTest extends App implements IAppTest {
     }
 }
 
-export default AppTest;
+let instance: AppTest;
+
+function getInstance() {
+    if (!instance) {
+        instance = new AppTest();
+    }
+    return instance;
+}
+
+export default { getInstance };

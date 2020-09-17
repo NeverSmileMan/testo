@@ -8,21 +8,33 @@ import {
 } from '../components/keyboard/KeyboardOptions';
 import KeyboardLayout from '../components/keyboard/KeyboardLayout';
 
-export const KeyboardLayoutUA = KeyboardLayout({ options: KeyboardLayoutOptionsUA });
-export const KeyboardLayoutEN = KeyboardLayout({ options: KeyboardLayoutOptionsEN });
-export const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsNUMS });
-
 const keyboard = Keyboard.getInstance();
 
-export const keyboardOnClick = (event: React.MouseEvent<HTMLDivElement>) => {
+const KeyboardLayoutUA = KeyboardLayout({ options: KeyboardLayoutOptionsUA });
+const KeyboardLayoutEN = KeyboardLayout({ options: KeyboardLayoutOptionsEN });
+const KeyboardLayoutNUMS = KeyboardLayout({ options: KeyboardLayoutOptionsNUMS });
+
+const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
     const target = event.target as HTMLElement;
     let keyElem: HTMLElement | null = target.closest('[data-key]');
     const key = keyElem?.dataset['key'];
     key && keyboard.onClick(key);
 };
 
-const getChangeLang = (setLang: React.Dispatch<() => string>) =>
-    (event: React.MouseEvent<HTMLDivElement>) => {
+const getDiffKeys = (changeLang: React.MouseEventHandler<HTMLDivElement>) => {
+    return {
+        'LANG': {
+            content: 'EN',
+            attr: {
+                onClick: changeLang,
+                'data-next-lang': 'EN',
+            },
+        },
+    };
+};
+
+const changeState = (setLang: React.Dispatch<() => string>) => {
+    const changeLang = (event: React.MouseEvent<HTMLDivElement>) => {
         const target = event.target as HTMLDivElement;
         const currentLang = target.dataset['nextLang'];
         if (!currentLang) return;
@@ -32,29 +44,25 @@ const getChangeLang = (setLang: React.Dispatch<() => string>) =>
         target.setAttribute('data-next-lang', nextLang);
     };
 
-const getKeyboardLayoutFUNC = (changeLang: React.MouseEventHandler<HTMLDivElement>) => {
-    const DiffKeys = {
-        'LANG': {
-            content: 'EN',
-            attr: {
-                onClick: changeLang,
-                'data-next-lang': 'EN',
-            },
-        },
-    };
+    const DiffKeys = getDiffKeys(changeLang);
 
     return KeyboardLayout({
         options: KeyboardLayoutOptionsFUNC,
         diffKeys: DiffKeys,
     });
-};
-
+}
 
 const useKeyboardMain = () => {
     const [lang, setLang] = useState('UA');
-    const [changeLang] = useState(() => getChangeLang(setLang));
-    const [KeyboardLayoutFUNC] = useState(() => getKeyboardLayoutFUNC(changeLang));
-    return { lang, KeyboardLayoutFUNC };
+    const [KeyboardLayoutFUNC] = useState(() => changeState(setLang));
+    return {
+        lang,
+        KeyboardLayoutEN,
+        KeyboardLayoutUA,
+        KeyboardLayoutNUMS,
+        KeyboardLayoutFUNC,
+        onClick,
+    };
 };
 
 export default useKeyboardMain;

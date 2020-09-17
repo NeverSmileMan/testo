@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import OrdersControl, { IOrdersControl, IStateOrders } from '../data.structure/OrdersControl';
 
 const createCallbacks = (orders: IOrdersControl) => {
@@ -19,14 +18,14 @@ const changeStateOrders = (
     setStateOrders: React.Dispatch<() => IStateOrders>,
 ) => {
     orders.onChangeOrders(setStateOrders);
+    return createCallbacks(orders);
 };
 
 const useOrders = (maxOrdersCount: number) => {
-    const [orders] = useState(() => new OrdersControl(maxOrdersCount) as IOrdersControl);
+    const [orders] = useState(() => new OrdersControl(maxOrdersCount));
     const [stateOrders, setStateOrders] = useState(orders.getStateOrders);
-    useState(() => changeStateOrders(orders, setStateOrders));
-    const [callbacks] = useState(() => createCallbacks(orders));
-    return { orders, stateOrders, ...callbacks };
+    const [methods] = useState(() => changeStateOrders(orders, setStateOrders));
+    return { orders, stateOrders, ...methods };
 };
 
 export default useOrders;

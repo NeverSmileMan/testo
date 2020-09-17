@@ -1,39 +1,30 @@
 import React, { useState } from 'react';
-import { Mode, State } from '../data.structure/types/types';
-import { IControlButton } from '../data.structure/ControlButton';
+import { IControlButton, IStateControlButton } from '../data.structure/ControlButton';
 
-function getHookControlButton(object: IControlButton) {
-    const onClick = () => object.doAction();
-
-    interface IStateControlButton {
-        mode: Mode;
-        currentIsActive: boolean;
-    }
-
-    const getState = () => ({
-        mode: object.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON,
-        currentIsActive: object.isActive(),
-    });
-
-    const setActive = (isActive?: boolean) => { !(isActive === undefined) && object.setActive(isActive) };
+function getHookControlButton(button: IControlButton) {
 
     function changeState(
         setState: React.Dispatch<() => IStateControlButton>,
         onAction?: () => void,
         doAction?: (callback: () => void) => void,
     ) { 
-        object.onChange(() => setState(() => getState()));
-        object.onAction(onAction);
-        if (doAction) doAction(object.doAction.bind(object));
+        button.onChange(setState);
+        button.onAction(onAction);
+        if (doAction) doAction(button.doAction);
+        const onClick = () => button.doAction();
+        const setActive = (isActive?: boolean) => {
+            !(isActive === undefined) && button.setActive(isActive);
+        };
+        return { onClick, setActive };
     }
 
     const useControlButton = (onAction?: () => void, doAction?: (callback: () => void) => void) => {
-        const [state, setState] = useState<IStateControlButton>(() => getState());
-        useState(() => changeState(setState, onAction, doAction));
-        return state;
+        const [state, setState] = useState<IStateControlButton>(button.getStateControlButton);
+        const [methods] = useState(() => changeState(setState, onAction, doAction));
+        return { ...state, ...methods };
     };
     
-    return { useControlButton, onClick, setActive };
+    return useControlButton;
 }
 
 export default getHookControlButton;

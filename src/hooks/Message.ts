@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import MessageObject from '../data.structure/Message';
+import Message, { IMessage } from '../data.structure/Message';
 import { IMessageInfo } from '../data.structure/data/messagesInfo';
 
-const message = MessageObject.getInstance();
-
-const changeState = (setState: React.Dispatch<() => IMessageInfo | null>) => {
-    message.onMessage(() => setState(message.getMessage));
+const changeState = (
+    message: IMessage,
+    setState: React.Dispatch<() => IMessageInfo | null>
+) => {
+    message.onMessage(setState);
 };
 
 const useMessage = () => {
+    const [message] = useState(Message.getInstance);
     const [messageInfo, setState] = useState(message.getMessage);
-    useState(() => changeState(setState));
+    useState(() => changeState(message, setState));
     if (messageInfo) return messageInfo;
     return { type: null, text: '' };
 };

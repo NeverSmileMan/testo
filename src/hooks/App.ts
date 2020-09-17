@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import App, { IAppTest, IStateApp } from '../data.structure/App';
-import { appControl } from '../functions/rikAppTest';
 
-function createStateApp(app: IAppTest, setStateApp: React.Dispatch<() => IStateApp>) {
-    appControl(app);
-    app.onChange(() => setStateApp(app.getStateApp));
-    return app.getStateApp();
+function createMethods(
+    app: IAppTest,
+    setStateApp: React.Dispatch<() => IStateApp>
+) {
+    app.onChange(setStateApp);
 }
 
 const useApp = () => {
-    const app = new App();
+    const [app] = useState(App.getInstance);
     const [stateApp, setStateApp] = useState(app.getStateApp);
-    useState(() => createStateApp(app, setStateApp));
+    useState(() => createMethods(app, setStateApp));
     return stateApp;
 };
 

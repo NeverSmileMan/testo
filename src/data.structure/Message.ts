@@ -7,12 +7,12 @@ import
 export interface IMessage {
     sendMessage: (code: MessageCode | null) => void;
     getMessage: () => IMessageInfo | null;
-    onMessage: (callback: () => void) => void;
+    onMessage: (callback: (getState: () => IMessageInfo | null) => void) => void;
 }
 
 export class Message implements IMessage {
     private _code: MessageCode | null = null;
-    private _callbackOnMessage?: () => void;
+    private _callbackOnMessage?: (getState: () => IMessageInfo | null) => void;
 
     constructor() {
         this.getMessage = this.getMessage.bind(this);
@@ -24,12 +24,12 @@ export class Message implements IMessage {
         this._onMessage();
     }
 
-    onMessage(callback: () => void) {
+    onMessage(callback: (getState: () => IMessageInfo | null) => void) {
         this._callbackOnMessage = callback;
     }
 
     private _onMessage() {
-        if (this._callbackOnMessage) this._callbackOnMessage();
+        if (this._callbackOnMessage) this._callbackOnMessage(this.getMessage);
     }
 
     getMessage() {

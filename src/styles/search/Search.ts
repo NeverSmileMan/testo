@@ -16,6 +16,7 @@ const styles = createStyles((theme: Theme) => ({
             borderRadius: '100px',
             fontSize: '1.2rem',
             fontWeight: 'bold',
+            overflow: 'hidden',
         },
         '& .focus:after': {
             content: "''",

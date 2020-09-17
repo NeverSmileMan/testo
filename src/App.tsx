@@ -7,6 +7,9 @@ import styles from './styles/App';
 import { AppState } from './data.structure/types/types';
 import useApp from './hooks/App';
 import Main from './components/Main';
+import rikAppControl from './functions/rikAppControl';
+
+rikAppControl.runRikAppControl();
 
 function AppComponent() {
     const { state, setEnvironment, themeName, maxOrdersCount} = useApp();

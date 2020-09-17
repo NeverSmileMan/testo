@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
-import ListObject from '../data.structure/List';
+import List, { IList } from '../data.structure/List';
 import { IItem } from '../data.structure/Item';
 
-const changeState = (onSelect: (item: IItem) => void, setState: React.Dispatch<() => (IItem[] | null)>) => {
-    const list = new ListObject();
-    list.onChange((itemsArray: IItem[] | null) => setState(() => itemsArray));
+const changeState = (
+    list: IList,
+    setState: React.Dispatch<() => (IItem[] | null)>,
+    onSelect: (item: IItem) => void,
+) => {
+    list.onChange(setState);
     const onItemSelect = (event: React.MouseEvent<HTMLDivElement>) => {
         const target = event.target as HTMLElement;
         const itemElem: HTMLElement | null = target.closest('[data-item-index]');
         const itemIndex = itemElem?.dataset['itemIndex'];
         itemIndex && onSelect(list.getItems()![+itemIndex]);
     };
-    const setFilter = list.setFilter.bind(list);
+    const setFilter = list.setFilter;
     return { onItemSelect, setFilter };
 };
 
 const useList = (onSelect: (item: IItem) => void) => {
-    const [itemsArray, setState] = useState<IItem[] | null>(() => null);
-    const [callbacks] = useState(() => changeState(onSelect, setState));
-    return { itemsArray, ...callbacks };
+    const [list] = useState(() => new List());
+    const [itemsArray, setState] = useState(list.getItems);
+    const [methods] = useState(() => changeState(list, setState, onSelect));
+    return { itemsArray, ...methods };
 };
 
 export default useList;

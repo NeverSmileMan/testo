@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Weights, { IWeightsTest, IStateWeightsTest } from '../data.structure/Weights';
+import Weights, { IWeightsTest, IStateWeightsTest } from '../data.structure/Weights'; 
 
 const changeState = (
     weights: IWeightsTest,

@@ -9,21 +9,21 @@ import TaraIcon from '@material-ui/icons/Speed';
 import TaraModal from '../tara/TaraModal';
 
 const propsClose: IControlButtonProps = {
-    object: new ControlButton(),
+    button: new ControlButton(),
     ModalComponent: CloseModal,
     IconComponent: CloseIcon,
     text: 'закрити',
 }
 
 const propsPrint: IControlButtonProps = {
-    object: new ControlButton(),
+    button: new ControlButton(),
     ModalComponent: PrintModal,
     IconComponent: PrintIcon,
     text: 'друк',
 }
 
 const propsTara: IControlButtonProps = {
-    object: new TaraButton(),
+    button: new TaraButton(),
     ModalComponent: TaraModal,
     IconComponent: TaraIcon,
     text: 'тара',

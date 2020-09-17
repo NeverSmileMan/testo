@@ -2,18 +2,20 @@ import { IItem } from './Item';
 import itemsData from './data/items';
 
 export interface IList {
-    onChange: (callback: (items: IItem[] | null) => void) => void;
+    onChange: (callback: (getState: () => IItem[] | null) => void) => void;
     getItems: () => IItem[] | null;
     setFilter: (filter: string) => void;
 }
 
 class List implements IList {
-    private _callbackOnChange?: (items: IItem[] | null) => void;
+    private _callbackOnChange?: (getState: () => IItem[] | null) => void;
     private _items: IItem[] | null = null;
     private _itemsData: IItem[];
     
     constructor() {
         this._itemsData = itemsData;
+        this.getItems = this.getItems.bind(this);
+        this.setFilter = this.setFilter.bind(this);
     }
 
     setFilter(filter: string) {
@@ -26,12 +28,12 @@ class List implements IList {
         return this._items;
     }
 
-    onChange(callback: (items: IItem[] | null) => void) {
+    onChange(callback: (getState: () => IItem[] | null) => void) {
         this._callbackOnChange = callback;
     }
 
     private _onChange() {
-        if (this._callbackOnChange) this._callbackOnChange(this._items);   
+        if (this._callbackOnChange) this._callbackOnChange(this.getItems);  
     }
 
     private _search(filter: string) {

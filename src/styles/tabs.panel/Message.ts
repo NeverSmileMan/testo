@@ -7,7 +7,8 @@ const styles = createStyles((theme: Theme) => ({
         '& .message': {
             height: '100%',
             borderRadius: '.4rem',
-            fontSize: '0.8rem',
+            fontSize: '0.9rem',
+            fontWeight: 'bold',
             border: '1px solid ' + theme.palette.secondary.dark,
             display: 'flex',
             justifyContent: 'center',
@@ -15,16 +16,12 @@ const styles = createStyles((theme: Theme) => ({
         },
         '& .error': {
             color: 'white',
-            background: theme.palette.primary.main,
-            animation: '$error 300ms',
+            animation: '$error 1200ms infinite',
         },
     },
     '@keyframes error': {
-        '0%': {opacity: 0},
-        '25%': {opacity: 1},
-        '50%': {opacity: 0},
-        '75%': {opacity: 1},
-        '100%': {opacity: 0},
+        '0%': { background: 'white' },        
+        '10%': { background: theme.palette.primary.main },
     },
 }));
 

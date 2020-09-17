@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/search/Search';
 import { IItem } from '../../data.structure/Item';
-import useSearch, { attachInput, refreshInput } from '../../hooks/Search';
+import useSearch from '../../hooks/Search';
 import List from './List';
 
 export type Props = {
@@ -14,10 +14,13 @@ export type Props = {
 
 function Search({ classes, callbacks }: Props) {
 
-    const { isFocus, value, valueHTML, input, ref, onListSelect } = useSearch(callbacks);
+    const {
+        isFocus, value, valueHTML, ref,
+        onListSelect, attachInput, refreshInput
+    } = useSearch(callbacks);
     
-    useEffect(() => attachInput(input), [input]);
-    useEffect(() => refreshInput(ref, valueHTML), [ref, valueHTML]);
+    useEffect(attachInput, [attachInput]);
+    useEffect(() => refreshInput(valueHTML), [refreshInput, valueHTML]);
 
     return (
         <div className={classes.wrapper}>
