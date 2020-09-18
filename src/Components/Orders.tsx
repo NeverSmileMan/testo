@@ -20,8 +20,6 @@ function Orders({ classes, maxOrdersCount}: Props ) {;
         stateOrders, callbacksTabs, callbacksControls,
     } = useOrders(maxOrdersCount);
 
-    const { currentOrder } = stateOrders;
-    // console.log(stateOrders);
     return (
         <OrdersControlContext.Provider value = {stateOrders}>
             <div className={classes.wrapper}>

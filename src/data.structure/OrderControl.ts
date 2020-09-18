@@ -50,7 +50,6 @@ export class OrderControl implements IOrderControl {
         this.getStateObject = this.getStateObject.bind(this);
         this.onMessage(Message.getInstance().sendMessage); //???
         // this._onWeightsChange();
-        // this.setOrder();
     }
 
     onItemsChange(callback: () => void) {
@@ -62,10 +61,8 @@ export class OrderControl implements IOrderControl {
     }
 
     setOrder() {
-        //if (this._currentOrder) this._currentOrder.tara = this._weights.getTara(); //??????????
-        // this._currentOrder = order;
         this._weights?.setTara(this._currentOrder.tara);
-        this.selectItem(null); //??????????
+        this.selectItem(null);
         this.onWeightsChange();
     }
 
@@ -142,9 +139,6 @@ export class OrderControl implements IOrderControl {
     private _throwMessage(code: MessageCode | null) {
         if (this._callbackOnMessage) { 
             this._callbackOnMessage(code);
-        }
-        if (code === MessageCode.WEIGHTS_IS_EMPTY) {
-            setTimeout(() => this.onWeightsChange(), 1000);
         }
     }
 

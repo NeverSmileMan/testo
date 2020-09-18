@@ -2,8 +2,8 @@ import
     messagesInfo, {
     IMessageInfo,
     MessageCode,
+    MessageType,
 } from './data/messagesInfo';
-
 
 export interface IMessage {
     sendMessage: (code: MessageCode | null, text?: string) => void;
@@ -15,16 +15,24 @@ export class Message implements IMessage {
     private _code: MessageCode | null = null;
     private _callbackOnMessage?: (getState: () => IMessageInfo | null) => void;
     private _text: string = '';
-
+    private _timer: any;
     constructor() {
         this.getMessage = this.getMessage.bind(this);
         this.sendMessage = this.sendMessage.bind(this);
     }
 
     sendMessage(code: MessageCode | null, text?: string) {
+        clearTimeout(this._timer);
+        const prevCode = this._code;
+        const prevText = this._text;
         this._code = code;
         this._text = (code && text) || '';
         this._onMessage();
+        if (code === null
+            || messagesInfo[code].type !== MessageType.ERROR) return;
+        this._code = prevCode;
+        this._text = prevText;
+        this._timer = setTimeout(() => this._onMessage, 3000);
     }
 
     onMessage(callback: (getState: () => IMessageInfo | null) => void) {

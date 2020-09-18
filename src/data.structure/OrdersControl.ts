@@ -1,9 +1,6 @@
 import { OrderControl, IOrderControl } from './OrderControl';
 import { Order, IOrder, IOrders } from './Order';
 import { Printer } from './Printer';
-import Weights from './Weights';
-
-const weights = Weights.getInstance();
 
 export interface IOrdersControl {
     canCreateOrder: () => boolean;
@@ -74,8 +71,6 @@ export class OrdersControl implements IOrdersControl {
         const orderNumber = this._ordersFreeNums.findIndex(item => item) + 1;
         this._ordersFreeNums[orderNumber - 1] = false;
         const order: IOrder = new Order(orderNumber);
-        // this._currentOrder = new OrderControl(order);
-        // this._currentOrder.onItemsChange(this._onOrderChange);
         this._orders.set(orderNumber, order);
         this._setCurrentOrder(orderNumber);
     }
@@ -106,7 +101,6 @@ export class OrdersControl implements IOrdersControl {
             if (order) {
                 this._currentOrder = new OrderControl(order);
                 this._currentOrder.onItemsChange(this._onOrderChange.bind(this));
-                // this._onChangeOrder();
                 this._onOrderChange(true);
                 this._onChange();
                 return;

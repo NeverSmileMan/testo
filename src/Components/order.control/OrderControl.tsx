@@ -1,9 +1,8 @@
-import React, { createContext, useEffect, useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/order.control/OrderControl';
 import { Mode } from '../../data.structure/types/types';
 import { IStateOrder } from '../../data.structure/OrderControl';
-import { IOrderControl } from '../../data.structure/OrderControl';
 import useOrder from '../../hooks/OrderControl';
 import Search from '../search/Search';
 import OrderInfo from './OrderInfo';
@@ -14,21 +13,13 @@ import { OrdersControlContext } from '../Orders';
 
 export const OrderControlContext = createContext<IStateOrder>({} as IStateOrder);
 
-type Props = {
-    // order: IOrderControl | null;
-} & WithStyles;
-
-function OrderControl({ classes }: Props) {
+function OrderControl({ classes }: WithStyles) {
     const { currentOrder } = useContext(OrdersControlContext);
     const {
         stateOrder,
         addItem, delItem, selectItem, onReset,
     } = useOrder(currentOrder);
-
-    // useEffect(() => {
-
-    // }, [order]);
-
+    
     if (!stateOrder) return null;
 
     const { orderMode } = stateOrder;
