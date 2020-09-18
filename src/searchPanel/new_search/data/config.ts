@@ -1,3 +1,4 @@
+/*
 import { ThemesNames } from '../../themes/themes';
 
 export interface IConfig {
@@ -14,3 +15,6 @@ export interface IEnvironment {
     displayWidth: number;
     displayHeight: number;
 }
+*/
+
+export {}

@@ -1,3 +1,4 @@
+/*
 import
     messagesInfo, {
     IMessageInfo,
@@ -67,3 +68,6 @@ function getInstance() {
 export default { getInstance };
 
 export * from '../data.structure/data/messagesInfo';
+*/
+
+export {}

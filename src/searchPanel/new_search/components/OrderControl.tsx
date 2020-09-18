@@ -1,3 +1,4 @@
+/*
 import React, { createContext } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/order.control/OrderControl';
@@ -49,3 +50,6 @@ function OrderControl({ classes, orderControl }: Props) {
 }
 
 export default withStyles(styles)(OrderControl);
+*/
+
+export {};

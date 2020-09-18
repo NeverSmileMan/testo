@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
-import ActiveInputService from '../data.structure/ActiveInputService';
-import { InputList, IInputList, IStateInput } from '../data.structure/InputListNumber';
-import { Props } from '../components/search/Search';
+import React, { useState, useRef, useEffect, SetStateAction } from 'react';
+// import ActiveInputService from '../services/ActiveInputService';
+import { ActiveInputService } from '../../../services/ActiveInputService';
+import { InputList, IInputList, IStateInput } from '../data/InputListNumber';
+import { Props } from '../components//Search';
 
 const changeState = (
     input: IInputList,
@@ -9,17 +10,24 @@ const changeState = (
     ref: React.RefObject<HTMLDivElement>,
     callbacks: Props['callbacks'],
 ) => {
-    const activeInputService = ActiveInputService.getInstance();
+    // const activeInputService = ActiveInputService.getInstance();
     input.onChange(setState);
-    input.onSelect(callbacks.onSelect);
-    callbacks.resetSearch(() => input.setValue(''));
+    // input.onSelect(callbacks.onSelect);
+    // callbacks.resetSearch(() => input.setValue(''));
     const onListSelect = input._onSelect;
+    // const attachInput = () => {
+    //     activeInputService.setActiveInput(input);
+    //     return () => activeInputService.delActiveInput(input);
+    // };
+    const setValue = (getNewValue: SetStateAction<string>) => {
+        if (typeof getNewValue === 'function')
+            input.setValue(getNewValue(input.getValue()))
+    };
     const attachInput = () => {
-        activeInputService.setActiveInput(input);
-        return () => activeInputService.delActiveInput(input);
+        ActiveInputService.setActive(setValue);
+        return () => ActiveInputService.unsetActive(setValue);
     };
     const refreshInput = (valueHTML: string) => {
-        console.log(valueHTML);
         if (ref.current) ref.current.innerHTML = valueHTML;
     };
     return { onListSelect, attachInput, refreshInput };

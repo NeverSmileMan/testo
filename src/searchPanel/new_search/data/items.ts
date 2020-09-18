@@ -1,4 +1,4 @@
-import { IItem, ItemType} from '../Item';
+import { IItem, ItemType} from './Item';
 
 const items: IItem[] = [
     {plu: 1000, name: "Товар 100", price: 100, type: ItemType.WEIGHT},

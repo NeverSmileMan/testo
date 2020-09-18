@@ -1,5 +1,5 @@
 import { IItem } from './Item';
-import itemsData from './data/items';
+import itemsData from './items';
 
 export interface IList {
     onChange: (callback: (getState: () => IItem[] | null) => void) => void;

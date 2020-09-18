@@ -1,6 +1,6 @@
 import { IItem } from './Item';
-import IObject from './types/objects';
-import { IMessage, MessageCode } from './Message';
+import IObject from './objects';
+// import { IMessage, MessageCode } from './Message';
 
 export interface IStateInput<V = string> {
     isFocus: boolean;
@@ -19,7 +19,7 @@ export interface IInput<
     setValue: (value: string) => void;
     getValue: () => V;
     getValueHTML: () => string;
-    onMessage: (message: IMessage) => void;
+    // onMessage: (message: IMessage) => void;
     onSelect: (callback: (value: S) => void) => void;
     ifFocus: () => boolean;
 }
@@ -29,7 +29,7 @@ export class Input<V extends string | number = string, S extends string | number
     protected _callbackOnChange?: (getState: () => IStateInput<V>) => void;
     protected _callbackOnSelect?: (value: S) => void;
     private _isFocus: boolean = false;
-    private _message?: IMessage;
+    // private _message?: IMessage;
 
     constructor() {
         this.getStateObject = this.getStateObject.bind(this);
@@ -79,7 +79,7 @@ export class Input<V extends string | number = string, S extends string | number
             }
         } catch(e) {
             this._value = currentValue;
-            this._throwMessage(MessageCode.INTERNAL_ERROR, 'НЕДОПУСТИМИЙ СИМВОЛ!');
+            // this._throwMessage(MessageCode.INTERNAL_ERROR, 'НЕДОПУСТИМИЙ СИМВОЛ!');
         }
     }
 
@@ -106,9 +106,9 @@ export class Input<V extends string | number = string, S extends string | number
         return (' ' + this.getValue()).replace(/ /g, '&nbsp;');
     }
 
-    onMessage(message: IMessage) {
-        this._message = message;
-    }
+    // onMessage(message: IMessage) {
+    //     this._message = message;
+    // }
 
     onSelect(callback: (value: S) => void) {
         this._callbackOnSelect = callback;
@@ -118,9 +118,9 @@ export class Input<V extends string | number = string, S extends string | number
         return this._isFocus;
     }
 
-    protected _throwMessage(code: MessageCode, text?: string) {
-        this._message?.sendMessage(code);
-    }
+    // protected _throwMessage(code: MessageCode, text?: string) {
+    //     this._message?.sendMessage(code);
+    // }
 
     protected _onChange() {
         if (this._callbackOnChange)

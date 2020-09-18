@@ -1,6 +1,6 @@
 import { Input, IInput } from './Input';
 import { IItem } from './Item';
-import { MessageCode } from './Message';
+// import { MessageCode } from './Message';
 
 export interface IInputList extends IInput<string, IItem> {
     _onSelect: (item: IItem) => void;
@@ -42,7 +42,7 @@ export class InputNumber extends Input<number, number> implements IInputNumber {
             return;
         }
         else {
-            this._throwMessage(MessageCode.INTERNAL_ERROR, 'НЕДОПУСТИМЕ ЗНАЧЕННЯ!');
+            // this._throwMessage(MessageCode.INTERNAL_ERROR, 'НЕДОПУСТИМЕ ЗНАЧЕННЯ!');
         }
     }
 }

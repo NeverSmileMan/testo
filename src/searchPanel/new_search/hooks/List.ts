@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import List, { IList } from '../data.structure/List';
-import { IItem } from '../data.structure/Item';
+import List, { IList } from '../data/List';
+import { IItem } from '../data/Item';
 
 const changeState = (
     list: IList,
