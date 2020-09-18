@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { IControlButton, IStateControlButton } from '../data.structure/ControlButton';
+import Weights from '../data.structure/Weights';
 
 function getHookControlButton(button: IControlButton) {
 
@@ -8,6 +9,9 @@ function getHookControlButton(button: IControlButton) {
         onAction?: () => void,
         doAction?: (callback: () => void) => void,
     ) { 
+        const weights = Weights.getInstance();
+        if (button.setWeights)
+            button.setWeights(weights);
         button.onChange(setState);
         button.onAction(onAction);
         if (doAction) doAction(button.doAction);
@@ -23,7 +27,7 @@ function getHookControlButton(button: IControlButton) {
         const [methods] = useState(() => changeState(setState, onAction, doAction));
         return { ...state, ...methods };
     };
-    
+
     return useControlButton;
 }
 

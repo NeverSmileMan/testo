@@ -1,6 +1,7 @@
 import EventEmiter from 'events';
+import IObject from './types/objects';
 
-export interface IWeights {
+export interface IWeights extends IObject<IStateWeights>{
 
     readonly minWeight: number;
     readonly midweight: number;
@@ -15,8 +16,6 @@ export interface IWeights {
     getTara: () => number;
     setPrice: (value: number | null, title?: string) => void;
     getWeight: () => number;
-    onChange: (callback: (getState: () => IStateWeights) => void) => void;
-    getStateWeights: () => IStateWeights;
     off: (callback: () => void) => void;
 }
 
@@ -45,15 +44,10 @@ export class Weights implements IWeights {
 
     constructor() {
         this._emitter = new EventEmiter();
-        this.getStateWeights = this.getStateWeights.bind(this);
+        this.getStateObject = this.getStateObject.bind(this);
     }
 
-    off(callback: () => void) {
-        console.log('UNREGISTER');
-        this._emitter.off('stateChange', callback);
-    }
-
-    getStateWeights(): IStateWeights {
+    getStateObject(): IStateWeights {
         return {
             isStable: this.isStable(),
             tara: this.getTara(),
@@ -62,6 +56,11 @@ export class Weights implements IWeights {
         };
     }
 
+    onChange(callback: (getState: () => IStateWeights) => void) {
+
+        this._emitter.on('stateChange', callback);
+    }
+    
     isStable(): boolean {
         return this._isStable;
     }
@@ -89,13 +88,12 @@ export class Weights implements IWeights {
         return this._weight - this._tara;
     }
 
-    onChange(callback: (getState: () => IStateWeights) => void) {
-
-        this._emitter.on('stateChange', callback);
+    off(callback: () => void) {
+        this._emitter.off('stateChange', callback);
     }
 
     protected _onChange() {
-        this._emitter.emit('stateChange', this.getStateWeights);
+        this._emitter.emit('stateChange', this.getStateObject);
     }
 }
 
@@ -105,7 +103,7 @@ export interface IStateWeightsTest extends IStateWeights {
 }
 
 export interface IWeightsTest extends IWeights {
-    getStateWeights: () => IStateWeightsTest;
+    getStateObject: () => IStateWeightsTest;
     onChange: (callback: (getState: () => IStateWeightsTest) => void) => void;
     __setWeight: (value: number) => void;
     __getPrice: () => number;
@@ -117,12 +115,12 @@ class WeightsTest extends Weights implements IWeightsTest {
 
     constructor() {
         super();
-        this.getStateWeights = this.getStateWeights.bind(this);
+        this.getStateObject = this.getStateObject.bind(this);
     }
     
-    getStateWeights() {
+    getStateObject() {
         return {
-            ...super.getStateWeights(),
+            ...super.getStateObject(),
             price: this.__getPrice(),
             title: this.__getTitle(),
         };

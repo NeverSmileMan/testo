@@ -10,7 +10,7 @@ const changeState = (
 
 const useWeights = () => {
     const [weights] = useState(Weights.getInstance);
-    const [state, setState] = useState(weights.getStateWeights);
+    const [state, setState] = useState(weights.getStateObject);
     useState(() => changeState(weights, setState));
     return state;
 };

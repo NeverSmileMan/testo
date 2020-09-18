@@ -1,44 +1,49 @@
 import { State } from './types/types';
-import Weights, { IWeightsTest } from './Weights';
+import { IWeightsTest } from './Weights';
 import ControlButton, { IControlButton } from './ControlButton';
 
 export interface ITaraButton extends IControlButton {
     setAdditionalTara: (value: number) => void;
+    setWeights: (weights: IWeightsTest) => void;
+    onWeightsChange: () => void;
 }
 
 class TaraButton extends ControlButton implements ITaraButton {
     private _tara: number = 0;
-    private _weights: IWeightsTest;
+    private _weights?: IWeightsTest;
 
     constructor() {
         super();
-        this._weights = Weights.getInstance();
-        this._weights.onChange(this._onWeightsChange.bind(this));
-        this._onWeightsChange();
+        this.onWeightsChange = this.onWeightsChange.bind(this)
         this.setAdditionalTara = this.setAdditionalTara.bind(this);
+    }
+
+    setWeights(weights: IWeightsTest) {
+        this._weights = weights;
+        this._weights.onChange(this.onWeightsChange);
+        console.log('WEIGHTS');
     }
 
     private _setState() {
         if (this._state === State.PENDING) return;
-        if (this._weights.isStable())
+        if (this._weights?.isStable())
             this._state = State.ENABLED;
         else
             this._state = State.DISABLED;
     }
 
-    private _onWeightsChange() {
+    onWeightsChange() {
         this._setState();
         this._onChange();
     }
 
     private _setTara(value: number) {
-        const currentTara = this._weights.getTara();
-        this._weights.setTara(currentTara + value);
+        const currentTara = this._weights?.getTara() || 0;
+        this._weights?.setTara(currentTara + value);
     }
 
     setAdditionalTara(value: number) {
         this._tara = value;
-        // this._input.setValue('');
         this.doAction();
     }
 
@@ -50,7 +55,7 @@ class TaraButton extends ControlButton implements ITaraButton {
             return;
         }
 
-        if (!this._weights.isStable) {
+        if (!this._weights?.isStable) {
             return;
         }
 

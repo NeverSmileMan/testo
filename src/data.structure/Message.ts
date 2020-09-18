@@ -43,7 +43,8 @@ export class Message implements IMessage {
     }
 
     private _onMessage() {
-        if (this._callbackOnMessage) this._callbackOnMessage(this.getMessage);
+        if (this._callbackOnMessage)
+            this._callbackOnMessage(this.getMessage);
     }
 
     getMessage() {
