@@ -21,23 +21,29 @@ const changeState = (
     const refreshInput = (valueHTML: string) => {
         if (ref.current) ref.current.innerHTML = valueHTML;
     };
-    const useNewOrder: Function = (
-        callbacks: Props['callbacks'],
-        setMethods: React.Dispatch<() => ReturnType<typeof changeState>>
-    ) => {
-        setMethods(() => changeState(input, setState, ref, callbacks));
-    };
 
-    return { onListSelect, attachInput, refreshInput, useNewOrder };
+    return { onListSelect, attachInput, refreshInput };
 }
 
 const useSearch = (callbacks: Props['callbacks']) => {
     const [input] = useState(() => new InputList());
-    const [state, setState] = useState(input.getStateObject);
+    const [{ isFocus, value, valueHTML }, setState] = useState(input.getStateObject);
     const ref = useRef(null);
-    const [methods, setMethods] = useState(() => changeState(input, setState, ref, callbacks));
-    useEffect(() => methods.useNewOrder(callbacks, setMethods), [callbacks, methods]);
-    return { ...state, ref, ...methods };
+    const [{ attachInput, refreshInput, onListSelect }, setMethods] = useState(
+        () => changeState(input, setState, ref, callbacks)
+    );
+
+    useEffect(() => setMethods(
+        () => changeState(input, setState, ref, callbacks)),
+        [input, callbacks],
+    );
+    useEffect(() => 
+        refreshInput(valueHTML),
+        [refreshInput, valueHTML],
+    );
+    useEffect(attachInput, [attachInput]);
+
+    return { isFocus, value, ref, onListSelect };
 };
 
 export default useSearch;

@@ -1,6 +1,9 @@
 import { OrderControl, IOrderControl } from './OrderControl';
 import { Order, IOrder, IOrders } from './Order';
 import { Printer } from './Printer';
+import Weights from './Weights';
+
+const weights = Weights.getInstance();
 
 export interface IOrdersControl {
     canCreateOrder: () => boolean;
@@ -95,7 +98,9 @@ export class OrdersControl implements IOrdersControl {
     }
 
     private _setCurrentOrder(orderNumber?: number) {
-        
+        // if (this._currentOrder) {
+        //     this._currentOrder.getOrder().tara = weights.getTara(); //??????????
+        // }
         if (orderNumber) {
             const order = this._orders.get(orderNumber);
             if (order) {

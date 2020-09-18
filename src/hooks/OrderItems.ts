@@ -12,6 +12,7 @@ export const selectItem = (event: React.MouseEvent<HTMLDivElement>, selectItem: 
 function useOrderItems(onSelect: (index: number | null) => void) {
     const context: IStateOrder = useContext(OrderControlContext);
     const onClick = useCallback((event) => selectItem(event, onSelect), [onSelect]);
+    
     return { ...context, onClick };
 }
 

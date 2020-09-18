@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { IItem } from '../data.structure/Item';
 import { IStateOrder } from '../data.structure/OrderControl';
 import { IOrderControl } from '../data.structure/OrderControl';
+import Weights from "../data.structure/Weights";
 
 const createCallbacks = (order: IOrderControl | null) => {
     const callbacksOrder = {
@@ -24,13 +25,24 @@ const changeStateOrder = (
 
 const useOrder = (order: IOrderControl | null) => {
     const [stateOrder, setStateOrder] = useState(order?.getStateObject);
-    console.log(stateOrder);
     const [methods, setMethods] = useState(() => changeStateOrder(order, setStateOrder));
+    
     useEffect(() => {
+        const weights = Weights.getInstance();
+        const onWeightsChange = order?.onWeightsChange;
+        if (onWeightsChange) weights.onChange(onWeightsChange);
         setStateOrder(order?.getStateObject);
         setMethods(() => changeStateOrder(order, setStateOrder));
+        return () => {
+            if (onWeightsChange) {
+                weights.off(onWeightsChange);
+            }         
+        };
     }, [order]);
 
+    useEffect(() => {
+        order?.setOrder();
+    }, [order]);
     return { stateOrder, ...methods };
 };
 

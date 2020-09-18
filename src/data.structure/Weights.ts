@@ -17,6 +17,7 @@ export interface IWeights {
     getWeight: () => number;
     onChange: (callback: (getState: () => IStateWeights) => void) => void;
     getStateWeights: () => IStateWeights;
+    off: (callback: () => void) => void;
 }
 
 export interface IStateWeights {
@@ -45,6 +46,11 @@ export class Weights implements IWeights {
     constructor() {
         this._emitter = new EventEmiter();
         this.getStateWeights = this.getStateWeights.bind(this);
+    }
+
+    off(callback: () => void) {
+        console.log('UNREGISTER');
+        this._emitter.off('stateChange', callback);
     }
 
     getStateWeights(): IStateWeights {
@@ -84,6 +90,7 @@ export class Weights implements IWeights {
     }
 
     onChange(callback: (getState: () => IStateWeights) => void) {
+
         this._emitter.on('stateChange', callback);
     }
 
@@ -122,6 +129,7 @@ class WeightsTest extends Weights implements IWeightsTest {
     }
 
     onChange(callback: (getState: () => IStateWeightsTest) => void) {
+        console.log('REGISTER');
         this._emitter.on('stateChange', callback);
     }
 

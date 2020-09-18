@@ -12,13 +12,15 @@ const onSelect = (
     orderNumber && Number.parseInt(orderNumber) && selectOrder(+orderNumber);
 };
 
-const useTabsNav = ({ selectOrder }: Props['callbacks']) => {
-    return {
-        ...useContext(OrdersControlContext),
-        selectOrder: useCallback(
+const useTabsNav = (callbacks: Props['callbacks']) => {
+    const { selectOrder } = callbacks;
+    const select = useCallback(
             (event) => onSelect(event, selectOrder),
             [selectOrder],
-        ),
+        );    
+    return {
+        ...useContext(OrdersControlContext),
+        selectOrder: select,
     };
 };
 

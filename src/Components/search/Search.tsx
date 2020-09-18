@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../../styles/search/Search';
 import { IItem } from '../../data.structure/Item';
@@ -15,12 +15,9 @@ export type Props = {
 function Search({ classes, callbacks }: Props) {
 
     const {
-        isFocus, value, valueHTML, ref,
-        onListSelect, attachInput, refreshInput,
+        isFocus, value, ref,
+        onListSelect,
     } = useSearch(callbacks);
-    
-    useEffect(attachInput, [attachInput]);
-    useEffect(() => refreshInput(valueHTML), [refreshInput, valueHTML]);
 
     return (
         <div className={classes.wrapper}>

@@ -21,6 +21,8 @@ export interface IOrderControl extends IObject<IStateOrder> {
     onReset: (callback: () => void) => void;
     onMessage: (callback: (code: MessageCode | null) => void) => void;
     onItemsChange: (callback: () => void) => void;
+    onWeightsChange: () => void;
+    setOrder: () => void;
 }
 
 export interface IStateOrder {
@@ -44,12 +46,11 @@ export class OrderControl implements IOrderControl {
 
     constructor(order: IOrder) {
         this._currentOrder = order;
-
-        this._weights.onChange(this._onWeightsChange.bind(this));
+        this.onWeightsChange = this.onWeightsChange.bind(this);
         this.getStateObject = this.getStateObject.bind(this);
         this.onMessage(Message.getInstance().sendMessage); //???
         // this._onWeightsChange();
-        this._setOrder();
+        // this.setOrder();
     }
 
     onItemsChange(callback: () => void) {
@@ -60,12 +61,12 @@ export class OrderControl implements IOrderControl {
         if (this._callbackOnItemsChange) this._callbackOnItemsChange();
     }
 
-    private _setOrder() {
+    setOrder() {
         //if (this._currentOrder) this._currentOrder.tara = this._weights.getTara(); //??????????
         // this._currentOrder = order;
         this._weights?.setTara(this._currentOrder.tara);
         this.selectItem(null); //??????????
-        this._onWeightsChange();
+        this.onWeightsChange();
     }
 
     onMessage(callback: (code: MessageCode | null) => void) { //null ???????
@@ -133,6 +134,7 @@ export class OrderControl implements IOrderControl {
         this.selectItem(null);
         this._onReset();
         this._state = State.PENDING;
+
         this._onChange();
         this.getItemsCount() > 0 && this._onItemsChange();
     }
@@ -142,7 +144,7 @@ export class OrderControl implements IOrderControl {
             this._callbackOnMessage(code);
         }
         if (code === MessageCode.WEIGHTS_IS_EMPTY) {
-            setTimeout(() => this._onWeightsChange(), 1000);
+            setTimeout(() => this.onWeightsChange(), 1000);
         }
     }
 
@@ -181,14 +183,17 @@ export class OrderControl implements IOrderControl {
         if (this._callbackOnChange) this._callbackOnChange(this.getStateObject);
     }
 
-    private _onWeightsChange() {
+    onWeightsChange() {
         if (this._state === State.PENDING) {
-            if (this._weights && this._weights.getWeight() <= 0) {
+            console.log(this._weights.getWeight());
+            if (this._weights && this._weights.getWeight() <= 0.01) {
                 this._state = State.ENABLED;
                 this._onChange();
                 this._weights.setPrice(null);
             }
             return;
+        } else {
+            this._currentOrder.tara = this._weights.getTara();
         }
 
         if (!this._weights.isStable()) {

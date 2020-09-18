@@ -31,7 +31,7 @@ function Orders({ classes, maxOrdersCount}: Props ) {;
                     <HomeButton />
                 </div>
                 <div className='order-panel'>
-                    <OrderControl order={currentOrder}/>
+                    <OrderControl />
                     <Controls callbacks={callbacksControls} />
                 </div>
             </div>
