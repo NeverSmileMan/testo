@@ -40,7 +40,7 @@ export class Input<V extends string | number = string, S extends string | number
         return {
             isFocus: this.ifFocus(),
             value: this.getValue() as V,
-            valueHTML: `${this.getValue()}`,
+            valueHTML: `${this.getValueHTML()}`,
         };
     }
 
@@ -103,7 +103,7 @@ export class Input<V extends string | number = string, S extends string | number
     }
 
     getValueHTML() {
-        return `&{this.getValue()}`;
+        return (' ' + this.getValue()).replace(/ /g, '&nbsp;');
     }
 
     onMessage(message: IMessage) {

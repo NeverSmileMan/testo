@@ -22,7 +22,7 @@ function Search({ classes, callbacks }: Props) {
     return (
         <div className={classes.wrapper}>
             <div ref={ref}
-                className={`input ${isFocus ? 'focus' : ''}`}>&nbsp;
+                className={`input ${isFocus ? 'focus' : ''}`}>
             </div>
             <List filter={value} onSelect={onListSelect}/>
         </div>

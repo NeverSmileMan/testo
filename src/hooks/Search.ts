@@ -19,6 +19,7 @@ const changeState = (
         return () => activeInputService.delActiveInput(input);
     };
     const refreshInput = (valueHTML: string) => {
+        console.log(valueHTML);
         if (ref.current) ref.current.innerHTML = valueHTML;
     };
     return { onListSelect, attachInput, refreshInput };

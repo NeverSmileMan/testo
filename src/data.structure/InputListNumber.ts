@@ -12,10 +12,6 @@ export interface IInputNumber extends IInput<number, number> {
 
 export class InputList extends Input<string, IItem> implements IInputList {
 
-    getValueHTML() {
-        return (' ' + this.getValue()).replace(/ /g, '&nbsp;');
-    }
-
     _onSelect(item: IItem) {
         if (!item) return;
         if (this._callbackOnSelect) this._callbackOnSelect(item);
