@@ -38,7 +38,7 @@ const InputQty = () => {
     delete: deleteQty,
     submit: useCallback(() => {
       setType(null)();
-      addItem({item:selectedItem, сalcValue:qtyGoods});
+      addItem({item:selectedItem, calcValue:qtyGoods});
     }, [qtyGoods, setType, addItem, selectedItem]),
   }
   return (
