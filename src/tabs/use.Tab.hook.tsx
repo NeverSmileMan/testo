@@ -47,7 +47,7 @@ export function useTabs(
 	const [tabItems, setTabItems] = useState<TabItems[]>([{tabNumber: 1, tara: 0, items: [],},] as TabItems[]);
 	const [activeTab, setActiveTab] = useState<number>(0);
 	const [activeItem, setActiveItem] = useState<AddedItem | null>(null);
-	const [freeTabNumbers, setFreeTabNumbers] = useState(() => {
+	const [freeTabNumbers, setFreeTabNumbers] = useState<Array<boolean>>(() => {
 		const arr = Array(MAX_NUMBER_OF_TABS).fill(false);
 		arr[0] = true;
 		return arr;
@@ -123,7 +123,6 @@ export function useTabs(
 			setHint(Hints.MinWeight, true)
 		}
 	}, [activeTab])
-
 
 	const print = useCallback(() => {
 		console.log('-------------------------')
