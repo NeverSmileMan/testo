@@ -41,7 +41,7 @@ const useOrder = (order: IOrderControl | null) => {
     }, [order]);
 
     useEffect(() => {
-        order?.setOrder();
+        order?.initOrder();
     }, [order]);
     return { stateOrder, ...methods };
 };

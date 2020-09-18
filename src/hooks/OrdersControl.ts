@@ -25,7 +25,7 @@ const useOrders = (maxOrdersCount: number) => {
     const [orders] = useState(() => new OrdersControl(maxOrdersCount));
     const [stateOrders, setStateOrders] = useState(orders.getStateOrders);
     const [methods] = useState(() => changeStateOrders(orders, setStateOrders));
-    return { stateOrders, ...methods };
+    return { stateOrders, ...methods, orderControl: orders.getOrderControl() };
 };
 
 export default useOrders;

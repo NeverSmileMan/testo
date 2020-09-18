@@ -7,8 +7,8 @@ import Message from './Message';
 import IObject from './types/objects';
 
 export interface IOrderControl extends IObject<IStateOrder> {
-    getOrder: () => IOrder;
-    getOrderNumber: () => number;
+    getOrder: () => IOrder | null;
+    getOrderNumber: () => number | null;
     delItem: () => void;
     getItems: () => IItemAmount[];
     selectItem: (index: number | null) => void;
@@ -22,11 +22,12 @@ export interface IOrderControl extends IObject<IStateOrder> {
     onMessage: (callback: (code: MessageCode | null) => void) => void;
     onItemsChange: (callback: () => void) => void;
     onWeightsChange: () => void;
-    setOrder: () => void;
+    setOrder: (order: IOrder) => void;
+    initOrder: () => void;
 }
 
 export interface IStateOrder {
-    order: IOrder;
+    order: IOrder | null;
     isSelected: boolean;
     total: string;
     orderItems: IItemAmount[];
@@ -37,15 +38,15 @@ export interface IStateOrder {
 export class OrderControl implements IOrderControl {
     private _weights: IWeightsTest = Weights.getInstance();
     private _selectedItemIndex: number | null = null;
-    private _currentOrder: IOrder;
+    private _order?: IOrder;
     private _state: State = State.ENABLED;
     private _callbackOnChange?: (getState: () => IStateOrder) => void;
     private _callbackOnReset?: () => void;
     private _callbackOnMessage?: (code: MessageCode | null) => void;
     private _callbackOnItemsChange?: () => void;
 
-    constructor(order: IOrder) {
-        this._currentOrder = order;
+    constructor() {
+        // this._order = order;
         this.onWeightsChange = this.onWeightsChange.bind(this);
         this.getStateObject = this.getStateObject.bind(this);
         this.onMessage(Message.getInstance().sendMessage); //???
@@ -60,10 +61,21 @@ export class OrderControl implements IOrderControl {
         if (this._callbackOnItemsChange) this._callbackOnItemsChange();
     }
 
-    setOrder() {
-        this._weights?.setTara(this._currentOrder.tara);
+    setOrder(order: IOrder) {
+        this._order = order
         this.selectItem(null);
+        // this.onWeightsChange();
+        this._onItemsChange();
+        this._onChange();       
+    }
+
+    initOrder() {
+        if (!this._order) return;
+        this._weights?.setTara(this._order.tara);
+        // this.selectItem(null);
         this.onWeightsChange();
+        // this._onItemsChange();
+        // this._onChange();
     }
 
     onMessage(callback: (code: MessageCode | null) => void) { //null ???????
@@ -75,7 +87,7 @@ export class OrderControl implements IOrderControl {
     }
 
     getCurrentOrder() {
-        return this._currentOrder;
+        return this._order;
     }
     
     _onReset() {
@@ -94,7 +106,7 @@ export class OrderControl implements IOrderControl {
     }
 
     getOrder() {
-        return this._currentOrder;
+        return this._order || null;
     }
 
     selectItem(index: number | null) {
@@ -121,12 +133,13 @@ export class OrderControl implements IOrderControl {
 
         if (this._weights.getWeight() <= 0.040) {
             this._throwMessage(MessageCode.WEIGHTS_IS_EMPTY);
+            console.log("MESS");
             return;
         }
 
         this._weights.setPrice(item.price, item.name);
         const newItem: IItemAmount = new ItemAmount(item, this._weights?.getSum());
-        this._currentOrder!.items.push(newItem);
+        this._order!.items.push(newItem);
         this._setTotal(newItem.sum);
         this.selectItem(null);
         this._onReset();
@@ -144,29 +157,29 @@ export class OrderControl implements IOrderControl {
 
     delItem() {
         if (!this.isSelected()) return;
-        this._setTotal(-this._currentOrder!.items[this._selectedItemIndex!].sum);
-        this._currentOrder!.items.splice(this._selectedItemIndex!, 1);
+        this._setTotal(-this._order!.items[this._selectedItemIndex!].sum);
+        this._order!.items.splice(this._selectedItemIndex!, 1);
         this.selectItem(null);
     }
 
     getItems() {
-        return this._currentOrder ? this._currentOrder.items : [];
+        return this._order ? this._order.items : [];
     }
 
     getItemsCount() {
-        return this._currentOrder ? this._currentOrder.items.length : 0;
+        return this._order ? this._order.items.length : 0;
     }
 
     getTotal(): number {
-        return this._currentOrder ? this._currentOrder.total : 0;
+        return this._order ? this._order.total : 0;
     }
 
     private _setTotal(value: number) {
-        this._currentOrder!.total += value;
+        this._order!.total += value;
     }
 
     getOrderNumber() {
-        return this._currentOrder.orderNumber;
+        return this._order?.orderNumber || null;
     }
 
     onChange(callback: (getState: () => IStateOrder) => void) {
@@ -187,7 +200,7 @@ export class OrderControl implements IOrderControl {
             }
             return;
         } else {
-            this._currentOrder.tara = this._weights.getTara();
+            if (this._order) this._order.tara = this._weights.getTara();
         }
 
         if (!this._weights.isStable()) {

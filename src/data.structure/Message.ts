@@ -30,9 +30,12 @@ export class Message implements IMessage {
         this._onMessage();
         if (code === null
             || messagesInfo[code].type !== MessageType.ERROR) return;
-        this._code = prevCode;
-        this._text = prevText;
-        this._timer = setTimeout(() => this._onMessage, 3000);
+
+        this._timer = setTimeout(() => {
+            this._code = prevCode;
+            this._text = prevText;
+            this._onMessage();
+        }, 3000);
     }
 
     onMessage(callback: (getState: () => IMessageInfo | null) => void) {
