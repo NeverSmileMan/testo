@@ -29,6 +29,7 @@ export function useTabs(
   setHint: (str: Hints, likeError?: boolean) => void,
   scaleService: any,
   calcValue: number,
+  setType: (type: string | null, callback?: any)=> any
 ): [
     TabItems[],
     number,
@@ -75,6 +76,18 @@ export function useTabs(
         if (weightScale >= (40 / 1000)) {
           switch (item.type) {
             case ItemTypes.piece:
+
+              new Promise((resolve, reject) => {
+
+                console.log('qqqqqqqqq',resolve)
+                setType('qtyGoods', resolve)();
+
+                 
+              })
+                .then(result => console.log('rewsult', result))
+                .catch(err => alert(err));
+
+
               if (сalcValue) {
                 addedItem.amount = сalcValue;
                 addedItem.cost = addedItem.amount * item.price;

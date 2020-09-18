@@ -22,7 +22,7 @@ const useStyle = makeStyles({
 
 const NameCalc = 'Кількість'
 
-const InputQty = () => {
+const InputQty = (props: any) => {
   const { inputContainer, keyboardContainer } = useStyle();
   const [qtyGoods, setqtyGoods] = useState(0)
   const { setType, selectedItem, addItem} = useContext(MainContext);
@@ -38,9 +38,11 @@ const InputQty = () => {
     delete: deleteQty,
     submit: useCallback(() => {
       setType(null)();
+      props.callback(655656);
       addItem({item:selectedItem, сalcValue:qtyGoods});
     }, [qtyGoods, setType, addItem, selectedItem]),
   }
+  console.log(props)
   return (
     <div className={inputContainer}>
       <HeadInput

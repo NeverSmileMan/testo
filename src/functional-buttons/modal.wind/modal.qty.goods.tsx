@@ -13,11 +13,13 @@ const useStyles = makeStyles({
     }
 })
 
-const ModalQtyGoods = () =>{
+const ModalQtyGoods = (props: any) =>{
     const {container} = useStyles()
+
+    console.log(props)
     return (
         <div className={container}>
-            <InputQty />
+            <InputQty callback={props.callback}/>
         </div>
     )
 }

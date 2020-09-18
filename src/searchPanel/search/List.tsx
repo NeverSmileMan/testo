@@ -57,12 +57,15 @@ function List({ input }: { input: string }) {
 
   if (!data) return null;
   const onClickItemList = (item:IItem) => {
-    if (item.type==='ваговий') {
+
       addItem({item:item})
-    } else {
-      setType('qtyGoods')();
-      setSelectedItem(item)
-    }
+ 
+    // if (item.type==='ваговий') {
+    //   addItem({item:item})
+    // } else {
+    //   setType('qtyGoods')();
+    //   setSelectedItem(item)
+    // }
   }
   const items = data.map((item, i) =>
     <li

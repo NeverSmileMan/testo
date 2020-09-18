@@ -23,22 +23,25 @@ interface Prop {
   click: () => any;
 }
 const ModalWindow = () => {
+  const cls = useStyles();
+  const {modalType} = useContext(MainContext)
+  
   const modal: { [key: string]: any } = {
     tara: () => (<ModalTara/>),
     print: () => (<ModalPrint />),
     close: () => (<ModalClose/>),
-    qtyGoods: () => (<ModalQtyGoods/>)
+    qtyGoods: () => (<ModalQtyGoods callback={modalType.callback}/>)
   }
-  const cls = useStyles();
-  const {modalType} = useContext(MainContext)
-  
+  console.log(modalType.callback)
   return (
     <>
+    {modalType.type ?
       <div className={cls.back}>
         {
-          modalType && modal[modalType] && modal[modalType]()
+          modalType.type && modal[modalType.type]()
         }
       </div>
+       : null}
     </>
   )
 }

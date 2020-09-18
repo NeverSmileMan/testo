@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const MainContext = createContext({
-	modalType: '' as string | null,
+	modalType: '' as any,
 	setType: (val: string | null): any => {},
 	deleteTab: () => {},
 	addTab: (e: React.MouseEvent<HTMLDivElement>) => {},
@@ -91,15 +91,22 @@ export default function Main() {
 
   
   
-	const [modalType, setModalType] = useState(null as string | null);
+	const [modalType, setModalType] = useState(null as any);
 	const [selectedItem, setSelectedItem] = useState({} as IItem);
-	const setType = (type: string | null): any => () => setModalType(type);
+	const setType = (type: string | null, callback?: Function): any => () => setModalType({type: type, callback});
+
+
+
 	const [calcValue, setCalcValue] = useState(0);
 	const submitValueCalc = (val: number) => {
     setCalcValue(val);
 		setType(null)();
 	};
-  
+	
+	
+
+
+
     const [
       tabItems,
       activeTab,
@@ -112,7 +119,7 @@ export default function Main() {
       deleteTab,
       setTara,
       print,
-    ] = useTabs(changeHint, ScalePlug, calcValue);
+    ] = useTabs(changeHint, ScalePlug, calcValue, setType);
 
 
 	const confirmClose = useCallback(() => {
