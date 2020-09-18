@@ -9,7 +9,7 @@ export interface Item {
 	amount: number;
 	cost: number;
 	price: number;
-	type: ItemTypes;
+	type: ItemTypes; 
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -45,7 +45,7 @@ export default function AddedItemsTable({ values, onClick, active }: Props): Rea
 					item={item}
 					changeRule={{
 						cost: item.cost.toFixed(2),
-						name: item.code + ' ' + item.name, //тут добавить языки
+						name: item.code + ' ' + item.name, //!тут добавить языки?
 					}}
 					columns={['name', 'amount', 'cost']}
 					addUnits={{ amount: item.type === ItemTypes.weights ? 'г.' : 'шт.' }}
