@@ -29,7 +29,7 @@ interface StyleProp {
 
 interface Prop extends StyleProp {
     btnName?: string | any;
-    nameClass?: string;
+    nameClass?: string | undefined;
     onClick: ()=>any;
 }
 const KeyboardBtn = ({
