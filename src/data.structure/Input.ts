@@ -24,14 +24,6 @@ export interface IInput<
     ifFocus: () => boolean;
 }
 
-// export interface IInputList extends IInput<string, IItem> {
-//     _onSelect: (item: IItem) => void;
-// }
-
-// export interface IInputNumber extends IInput<number, number> {
-//     getValue: () => number;
-// }
-
 export class Input<V extends string | number = string, S extends string | number | IItem = string> implements IInput<V, S> {
     protected _value: string = '';
     protected _callbackOnChange?: (getState: () => IStateInput<V>) => void;
@@ -142,43 +134,3 @@ export class Input<V extends string | number = string, S extends string | number
 
 }
 
-// export class InputList extends Input<string, IItem> implements IInputList {
-
-//     _onSelect(item: IItem) {
-//         if (!item) return;
-//         if (this._callbackOnSelect) this._callbackOnSelect(item);
-//     }
-
-//     getValueHTML() {
-//         return (' ' + this.getValue()).replace(/ /g, '&nbsp;');
-//     }
-// }
-
-// export class InputNumber extends Input<number, number> implements IInputNumber {
-
-//     getValue() {
-//         return Number(this._value) / 1000;
-//     }
-
-//     getStateObject() {
-//         return {
-//             isFocus: this.ifFocus(),
-//             value: this.getValue(),
-//             valueHTML: `${this.getValueHTML()}`,
-//         };
-//     }
-
-//     getValueHTML() {
-//         return (this.getValue()).toFixed(3);
-//     }
-
-//     protected _onChange() {
-//         if (!this._value || String(this.getValue() * 1000) === this._value) {
-//             super._onChange();
-//             return;
-//         }
-//         else {
-//             this._throwMessage(MessageCode.INTERNAL_ERROR, 'НЕДОПУСТИМЕ ЗНАЧЕННЯ!');
-//         }
-//     }
-// }

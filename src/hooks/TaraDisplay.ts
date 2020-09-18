@@ -23,8 +23,8 @@ const changeState = (
     const refreshInput = (valueHTML: string) => {
         if (ref.current) ref.current.innerHTML = valueHTML;
     };
-    
-    return { attachInput, refreshInput };
+    const isFocus = () => activeInputService.ifActiveInput(input);
+    return { attachInput, refreshInput, isFocus };
 }
 
 const useTaraDisplay = (onSelect: Props['onSelect']) => {

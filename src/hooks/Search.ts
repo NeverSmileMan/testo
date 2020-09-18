@@ -21,7 +21,6 @@ const changeState = (
     const refreshInput = (valueHTML: string) => {
         if (ref.current) ref.current.innerHTML = valueHTML;
     };
-
     return { onListSelect, attachInput, refreshInput };
 }
 
