@@ -129,7 +129,6 @@ class WeightsTest extends Weights implements IWeightsTest {
     }
 
     onChange(callback: (getState: () => IStateWeightsTest) => void) {
-        console.log('REGISTER');
         this._emitter.on('stateChange', callback);
     }
 

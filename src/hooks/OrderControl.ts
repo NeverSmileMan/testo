@@ -4,7 +4,6 @@ import { IStateOrder } from '../data.structure/OrderControl';
 import { IOrderControl } from '../data.structure/OrderControl';
 import Weights from "../data.structure/Weights";
 import Message from '../data.structure/Message';
-// import messagesInfo from '../data.structure/data/messagesInfo';
 
 const createCallbacks = (order: IOrderControl | null) => {
     const callbacksOrder = {
@@ -22,9 +21,9 @@ const changeStateOrder = (
 ) => {
     order.onChange(setStateOrder);
     const weights = Weights.getInstance();
-    weights.onChange(order.onWeightsChange);
+    order.setWeights(weights);
     const message = Message.getInstance();
-    order.onMessage(message.sendMessage);
+    order.onMessage(message);
     const callbacks = createCallbacks(order);
     return { ...callbacks };
 };
@@ -37,16 +36,3 @@ const useOrder = (order: IOrderControl) => {
 };
 
 export default useOrder;
-
-    // useEffect(() => {
-    //     const weights = Weights.getInstance();
-    //     const onWeightsChange = order?.onWeightsChange;
-    //     if (onWeightsChange) weights.onChange(onWeightsChange);
-    //     setStateOrder(order?.getStateObject);
-    //     setMethods(() => changeStateOrder(order, setStateOrder));
-    //     return () => {
-    //         if (onWeightsChange) {
-    //             weights.off(onWeightsChange);
-    //         }         
-    //     };
-    // }, [order]);

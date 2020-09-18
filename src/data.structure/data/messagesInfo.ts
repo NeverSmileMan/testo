@@ -10,6 +10,7 @@ export enum MessageCode {
     WEIGHTS_IS_SMALL,
     TEST_RIK_CONTROL,
     INTERNAL_ERROR,
+    CLEAR_MESSAGE,
 }
 
 export interface IMessageInfo {
@@ -18,6 +19,7 @@ export interface IMessageInfo {
 }
 
 const messagesInfo: { [key in MessageCode]: IMessageInfo } = {
+    [MessageCode.CLEAR_MESSAGE]: { type: MessageType.INFO, text: '' },
     [MessageCode.WEIGHTS_IS_SMALL]: { type: MessageType.WARNING, text: 'Вага має перевищувати 40гр!' },
     [MessageCode.WEIGHTS_IS_EMPTY]: { type: MessageType.ERROR, text: 'Поставте товар на ваги!' },
     [MessageCode.WEIGHTS_NOT_STABLE]: { type: MessageType.WARNING, text: 'Вага не стабільна!' },

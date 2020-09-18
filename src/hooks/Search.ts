@@ -38,10 +38,3 @@ const useSearch = (callbacks: Props['callbacks']) => {
 };
 
 export default useSearch;
-
-
-
-// useEffect(() => setMethods(
-//     () => changeState(input, setState, ref, callbacks)),
-//     [input, callbacks],
-// );

@@ -1,29 +1,29 @@
 import { IItem, IItemAmount, ItemAmount } from './Item';
-import Weights, { IWeightsTest } from './Weights';
+import { IWeightsTest } from './Weights';
 import { IOrder } from './Order';
 import { MessageCode } from './data/messagesInfo';
 import { State, Mode } from './types/types';
-// import Message from './Message';
 import IObject from './types/objects';
+import { IMessage } from './Message';
 
 export interface IOrderControl extends IObject<IStateOrder> {
-    getOrder: () => IOrder | null;
-    getOrderNumber: () => number | null;
+    setOrder: (order: IOrder) => void;
+    setWeights: (weights: IWeightsTest) => void;
+    initOrder: () => void;
+    addItem: (item: IItem) => void;
     delItem: () => void;
     getItems: () => IItemAmount[];
+    getItemsCount: () => number | 0;
+    getOrderNumber: () => number | null;
+    getOrder: () => IOrder | null;
+    getTotal: () => number;
     selectItem: (index: number | null) => void;
     isSelected: () => boolean;
     getSelectedItemIndex: () => number | null; 
-    getItemsCount: () => number | 0;
-    getTotal: () => number;
     getState: () => State;
-    addItem: (item: IItem) => void;
     onReset: (callback: () => void) => void;
-    onMessage: (callback: (code: MessageCode | null) => void) => void;
+    onMessage: (message: IMessage) => void;
     onItemsChange: (callback: () => void) => void;
-    onWeightsChange: () => void;
-    setOrder: (order: IOrder) => void;
-    initOrder: () => void;
 }
 
 export interface IStateOrder {
@@ -36,62 +36,19 @@ export interface IStateOrder {
 }
 
 export class OrderControl implements IOrderControl {
-    private _weights: IWeightsTest = Weights.getInstance();
+    private _weights?: IWeightsTest;
+    private _message?: IMessage;
     private _selectedItemIndex: number | null = null;
     private _order?: IOrder;
-    private _state: State = State.ENABLED;
+    private _state: State = State.READY;
     private _callbackOnChange?: (getState: () => IStateOrder) => void;
     private _callbackOnReset?: () => void;
-    private _callbackOnMessage?: (code: MessageCode | null) => void;
+    private _callbackOnMessage?: (code: MessageCode) => void;
     private _callbackOnItemsChange?: () => void;
 
     constructor() {
-        // this._order = order;
-        this.onWeightsChange = this.onWeightsChange.bind(this);
+        this._onWeightsChange = this._onWeightsChange.bind(this);
         this.getStateObject = this.getStateObject.bind(this);
-        // this.onMessage(Message.getInstance().sendMessage); //???
-        // this._onWeightsChange();
-    }
-
-    onItemsChange(callback: () => void) {
-        this._callbackOnItemsChange = callback;
-    }
-
-    private _onItemsChange() {
-        if (this._callbackOnItemsChange) this._callbackOnItemsChange();
-    }
-
-    setOrder(order: IOrder) {
-        this._order = order
-        this.selectItem(null);
-        // this.onWeightsChange();
-        this._onChange(); 
-        this._onItemsChange();  
-    }
-
-    initOrder() {
-        if (!this._order) return;
-        this._weights?.setTara(this._order.tara);
-        // this.selectItem(null);
-        // можна не робити this.onWeightsChange();
-        // this._onItemsChange();
-        // this._onChange();
-    }
-
-    onMessage(callback: (code: MessageCode | null) => void) { //null ???????
-        this._callbackOnMessage = callback;
-    }
-
-    onReset(callback: () => void) {
-        this._callbackOnReset = callback;
-    }
-
-    getCurrentOrder() {
-        return this._order;
-    }
-    
-    _onReset() {
-        if (this._callbackOnReset) this._callbackOnReset();
     }
 
     getStateObject(): IStateOrder {
@@ -105,8 +62,74 @@ export class OrderControl implements IOrderControl {
         };
     }
 
+    onChange(callback: (getState: () => IStateOrder) => void) {
+        this._callbackOnChange = callback;
+    }
+
+    setOrder(order: IOrder) {
+        this._order = order;
+        this.selectItem(null);
+        this._onChange(); 
+        this._onItemsChange();  
+    }
+
+    setWeights(weights: IWeightsTest) {
+        this._weights = weights;
+        this._weights.onChange(this._onWeightsChange);
+    }
+
+    initOrder() {
+        if (!this._order) return;
+        this._weights?.setTara(this._order.tara);
+    }
+
+    addItem(item: IItem) {
+        if (!this._weights?.isStable()) {
+            this._throwMessage(MessageCode.WEIGHTS_NOT_STABLE);
+            return;
+        }
+
+        if (this._weights.getWeight() <= 0.040) {
+            this._throwMessage(MessageCode.WEIGHTS_IS_EMPTY);
+            return;
+        }
+
+        this._weights.setPrice(item.price, item.name);
+        const newItem: IItemAmount = new ItemAmount(item, this._weights?.getSum());
+        this._order!.items.push(newItem);
+        this._setTotal(newItem.sum);
+        this.selectItem(null);
+        this._onReset();
+        this._state = State.PENDING;
+        this._onChange();
+        this.getItemsCount() > 0 && this._onItemsChange();
+    }
+
+    delItem() {
+        if (!this.isSelected()) return;
+        this._setTotal(-this._order!.items[this._selectedItemIndex!].sum);
+        this._order!.items.splice(this._selectedItemIndex!, 1);
+        this.selectItem(null);
+    }
+
+    getItems() {
+        return this._order ? this._order.items : [];
+    }
+
+    getItemsCount() {
+        return this._order ? this._order.items.length : 0;
+    }
+
     getOrder() {
         return this._order || null;
+    }
+
+    getOrderNumber() {
+        return this._order?.orderNumber || null;
+    }
+
+    getTotal(): number {
+        return this._order ? this._order.total : 0;
     }
 
     selectItem(index: number | null) {
@@ -125,82 +148,35 @@ export class OrderControl implements IOrderControl {
         return this._selectedItemIndex;
     }
 
-    addItem(item: IItem) {
-        if (!this._weights.isStable()) {
-            this._throwMessage(MessageCode.WEIGHTS_NOT_STABLE);
-            return;
-        }
-
-        if (this._weights.getWeight() <= 0.040) {
-            this._throwMessage(MessageCode.WEIGHTS_IS_EMPTY);
-            console.log("MESS");
-            return;
-        }
-
-        this._weights.setPrice(item.price, item.name);
-        const newItem: IItemAmount = new ItemAmount(item, this._weights?.getSum());
-        this._order!.items.push(newItem);
-        this._setTotal(newItem.sum);
-        this.selectItem(null);
-        this._onReset();
-        this._state = State.PENDING;
-
-        this._onChange();
-        this.getItemsCount() > 0 && this._onItemsChange();
+    getState() {
+        return this._state;
     }
 
-    private _throwMessage(code: MessageCode | null) {
-        if (this._callbackOnMessage) { 
-            this._callbackOnMessage(code);
-        }
+    onReset(callback: () => void) {
+        this._callbackOnReset = callback;
     }
 
-    delItem() {
-        if (!this.isSelected()) return;
-        this._setTotal(-this._order!.items[this._selectedItemIndex!].sum);
-        this._order!.items.splice(this._selectedItemIndex!, 1);
-        this.selectItem(null);
+    onMessage(message: IMessage) {
+        this._message = message;
     }
 
-    getItems() {
-        return this._order ? this._order.items : [];
+    onItemsChange(callback: () => void) {
+        this._callbackOnItemsChange = callback;
     }
 
-    getItemsCount() {
-        return this._order ? this._order.items.length : 0;
-    }
+    private _onWeightsChange() {
+        if (!this._weights) return;
 
-    getTotal(): number {
-        return this._order ? this._order.total : 0;
-    }
-
-    private _setTotal(value: number) {
-        this._order!.total += value;
-    }
-
-    getOrderNumber() {
-        return this._order?.orderNumber || null;
-    }
-
-    onChange(callback: (getState: () => IStateOrder) => void) {
-        this._callbackOnChange = callback;
-    }
-
-    protected _onChange() {
-        if (this._callbackOnChange) this._callbackOnChange(this.getStateObject);
-    }
-
-    onWeightsChange() {
         if (this._state === State.PENDING) {
-            console.log(this._weights.getWeight());
             if (this._weights && this._weights.getWeight() <= 0.01) {
-                this._state = State.ENABLED;
+                this._state = State.READY;
                 this._onChange();
                 this._weights.setPrice(null);
             }
             return;
         } else {
-            if (this._order) this._order.tara = this._weights.getTara();
+            if (this._order && this._weights)
+                this._order.tara = this._weights.getTara();
         }
 
         if (!this._weights.isStable()) {
@@ -213,12 +189,29 @@ export class OrderControl implements IOrderControl {
             return;
         }
 
-        this._throwMessage(null);
+        this._throwMessage(MessageCode.CLEAR_MESSAGE);
     }
 
-    getState() {
-        return this._state;
+    private _onItemsChange() {
+        if (this._callbackOnItemsChange) this._callbackOnItemsChange();
     }
+    
+    private _onReset() {
+        if (this._callbackOnReset) this._callbackOnReset();
+    }
+
+    private _throwMessage(code: MessageCode) {
+        this._message?.sendMessage(code);
+    }
+
+    private _setTotal(value: number) {
+        this._order!.total += value;
+    }
+
+    private _onChange() {
+        if (this._callbackOnChange) this._callbackOnChange(this.getStateObject);
+    }
+
 }
 
 export default OrderControl;
