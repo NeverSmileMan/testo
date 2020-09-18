@@ -137,8 +137,10 @@ export function useTabs(
 
 	const deleteTab = useCallback(() => {
 		if (tabItems.length === 1) {
-			if (tabItems[0].tabNumber === 1) return
-			else {
+			if (tabItems[0].tabNumber === 1) {
+				tabItems[0].items = []
+				return
+			} else {
 				setFreeTabNumbers((prevState) => {
 					prevState[0] = true;
 					return prevState
