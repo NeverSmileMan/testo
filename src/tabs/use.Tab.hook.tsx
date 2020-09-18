@@ -78,11 +78,7 @@ export function useTabs(
             case ItemTypes.piece:
 
               new Promise((resolve, reject) => {
-
-                console.log('qqqqqqqqq',resolve)
                 setType('qtyGoods', resolve)();
-
-                 
               })
                 .then(result => console.log('rewsult', result))
                 .catch(err => alert(err));
