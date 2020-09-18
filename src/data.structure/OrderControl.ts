@@ -43,7 +43,6 @@ export class OrderControl implements IOrderControl {
     private _state: State = State.READY;
     private _callbackOnChange?: (getState: () => IStateOrder) => void;
     private _callbackOnReset?: () => void;
-    private _callbackOnMessage?: (code: MessageCode) => void;
     private _callbackOnItemsChange?: () => void;
 
     constructor() {

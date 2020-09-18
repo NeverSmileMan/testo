@@ -28,10 +28,11 @@ const changeStateOrder = (
     return { ...callbacks };
 };
 
-const useOrder = (order: IOrderControl) => {
-    const [stateOrder, setStateOrder] = useState(order?.getStateObject);
-    const [methods] = useState(() => changeStateOrder(order, setStateOrder));
-    useEffect(() => order.initOrder(), [order]);
+const useOrder = (orderControl: IOrderControl) => {
+    const [stateOrder, setStateOrder] = useState(orderControl.getStateObject);
+    const [methods] = useState(() => changeStateOrder(orderControl, setStateOrder));
+    const { order } = stateOrder;
+    useEffect(() => orderControl.initOrder(), [orderControl, order]);
     return { stateOrder, ...methods };
 };
 
