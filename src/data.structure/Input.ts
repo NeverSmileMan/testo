@@ -165,7 +165,7 @@ export class InputNumber extends Input<number, number> implements IInputNumber {
     }
 
     protected _onChange() {
-        if (!this._value || String(this.getValue()) === this._value) {
+        if (!this._value || String(this.getValue() * 1000) === this._value) {
             super._onChange();
             return;
         }

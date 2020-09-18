@@ -29,21 +29,19 @@ const useSearch = (callbacks: Props['callbacks']) => {
     const [input] = useState(() => new InputList());
     const [{ isFocus, value, valueHTML }, setState] = useState(input.getStateObject);
     const ref = useRef(null);
-    const [{ attachInput, refreshInput, onListSelect }, setMethods] = useState(
+    const [{ attachInput, refreshInput, onListSelect }] = useState(
         () => changeState(input, setState, ref, callbacks)
     );
-
-    useEffect(() => setMethods(
-        () => changeState(input, setState, ref, callbacks)),
-        [input, callbacks],
-    );
-    useEffect(() => 
-        refreshInput(valueHTML),
-        [refreshInput, valueHTML],
-    );
+    useEffect(() => refreshInput(valueHTML), [refreshInput, valueHTML]);
     useEffect(attachInput, [attachInput]);
-
     return { isFocus, value, ref, onListSelect };
 };
 
 export default useSearch;
+
+
+
+// useEffect(() => setMethods(
+//     () => changeState(input, setState, ref, callbacks)),
+//     [input, callbacks],
+// );

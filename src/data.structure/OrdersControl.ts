@@ -33,15 +33,15 @@ export class OrdersControl implements IOrdersControl {
     private _callbackOnChange?: (getState: () => IStateOrders) => void;
     printIsActive: boolean = false;
     closeIsActive: boolean = false;
-    private _currentOrder: IOrderControl;
+    private _orderControl: IOrderControl;
     private _callbackOnClose?: () => void;
     
     constructor(private _maxOrdersCount: number) {
         this._ordersFreeNums = Array(this._maxOrdersCount).fill(true);
         this.getStateOrders = this.getStateOrders.bind(this);
         this.doClose = this.doClose.bind(this);
-        this._currentOrder = new OrderControl();
-        this._currentOrder.onItemsChange(this._onOrderChange.bind(this));
+        this._orderControl = new OrderControl();
+        this._orderControl.onItemsChange(this._onOrderChange.bind(this));
         this._setCurrentOrder(); //може повертати значення
     }
 
@@ -55,11 +55,11 @@ export class OrdersControl implements IOrdersControl {
 
     getStateOrders() {
         return {
-            // currentOrder: this._currentOrder,
+            // currentOrder: this._orderControl,
             printIsActive: this.printIsActive,
             closeIsActive: this.closeIsActive,
             ordersNumbers: [...this.getOrders().keys()],
-            currentOrderNumber: this._currentOrder?.getOrderNumber() || null,
+            currentOrderNumber: this._orderControl?.getOrderNumber() || null,
             canCreate: this.canCreateOrder(),
             doClose: this.doClose.bind(this),
         };
@@ -83,7 +83,7 @@ export class OrdersControl implements IOrdersControl {
     }
 
     getOrderControl() {
-        return this._currentOrder;
+        return this._orderControl;
     }
 
     getOrders() {
@@ -99,15 +99,15 @@ export class OrdersControl implements IOrdersControl {
     }
 
     private _setCurrentOrder(orderNumber?: number) {
-        // if (this._currentOrder) {
-        //     this._currentOrder.getOrder().tara = weights.getTara(); //??????????
+        // if (this._orderControl) {
+        //     this._orderControl.getOrder().tara = weights.getTara(); //??????????
         // }
         if (orderNumber) {
             const order = this._orders.get(orderNumber);
             if (order) {
-                // this._currentOrder = new OrderControl(order);
+                // this._orderControl = new OrderControl(order);
                 
-                this._currentOrder.setOrder(order);
+                this._orderControl.setOrder(order);
                 //this._onOrderChange(true);
                 this._onChange();
                 return;
@@ -124,7 +124,7 @@ export class OrdersControl implements IOrdersControl {
     }
 
     deleteOrder() {
-        const orderNumber = this._currentOrder?.getOrderNumber();
+        const orderNumber = this._orderControl?.getOrderNumber();
         if (!orderNumber) return;
         this._orders.delete(orderNumber);
         this._ordersFreeNums[orderNumber - 1] = true;
@@ -132,16 +132,16 @@ export class OrdersControl implements IOrdersControl {
     }
 
     printOrder() {
-        const order = this._currentOrder?.getOrder();
+        const order = this._orderControl?.getOrder();
         if (!order) return;
         new Printer(order);
         this._doClose();
     }
 
     private _onOrderChange(init?: boolean) {
-        if (!this._currentOrder) return;
+        if (!this._orderControl) return;
 
-        const itemsCount = this._currentOrder.getItemsCount();
+        const itemsCount = this._orderControl.getItemsCount();
 
         if ((init && itemsCount > 0) || itemsCount === 1) {
             this.printIsActive = true;
@@ -152,7 +152,7 @@ export class OrdersControl implements IOrdersControl {
 
         if (itemsCount === 0) {
             const ordersCount = this._orders.size;
-            const orderNumber = this._currentOrder.getOrderNumber();
+            const orderNumber = this._orderControl.getOrderNumber();
             if (ordersCount === 1 && orderNumber === 1) {
                 this.closeIsActive = false;
             } else {

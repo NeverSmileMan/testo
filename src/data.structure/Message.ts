@@ -35,7 +35,7 @@ export class Message implements IMessage {
             this._code = prevCode;
             this._text = prevText;
             this._onMessage();
-        }, 3000);
+        }, 2000);
     }
 
     onMessage(callback: (getState: () => IMessageInfo | null) => void) {

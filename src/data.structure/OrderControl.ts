@@ -3,7 +3,7 @@ import Weights, { IWeightsTest } from './Weights';
 import { IOrder } from './Order';
 import { MessageCode } from './data/messagesInfo';
 import { State, Mode } from './types/types';
-import Message from './Message';
+// import Message from './Message';
 import IObject from './types/objects';
 
 export interface IOrderControl extends IObject<IStateOrder> {
@@ -49,7 +49,7 @@ export class OrderControl implements IOrderControl {
         // this._order = order;
         this.onWeightsChange = this.onWeightsChange.bind(this);
         this.getStateObject = this.getStateObject.bind(this);
-        this.onMessage(Message.getInstance().sendMessage); //???
+        // this.onMessage(Message.getInstance().sendMessage); //???
         // this._onWeightsChange();
     }
 
@@ -65,15 +65,15 @@ export class OrderControl implements IOrderControl {
         this._order = order
         this.selectItem(null);
         // this.onWeightsChange();
-        this._onItemsChange();
-        this._onChange();       
+        this._onChange(); 
+        this._onItemsChange();  
     }
 
     initOrder() {
         if (!this._order) return;
         this._weights?.setTara(this._order.tara);
         // this.selectItem(null);
-        this.onWeightsChange();
+        // можна не робити this.onWeightsChange();
         // this._onItemsChange();
         // this._onChange();
     }
