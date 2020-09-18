@@ -9,6 +9,7 @@ import Main from './main';
 
 //-----
 import Tablo from './plugs/Tablo';
+import FillFormButton from './my.modals/form';
 //-----
 
 const useStyles = makeStyles({
@@ -144,6 +145,10 @@ function App() {
           <div className={classes.keyboardWrap}>
             {/* <KeyboardGrid service={ActiveInputService} keyboardLayout={keyBoard} /> */}
             <KeyboardFlex service={ActiveInputService} keyboardLayout={keyBoardFlex}/>
+
+
+
+            <FillFormButton />
           </div>
         </div>
       </ThemeProvider>
