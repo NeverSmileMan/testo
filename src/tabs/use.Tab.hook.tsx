@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {ActiveInputService} from '../services/ActiveInputService';
 import {Hints, ItemTypes, MAX_NUMBER_OF_TABS} from '../custom/variables';
 
+
 export interface TabItems {
 	tabNumber: number;
 	tara: number;
@@ -22,7 +23,7 @@ interface AddedItem extends Item {
 
 export interface ArgAddItemFunc {
 	item: Item,
-	сalcValue?: number
+	calcValue?: number
 }
 
 export function useTabs(
@@ -35,7 +36,7 @@ export function useTabs(
 		AddedItem | null,
 	React.Dispatch<React.SetStateAction<number>>,
 	React.Dispatch<React.SetStateAction<AddedItem | null>>,
-	({item, сalcValue}: ArgAddItemFunc) => boolean,
+	({item, calcValue}: ArgAddItemFunc) => boolean,
 	() => void,
 	() => void,
 	() => void,
@@ -66,7 +67,7 @@ export function useTabs(
 	}, [tabItems, activeTab]);
 
 	const addItem = useCallback(
-		({item, сalcValue}: ArgAddItemFunc) => {
+		({item, calcValue}: ArgAddItemFunc) => {
 			if (scaleService.checkStable()) {
 				const addedItem = {...item} as AddedItem;
 				scaleService.setTitle(item.name);
@@ -75,8 +76,8 @@ export function useTabs(
 				if (weightScale >= (40 / 1000)) {
 					switch (item.type) {
 						case ItemTypes.piece:
-							if (сalcValue) {
-								addedItem.amount = сalcValue;
+							if (calcValue) {
+								addedItem.amount = calcValue;
 								addedItem.cost = addedItem.amount * item.price;
 							} else {
 								setHint(Hints.PickItemsQty);
@@ -116,7 +117,11 @@ export function useTabs(
 	// const closeOrder = useCallback(() => {}, []);
 
 	useEffect(() => {
-		scaleService.setTara(getTara())
+		const tara = getTara()
+		scaleService.setTara(tara)
+		if (tara < scaleService.getItemWeight) {
+			setHint(Hints.MinWeight, true)
+		}
 	}, [activeTab])
 
 
