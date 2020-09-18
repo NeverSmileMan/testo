@@ -25,7 +25,7 @@ const NameCalc = 'Кількість'
 const InputQty = () => {
   const { inputContainer, keyboardContainer } = useStyle();
   const [qtyGoods, setqtyGoods] = useState(0)
-  const { setType, selectedItem, addItem} = useContext(MainContext);
+  const { setType, selectedItem, addItem } = useContext(MainContext);
   const getQty = useCallback((num: number): any => () => {
     setqtyGoods(qtyGoods * 10 + num)
   }, [setqtyGoods, qtyGoods])
@@ -37,8 +37,10 @@ const InputQty = () => {
   const controlOnclick = {
     delete: deleteQty,
     submit: useCallback(() => {
-      setType(null)();
-      addItem({item:selectedItem, calcValue:qtyGoods});
+      if (qtyGoods > 0) {
+        setType(null)();
+        addItem({ item: selectedItem, calcValue: qtyGoods })
+      };
     }, [qtyGoods, setType, addItem, selectedItem]),
   }
   return (
@@ -48,7 +50,7 @@ const InputQty = () => {
         inputName={NameCalc} />
       <div className={keyboardContainer}>
         <NumberKeyboard onClick={getQty} />
-        <ControlKeyboard onClick={controlOnclick} />
+        <ControlKeyboard inputValue={qtyGoods} onClick={controlOnclick} />
       </div>
     </div>
   )

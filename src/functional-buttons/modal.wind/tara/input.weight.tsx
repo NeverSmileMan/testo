@@ -33,13 +33,17 @@ const InputWeight = () => {
   }, [setWeihghtTara, inputValue, changeHint])
 
   const deleteWeight = useCallback(() => {
-    setWeihghtTara(Math.trunc(inputValue / 10))
-  }, [setWeihghtTara, inputValue])
-  
-  const controlOnckick ={
+    setWeihghtTara(Math.trunc(inputValue / 10));
+  }, [setWeihghtTara, inputValue]);
+
+  const controlOnckick = {
     delete: deleteWeight,
-    submit: useCallback(()=>submitValueCalc(inputValue),[inputValue]),
-  }
+    submit: useCallback(() => {
+      if (inputValue > 0) {
+        submitValueCalc(inputValue)
+      }
+    }, [inputValue, submitValueCalc]),
+  };
 
   return (
     <div className={inputContainer}>
@@ -48,7 +52,7 @@ const InputWeight = () => {
         inputName={NameCalc} />
       <div className={keyboardContainer}>
         <NumberKeyboard onClick={getWeight} />
-        <ControlKeyboard onClick={controlOnckick} />
+        <ControlKeyboard inputValue={inputValue} onClick={controlOnckick} />
       </div>
     </div>
   )
