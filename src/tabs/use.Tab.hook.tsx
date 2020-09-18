@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ActiveInputService} from '../services/ActiveInputService';
 import {Hints, ItemTypes, MAX_NUMBER_OF_TABS} from '../custom/variables';
 
@@ -62,7 +62,7 @@ export function useTabs(
 	}, [tabItems, activeTab]);
 
 	const getTara = useCallback(() => {
-		return tabItems[activeTab].tara
+		return (tabItems[activeTab].tara) / 1000
 	}, [tabItems, activeTab]);
 
 	const addItem = useCallback(
@@ -114,6 +114,11 @@ export function useTabs(
 
 	// const createOrder = useCallback(() => {}, []);
 	// const closeOrder = useCallback(() => {}, []);
+
+	useEffect(() => {
+		scaleService.setTara(getTara())
+	}, [activeTab])
+
 
 	const print = useCallback(() => {
 		console.log('-------------------------')
