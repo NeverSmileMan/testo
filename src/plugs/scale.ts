@@ -39,14 +39,15 @@ export const ScalePlug = {
 	},
 
 	getItemWeight() {
-		const weight = (Math.floor(Math.random() * 200) + 40) / 1000;
-		this.setWeight(weight);
+		const weight = (Math.floor(Math.random() * 200) + 40);
+		this.setWeight(weight/1000);
 		return weight;
 	},
 
-	getItemCost(total: any) {
-		this.setTotal(total);
-		return total;
+	getItemCost() {
+		const cost = (Math.floor(Math.random() * 200) + 20);
+		this.setTotal(cost);
+		return cost;
 	},
 
 }

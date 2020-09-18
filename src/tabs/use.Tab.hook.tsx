@@ -84,9 +84,8 @@ export function useTabs(
               }
               break;
             case ItemTypes.weights:
-              const price = +(weightScale * addedItem.price).toFixed(2)
               addedItem.amount = weightScale;
-              addedItem.cost = scaleService.getItemCost(price);
+              addedItem.cost = scaleService.getItemCost();
               break;
             default:
               setHint(Hints.IncorrectItemType, true);

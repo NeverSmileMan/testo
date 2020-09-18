@@ -52,9 +52,9 @@ function OrderInfo(props: any) {
 					<DeleteForeverIcon fontSize='small'/>
 				</div> :
 				<>
-					<div className={classes.total}>
+					{/* <div className={classes.total}>
 						{props.value.length ? <>{calc('amount').toFixed(3)}</> : <>{(0).toFixed(3)}</>}  г.
-					</div>
+					</div> */}
 					<div className={classes.total}>
 						{props.value.length ? <>{calc('cost').toFixed(2)}</> : <>{(0).toFixed(2)}</>}
 					</div>
