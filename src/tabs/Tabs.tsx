@@ -3,8 +3,7 @@ import Tab from "./Tab";
 import {makeStyles} from "@material-ui/styles";
 import {MainContext} from '../main';
 import {TabItems} from './use.Tab.hook';
-
-export const MAX_NUMBER_OF_TABS = 6;
+import {MAX_NUMBER_OF_TABS} from "../custom/variables";
 
 const styles = makeStyles({
 	header_tabs: {

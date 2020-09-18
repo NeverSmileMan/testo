@@ -18,9 +18,9 @@ interface Prop {
 const titlePrint: string = 'Зніміть товар з вагів';
 
 const ModalPrint = ({title = titlePrint}: Prop) => {
-	const {showPrint} = useContext(MainContext)
+	const {print} = useContext(MainContext)
 	const cls = useStyles();
-	return <div className={cls.title} onClick={showPrint}>{title}</div>
+	return <div className={cls.title} onClick={print}>{title}</div>
 
 }
 

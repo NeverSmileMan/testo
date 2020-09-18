@@ -1,8 +1,8 @@
 import React, {FC} from "react";
 import {makeStyles} from "@material-ui/styles";
-import {MAX_NUMBER_OF_TABS} from "./Tabs";
 import {createStyles, Theme} from "@material-ui/core/";
 import {TabItems} from "./use.Tab.hook";
+import {MAX_NUMBER_OF_TABS} from "../custom/variables";
 
 interface PropsTab {
 	tab: TabItems;
@@ -34,14 +34,11 @@ const styles = makeStyles((theme: Theme) => createStyles({
 }))
 
 const Tab: FC<PropsTab> = ({tab, setActive, active, index}) => {
-
 	const {tab_style, tab_active} = styles()
-
 	return <div id={index.toString()}
 	            onClick={() => setActive(index)}
 	            className={`${tab_style} ${active ? tab_active : ''}`}>
 		{tab.tabNumber}
 	</div>
-
 }
 export default Tab;

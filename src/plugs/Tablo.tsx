@@ -1,7 +1,6 @@
-import React, {useContext, useEffect} from 'react'
+import React from 'react'
 import {makeStyles} from '@material-ui/styles';
 import {ScalePlug} from './scale'
-import {MainContext} from "../main";
 
 const useStyles = makeStyles({
 	grid: {
@@ -49,18 +48,15 @@ const useStyles = makeStyles({
 
 export default function Tablo() {
 	const classes = useStyles();
-	const {activeTara} = useContext(MainContext)
 
-	const [tara, setTara] = React.useState(activeTara);
+	const [tara, setTara] = React.useState((0).toFixed(2));
 	const [title, setTitle] = React.useState();
 	const [price, setPrice] = React.useState((0).toFixed(2));
 	const [weight, setWeight] = React.useState<any>((0).toFixed(3));
 	const [total, setTotal] = React.useState((0).toFixed(2));
 
 
-	useEffect(() => {
-		ScalePlug.setFuncs(setTara, setTitle, setPrice, setWeight, setTotal);
-	}, [tara, title, price, weight, total, activeTara])
+	ScalePlug.setFuncs(setTara, setTitle, setPrice, setWeight, setTotal);
 
 	const styleScale = {
 		fontSize: '2em',
