@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ActiveInputService from '../data.structure/ActiveInputService';
-import { InputList, IInputList, IStateInput } from '../data.structure/Input';
+import { InputList, IInputList, IStateInput } from '../data.structure/InputListNumber';
 import { Props } from '../components/search/Search';
 
 const changeState = (

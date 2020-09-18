@@ -1,14 +1,6 @@
 import { IItem } from './Item';
 import IObject from './types/objects';
-import Message, { MessageCode } from './Message';
-
-const message = Message.getInstance();
-
-export interface IInputBase<V extends string | number = string> extends IObject<IStateInput<V>>{
-    setFocus: () => void;
-    blurFocus: () => void;
-    pressKey: (key: string) => void;
-}
+import { IMessage, MessageCode } from './Message';
 
 export interface IStateInput<V = string> {
     isFocus: boolean;
@@ -16,31 +8,36 @@ export interface IStateInput<V = string> {
     valueHTML: string;
 }
 
-export interface IInput<V extends string | number = string, S extends string | number | IItem = string>
-    extends IInputBase<V>
+export interface IInput<
+    V extends string | number = string,
+    S extends string | number | IItem = string>
+    extends IObject<IStateInput<V>>    
 {
+    setFocus: () => void;
+    blurFocus: () => void;
+    pressKey: (key: string) => void;
     setValue: (value: string) => void;
     getValue: () => V;
     getValueHTML: () => string;
-    onChange: (callback: (getState: () => IStateInput<V>) => void) => void;
+    onMessage: (message: IMessage) => void;
     onSelect: (callback: (value: S) => void) => void;
     ifFocus: () => boolean;
-    getStateObject: () => IStateInput<V>;
 }
 
-export interface IInputList extends IInput<string, IItem> {
-    _onSelect: (item: IItem) => void;
-}
+// export interface IInputList extends IInput<string, IItem> {
+//     _onSelect: (item: IItem) => void;
+// }
 
-export interface IInputNumber extends IInput<number, number> {
-    getValue: () => number;
-}
+// export interface IInputNumber extends IInput<number, number> {
+//     getValue: () => number;
+// }
 
 export class Input<V extends string | number = string, S extends string | number | IItem = string> implements IInput<V, S> {
     protected _value: string = '';
     protected _callbackOnChange?: (getState: () => IStateInput<V>) => void;
     protected _callbackOnSelect?: (value: S) => void;
     private _isFocus: boolean = false;
+    private _message?: IMessage;
 
     constructor() {
         this.getStateObject = this.getStateObject.bind(this);
@@ -55,31 +52,8 @@ export class Input<V extends string | number = string, S extends string | number
         };
     }
 
-    protected _addSymbol(value: string) {
-        this._value += value;
-        this._onChange();
-    }
-
-    protected _delSymbol() {
-        this._value = this._value.substring(0, this._value.length - 1);
-        this._onChange();
-    }
-
-    setValue(value: string = '') {
-        this._value = value;
-        this._onChange();
-    }
-
-    ifFocus() {
-        return this._isFocus;
-    }
-
-    getValue() {
-        return this._value as V;
-    }
-
-    getValueHTML() {
-        return `&{this.getValue()}`;
+    onChange(callback: (getState: () => IStateInput<V>) => void) {
+        this._callbackOnChange = callback;
     }
 
     setFocus() {
@@ -90,22 +64,6 @@ export class Input<V extends string | number = string, S extends string | number
     blurFocus() {
         this._isFocus = false;
         this._onChange();
-    }
-
-    protected _onChange() {
-        if (this._callbackOnChange) this._callbackOnChange(this.getStateObject);
-    }
-
-    protected _onSelect(value?: any) {
-        if (this._callbackOnSelect) this._callbackOnSelect(value || this.getValue());
-    }
-
-    onChange(callback: (getState: () => IStateInput<V>) => void) {
-        this._callbackOnChange = callback;
-    }
-
-    onSelect(callback: (value: S) => void) {
-        this._callbackOnSelect = callback;
     }
 
     pressKey(key: string) {
@@ -129,48 +87,98 @@ export class Input<V extends string | number = string, S extends string | number
             }
         } catch(e) {
             this._value = currentValue;
-            message.sendMessage(MessageCode.INTERNAL_ERROR, 'НЕДОПУСТИМИЙ СИМВОЛ!');
+            this._throwMessage(MessageCode.INTERNAL_ERROR, 'НЕДОПУСТИМИЙ СИМВОЛ!');
         }
     }
-}
 
-export class InputList extends Input<string, IItem> implements IInputList {
-
-    _onSelect(item: IItem) {
-        if (!item) return;
-        if (this._callbackOnSelect) this._callbackOnSelect(item);
+    protected _addSymbol(value: string) {
+        this._value += value;
+        this._onChange();
     }
 
-    getValueHTML() {
-        return (' ' + this.getValue()).replace(/ /g, '&nbsp;');
+    protected _delSymbol() {
+        this._value = this._value.substring(0, this._value.length - 1);
+        this._onChange();
     }
-}
 
-export class InputNumber extends Input<number, number> implements IInputNumber {
+    setValue(value: string = '') {
+        this._value = value;
+        this._onChange();
+    }
 
     getValue() {
-        return Number(this._value) / 1000;
-    }
-
-    getStateObject() {
-        return {
-            isFocus: this.ifFocus(),
-            value: this.getValue(),
-            valueHTML: `${this.getValueHTML()}`,
-        };
+        return this._value as V;
     }
 
     getValueHTML() {
-        return (this.getValue()).toFixed(3);
+        return `&{this.getValue()}`;
+    }
+
+    onMessage(message: IMessage) {
+        this._message = message;
+    }
+
+    onSelect(callback: (value: S) => void) {
+        this._callbackOnSelect = callback;
+    }
+
+    ifFocus() {
+        return this._isFocus;
+    }
+
+    protected _throwMessage(code: MessageCode, text?: string) {
+        this._message?.sendMessage(code);
     }
 
     protected _onChange() {
-        if (!this._value || String(this.getValue() * 1000) === this._value) {
-            super._onChange();
-            return;
-        }
-        else {
-            message.sendMessage(MessageCode.INTERNAL_ERROR, 'НЕДОПУСТИМЕ ЗНАЧЕННЯ!');
-        }
+        if (this._callbackOnChange)
+            this._callbackOnChange(this.getStateObject);
     }
+
+    protected _onSelect(value?: any) {
+        if (this._callbackOnSelect)
+            this._callbackOnSelect(value || this.getValue());
+    }
+
 }
+
+// export class InputList extends Input<string, IItem> implements IInputList {
+
+//     _onSelect(item: IItem) {
+//         if (!item) return;
+//         if (this._callbackOnSelect) this._callbackOnSelect(item);
+//     }
+
+//     getValueHTML() {
+//         return (' ' + this.getValue()).replace(/ /g, '&nbsp;');
+//     }
+// }
+
+// export class InputNumber extends Input<number, number> implements IInputNumber {
+
+//     getValue() {
+//         return Number(this._value) / 1000;
+//     }
+
+//     getStateObject() {
+//         return {
+//             isFocus: this.ifFocus(),
+//             value: this.getValue(),
+//             valueHTML: `${this.getValueHTML()}`,
+//         };
+//     }
+
+//     getValueHTML() {
+//         return (this.getValue()).toFixed(3);
+//     }
+
+//     protected _onChange() {
+//         if (!this._value || String(this.getValue() * 1000) === this._value) {
+//             super._onChange();
+//             return;
+//         }
+//         else {
+//             this._throwMessage(MessageCode.INTERNAL_ERROR, 'НЕДОПУСТИМЕ ЗНАЧЕННЯ!');
+//         }
+//     }
+// }

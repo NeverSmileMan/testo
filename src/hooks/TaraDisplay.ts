@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import ActiveInputService from '../data.structure/ActiveInputService';
-import { InputNumber, IInputNumber, IStateInput } from '../data.structure/Input';
+import Message from '../data.structure/Message';
+
+import { InputNumber, IInputNumber, IStateInput } from '../data.structure/InputListNumber';
 import { Props } from '../components/tara/TaraDisplay';
 
 const changeState = (
@@ -10,6 +12,8 @@ const changeState = (
     onSelect: Props['onSelect'],
 ) => {
     const activeInputService = ActiveInputService.getInstance();
+    const message = Message.getInstance();
+    input.onMessage(message);
     input.onChange(setState);
     input.onSelect(onSelect);
     const attachInput = () => {
