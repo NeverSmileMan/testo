@@ -6,14 +6,14 @@ import
 } from './data/messagesInfo';
 
 export interface IMessage {
-    sendMessage: (code: MessageCode | null, text?: string) => void;
-    getMessage: () => IMessageInfo | null;
-    onMessage: (callback: (getState: () => IMessageInfo | null) => void) => void;
+    sendMessage: (code: MessageCode, text?: string) => void;
+    getMessage: () => IMessageInfo;
+    onMessage: (callback: (getState: () => IMessageInfo) => void) => void;
 }
 
 export class Message implements IMessage {
-    private _code: MessageCode | null = null;
-    private _callbackOnMessage?: (getState: () => IMessageInfo | null) => void;
+    private _code: MessageCode = MessageCode.CLEAR_MESSAGE;
+    private _callbackOnMessage?: (getState: () => IMessageInfo) => void;
     private _text: string = '';
     private _timer: any;
     constructor() {
@@ -21,7 +21,7 @@ export class Message implements IMessage {
         this.sendMessage = this.sendMessage.bind(this);
     }
 
-    sendMessage(code: MessageCode | null, text?: string) {
+    sendMessage(code: MessageCode, text?: string) {
         clearTimeout(this._timer);
         const prevCode = this._code;
         const prevText = this._text;
@@ -38,7 +38,7 @@ export class Message implements IMessage {
         }, 2000);
     }
 
-    onMessage(callback: (getState: () => IMessageInfo | null) => void) {
+    onMessage(callback: (getState: () => IMessageInfo) => void) {
         this._callbackOnMessage = callback;
     }
 
@@ -48,7 +48,7 @@ export class Message implements IMessage {
     }
 
     getMessage() {
-        if (this._code === null) return null;
+        if (this._code === null) return messagesInfo[MessageCode.CLEAR_MESSAGE];
         const message = { ...messagesInfo[this._code] };
         if (this._text) message.text += ': ' + this._text;
         return message;

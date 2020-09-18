@@ -6,7 +6,7 @@ const changeState = (
     button: ITaraButton,
 ) => {
     const weights = Weights.getInstance();
-    button.setWeights(weights);
+    button.setWeights && button.setWeights(weights);
 }
 
 const useTaraButton = (button: ITaraButton) => {

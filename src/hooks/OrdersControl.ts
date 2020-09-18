@@ -3,12 +3,12 @@ import OrdersControl, { IOrdersControl, IStateOrders } from '../data.structure/O
 
 const createCallbacks = (orders: IOrdersControl) => {
     const callbacksControls = {
-        deleteOrder: () => orders.deleteOrder(),
-        printOrder: () => orders.printOrder(),
+        deleteOrder: orders.deleteOrder,
+        printOrder: orders.printOrder,
     };
     const callbacksTabs = {
-        selectOrder: (orderNumber: number) => orders.selectOrder(orderNumber),
-        createOrder: () => orders.createOrder(),
+        selectOrder: orders.selectOrder,
+        createOrder: orders.createOrder,
     }
     return { callbacksTabs, callbacksControls };
 }

@@ -37,7 +37,12 @@ export class OrdersControl implements IOrdersControl {
     constructor(private _maxOrdersCount: number) {
         this.getStateObject = this.getStateObject.bind(this);
         this.doClose = this.doClose.bind(this);
-        this._onOrderItemsChange = this._onOrderItemsChange.bind(this)
+        this._onOrderItemsChange = this._onOrderItemsChange.bind(this);
+        this.deleteOrder = this.deleteOrder.bind(this);
+        this.printOrder = this.printOrder.bind(this);
+        this.createOrder = this.createOrder.bind(this);
+        this.selectOrder = this.selectOrder.bind(this);
+        
         this._ordersFreeNums = Array(this._maxOrdersCount).fill(true);
         this._orderControl = new OrderControl();
         this._orderControl.onItemsChange(this._onOrderItemsChange);
@@ -104,23 +109,20 @@ export class OrdersControl implements IOrdersControl {
     }
 
     private _doClose() {
-        if (this._callbackOnClose) this._callbackOnClose();
+        this._callbackOnClose && this._callbackOnClose();
     }
 
     private _onChange() {
-        if (this._callbackOnChange)
-            this._callbackOnChange(this.getStateObject);
+        this._callbackOnChange
+            && this._callbackOnChange(this.getStateObject);
     }
 
     private _setCurrentOrder(orderNumber?: number) {
 
         if (orderNumber) {
             const order = this._orders.get(orderNumber);
-            if (order) {
-                this._orderControl.setOrder(order);
-                this._onChange();
-                return;
-            }
+            if (order) this._orderControl.setOrder(order);
+            return;
         }
 
         if (!this._orders.size) {
@@ -132,20 +134,18 @@ export class OrdersControl implements IOrdersControl {
         this._setCurrentOrder(firstOrderNumber);
     }
 
-    private _onOrderItemsChange(init?: boolean) {
+    private _onOrderItemsChange() {
         if (!this._orderControl) return;
 
         const itemsCount = this._orderControl.getItemsCount();
 
-        if ((init && itemsCount > 0) || itemsCount === 1) {
+        if (itemsCount === 1) {
             this.printIsActive = true;
             this.closeIsActive = true;
-            !init && this._onChange();
-            return;
         }
 
         if (itemsCount === 0) {
-            const ordersCount = this._orders.size;
+            const ordersCount = this._orderControl.getItemsCount();
             const orderNumber = this._orderControl.getOrderNumber();
             if (ordersCount === 1 && orderNumber === 1) {
                 this.closeIsActive = false;
@@ -153,8 +153,9 @@ export class OrdersControl implements IOrdersControl {
                 this.closeIsActive = true;
             }
             this.printIsActive = false;
-            !init && this._onChange();
         }
+
+        this._onChange();
     }
 }
 

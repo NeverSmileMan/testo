@@ -1,16 +1,15 @@
 import { State } from './types/types';
-import { IWeightsTest } from './Weights';
+import { IWeights } from './Weights';
 import ControlButton, { IControlButton } from './ControlButton';
 
 export interface ITaraButton extends IControlButton {
     setAdditionalTara: (value: number) => void;
-    setWeights: (weights: IWeightsTest) => void;
     onWeightsChange: () => void;
 }
 
 class TaraButton extends ControlButton implements ITaraButton {
     private _tara: number = 0;
-    private _weights?: IWeightsTest;
+    private _weights?: IWeights<any>;
 
     constructor() {
         super();
@@ -18,7 +17,7 @@ class TaraButton extends ControlButton implements ITaraButton {
         this.setAdditionalTara = this.setAdditionalTara.bind(this);
     }
 
-    setWeights(weights: IWeightsTest) {
+    setWeights(weights: IWeights<any>) {
         this._weights = weights;
         this._weights.onChange(this.onWeightsChange);
         console.log('WEIGHTS');

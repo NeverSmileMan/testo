@@ -1,5 +1,6 @@
 import { State, Mode } from './types/types';
-import { IWeightsTest} from './Weights';
+
+import { IWeights } from './Weights';
 
 export interface IControlButton {
     onAction: (callback?: () => void) => void;
@@ -9,7 +10,7 @@ export interface IControlButton {
     doAction: (confirm?: boolean) => void;
     getState: () => State;
     getStateControlButton: () => IStateControlButton;
-    setWeights?: (weights: IWeightsTest) => void;
+    setWeights?: (weights: IWeights<any>) => void;
 }
 
 export interface IStateControlButton {

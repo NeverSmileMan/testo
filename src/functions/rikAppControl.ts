@@ -38,7 +38,7 @@ function runRikAppControl() {
         if (event.shiftKey && event.code === 'KeyZ') { weights.__setStable(); return; }
         if (event.shiftKey && event.code === 'KeyM') {
             message.sendMessage(MessageCode.TEST_RIK_CONTROL);
-            setTimeout(() => message.sendMessage(null), 4000);
+            // setTimeout(() => message.sendMessage(MessageCode.CLEAR_MESSAGE), 4000);
         }
     });
 };

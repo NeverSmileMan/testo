@@ -48,6 +48,10 @@ export class OrderControl implements IOrderControl {
     constructor() {
         this._onWeightsChange = this._onWeightsChange.bind(this);
         this.getStateObject = this.getStateObject.bind(this);
+        this.delItem = this.delItem.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.selectItem = this.selectItem.bind(this);
+        this.onReset = this.onReset.bind(this);
     }
 
     getStateObject(): IStateOrder {
@@ -68,8 +72,7 @@ export class OrderControl implements IOrderControl {
     setOrder(order: IOrder) {
         this._order = order;
         this.selectItem(null);
-        this._onChange(); 
-        this._onItemsChange();  
+        this._onItemsChange();
     }
 
     setWeights(weights: IWeightsTest) {
@@ -78,8 +81,8 @@ export class OrderControl implements IOrderControl {
     }
 
     initOrder() {
-        if (!this._order) return;
-        this._weights?.setTara(this._order.tara);
+        if (this._order) 
+            this._weights?.setTara(this._order.tara);
     }
 
     addItem(item: IItem) {
@@ -93,15 +96,17 @@ export class OrderControl implements IOrderControl {
             return;
         }
 
+        this._state = State.PENDING;
+
         this._weights.setPrice(item.price, item.name);
-        const newItem: IItemAmount = new ItemAmount(item, this._weights?.getSum());
+        const sum = this._weights?.getSum();
+        
+        const newItem: IItemAmount = new ItemAmount(item, sum);
         this._order!.items.push(newItem);
         this._setTotal(newItem.sum);
-        this.selectItem(null);
         this._onReset();
-        this._state = State.PENDING;
-        this._onChange();
-        this.getItemsCount() > 0 && this._onItemsChange();
+        this.selectItem(null);
+        this.getItemsCount() <= 1 && this._onItemsChange();
     }
 
     delItem() {
@@ -132,10 +137,9 @@ export class OrderControl implements IOrderControl {
     }
 
     selectItem(index: number | null) {
-        if (this._selectedItemIndex !== index) {
-            this._selectedItemIndex = index;
-        }
-        else this._selectedItemIndex = null;
+        this._selectedItemIndex !== index ?
+            this._selectedItemIndex = index :
+            this._selectedItemIndex = null;
         this._onChange();
     }
 
@@ -164,8 +168,6 @@ export class OrderControl implements IOrderControl {
     }
 
     private _onWeightsChange() {
-        if (!this._weights) return;
-
         if (this._state === State.PENDING) {
             if (this._weights && this._weights.getWeight() <= 0.01) {
                 this._state = State.READY;
@@ -178,7 +180,7 @@ export class OrderControl implements IOrderControl {
                 this._order.tara = this._weights.getTara();
         }
 
-        if (!this._weights.isStable()) {
+        if (!this._weights?.isStable()) {
             this._throwMessage(MessageCode.WEIGHTS_NOT_STABLE);
             return;
         }
@@ -192,11 +194,11 @@ export class OrderControl implements IOrderControl {
     }
 
     private _onItemsChange() {
-        if (this._callbackOnItemsChange) this._callbackOnItemsChange();
+        this._callbackOnItemsChange && this._callbackOnItemsChange();
     }
     
     private _onReset() {
-        if (this._callbackOnReset) this._callbackOnReset();
+        this._callbackOnReset && this._callbackOnReset();
     }
 
     private _throwMessage(code: MessageCode) {
@@ -208,7 +210,8 @@ export class OrderControl implements IOrderControl {
     }
 
     private _onChange() {
-        if (this._callbackOnChange) this._callbackOnChange(this.getStateObject);
+        this._callbackOnChange
+            && this._callbackOnChange(this.getStateObject);
     }
 
 }

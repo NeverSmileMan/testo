@@ -4,7 +4,7 @@ import { IMessageInfo } from '../data.structure/data/messagesInfo';
 
 const changeState = (
     message: IMessage,
-    setState: React.Dispatch<() => IMessageInfo | null>
+    setState: React.Dispatch<() => IMessageInfo>
 ) => {
     message.onMessage(setState);
 };

@@ -1,7 +1,7 @@
 import EventEmiter from 'events';
 import IObject from './types/objects';
 
-export interface IWeights extends IObject<IStateWeights>{
+export interface IWeights<V> extends IObject<V>{
 
     readonly minWeight: number;
     readonly midweight: number;
@@ -26,7 +26,7 @@ export interface IStateWeights {
     sum: number;
 }
 
-export class Weights implements IWeights {
+export class Weights<V extends IStateWeights> implements IWeights<IStateWeights> {
     protected _isStable: boolean = true;
     private _tara: number = 0;
     protected _price: number = 0;
@@ -56,8 +56,7 @@ export class Weights implements IWeights {
         };
     }
 
-    onChange(callback: (getState: () => IStateWeights) => void) {
-
+    onChange(callback: (getState: () => V) => void) {
         this._emitter.on('stateChange', callback);
     }
     
@@ -81,7 +80,7 @@ export class Weights implements IWeights {
     setPrice(value: number | null, title: string = '') {
         this._price = value || 0;
         this._title = title || '';
-        this._onChange()
+        this._onChange();
     }
 
     getWeight(): number {
@@ -102,16 +101,14 @@ export interface IStateWeightsTest extends IStateWeights {
     title: string;
 }
 
-export interface IWeightsTest extends IWeights {
-    getStateObject: () => IStateWeightsTest;
-    onChange: (callback: (getState: () => IStateWeightsTest) => void) => void;
+export interface IWeightsTest extends IWeights<IStateWeightsTest> {
     __setWeight: (value: number) => void;
     __getPrice: () => number;
     __getTitle: () => string;
     __setStable: (isStable?: boolean) => void;
 }
 
-class WeightsTest extends Weights implements IWeightsTest {
+class WeightsTest extends Weights<IStateWeightsTest> implements IWeightsTest {
 
     constructor() {
         super();
@@ -124,10 +121,6 @@ class WeightsTest extends Weights implements IWeightsTest {
             price: this.__getPrice(),
             title: this.__getTitle(),
         };
-    }
-
-    onChange(callback: (getState: () => IStateWeightsTest) => void) {
-        this._emitter.on('stateChange', callback);
     }
 
     __setWeight(value: number) {
