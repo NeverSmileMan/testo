@@ -99,12 +99,6 @@ export default function Main() {
 	const setType = (type: string | null): any => () => setModalType(type);
 	const [calcValue, setCalcValue] = useState(0);
 
-	const submitValueCalc = useCallback((val: number) => {
-		setCalcValue(val);
-		setType(null)();
-		setTara(val)
-	},[calcValue]);
-
 	const [
 		tabItems,
 		activeTab,
@@ -118,6 +112,13 @@ export default function Main() {
 		setTara,
 		print,
 	] = useTabs(changeHint, ScalePlug, calcValue);
+
+	const submitValueCalc = useCallback((val: number) => {
+		setCalcValue(val);
+		setType(null)();
+		setTara(val)
+	}, [calcValue, tabItems, activeTab]);
+
 
 	const confirmClose = useCallback(() => {
 		setType(null)();

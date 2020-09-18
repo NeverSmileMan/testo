@@ -1,7 +1,6 @@
 import React, {useCallback, useState} from 'react';
-import {MAX_NUMBER_OF_TABS} from './Tabs';
 import {ActiveInputService} from '../services/ActiveInputService';
-import {Hints, ItemTypes} from '../custom/variables';
+import {Hints, ItemTypes, MAX_NUMBER_OF_TABS} from '../custom/variables';
 
 export interface TabItems {
 	tabNumber: number;
@@ -23,7 +22,7 @@ interface AddedItem extends Item {
 
 export interface ArgAddItemFunc {
 	item: Item,
-	calcValue?: number
+	сalcValue?: number
 }
 
 export function useTabs(
@@ -36,12 +35,13 @@ export function useTabs(
 		AddedItem | null,
 	React.Dispatch<React.SetStateAction<number>>,
 	React.Dispatch<React.SetStateAction<AddedItem | null>>,
-	({item, calcValue}: ArgAddItemFunc) => boolean,
+	({item, сalcValue}: ArgAddItemFunc) => boolean,
 	() => void,
 	() => void,
 	() => void,
-	(tara: number) => void,
+	(tara: number) => void, // setTara
 	() => void,
+	() => number // getTara
 ] {
 	const [tabItems, setTabItems] = useState<TabItems[]>([{tabNumber: 1, tara: 0, items: [],},] as TabItems[]);
 	const [activeTab, setActiveTab] = useState<number>(0);
@@ -52,7 +52,7 @@ export function useTabs(
 		return arr;
 	});
 
-	const setTara = useCallback((tara: number) => {
+	const setTara = useCallback((tara) => {
 		if (scaleService.checkStable()) {
 			scaleService.setTara(tara / 1000)
 			scaleService.setWeight(-tara / 1000)
@@ -61,13 +61,12 @@ export function useTabs(
 		setTabItems([...tabItems]);
 	}, [tabItems, activeTab]);
 
-
 	const getTara = useCallback(() => {
 		return tabItems[activeTab].tara
 	}, [tabItems, activeTab]);
 
 	const addItem = useCallback(
-		({item, calcValue: calcValue}: ArgAddItemFunc) => {
+		({item, сalcValue}: ArgAddItemFunc) => {
 			if (scaleService.checkStable()) {
 				const addedItem = {...item} as AddedItem;
 				scaleService.setTitle(item.name);
@@ -76,8 +75,8 @@ export function useTabs(
 				if (weightScale >= (40 / 1000)) {
 					switch (item.type) {
 						case ItemTypes.piece:
-							if (calcValue) {
-								addedItem.amount = calcValue;
+							if (сalcValue) {
+								addedItem.amount = сalcValue;
 								addedItem.cost = addedItem.amount * item.price;
 							} else {
 								setHint(Hints.PickItemsQty);
@@ -85,9 +84,8 @@ export function useTabs(
 							}
 							break;
 						case ItemTypes.weights:
-							const price = +(weightScale * addedItem.price).toFixed(2)
 							addedItem.amount = weightScale;
-							addedItem.cost = scaleService.getItemCost(price);
+							addedItem.cost = scaleService.getItemCost();
 							break;
 						default:
 							setHint(Hints.IncorrectItemType, true);
@@ -118,17 +116,12 @@ export function useTabs(
 	// const closeOrder = useCallback(() => {}, []);
 
 	const print = useCallback(() => {
+		console.log('-------------------------')
 		console.log('print', tabItems[activeTab].items)
+		console.log('-------------------------')
 	}, [activeTab, tabItems]);
 
 	const addTab = useCallback(() => {
-		if (scaleService.checkStable()) {
-			scaleService.setTara(0)
-			scaleService.setWeight((0).toFixed(3))
-			scaleService.setPrice((0).toFixed(2))
-			scaleService.setTotal((0).toFixed(2))
-		}
-
 		const num = freeTabNumbers.findIndex(item => !item) + 1
 		setFreeTabNumbers((prevState) => {
 			prevState[num - 1] = true;
@@ -176,6 +169,7 @@ export function useTabs(
 		addTab,
 		deleteTab,
 		setTara,
-		print
+		print,
+		getTara
 	];
 }

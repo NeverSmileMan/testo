@@ -16,6 +16,7 @@ const useStyles = makeStyles({
 		gridRow: '1',
 		backgroundColor: 'white',
 		border: '1px solid black',
+		display: 'inline-block',
 	},
 	tara: {
 		gridColumn: '1 / 2',
@@ -64,12 +65,15 @@ export default function Tablo() {
 		justifyContent: 'flex-end',
 		fontWeight: 700
 	}
+	const styleScale2 = {
+		fontWeight: 700
+	}
 
 	return (
 		<div className={classes.grid}>
 			<div className={classes.title}>
 				Title
-				<span style={styleScale}>
+				<span style={styleScale2}>
         {title}
         </span>
 			</div>
