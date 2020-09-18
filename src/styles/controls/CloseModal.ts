@@ -1,7 +1,7 @@
 import { createStyles, Theme } from '@material-ui/core/styles';
 
 const styles = createStyles((theme: Theme) => ({
-    wrapper: {
+    'wrapper': {
         backgroundColor: theme.palette.secondary.light,
         color: theme.palette.secondary.dark,
         width: '40%',

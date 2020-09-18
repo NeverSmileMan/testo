@@ -1,15 +1,13 @@
 import { State, Mode } from './types/types';
-
 import { IWeights } from './Weights';
+import IObject from './types/objects';
 
-export interface IControlButton {
+export interface IControlButton extends IObject<IStateControlButton>{
     onAction: (callback?: () => void) => void;
-    onChange: (callback: (getState: () => IStateControlButton) => void) => void;
     setActive: (value: boolean) => void;
     isActive: () => boolean;
     doAction: (confirm?: boolean) => void;
     getState: () => State;
-    getStateControlButton: () => IStateControlButton;
     setWeights?: (weights: IWeights<any>) => void;
 }
 
@@ -24,11 +22,11 @@ class ControlButton implements IControlButton {
     private _callbackOnChange?: (getState: () => IStateControlButton) => void;
 
     constructor() {
-        this.getStateControlButton = this.getStateControlButton.bind(this);
+        this.getStateObject = this.getStateObject.bind(this);
         this.doAction = this.doAction.bind(this);
     }
 
-    getStateControlButton() {
+    getStateObject() {
         return {
             mode: this.getState() === State.PENDING ? Mode.MODAL : Mode.BUTTON,
             currentIsActive: this.isActive(),
@@ -76,7 +74,7 @@ class ControlButton implements IControlButton {
     }
 
     protected _onChange() {
-        if (this._callbackOnChange) this._callbackOnChange(this.getStateControlButton);
+        if (this._callbackOnChange) this._callbackOnChange(this.getStateObject);
     }
 }
 

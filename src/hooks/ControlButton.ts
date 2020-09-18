@@ -23,7 +23,7 @@ function getHookControlButton(button: IControlButton) {
     }
 
     const useControlButton = (onAction?: () => void, doAction?: (callback: () => void) => void) => {
-        const [state, setState] = useState<IStateControlButton>(button.getStateControlButton);
+        const [state, setState] = useState<IStateControlButton>(button.getStateObject);
         const [methods] = useState(() => changeState(setState, onAction, doAction));
         return { ...state, ...methods };
     };

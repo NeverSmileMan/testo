@@ -3,6 +3,10 @@ import { createStyles, Theme } from '@material-ui/core/styles';
 
 const styles = createStyles((theme: Theme) => ({
     '@global': {
+        '#root': {
+            width: 1366 + 10 + 'px',
+            height: 768 + 10 + 'px',
+        },
         'html, body': {
             fontSize: '18px',
             fontFamily: 'Roboto',

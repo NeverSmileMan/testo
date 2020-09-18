@@ -1,14 +1,13 @@
 import { ThemesNames } from '../themes/themes';
 import { IConfig, config, IEnvironment } from './data/config';
 import { AppState } from './types/types';
+import IObject from './types/objects';
 
-export interface IApp {
+export interface IApp extends IObject<IStateApp>{
     setEnvironment: (rect: DOMRect) => void;
     getEnvironment: () => IEnvironment;
     getState: () => AppState;
     getConfig: () => IConfig;
-    onChange: (callback: (getState: () => IStateApp) => void) => void;
-    getStateApp: () => IStateApp;
 }
 
 export interface IStateApp {
@@ -16,11 +15,9 @@ export interface IStateApp {
     themeName: ThemesNames;
     maxOrdersCount: number;
     setEnvironment: (rect: DOMRect) => void;
-    // getStateApp: () => IStateApp;
 }
 
 class App implements IApp {
-
     private _state: AppState = AppState.INIT;
     protected _config: IConfig;
     private _env: IEnvironment = {} as IEnvironment;
@@ -28,16 +25,15 @@ class App implements IApp {
 
     constructor() {
         this._config = config;
-        this.getStateApp = this.getStateApp.bind(this);
+        this.getStateObject = this.getStateObject.bind(this);
     }
 
-    getStateApp() {
+    getStateObject() {
         return {
             state: this.getState(),
             themeName: this.getConfig().themeName,
             maxOrdersCount: this.getConfig().maxOrdersCount,
             setEnvironment: (rect: DOMRect) => this.setEnvironment(rect),
-            // getStateApp: this.getStateApp,
         };
     }
 
@@ -67,9 +63,9 @@ class App implements IApp {
     }
 
     protected _onChange() {
-        if (this._callbackOnChange) {
-            setTimeout(() => this._callbackOnChange!(this.getStateApp), 1000);
-        }
+        this._callbackOnChange &&
+            setTimeout(
+                () => this._callbackOnChange!(this.getStateObject), 1000);
     }
 }
 

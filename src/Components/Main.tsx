@@ -12,7 +12,7 @@ type Props = {
 function Main({ classes, maxOrdersCount }: Props ) {
     return (
         <div className={classes.test_wrapper}>
-            <div className={classes.main}>
+            <div className={classes.wrapper}>
                 <div className='weights'>
                     <WeightsDisplay />
                 </div>

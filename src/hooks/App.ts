@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import App, { IAppTest, IStateApp } from '../data.structure/App';
 
-function createMethods(
+function changeState(
     app: IAppTest,
     setStateApp: React.Dispatch<() => IStateApp>
 ) {
@@ -10,8 +10,8 @@ function createMethods(
 
 const useApp = () => {
     const [app] = useState(App.getInstance);
-    const [stateApp, setStateApp] = useState(app.getStateApp);
-    useState(() => createMethods(app, setStateApp));
+    const [stateApp, setStateApp] = useState(app.getStateObject);
+    useState(() => changeState(app, setStateApp));
     return stateApp;
 };
 
