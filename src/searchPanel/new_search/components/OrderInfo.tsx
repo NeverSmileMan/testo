@@ -5,6 +5,8 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 // import { OrderControlContext } from '../order.control/OrderControl';
 
 type Props = {
+    value: any;
+    activeItem: any
     onClick: () => void;
 } & WithStyles;
 
@@ -28,3 +30,11 @@ function OrderInfo({ classes, onClick }: Props) {
 }
 
 export default withStyles(styles)(OrderInfo);
+
+// const calc = React.useCallback((data: string) => {
+//     let w: any = [];
+//     let x: any;
+//     if (props.value.length) props.value.forEach((item: any) => w.push(item[data]));
+//     if (props.value.length) x = w.reduce((acc: any, cur: any) => acc + cur);
+//     return x;
+// }, [props])
