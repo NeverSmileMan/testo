@@ -18,7 +18,7 @@ function List({ classes, filter, onSelect }: Props) {
     
     const items = itemsArray.map((item, i) =>
         <li key={i} data-item-index={i}>
-            <span>{item.plu}</span>
+            <span>{item.code}</span>
             <span>{item.name}</span>
         </li>
     );

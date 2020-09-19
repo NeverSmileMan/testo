@@ -27,7 +27,7 @@ const styles = createStyles((theme: Theme) => ({
             color: theme.palette.primary.main,
             minWidth: '100px',
             fontWeight: 'bold',
-            fontSize: '1.2rem',
+            fontSize: '1rem',
         }
     },
 }));

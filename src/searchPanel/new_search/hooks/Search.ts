@@ -1,23 +1,25 @@
-import React, { useState, useRef, useEffect, SetStateAction, useContext } from 'react';
+import {
+    useState, useRef, useEffect, useContext,
+    SetStateAction, Dispatch, RefObject,
+} from 'react';
 // import ActiveInputService from '../services/ActiveInputService';
 import { ActiveInputService } from '../../../services/ActiveInputService';
 import { InputList, IInputList, IStateInput } from '../data/InputListNumber';
 import { Props } from '../components//Search';
 
-// import itemsData, { IItem } from './itemsData';
 import { MainContext } from '../../../main';
 import { IItem } from '../data/items';
 
 interface IcallbacksNew {
     addItem: (item: any) => boolean;
     setType: (val: string | null) => any;
-    setSelectedItem: React.Dispatch<SetStateAction<IItem>>;
+    setSelectedItem: Dispatch<SetStateAction<IItem>>;
 }
 
 const changeState = (
     input: IInputList,
-    setState: React.Dispatch<() => IStateInput<string>>,
-    ref: React.RefObject<HTMLDivElement>,
+    setState: Dispatch<() => IStateInput<string>>,
+    ref: RefObject<HTMLDivElement>,
     callbacks: IcallbacksNew, // Props['callbacks'],
 ) => {
     // const activeInputService = ActiveInputService.getInstance();
@@ -54,15 +56,15 @@ const changeState = (
 
 const useSearch = (callbacks: Props['callbacks']) => {
     const [input] = useState(() => new InputList());
-    
-    const { addItem, setType, setSelectedItem } = useContext(MainContext);
-    const callbacksNew = { addItem, setType, setSelectedItem };
-
     const [{ isFocus, value, valueHTML }, setState] = useState(input.getStateObject);
     const ref = useRef(null);
-    const [{ attachInput, refreshInput, onListSelect }] = useState(
-        () => changeState(input, setState, ref, callbacksNew)
-    );
+    const callbacksNew = useContext(MainContext);
+    const [{
+        attachInput, refreshInput, onListSelect,
+    }] = useState(() => changeState(input, setState, ref, callbacksNew));
+    useEffect(() => {
+        input.setValue('');
+    }, [input, callbacksNew]);
     useEffect(() => refreshInput(valueHTML), [refreshInput, valueHTML]);
     useEffect(attachInput, [attachInput]);
     return { isFocus, value, ref, onListSelect };

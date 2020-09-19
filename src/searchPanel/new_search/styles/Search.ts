@@ -3,7 +3,7 @@ import { createStyles, Theme } from '@material-ui/core/styles';
 const styles = createStyles((theme: Theme) => ({
     'wrapper': {
         backgroundColor: theme.palette.primary.main,
-        width: '70%',
+        width: '60%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -14,7 +14,7 @@ const styles = createStyles((theme: Theme) => ({
             paddingRight: '1.5rem',
             backgroundColor: 'white',
             borderRadius: '100px',
-            fontSize: '1.2rem',
+            fontSize: '1rem',
             fontWeight: 'bold',
             overflow: 'hidden',
         },

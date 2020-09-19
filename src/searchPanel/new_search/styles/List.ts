@@ -3,7 +3,7 @@ import { createStyles, Theme } from '@material-ui/core/styles';
 const styles = createStyles((theme: Theme) => ({
     'list': {
         backgroundColor: theme.palette.primary.light,
-        border: 'solid 3px ' + theme.palette.primary.main,
+        // border: 'solid 3px ' + theme.palette.primary.main,
         borderTop: 'none',
         borderRight: 'none',
         position: 'absolute',
@@ -18,7 +18,7 @@ const styles = createStyles((theme: Theme) => ({
             padding: '0px',
         },
         '& li': {
-            fontSize: '1.1rem',
+            fontSize: '1rem',
             borderBottom: 'solid 1px ' + theme.palette.secondary.dark,
             paddingLeft: '2rem',
             paddingRight: '2rem',

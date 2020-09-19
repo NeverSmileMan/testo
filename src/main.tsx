@@ -157,7 +157,7 @@ export default function Main() {
 			<div className={bodyWrap}>
 				<div className={body}>
 					<div className={searchPanel}>
-						<Search callbacks={{}}/>
+						<Search />
 						<OrderInfo
                             value={tabItems[activeTab].items}
                             activeItem={activeItem}

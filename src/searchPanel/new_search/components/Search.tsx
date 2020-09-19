@@ -7,7 +7,7 @@ import useSearch from '../hooks/Search';
 import List from './List';
 
 export type Props = {
-    callbacks: {
+    callbacks?: {
         onSelect?: (item: IItem) => void;
         resetSearch?: (callback: () => void) => void;
     };
@@ -23,7 +23,7 @@ function Search({ classes, callbacks }: Props) {
     return (
         <div className={classes.wrapper}>
             <div ref={ref}
-                className={`input ${isFocus ? 'focus' : ''}`}>
+                className={`input ${isFocus ? 'focus' : 'focus'}`}>
             </div>
             <List filter={value} onSelect={onListSelect}/>
         </div>
@@ -31,7 +31,3 @@ function Search({ classes, callbacks }: Props) {
 }
 
 export default withStyles(styles)(Search);
-
-// import itemsData, { IItem } from './itemsData';
-// import { MainContext } from '../../main';
-// const { addItem, setType, setSelectedItem } = useContext(MainContext);
