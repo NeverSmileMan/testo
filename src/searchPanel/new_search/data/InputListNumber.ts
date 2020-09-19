@@ -1,5 +1,6 @@
 import { Input, IInput } from './Input';
-import { IItem } from './Item';
+// import { IItem } from './Item';
+import { IItem } from '../data/items';
 // import { MessageCode } from './Message';
 
 export interface IInputList extends IInput<string, IItem> {

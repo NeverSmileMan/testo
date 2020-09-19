@@ -3,17 +3,27 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/OrderInfo';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';    
 // import { OrderControlContext } from '../order.control/OrderControl';
+import { AddedItem } from '../../../tabs/use.Tab.hook';
 
 type Props = {
-    value: any;
-    activeItem: any
+    value: AddedItem[];
+    activeItem: AddedItem | null;
     onClick: () => void;
 } & WithStyles;
 
-function OrderInfo({ classes, onClick }: Props) {
+const getTotal = (items: AddedItem[], attr: keyof AddedItem) => 
+    items.reduce((sum, item) => sum += +item[attr], 0).toFixed(2);
+
+function OrderInfo({
+    classes,
+    value: orderItems,
+    activeItem: isSelected,
+    onClick }: Props
+    ) {
     
     // const { isSelected, total } = useContext(OrderControlContext);
-    const { isSelected, total } = { isSelected: false, total: '123.45' };
+
+    const total = getTotal(orderItems, 'cost');
 
     return (
         <div className={classes.wrapper}>
@@ -30,11 +40,3 @@ function OrderInfo({ classes, onClick }: Props) {
 }
 
 export default withStyles(styles)(OrderInfo);
-
-// const calc = React.useCallback((data: string) => {
-//     let w: any = [];
-//     let x: any;
-//     if (props.value.length) props.value.forEach((item: any) => w.push(item[data]));
-//     if (props.value.length) x = w.reduce((acc: any, cur: any) => acc + cur);
-//     return x;
-// }, [props])

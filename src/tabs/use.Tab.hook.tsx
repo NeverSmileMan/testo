@@ -16,7 +16,7 @@ interface Item {
 	type: ItemTypes;
 }
 
-interface AddedItem extends Item {
+export interface AddedItem extends Item {
 	amount: number;
 	cost: number;
 }

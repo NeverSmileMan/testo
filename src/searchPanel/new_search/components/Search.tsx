@@ -1,7 +1,8 @@
 import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/Search';
-import { IItem } from '../data/Item';
+// import { IItem } from '../data/Item';
+import { IItem } from '../data/items';
 import useSearch from '../hooks/Search';
 import List from './List';
 
@@ -30,3 +31,7 @@ function Search({ classes, callbacks }: Props) {
 }
 
 export default withStyles(styles)(Search);
+
+// import itemsData, { IItem } from './itemsData';
+// import { MainContext } from '../../main';
+// const { addItem, setType, setSelectedItem } = useContext(MainContext);

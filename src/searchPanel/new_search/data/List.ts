@@ -1,4 +1,5 @@
-import { IItem } from './Item';
+// import { IItem } from './Item';
+import { IItem } from './items';
 import itemsData from './items';
 
 export interface IList {
@@ -38,7 +39,7 @@ class List implements IList {
 
     private _search(filter: string) {
         this._items = this._itemsData.filter(
-            item => item.name.toUpperCase().includes(filter)
+            item => item.name.toUpperCase().includes(filter.toUpperCase())
         );
     }
 

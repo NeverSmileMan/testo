@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import List, { IList } from '../data/List';
-import { IItem } from '../data/Item';
+// import { IItem } from '../data/Item';
+import { IItem } from '../data/items';
 
 const changeState = (
     list: IList,
