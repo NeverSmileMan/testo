@@ -8,8 +8,8 @@ const styles = createStyles((theme: Theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         '& .delete': {
-            width: '2rem',
-            height: '2rem',
+            width: '1.6rem',
+            height: '1.6rem',
             borderRadius: '100px',
             background: 'white',
             color: theme.palette.error.main,
