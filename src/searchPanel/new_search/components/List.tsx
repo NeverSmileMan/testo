@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/List';
 // import { IItem } from '../data/Item';
-import { IItem } from '../data/items';
+import { IItem } from '../objects/items';
 import useList from '../hooks/List';
 
 type Props = {

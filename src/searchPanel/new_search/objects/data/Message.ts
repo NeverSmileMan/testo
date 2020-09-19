@@ -1,10 +1,9 @@
-/*
 import
     messagesInfo, {
     IMessageInfo,
     MessageCode,
     MessageType,
-} from './data/messagesInfo';
+} from './messagesInfo';
 
 export interface IMessage {
     sendMessage: (code: MessageCode, text?: string) => void;
@@ -67,7 +66,4 @@ function getInstance() {
 
 export default { getInstance };
 
-export * from '../data.structure/data/messagesInfo';
-*/
-
-export {}
+export * from './messagesInfo';

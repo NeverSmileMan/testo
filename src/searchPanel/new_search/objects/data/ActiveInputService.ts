@@ -1,5 +1,5 @@
 import Keyboard, { IKeyboard } from './Keyboard';
-import { IInput } from './Input';
+import { IInput } from '../Input';
 
 export interface IActiveInputService {
     setActiveInput: (input: IInput<any, any> | null) => void;

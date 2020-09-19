@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/Search';
 // import { IItem } from '../data/Item';
-import { IItem } from '../data/items';
+import { IItem } from '../objects/items';
 import useSearch from '../hooks/Search';
 import List from './List';
 

@@ -1,4 +1,4 @@
-import { IInput } from './Input';
+import { IInput } from '../Input';
 
 export interface IKeyboard {
     onClick: (key: string) => void

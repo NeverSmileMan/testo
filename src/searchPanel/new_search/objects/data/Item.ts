@@ -26,7 +26,7 @@ export interface IItemAmount extends IItem {
     sum: number;
 }
 
-export class ItemAmount extends Item implements IItemAmount{
+export class ItemAmount extends Item implements IItemAmount {
     weights?: number;
     quantity?: number;
 
@@ -34,8 +34,7 @@ export class ItemAmount extends Item implements IItemAmount{
         public item: IItem,
         public sum: number = 0,
         amount: number = 0,
-        ) {
-
+    ) {
         super(
             item.plu,
             item.name,

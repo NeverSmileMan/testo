@@ -4,11 +4,11 @@ import {
 } from 'react';
 // import ActiveInputService from '../services/ActiveInputService';
 import { ActiveInputService } from '../../../services/ActiveInputService';
-import { InputList, IInputList, IStateInput } from '../data/InputListNumber';
+import { InputList, IInputList, IStateInput } from '../objects/InputListNumber';
 import { Props } from '../components//Search';
 
 import { MainContext } from '../../../main';
-import { IItem } from '../data/items';
+import { IItem } from '../objects/items';
 
 interface IcallbacksNew {
     addItem: (item: any) => boolean;
@@ -25,15 +25,6 @@ const changeState = (
     // const activeInputService = ActiveInputService.getInstance();
     input.onChange(setState);
     // input.onSelect(callbacks.onSelect);
-    const onSelectNew = (item: IItem) => {
-        if (item.type === 'ваговий') {
-            callbacks.addItem({ item });
-            return;
-        }
-        callbacks.setType('qtyGoods')();
-        callbacks.setSelectedItem(item);
-    }
-    input.onSelect(onSelectNew);
     // callbacks.resetSearch(() => input.setValue(''));
     const onListSelect = input._onSelect;
     // const attachInput = () => {
@@ -54,6 +45,18 @@ const changeState = (
     return { onListSelect, attachInput, refreshInput };
 }
 
+const changeCallbacksNew = (input: IInputList, callbacks: IcallbacksNew) => {
+    const onSelectNew = (item: IItem) => {
+        if (item.type === 'ваговий') {
+            callbacks.addItem({ item });
+            return;
+        }
+        callbacks.setType('qtyGoods')();
+        callbacks.setSelectedItem(item);
+    }
+    input.onSelect(onSelectNew);
+}
+
 const useSearch = (callbacks: Props['callbacks']) => {
     const [input] = useState(() => new InputList());
     const [{ isFocus, value, valueHTML }, setState] = useState(input.getStateObject);
@@ -63,6 +66,7 @@ const useSearch = (callbacks: Props['callbacks']) => {
         attachInput, refreshInput, onListSelect,
     }] = useState(() => changeState(input, setState, ref, callbacksNew));
     useEffect(() => {
+        changeCallbacksNew(input, callbacksNew);
         input.setValue('');
     }, [input, callbacksNew]);
     useEffect(() => refreshInput(valueHTML), [refreshInput, valueHTML]);
