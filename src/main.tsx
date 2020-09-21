@@ -5,8 +5,8 @@ import Hint from './tabs/Hint';
 import HomeButton from './tabs/HomeButton';
 import GroupBtn from './functional-buttons/groupBtn';
 import AddedItemsTable from './added.items.table/added.items.table';
-import Search from './searchPanel/new_search/components/Search';
-import OrderInfo from './searchPanel/new_search/components/OrderInfo';
+// import Search from './searchPanel/new_search/components/Search';
+// import OrderInfo from './searchPanel/new_search/components/OrderInfo';
 import ModalWindow from './functional-buttons/modal.wind/modal.wind';
 import { useTabs } from './tabs/use.Tab.hook';
 import { IItem } from './searchPanel/search/itemsData';
@@ -143,9 +143,9 @@ export default function Main() {
 				<div className={body}>
 					<div className={searchPanel}>
 						<MainContext.Provider value={context}>
-							<Search />{/* addItem, setType, setSelectedItem  */}
+							{/* <Search />addItem, setType, setSelectedItem  */}
 						</MainContext.Provider>
-						<OrderInfo value={tabItems[activeTab].items} activeItem={activeItem} onClick={deleteItem} />
+						{/* <OrderInfo value={tabItems[activeTab].items} activeItem={activeItem} onClick={deleteItem} /> */}
 					</div>
 					<AddedItemsTable values={tabItems[activeTab].items} onClick={setActiveItem} active={activeItem} />
 				</div>

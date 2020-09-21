@@ -1,4 +1,4 @@
-import { Lang } from '../custom/variables';
+import { Lang } from './keyboard.flex';
 
 type SpicialKey = string | undefined | JSX.Element | SpecialValue;
 
