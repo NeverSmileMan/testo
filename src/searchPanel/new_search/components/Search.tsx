@@ -4,7 +4,7 @@ import styles from '../styles/Search';
 // import { IItem } from '../data/Item';
 import { IItem } from '../objects/items';
 import useSearch from '../hooks/Search';
-import List from '../../pure_function_search/components/List';
+import List from './List';
 
 export type Props = {
     callbacks?: {
