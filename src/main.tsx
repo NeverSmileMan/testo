@@ -64,24 +64,16 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const MainContext = createContext({
 	modalType: '' as string | null,
-	setType: (val: string | null): any => {
-	},
-	deleteTab: () => {
-	},
-	addTab: (e: React.MouseEvent<HTMLDivElement>) => {
-	},
-	confirmClose: () => {
-	},
-	setActiveTab: (val: any) => {
-	},
+	setType: (val: string | null): any => {},
+	deleteTab: () => {},
+	addTab: (e: React.MouseEvent<HTMLDivElement>) => {},
+	confirmClose: () => {},
+	setActiveTab: (val: any) => {},
 	addItem: (item: any) => true as boolean,
 	activeTab: '' as any,
-	print: () => {
-	},
-	changeHint: (str: Hints, likeError?: boolean) => {
-	},
-	submitValueCalc: (num: number) => {
-	},
+	print: () => {},
+	changeHint: (str: Hints, likeError?: boolean) => {},
+	submitValueCalc: (num: number) => {},
 	setSelectedItem: (() => {
 	}) as React.Dispatch<React.SetStateAction<IItem>>,
 	setCalcValue: (() => {
@@ -147,7 +139,7 @@ export default function Main() {
 		>
 			<div className={header}>
 				<div className={tab}>
-					<Tabs tabs={tabItems}/>
+				<Tabs tabs={tabItems}/> 	{/* {addTab, setActiveTab, activeTab} */}
 				</div>
 				<div className={info}>
 					<Hint hint={hint} error={error}/>
@@ -157,7 +149,7 @@ export default function Main() {
 			<div className={bodyWrap}>
 				<div className={body}>
 					<div className={searchPanel}>
-						<Search />
+						<Search />  {/*    { addItem, setType, setSelectedItem }   */}
 						<OrderInfo
                             value={tabItems[activeTab].items}
                             activeItem={activeItem}
@@ -167,10 +159,9 @@ export default function Main() {
 					<AddedItemsTable values={tabItems[activeTab].items} onClick={setActiveItem} active={activeItem}/>
 				</div>
 				<div className={sideButtons}>
-					<GroupBtn/>
+					<GroupBtn/>  {/**  confirmClose print modalType setType, selectedItem, addItem  changeHint, submitValueCalc          */}
 				</div>
 				{modalType && <ModalWindow/>}
 			</div>
 		</MainContext.Provider>
-	);
-}
+	)}
