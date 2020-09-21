@@ -41,10 +41,10 @@ export function useTabs(
 	() => void,
 	() => void,
 	(tara: number) => void, // setTara
-	() => void,
+	() => void, // print
 	() => number // getTara
 ] {
-	const [tabItems, setTabItems] = useState<TabItems[]>([{tabNumber: 1, tara: 0, items: [],},] as TabItems[]);
+	const [tabItems, setTabItems] = useState<TabItems[]>([{tabNumber: 1, tara: 0, items: []}] as TabItems[]);
 	const [activeTab, setActiveTab] = useState<number>(0);
 	const [activeItem, setActiveItem] = useState<AddedItem | null>(null);
 	const [freeTabNumbers, setFreeTabNumbers] = useState<Array<boolean>>(() => {

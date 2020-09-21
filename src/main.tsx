@@ -1,4 +1,4 @@
-import React, {createContext, useCallback, useEffect, useState} from 'react';
+import React, {createContext, useCallback, useState} from 'react';
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Tabs from './tabs/Tabs';
 import Hint from './tabs/Hint';
@@ -14,7 +14,6 @@ import {Hints} from './custom/variables';
 import {useHints} from './custom/hooks';
 //---------plugs---------------
 import {ScalePlug} from './plugs/scale';
-// import items from "./searchPanel/search/itemsData";
 //-----------------------------
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -68,14 +67,9 @@ export const MainContext = createContext({
 	},
 	deleteTab: () => {
 	},
-	addTab: (e: React.MouseEvent<HTMLDivElement>) => {
-	},
 	confirmClose: () => {
 	},
-	setActiveTab: (val: any) => {
-	},
 	addItem: (item: any) => true as boolean,
-	activeTab: '' as any,
 	print: () => {
 	},
 	changeHint: (str: Hints, likeError?: boolean) => {
@@ -119,7 +113,6 @@ export default function Main() {
 		setTara(val)
 	}, [calcValue, tabItems, activeTab]);
 
-
 	const confirmClose = useCallback(() => {
 		setType(null)();
 		deleteTab();
@@ -131,11 +124,8 @@ export default function Main() {
 				modalType,
 				setType,
 				deleteTab,
-				addTab,
 				confirmClose,
-				setActiveTab,
 				addItem,
-				activeTab,
 				print,
 				changeHint,
 				submitValueCalc,
@@ -147,7 +137,10 @@ export default function Main() {
 		>
 			<div className={header}>
 				<div className={tab}>
-					<Tabs tabs={tabItems}/>
+					<Tabs tabs={tabItems}
+					      activeTab={activeTab}
+					      addTab={addTab}
+					      setActiveTab={setActiveTab} />
 				</div>
 				<div className={info}>
 					<Hint hint={hint} error={error}/>
@@ -157,12 +150,12 @@ export default function Main() {
 			<div className={bodyWrap}>
 				<div className={body}>
 					<div className={searchPanel}>
-						<Search />
+						<Search/>
 						<OrderInfo
-                            value={tabItems[activeTab].items}
-                            activeItem={activeItem}
-                            onClick={deleteItem}
-                        />
+							value={tabItems[activeTab].items}
+							activeItem={activeItem}
+							onClick={deleteItem}
+						/>
 					</div>
 					<AddedItemsTable values={tabItems[activeTab].items} onClick={setActiveItem} active={activeItem}/>
 				</div>
