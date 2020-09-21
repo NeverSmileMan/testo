@@ -112,6 +112,7 @@ export class Input<V extends string | number = string, S extends string | number
     }
 
     onSelect(callback: (value: S) => void) {
+        console.log('NEW CALLBACKS');
         this._callbackOnSelect = callback;
     }
 

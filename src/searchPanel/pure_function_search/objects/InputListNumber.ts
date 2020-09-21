@@ -48,4 +48,4 @@ export class InputNumber extends Input<number, number> implements IInputNumber {
     }
 }
 
-export * from './Input';
+export * from './InputNew';
