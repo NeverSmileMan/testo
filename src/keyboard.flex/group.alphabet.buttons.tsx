@@ -2,31 +2,7 @@ import React, { useContext, ReactElement } from 'react';
 import { LayoutContext } from './keyboard.flex';
 import { Alphabet, Servise, Key } from './interfaces';
 import Button from './button';
-import { makeStyles } from '@material-ui/styles';
-
-const useStyles = makeStyles({
-	keyboardAlphabet: {
-		display: 'flex',
-		flexDirection: 'column',
-		height: '100%',
-		width: '100%',
-		boxSizing: 'border-box',
-	},
-	row: {
-		display: 'flex',
-		flexGrow: 1,
-		boxSizing: 'border-box',
-	},
-	spacer: {
-		margin: '0.2em',
-	},
-	offset: {
-		width: '30%',
-	},
-	space: {
-		width: '300%',
-	},
-});
+import { useStylesAlphabet } from './styles';
 
 interface Props {
 	opts: Alphabet;
@@ -35,7 +11,7 @@ interface Props {
 
 export default function GroupAlphabetButtons({ opts, service }: Props): ReactElement {
 	const layout = useContext(LayoutContext);
-	const classes = useStyles();
+	const classes = useStylesAlphabet();
 
 	return (
 		<div className={classes.keyboardAlphabet}>

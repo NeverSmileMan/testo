@@ -1,10 +1,15 @@
 import React, { useState, ReactElement } from 'react';
-import { makeStyles } from '@material-ui/styles';
 import GroupAlphabetButtons from './group.alphabet.buttons';
 import GroupNumericButtons from './group.numeric.buttons';
 import GroupSpecialButtons from './group.special.buttons';
-import { Lang } from '../custom/variables';
 import { Servise, IKeyboard } from './interfaces';
+import { useStylesKeyboard } from './styles';
+
+export enum Lang {
+	EN = 'en',
+	RU = 'ru',
+	UA = 'uk',
+}
 
 export const LayoutContext = React.createContext({
 	name: '' as Lang,
@@ -12,42 +17,9 @@ export const LayoutContext = React.createContext({
 	names: [] as Lang[],
 });
 
-const useStyles = makeStyles({
-	keyboard: {
-		height: '100%',
-		width: '100%',
-		padding: '0.5em',
-		display: 'flex',
-		backgroundColor: '#fff',
-		boxSizing: 'border-box',
-		justifyContent: 'space-between',
-	},
-	grid: {
-		display: 'grid',
-		gridTemplateColumns: '77fr 17fr 6fr',
-		gridTemplateRows: '100%',
-		gridGap: '0.4em',
-		width: '100%',
-		height: '100%',
-	},
-	alphabet: {
-		gridColumn: '1',
-		gridRow: '1',
-	},
-	numeric: {
-		gridColumn: '2',
-		gridRow: '1',
-	},
-	special: {
-		gridColumn: '3',
-		gridRow: '1',
-	},
-});
-
 function getDefaultLayout<T, K extends keyof T>(obj: T) {
 	return Object.keys(obj)[0] as K;
 }
-
 interface Props {
 	service: Servise;
 	keyboardLayout: IKeyboard;
@@ -55,7 +27,7 @@ interface Props {
 
 export default function Keyboard({ service, keyboardLayout }: Props): ReactElement {
 	const [layoutName, setLayoutName] = useState<Lang>(getDefaultLayout(keyboardLayout.alphabet.keys));
-	const classes = useStyles();
+	const classes = useStylesKeyboard();
 
 	return (
 		<div className={`${classes.keyboard} ${classes.grid}`} /* коробка для отображения расположения частей клавы*/>

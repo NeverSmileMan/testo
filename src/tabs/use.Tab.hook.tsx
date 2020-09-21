@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {ActiveInputService} from '../services/ActiveInputService';
-import {Hints, ItemTypes, MAX_NUMBER_OF_TABS} from '../custom/variables';
+import {Hints, MAX_NUMBER_OF_TABS} from '../custom/variables';
 
 
 export interface TabItems {
@@ -9,11 +9,33 @@ export interface TabItems {
 	items: AddedItem[];
 }
 
-interface Item {
-	code: string;
-	name: string;
+
+enum ItemTypes {
+	weights = 'weighed',
+	piece = 'pieced',
+}
+interface Defaults {
+	tara: number;
+	pieces_per_package: number;
+}
+interface Lifetime {
+	shelf_life_1: number;
+}
+interface Texts {
+	article: string;
+	full_title: string;
+	shop: string;
+	short_title: string;
+}
+export interface Item {
+	defaults: Defaults;
+	id: string;
+	lifetime: Lifetime;
+	plu: number;
 	price: number;
-	type: ItemTypes;
+	searchIndex: string;
+	texts: Texts;
+	type: 'pieced' | 'weighed';
 }
 
 export interface AddedItem extends Item {
@@ -70,7 +92,7 @@ export function useTabs(
 		({item, calcValue}: ArgAddItemFunc) => {
 			if (scaleService.checkStable()) {
 				const addedItem = {...item} as AddedItem;
-				scaleService.setTitle(item.name);
+				scaleService.setTitle(item.texts.full_title);
 				scaleService.setPrice(item.price);
 				const weightScale = scaleService.getItemWeight();
 				if (weightScale >= (40 / 1000)) {

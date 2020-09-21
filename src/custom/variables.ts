@@ -7,9 +7,5 @@ export enum Hints {
 	PositiveWeight = 'Вага має бути більшою за нуль',
 }
 
-export enum Lang {
-	EN = 'en',
-	RU = 'ru',
-	UA = 'uk',
-}
+
 export const MAX_NUMBER_OF_TABS = 6;

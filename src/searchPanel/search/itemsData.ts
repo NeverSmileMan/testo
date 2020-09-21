@@ -1,62 +1,58 @@
+interface Defaults {
+	tara: number;
+	pieces_per_package: number;
+}
+interface Lifetime {
+	shelf_life_1: number;
+}
+interface Texts {
+	article: string;
+	full_title: string;
+	shop: string;
+	short_title: string;
+}
 export interface IItem {
-	code: number,
-	name: string,
-	price: number,
-	type: 'ваговий' | 'штучний',
+	defaults: Defaults;
+	id: string;
+	lifetime: Lifetime;
+	plu: number;
+	price: number;
+	searchIndex: string;
+	texts: Texts;
+	type: 'pieced' | 'weighed';
 }
 
-const priceRand = () => (Math.floor(Math.random() * 20000) + 40) / 100
+
 
 const items: IItem[] = [
-	{code: 1000, name: "Товар 100", price: priceRand(), type: 'ваговий'},
-	{code: 1001, name: "Товар 101", price: priceRand(), type: 'ваговий'},
-	{code: 1002, name: "Товар 102", price: priceRand(), type: 'ваговий'},
-	{code: 1003, name: "Товар 103", price: priceRand(), type: 'ваговий'},
-	{code: 1004, name: "Товар 104", price: priceRand(), type: 'ваговий'},
-	{code: 1005, name: "Товар 105", price: priceRand(), type: 'ваговий'},
-	{code: 1006, name: "Товар 106", price: priceRand(), type: 'ваговий'},
-	{code: 1007, name: "Товар 107", price: priceRand(), type: 'ваговий'},
-	{code: 1008, name: "Товар 108", price: priceRand(), type: 'ваговий'},
-	{code: 1009, name: "Товар 109", price: priceRand(), type: 'ваговий'},
-	{code: 1010, name: "Товар 110", price: priceRand(), type: 'ваговий'},
-	{code: 1011, name: "Товар 111", price: priceRand(), type: 'ваговий'},
-	{code: 1012, name: "Товар 112", price: priceRand(), type: 'ваговий'},
-	{code: 1013, name: "Товар 113", price: priceRand(), type: 'ваговий'},
-	{code: 1014, name: "Товар 114", price: priceRand(), type: 'ваговий'},
-	{code: 1015, name: "Товар 115", price: priceRand(), type: 'ваговий'},
-	{code: 1016, name: "Товар 116", price: priceRand(), type: 'ваговий'},
-	{code: 1017, name: "Товар 117", price: priceRand(), type: 'ваговий'},
-	{code: 1018, name: "Товар 118", price: priceRand(), type: 'ваговий'},
-	{code: 1019, name: "Товар 119", price: priceRand(), type: 'ваговий'},
-	{code: 1020, name: "Товар 120", price: priceRand(), type: 'ваговий'},
-	{code: 1021, name: "Товар 121", price: priceRand(), type: 'ваговий'},
-	{code: 1022, name: "Товар 122", price: priceRand(), type: 'ваговий'},
-	{code: 1023, name: "Товар 123", price: priceRand(), type: 'ваговий'},
-	{code: 1024, name: "Товар 124", price: priceRand(), type: 'ваговий'},
-	{code: 1026, name: "Товар 126", price: priceRand(), type: 'ваговий'},
-	{code: 1027, name: "Товар 127", price: priceRand(), type: 'ваговий'},
-	{code: 1028, name: "Товар 128", price: priceRand(), type: 'ваговий'},
-	{code: 1029, name: "Товар 129", price: priceRand(), type: 'ваговий'},
-	{code: 1030, name: "Товар 130", price: priceRand(), type: 'ваговий'},
-	{code: 1031, name: "Товар 131", price: priceRand(), type: 'ваговий'},
-	{code: 1032, name: "Товар 132", price: priceRand(), type: 'ваговий'},
-	{code: 1033, name: "Товар 133", price: priceRand(), type: 'ваговий'},
-	{code: 1034, name: "Товар 134", price: priceRand(), type: 'ваговий'},
-	{code: 1035, name: "Товар 135", price: priceRand(), type: 'ваговий'},
-	{code: 1036, name: "Товар 136", price: priceRand(), type: 'ваговий'},
-	{code: 1037, name: "Товар 137", price: priceRand(), type: 'ваговий'},
-	{code: 1038, name: "Товар 138", price: priceRand(), type: 'ваговий'},
-	{code: 1039, name: "Товар 139", price: priceRand(), type: 'ваговий'},
-	{code: 1040, name: "Товар 140", price: priceRand(), type: 'ваговий'},
-	{code: 1041, name: "Товар 141", price: priceRand(), type: 'ваговий'},
-	{code: 1042, name: "Товар 142", price: priceRand(), type: 'ваговий'},
-	{code: 1043, name: "Товар 143", price: priceRand(), type: 'ваговий'},
-	{code: 1044, name: "Товар 144", price: priceRand(), type: 'ваговий'},
-	{code: 1045, name: "Товар 145", price: priceRand(), type: 'ваговий'},
-	{code: 1046, name: "Товар 146", price: priceRand(), type: 'ваговий'},
-	{code: 1047, name: "Товар 147", price: priceRand(), type: 'ваговий'},
-	{code: 1048, name: "Товар 148", price: priceRand(), type: 'ваговий'},
-	{code: 1049, name: "Товар 149", price: priceRand(), type: 'штучний'},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
+	{id:"734ae666-ad1c-2440-7d16-9d22debf1c99",plu:903,searchIndex:"Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые",price:29.99,type:"weighed",defaults:{tara:0,pieces_per_package:0},lifetime:{shelf_life_1:0},texts:{article:"492273",shop:"Сильпо Винница",short_title:"ГрибиКгГливиЖовтi",full_title:"Гриби Гливи жовті"}},
 ];
 
 export default items;
