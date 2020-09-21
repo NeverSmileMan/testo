@@ -11,8 +11,7 @@ type Props = {
 } & WithStyles;
 
 function List({ classes, filter, onSelect }: Props) {
-    const { itemsArray, setFilter, onItemSelect } = useList(onSelect);
-    useEffect(() => setFilter(filter), [setFilter, filter]);
+    const { itemsArray, onItemSelect } = useList(filter, onSelect);
 
     if (!itemsArray) return null;
     
