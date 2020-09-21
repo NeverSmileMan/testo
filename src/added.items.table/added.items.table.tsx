@@ -4,7 +4,7 @@ import SingleItem from './single.item';
 
 enum ItemTypes {
 	weights = 'weighed',
-	piece = 'штучний',
+	piece = 'pieced',
 }
 interface Defaults {
 	tara: number;
