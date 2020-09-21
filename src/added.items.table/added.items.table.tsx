@@ -1,15 +1,35 @@
 import React, { ReactElement } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import SingleItem from './single.item';
-import { ItemTypes } from '../custom/variables';
 
+enum ItemTypes {
+	weights = 'weighed',
+	piece = 'штучний',
+}
+interface Defaults {
+	tara: number;
+	pieces_per_package: number;
+}
+interface Lifetime {
+	shelf_life_1: number;
+}
+interface Texts {
+	article: string;
+	full_title: string;
+	shop: string;
+	short_title: string;
+}
 export interface Item {
-	code: string;
-	name: string;
-	amount: number;
-	cost: number;
+	defaults: Defaults;
+	id: string;
+	lifetime: Lifetime;
+	plu: number;
 	price: number;
-	type: ItemTypes; 
+	searchIndex: string;
+	texts: Texts;
+	type: ItemTypes;
+	cost: number;
+	amount: number;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -45,9 +65,9 @@ export default function AddedItemsTable({ values, onClick, active }: Props): Rea
 					item={item}
 					changeRule={{
 						cost: item.cost.toFixed(2),
-						name: item.code + ' ' + item.name, //!тут добавить языки?
+						texts: item.plu + ' ' + item.texts.full_title,
 					}}
-					columns={['name', 'amount', 'cost']}
+					columns={['texts', 'amount', 'cost']}
 					addUnits={{ amount: item.type === ItemTypes.weights ? 'г.' : 'шт.' }}
 					active={active}
 					key={i}

@@ -2,8 +2,6 @@ import React, { ReactElement, useCallback } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Item } from './added.items.table';
 
-type Options = Array<Partial<keyof Item>>;
-
 interface Props {
 	item: Item;
 	columns: Options;
@@ -12,6 +10,7 @@ interface Props {
 	addUnits: AddUnits;
 	onClick: (val: null | Item) => void;
 }
+type Options = Array<Partial<keyof Item>>;
 
 type ChangeRule = {
 	[K in keyof Partial<Item>]: number | string;
