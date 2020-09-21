@@ -129,13 +129,14 @@ const changeState = (
 
 const changeCallbacksNew = (onListSelect: (item: IItem, callback: (value: IItem) => void) => void, callbacks: ICallbacksNew) => {
     console.log('newCallbacks');
+    const { addItem, setType, setSelectedItem} = callbacks;
     const onSelectNew = (item: IItem) => {
         if (item.type === 'ваговий') {
-            callbacks.addItem({ item });
+            addItem({ item });
             return;
         }
-        callbacks.setType('qtyGoods')();
-        callbacks.setSelectedItem(item);
+        setType('qtyGoods')();
+        setSelectedItem(item);
     }
     return (item: IItem) => onListSelect(item, onSelectNew);
 }
@@ -150,7 +151,10 @@ const useSearch = () => {
     // const onSelectList = useCallback(
     //     (item: IItem) => onListSelect(item, changeCallbacksNew(callbacksNew)), [callbacksNew]);
     const [onSelectList, getOnSelectList] = useState(() => changeCallbacksNew(onListSelect, callbacksNew));
+    // const f = useCallback(() => changeCallbacksNew(onListSelect, callbacksNew), [callbacksNew]);
+    // const onSelectList = f();
     useEffect(() => {
+        // console.log('NEW CALLBACKS');
         getOnSelectList(() => changeCallbacksNew(onListSelect, callbacksNew));
         setValue('');
     }, [callbacksNew]);
