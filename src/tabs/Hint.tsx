@@ -65,4 +65,4 @@ const Hint: FC<HintsProps> = ({ hint, error }) => {
 	);
 };
 
-export default Hint;
+export default React.memo(Hint);
