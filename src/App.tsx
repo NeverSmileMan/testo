@@ -9,7 +9,6 @@ import Main from './main';
 
 //-----
 import Tablo from './plugs/Tablo';
-import FillFormButton from './my.modals/form';
 //-----
 
 const useStyles = makeStyles({
@@ -148,7 +147,7 @@ function App() {
 
 
 
-            <FillFormButton />
+
           </div>
         </div>
       </ThemeProvider>

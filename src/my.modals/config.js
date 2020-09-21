@@ -1,7 +1,13 @@
 import React from 'react';
+import Win from '../functional-buttons/modal.wind/modal.close'
 
-export const exampleInstanceName = 'modal/example';
+
+
+export const exampleInstanceName = 'example';
+
+
+
 
 export default {
-  [exampleInstanceName]: React.lazy(() => import('../functional-buttons/modal.wind/modal.close')),
+  [exampleInstanceName]: <Win/>,
 };

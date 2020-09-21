@@ -1,10 +1,12 @@
 // ./Provider.js
 import React, {useMemo, useCallback, useState, createPortal} from 'react';
-
+import ModalClose from '../functional-buttons/modal.wind/modal.close'
+import ReactDOM from 'react-dom';
+import config from './config'
 
 export const DialogContext = React.createContext();
 
-export const Provider = ({ children, node, Layout, config }) => {
+export const Provider = ({children}) => {
   const [instances, setInstances] = useState([]);
   const [events, setEvents] = useState([]);
 
@@ -41,15 +43,14 @@ export const Provider = ({ children, node, Layout, config }) => {
   const context = {
     instances,
     setInstances,
-    config,
     events,
-    setEvents
+    setEvents,
+    config
   };
 
   const Component = instances.map(instance => (
-    <Layout
+    <ModalClose
       key={instance.instanceName}
-      component={config[instance.instanceName]}
       cancel={cancel}
       success={success}
       close={close}
@@ -58,19 +59,15 @@ export const Provider = ({ children, node, Layout, config }) => {
   ));
 
 
-  // При изменении state не обновляем дочерние компоненты
-  const child = useMemo(() => React.Children.only(children), [children]);
-
   return (
-    <DialogContext.Provider value={context}>
       <>
-        {child}
-        {createPortal(Component, node)}
-      </>
+    <DialogContext.Provider value={context}>
+      {children}
+        {ReactDOM.createPortal(Component, document.body)}
     </DialogContext.Provider>
+      </>
   );
 };
-
 
 
 

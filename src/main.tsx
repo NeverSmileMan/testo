@@ -15,6 +15,8 @@ import { useHints } from './custom/hooks';
 //---------plugs---------------
 import { ScalePlug } from './plugs/scale';
 // import items from "./searchPanel/search/itemsData";
+import {Provider} from './my.modals/Provider';
+import FillFormButton from './my.modals/form';
 //-----------------------------
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -142,30 +144,35 @@ export default function Main() {
 	// }, [calcValue]);
 	// const activeTara = tabItems[activeTab].tara;
 
+
+
+	const mainContext = {
+		modalType,
+		setType,
+		deleteTab,
+		addTab,
+		confirmClose,
+		setActiveTab,
+		addItem,
+		activeTab,
+		showPrint,
+		changeHint,
+		submitValueCalc,
+		setSelectedItem,
+		setCalcValue,
+		calcValue,
+		activeTara: tabItems[activeTab].tara,
+		selectedItem,
+	};
+
 	return (
-		<MainContext.Provider
-			value={{
-				modalType,
-				setType,
-				deleteTab,
-				addTab,
-				confirmClose,
-				setActiveTab,
-				addItem,
-				activeTab,
-				showPrint,
-				changeHint,
-				submitValueCalc,
-				setSelectedItem,
-				setCalcValue,
-				calcValue,
-				activeTara: tabItems[activeTab].tara,
-				selectedItem,
-			}}
-		>
-			<div className={header}>
+		<>
+		<div className={header}>
 				<div className={tab}>
-					<Tabs tabs={tabItems} />
+					
+				<MainContext.Provider value={mainContext}>
+					<Tabs tabs={tabItems} /> {/*  //addTab, setActiveTab, activeTab */}
+					</MainContext.Provider>
 				</div>
 				<div className={info}>
 					<Hint hint={hint} error={error} />
@@ -175,16 +182,23 @@ export default function Main() {
 			<div className={bodyWrap}>
 				<div className={body}>
 					<div className={searchPanel}>
+				<MainContext.Provider value={mainContext}>
 						<Search />
+		</MainContext.Provider>
 						<OrderInfo value={tabItems[activeTab].items} activeItem={activeItem} onClick={deleteItem} />
 					</div>
 					<AddedItemsTable values={tabItems[activeTab].items} onClick={setActiveItem} active={activeItem} />
 				</div>
+				<MainContext.Provider value={mainContext}>
 				<div className={sideButtons}>
 					<GroupBtn />
 				</div>
 				{modalType && <ModalWindow />}
+					<Provider>
+              <FillFormButton/>
+            </Provider> 
+					</MainContext.Provider>
 			</div>
-		</MainContext.Provider>
+			</>
 	);
 }

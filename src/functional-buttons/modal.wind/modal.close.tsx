@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 })
 interface CloseProp {
   title?: string;
-  confirm?: string;
+  confirm?: any;
   reject?: string;
 }
 
@@ -45,15 +45,15 @@ const titleModal: string = 'Ви хочете остаточно закрити 
 const modalConfirm: string = 'Так';
 const modalReject: string = 'Ні';
 
-const ModalClose = ({ title = titleModal, confirm = modalConfirm, reject = modalReject}: CloseProp) => {
+const ModalClose = ({ title = titleModal, success, reject = modalReject}: any) => {
   const clss = useStyles();
   const {setType, confirmClose} = useContext(MainContext)
   return (
     <div className={clss.modal}>
       <div className={clss.title}>{title}</div>
       <div className={clss.btns}>
-        <div onClick={confirmClose} className={clss.btn}>{confirm}</div>
-        <div onClick={setType(null)} className={clss.btn}>{reject}</div>
+        <div onClick={success} className={clss.btn}>{'Так'}</div>
+        <div onClick={setType(null)} className={clss.btn}>{'Ні'}</div>
       </div>
     </div>
   )
