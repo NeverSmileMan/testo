@@ -3,16 +3,16 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/List';
 // import { IItem } from '../data/Item';
 import { IItem } from '../objects/items';
-import useList from '../hooks/List';
+import useList from '../../pure_function_search/hooks/List';
 
 type Props = {
     filter: string;
     onSelect: (item: IItem) => void;
 } & WithStyles;
 
-function List({ classes, filter, onSelect }: Props) {
-    const { itemsArray, setFilter, onItemSelect } = useList(onSelect);
-    useEffect(() => setFilter(filter), [setFilter, filter]);
+function List(props: Props) {
+    const { itemsArray, onItemSelect } = useList(props);
+    // useEffect(() => setFilter(filter), [setFilter, filter]);
 
     if (!itemsArray) return null;
     
@@ -24,7 +24,7 @@ function List({ classes, filter, onSelect }: Props) {
     );
 
     return (
-        <div className={classes.list} onClick={onItemSelect}>
+        <div className={props.classes.list} onClick={onItemSelect}>
             {items.length?
                 <ul>
                     {items}

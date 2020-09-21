@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/Search';
-// import { IItem } from '../data/Item';
 import { IItem } from '../objects/items';
 import useSearch from '../hooks/Search';
-import List from '../../pure_function_search/components/List';
+import List from './List';
 
 export type Props = {
     callbacks?: {
@@ -13,12 +12,12 @@ export type Props = {
     };
 } & WithStyles;
 
-function Search({ classes, callbacks }: Props) {
+function Search({ classes }: Props) {
 
     const {
         isFocus, value, ref,
         onListSelect,
-    } = useSearch(callbacks);
+    } = useSearch();
 
     return (
         <div className={classes.wrapper}>
