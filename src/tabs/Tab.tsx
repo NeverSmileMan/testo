@@ -4,7 +4,7 @@ import {createStyles, Theme} from "@material-ui/core/";
 import {TabItems} from "./use.Tab.hook";
 import {MAX_NUMBER_OF_TABS} from "../custom/variables";
 
-interface PropsTab {
+interface TabProps {
 	tab: TabItems;
 	setActive: (val: number) => void;
 	active: boolean
@@ -33,7 +33,7 @@ const styles = makeStyles((theme: Theme) => createStyles({
 	}
 }))
 
-const Tab: FC<PropsTab> = ({tab, setActive, active, index}) => {
+const Tab: FC<TabProps> = ({tab, setActive, active, index}) => {
 	const {tab_style, tab_active} = styles()
 	return <div id={index.toString()}
 	            onClick={() => setActive(index)}
