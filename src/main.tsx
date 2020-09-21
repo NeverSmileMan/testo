@@ -1,5 +1,5 @@
-import React, { createContext, useCallback, useState } from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import React, {createContext, useCallback, useEffect, useState} from 'react';
+import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 import Tabs from './tabs/Tabs';
 import Hint from './tabs/Hint';
 import HomeButton from './tabs/HomeButton';
@@ -8,12 +8,12 @@ import AddedItemsTable from './added.items.table/added.items.table';
 import Search from './searchPanel/new_search/components/Search';
 import OrderInfo from './searchPanel/new_search/components/OrderInfo';
 import ModalWindow from './functional-buttons/modal.wind/modal.wind';
-import { useTabs } from './tabs/use.Tab.hook';
-import { IItem } from './searchPanel/search/itemsData';
-import { Hints } from './custom/variables';
-import { useHints } from './custom/hooks';
+import {useTabs} from './tabs/use.Tab.hook';
+import {IItem} from './searchPanel/search/itemsData';
+import {Hints} from './custom/variables';
+import {useHints} from './custom/hooks';
 //---------plugs---------------
-import { ScalePlug } from './plugs/scale';
+import {ScalePlug} from './plugs/scale';
 //-----------------------------
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -70,14 +70,16 @@ export const MainContext = createContext({
 	print: () => {},
 	changeHint: (str: Hints, likeError?: boolean) => {},
 	submitValueCalc: (num: number) => {},
-	setSelectedItem: (() => {}) as React.Dispatch<React.SetStateAction<IItem>>,
-	setCalcValue: (() => {}) as React.Dispatch<React.SetStateAction<number>>,
+	setSelectedItem: (() => {
+	}) as React.Dispatch<React.SetStateAction<IItem>>,
+	setCalcValue: (() => {
+	}) as React.Dispatch<React.SetStateAction<number>>,
 	calcValue: 0 as number,
 	selectedItem: {} as IItem,
 });
 
 export default function Main() {
-	const { tab, sideButtons, info, bodyWrap, body, header, searchPanel } = useStyles();
+	const {tab, sideButtons, info, bodyWrap, body, header, searchPanel} = useStyles();
 	const [hint, error, changeHint] = useHints();
 
 	const [modalType, setModalType] = useState(null as string | null);
@@ -132,28 +134,29 @@ export default function Main() {
 		<>
 			<div className={header}>
 				<div className={tab}>
-					<Tabs tabs={tabItems} activeTab={activeTab} addTab={addTab} setActiveTab={setActiveTab} />
+					<Tabs tabs={tabItems} activeTab={activeTab} addTab={addTab} setActiveTab={setActiveTab}/>
 				</div>
 				<div className={info}>
-					<Hint hint={hint} error={error} />
-					<HomeButton />
+					<Hint hint={hint}
+					      error={error}/>
+					<HomeButton/>
 				</div>
 			</div>
 			<div className={bodyWrap}>
 				<div className={body}>
 					<div className={searchPanel}>
 						<MainContext.Provider value={context}>
-							<Search />{/* addItem, setType, setSelectedItem  */}
+							<Search/>{/* addItem, setType, setSelectedItem  */}
 						</MainContext.Provider>
-						<OrderInfo value={tabItems[activeTab].items} activeItem={activeItem} onClick={deleteItem} />
+						<OrderInfo value={tabItems[activeTab].items} activeItem={activeItem} onClick={deleteItem}/>
 					</div>
-					<AddedItemsTable values={tabItems[activeTab].items} onClick={setActiveItem} active={activeItem} />
+					<AddedItemsTable values={tabItems[activeTab].items} onClick={setActiveItem} active={activeItem}/>
 				</div>
 				<MainContext.Provider value={context}>
 					<div className={sideButtons}>
-						<GroupBtn />{/**  confirmClose print modalType setType, selectedItem, addItem  changeHint, submitValueCalc  */}
+						<GroupBtn/>{/**  confirmClose print modalType setType, selectedItem, addItem  changeHint, submitValueCalc  */}
 					</div>
-					{modalType && <ModalWindow />}
+					{modalType && <ModalWindow/>}
 				</MainContext.Provider>
 			</div>
 		</>
