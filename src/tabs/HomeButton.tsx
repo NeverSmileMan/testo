@@ -29,4 +29,4 @@ const HomeButton: FC<OwnProps> = (props) => {
 	);
 };
 
-export default HomeButton;
+export default React.memo(HomeButton);

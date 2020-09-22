@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {FC, useContext} from "react";
 import Tab from "./Tab";
 import {makeStyles} from "@material-ui/styles";
 import {MainContext} from '../main';
@@ -29,10 +29,15 @@ const styles = makeStyles({
 	}
 })
 
-function Tabs({tabs}: any) {
 
-	const {addTab, setActiveTab, activeTab} = useContext(MainContext)
+interface TabsProps {
+	tabs: TabItems[]
+	activeTab: number,
+	addTab: (e: React.MouseEvent<HTMLDivElement>) => void,
+	setActiveTab: (val: number) => void,
+}
 
+const Tabs: FC<TabsProps> = ({tabs, addTab, activeTab, setActiveTab}) => {
 	const {header_tabs, tab} = styles()
 	return (
 		<div className={header_tabs}>
