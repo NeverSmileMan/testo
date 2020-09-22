@@ -1,8 +1,8 @@
 import React, { createContext, useCallback, useState } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Tabs from './tabs/Tabs';
-import Hint from './tabs/Hint';
-import HomeButton from './tabs/HomeButton';
+import Hint from './tabs/hint/Hint';
+import HomeButton from './tabs/homeButton/HomeButton';
 import GroupBtn from './functional-buttons/groupBtn';
 import AddedItemsTable from './added.items.table/added.items.table';
 import Search from './searchPanel/pure_function_search/components/Search';

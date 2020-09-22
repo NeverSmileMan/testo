@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import Tab from "./Tab";
 import { TabItems } from './use.Tab.hook';
 import { MAX_NUMBER_OF_TABS } from "../custom/variables";
-import { styles } from "./styles";
+import { styles } from "./Tabs.styles";
 
 interface TabsProps {
 	tabs: TabItems[]

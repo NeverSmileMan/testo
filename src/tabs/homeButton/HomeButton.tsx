@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import HomeIcon from '@material-ui/icons/Home';
-import { styles } from "./styles";
+import { styles } from "./HomeButton.styles";
 
 interface OwnProps {
 }
-const HomeButton: FC<OwnProps> = ( props ) => {
 
+const HomeButton: FC<OwnProps> = () => {
 	const click = ( e: React.MouseEvent<HTMLDivElement> ) => {
 		console.log( 'home', e.target )
 	}

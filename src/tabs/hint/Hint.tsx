@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Hints } from '../custom/variables';
-import { styles } from "./styles";
+import { Hints } from '../../custom/variables';
+import { styles } from "./Hint.styles";
 
 export interface HintsProps {
 	hint: Hints;
