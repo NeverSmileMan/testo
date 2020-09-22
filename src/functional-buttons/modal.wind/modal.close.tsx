@@ -45,15 +45,22 @@ const titleModal: string = 'Ви хочете остаточно закрити 
 const modalConfirm: string = 'Так';
 const modalReject: string = 'Ні';
 
-const ModalClose = ({ title = titleModal, confirm = modalConfirm, reject = modalReject}: CloseProp) => {
+const ModalClose = ({ title = titleModal, confirm = modalConfirm, reject = modalReject, apply, close}: any) => {
   const clss = useStyles();
   const {setType, confirmClose} = useContext(MainContext)
+
+const onClick = () => {
+  apply();
+  close();
+  console.log('qqqqqqqqqqqqqq');
+}
+
   return (
     <div className={clss.modal}>
       <div className={clss.title}>{title}</div>
       <div className={clss.btns}>
-        <div onClick={confirmClose} className={clss.btn}>{confirm}</div>
-        <div onClick={setType(null)} className={clss.btn}>{reject}</div>
+        <div onClick={onClick} className={clss.btn}>{confirm}</div>
+        <div onClick={close} className={clss.btn}>{reject}</div>
       </div>
     </div>
   )

@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const MainContext = createContext({
 	modalType: '' as string | null,
 	setType: (val: string | null): any => {},
-	// deleteTab: () => {},
+	deleteTab: () => {},
 	confirmClose: () => {},
 	addItem: (item: any) => true as boolean,
 	print: () => {},
@@ -125,7 +125,7 @@ export default function Main() {
 		selectedItem,
 		// calcValue, //---------
 		// setCalcValue, //---------
-		// deleteTab, //---------
+		deleteTab, //---------
 	};
 
 	return (

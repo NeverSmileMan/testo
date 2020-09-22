@@ -7,6 +7,7 @@ import Main from './main';
 
 //-----
 import Tablo from './plugs/Tablo';
+import {PopUpProvider, InnerElement} from './modal/provider';
 //-----
 
 const useStyles = makeStyles({
@@ -125,6 +126,7 @@ function App() {
 )
 
   return (
+    <PopUpProvider>
     <div className={classes.appWrap} onKeyDown={onKey} tabIndex={-1}>
       <ThemeProvider theme={theme}>
         <div className={classes.scale}>
@@ -134,6 +136,7 @@ function App() {
             <button style={{ display: 'inlie-block' }} onClick={() => setTheme(themes.fora)}>FORA</button>
           </div>
           <Tablo />
+          <InnerElement/>
         </div>
         <div className={classes.mainWrap}>
           <div className={`${classes.main}`}>
@@ -145,6 +148,7 @@ function App() {
         </div>
       </ThemeProvider>
     </div>
+    </PopUpProvider>
   );
 }
 

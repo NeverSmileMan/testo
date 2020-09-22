@@ -6,6 +6,12 @@ import CheckCircle from '@material-ui/icons/CheckCircle';
 import { makeStyles } from '@material-ui/styles';
 import { MainContext } from '../main';
 
+//------------------
+import { usePopUp } from '../modal/provider';
+import ModalClose from './modal.wind/modal.close';
+
+//------------------
+
 const buttons = [
   {
     type: 'tara',
@@ -33,14 +39,21 @@ const useStyles = makeStyles({
 })
 
 const GroupBtn = () => {
+  const popUp = usePopUp();
   const cls = useStyles();
-  const { setType } = useContext(MainContext)
+  const { deleteTab } = useContext(MainContext)
+
+
+	const onClick = React.useCallback(() => {
+		popUp.setup(<ModalClose apply={deleteTab} close={popUp.close.bind(popUp)}/>);
+	}, [popUp]);
+
   return (
     <div className={cls.btns}>
       {buttons.map((val) =>
         <Button
           key={val.text}
-          click={setType(val.type)}
+          click={onClick}
           nameButton={val.text}
           buttonIcon={val.renderIcon}
         />
