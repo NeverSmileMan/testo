@@ -1,11 +1,27 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
+export const useStylesButton = makeStyles((theme: Theme) =>
+	createStyles({
+		btn: {
+			display: 'flex',
+			alignItems: 'center',
+			justifyContent: 'center',
+			borderRadius: '.15rem',
+			fontSize: '1.1em',
+			background: theme.palette.grey[300],
+			overflow: 'hidden',
+			fontWeight: theme.typography.fontWeightMedium,
+			textTransform: 'uppercase',
+			width: '100%',
+			marginLeft: '0.15em',
+			marginRight: '0.15em',
+		},
+	}),
+);
+
 export const useStylesKeyboard = makeStyles({
 	keyboard: {
-		height: '100%',
-		width: '100%',
 		padding: '0.5em',
-		display: 'flex',
 		backgroundColor: '#fff',
 		boxSizing: 'border-box',
 		justifyContent: 'space-between',
@@ -32,8 +48,6 @@ export const useStylesKeyboard = makeStyles({
 	},
 });
 
-
-
 export const useStylesAlphabet = makeStyles({
 	keyboardAlphabet: {
 		display: 'flex',
@@ -58,11 +72,10 @@ export const useStylesAlphabet = makeStyles({
 	},
 });
 
-
 export const useStylesNumeric = makeStyles((theme: Theme) =>
 	createStyles({
 		btnNumeric: {
-			background: theme.palette.grey[400],
+			background: `${theme.palette.grey[400]}`,
 			margin: '0',
 		},
 		keyboardNumeric: {
@@ -112,26 +125,6 @@ export const useStylesNumeric = makeStyles((theme: Theme) =>
 		nkey_9: {
 			gridColumn: '1 / 4',
 			gridRow: '4',
-		},
-	}),
-);
-
-
-export const useStylesButton = makeStyles((theme: Theme) =>
-	createStyles({
-		btn: {
-			display: 'flex',
-			alignItems: 'center',
-			justifyContent: 'center',
-			borderRadius: '.15rem',
-			fontSize: '1.1em',
-			background: theme.palette.grey[300],
-			overflow: 'hidden',
-			fontWeight: theme.typography.fontWeightMedium,
-			textTransform: 'uppercase',
-			width: '100%',
-			marginLeft: '0.15em',
-			marginRight: '0.15em',
 		},
 	}),
 );

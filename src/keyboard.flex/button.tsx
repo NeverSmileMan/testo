@@ -17,7 +17,7 @@ export default function Button({ callback, value, children, className }: Props):
 	}, [value, callback]);
 
 	return (
-		<div className={`${classes.btn} ${className}`} onClick={onClick}>
+		<div className={`${className} ${classes.btn}`} onClick={onClick}>
 			{children ?? value}
 		</div>
 	);
