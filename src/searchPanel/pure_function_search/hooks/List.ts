@@ -20,7 +20,8 @@ const getMethods = (
 
     const search = (filter: string, state: IState) => {
         const items = state.itemsData.filter(
-            item => item.searchIndex.toUpperCase().includes(filter.toUpperCase())
+            item => item.searchIndex.toUpperCase().includes(filter.toUpperCase()) ||
+            String(item.plu).includes(filter)
         );
         return items;
     };
