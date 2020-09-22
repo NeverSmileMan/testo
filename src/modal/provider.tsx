@@ -1,17 +1,17 @@
 import React, {Dispatch, SetStateAction} from 'react';
 
-export function InnerElement() {
-	const popUp = usePopUp();
-	const onClick = React.useCallback(() => {
-		popUp.setup(<div>Hello, world</div>, [<ClosePopUp key={0} />]);
-	}, []);
+// export function InnerElement() {
+// 	const popUp = usePopUp();
+// 	const onClick = React.useCallback(() => {
+// 		popUp.setup(<div>Hello, world</div>, [<ClosePopUp key={0} />]);
+// 	}, []);
 
-	return (
-		<div onClick={onClick} style={{ width: '100px', height: '100px', backgroundColor: 'red' }}>
-			Open modal!
-		</div>
-	);
-}
+// 	return (
+// 		<div onClick={onClick} style={{ width: '100px', height: '100px', backgroundColor: 'red' }}>
+// 			Open modal!
+// 		</div>
+// 	);
+// }
 
 const PopUp = React.createContext((null as any) as PopUpContext);
 
@@ -46,14 +46,14 @@ export function usePopUp(): PopUpContext {
 	return React.useContext(PopUp);
 }
 
-const ClosePopUp: React.FC<{}> = () => {
-	const popUp = usePopUp();
-	const onClick = React.useCallback(() => {
-		popUp.setup(null);
-	}, [popUp]);
+// const ClosePopUp: React.FC<{}> = () => {
+// 	const popUp = usePopUp();
+// 	const onClick = React.useCallback(() => {
+// 		popUp.setup(null);
+// 	}, [popUp]);
 
-	return <button onClick={onClick}>Close</button>;
-};
+// 	return <button onClick={onClick}>Close</button>;
+// };
 
 interface PopUpWindowProps {
 	control: PopUpContext;
