@@ -152,7 +152,7 @@ export function useTabs(
 		console.log('-------------------------')
 	}, [activeTab, tabItems]);
 
-	const addTab = useCallback(() => {
+	const createTab = useCallback(() => {
 		const num = freeTabNumbers.findIndex(item => !item) + 1
 		setFreeTabNumbers((prevState) => {
 			prevState[num - 1] = true;
@@ -199,7 +199,7 @@ export function useTabs(
 		setActiveItem,
 		addItem,
 		deleteItem,
-		addTab,
+		createTab,
 		deleteTab,
 		setTara,
 		print,

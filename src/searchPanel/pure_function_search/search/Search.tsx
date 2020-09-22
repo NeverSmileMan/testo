@@ -1,9 +1,9 @@
 import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
-import styles from '../styles/Search';
-import { IItem } from '../../data/Item';
-import useSearch from '../hooks/Search';
-import List from './List';
+import styles from './Search.styles';
+import { IItem } from '../../../data/Item';
+import useSearch from './Search.hook';
+import List from '../list/List';
 
 export type Props = {
     callbacks?: {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { IItem } from '../../data/Item';
-import itemsDataNew from '../../data/items.json';
-import { Props } from '../components/List';
+import { IItem } from '../../../data/Item';
+import itemsDataNew from '../../../data/items.json';
+import { Props } from './List';
 
 interface IState {
     items: IItem[] | null;
@@ -20,7 +20,8 @@ const getMethods = (
 
     const search = (filter: string, state: IState) => {
         const items = state.itemsData.filter(
-            item => item.searchIndex.toUpperCase().includes(filter.toUpperCase())
+            item => item.searchIndex.toUpperCase().includes(filter.toUpperCase()) ||
+            String(item.plu).includes(filter)
         );
         return items;
     };
