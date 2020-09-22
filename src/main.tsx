@@ -15,7 +15,7 @@ import { useHints } from './custom/hooks';
 //---------plugs---------------
 import { ScalePlug } from './plugs/scale';
 // import items from "./searchPanel/search/itemsData";
-import { Provider } from './my.modals/Provider';
+import {Provider} from './my.modals/Provider';
 import FillFormButton from './my.modals/form';
 //-----------------------------
 
@@ -84,32 +84,45 @@ export const MainContext = createContext({
 });
 
 export default function Main() {
-	const { tab, sideButtons, info, bodyWrap, body, header, searchPanel } = useStyles();
-	const [hint, error, changeHint] = useHints();
+  const { tab, sideButtons, info, bodyWrap, body, header, searchPanel } = useStyles();
+  const [hint, error, changeHint] = useHints();
+  
 
+
+
+
+  
+  
 	const [modalType, setModalType] = useState(null as any);
 	const [selectedItem, setSelectedItem] = useState({} as IItem);
-	const setType = (type: string | null, callback?: Function): any => () => setModalType({ type: type, callback });
+	const setType = (type: string | null, callback?: Function): any => () => setModalType({type: type, callback});
+
+
 
 	const [calcValue, setCalcValue] = useState(0);
 	const submitValueCalc = (val: number) => {
-		setCalcValue(val);
+    setCalcValue(val);
 		setType(null)();
 	};
+	
+	
 
-	const [
-		tabItems,
-		activeTab,
-		activeItem,
-		setActiveTab,
-		setActiveItem,
-		addItem,
-		deleteItem,
-		addTab,
-		deleteTab,
-		setTara,
-		print,
-	] = useTabs(changeHint, ScalePlug, calcValue, setType);
+
+
+    const [
+      tabItems,
+      activeTab,
+      activeItem,
+      setActiveTab,
+      setActiveItem,
+      addItem,
+      deleteItem,
+      addTab,
+      deleteTab,
+      setTara,
+      print,
+    ] = useTabs(changeHint, ScalePlug, calcValue, setType);
+
 
 	const confirmClose = useCallback(() => {
 		setType(null)();
@@ -130,6 +143,8 @@ export default function Main() {
 	// 	showTara();
 	// }, [calcValue]);
 	// const activeTara = tabItems[activeTab].tara;
+
+
 
 	const mainContext = {
 		modalType,
@@ -152,10 +167,11 @@ export default function Main() {
 
 	return (
 		<>
-			<div className={header}>
+		<div className={header}>
 				<div className={tab}>
-					<MainContext.Provider value={mainContext}>
-						<Tabs tabs={tabItems} /> {/*  //addTab, setActiveTab, activeTab */}
+					
+				<MainContext.Provider value={mainContext}>
+					<Tabs tabs={tabItems} /> {/*  //addTab, setActiveTab, activeTab */}
 					</MainContext.Provider>
 				</div>
 				<div className={info}>
@@ -166,23 +182,23 @@ export default function Main() {
 			<div className={bodyWrap}>
 				<div className={body}>
 					<div className={searchPanel}>
-						<MainContext.Provider value={mainContext}>
-							<Search />
-						</MainContext.Provider>
+				<MainContext.Provider value={mainContext}>
+						<Search />
+		</MainContext.Provider>
 						<OrderInfo value={tabItems[activeTab].items} activeItem={activeItem} onClick={deleteItem} />
 					</div>
 					<AddedItemsTable values={tabItems[activeTab].items} onClick={setActiveItem} active={activeItem} />
 				</div>
 				<MainContext.Provider value={mainContext}>
-					<div className={sideButtons}>
-						<GroupBtn />
-					</div>
-					{modalType && <ModalWindow />}
+				<div className={sideButtons}>
+					<GroupBtn />
+				</div>
+				{modalType && <ModalWindow />}
 					<Provider>
-						<FillFormButton />
-					</Provider>
-				</MainContext.Provider>
+              <FillFormButton/>
+            </Provider> 
+					</MainContext.Provider>
 			</div>
-		</>
+			</>
 	);
 }
