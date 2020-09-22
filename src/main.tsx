@@ -132,7 +132,9 @@ export default function Main() {
 		<>
 			<div className={header}>
 				<div className={tab}>
+				<MainContext.Provider value={context}>
 					<Tabs tabs={tabItems} activeTab={activeTab} createTab={createTab} setActiveTab={setActiveTab} />
+					</MainContext.Provider>
 				</div>
 				<div className={info}>
 					<Hint hint={hint} error={error} />

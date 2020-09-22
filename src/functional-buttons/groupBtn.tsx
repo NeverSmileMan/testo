@@ -44,9 +44,9 @@ const GroupBtn = () => {
   const { deleteTab } = useContext(MainContext)
 
 
-	const onClick = React.useCallback(() => {
+	const onClick = () => {
 		popUp.setup(<ModalClose apply={deleteTab} close={popUp.close.bind(popUp)}/>);
-	}, [popUp]);
+	};
 
   return (
     <div className={cls.btns}>

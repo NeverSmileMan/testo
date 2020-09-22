@@ -19,10 +19,10 @@ export const PopUpProvider: React.FC<{}> = ({ children }) => {
 	const popUpNode = React.useState<JSX.Element | null>(null);
 	const popUpControls = React.useState<JSX.Element[]>(() => []);
 	const value = React.useMemo(() => new PopUpContext(popUpNode, popUpControls), [popUpNode, popUpControls]);
-
+  const child = React.useMemo(() => React.Children.only(children), [children]);
 	return (
 		<PopUp.Provider value={value}>
-			{children}
+			{child}
 			<PopUpWindow control={value} />
 		</PopUp.Provider>
 	);
