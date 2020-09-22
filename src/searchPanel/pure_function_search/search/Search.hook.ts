@@ -2,9 +2,9 @@ import {
     useState, useRef, useEffect, useContext,
     SetStateAction, Dispatch, RefObject,
 } from 'react';
-import { ActiveInputService } from '../../../../services/ActiveInputService';
-import { MainContext } from '../../../../main';
-import { IItem, ItemType } from '../../../data/Item';
+import { ActiveInputService } from '../../../services/ActiveInputService';
+import { MainContext } from '../../../main';
+import { IItem, ItemType } from '../../data/Item';
 import { getStateInput, IStateInput, getMethodsInput } from './Input.object';
 
 interface ICallbacksNew {

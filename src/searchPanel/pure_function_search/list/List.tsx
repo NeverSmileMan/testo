@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from './List.styles';
-import { IItem } from '../../../data/Item';
+import { IItem } from '../../data/Item';
 import useList from './List.hook';
 
 export type Props = {

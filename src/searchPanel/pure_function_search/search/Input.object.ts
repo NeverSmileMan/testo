@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { IItem } from '../../../data/Item';
+import { IItem } from '../../data/Item';
 
 export interface IStateInput {
     value: string;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from './Search.styles';
-import { IItem } from '../../../data/Item';
+import { IItem } from '../../data/Item';
 import useSearch from './Search.hook';
 import List from '../list/List';
 

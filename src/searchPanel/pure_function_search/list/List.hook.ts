@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { IItem } from '../../../data/Item';
-import itemsDataNew from '../../../data/items.json';
+import { IItem } from '../../data/Item';
+import itemsDataNew from '../../data/items.json';
 import { Props } from './List';
 
 interface IState {
