@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import List, { IList } from '../objects/List';
 // import { IItem } from '../data/Item';
 import { IItem } from '../objects/items';
@@ -19,11 +19,12 @@ const changeState = (
     return { onItemSelect, setFilter };
 };
 
-const useList = (onSelect: (item: IItem) => void) => {
+const useList = (filter: string, onSelect: (item: IItem) => void) => {
     const [list] = useState(() => new List());
     const [itemsArray, setState] = useState(list.getItems);
-    const [methods] = useState(() => changeState(list, setState, onSelect));
-    return { itemsArray, ...methods };
+    const [{ onItemSelect, setFilter }] = useState(() => changeState(list, setState, onSelect));
+    useEffect(() => setFilter(filter), [setFilter, filter]);
+    return { itemsArray, onItemSelect };
 };
 
 export default useList;
