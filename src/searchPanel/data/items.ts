@@ -1,4 +1,4 @@
-import { IItem, ItemType, Item} from '../Item';
+import { IItem, ItemType, Item} from './Item';
 
 const items: IItem[] = [
     new Item('', 1000, 'Товар 100', 100, ItemType.WEIGHT),

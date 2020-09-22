@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/List';
-// import { IItem } from '../data/Item';
-import { IItem } from '../objects/items';
+import { IItem } from '../../data/Item';
 import useList from '../hooks/List';
 
 type Props = {
@@ -11,14 +10,15 @@ type Props = {
 } & WithStyles;
 
 function List({ classes, filter, onSelect }: Props) {
+    console.log(filter);
     const { itemsArray, onItemSelect } = useList(filter, onSelect);
 
     if (!itemsArray) return null;
     
     const items = itemsArray.map((item, i) =>
         <li key={i} data-item-index={i}>
-            <span>{item.code}</span>
-            <span>{item.name}</span>
+            <span>{item.plu}</span>
+            <span>{item.searchIndex}</span>
         </li>
     );
 
@@ -37,51 +37,3 @@ function List({ classes, filter, onSelect }: Props) {
 }
 
 export default withStyles(styles)(List);
-
-/*
-function List({ input }: { input: string }) {
-    const classes = useStyles();
-    const [{ filter, data = null }, setState] = useState({ filter: input } as { filter: string, data: IItem[] | null });
-    const { addItem, setType, setSelectedItem } = useContext(MainContext);
-  
-    useEffect(() => {
-      if (!input) {
-        setState(() => ({ filter: '', data: null }));
-        return;
-      }
-      if (input === filter) return;
-      const data = itemsData.filter(item => item.name.toUpperCase().includes(input.toUpperCase()));
-      setState(() => ({ filter: input, data }));
-    }, [input]);
-  
-    if (!data) return null;
-    const onClickItemList = (item:IItem) => {
-      if (item.type==='ваговий') {
-        addItem({item:item})
-      } else {
-        setType('qtyGoods')();
-        setSelectedItem(item)
-      }
-    }
-    const items = data.map((item, i) =>
-      <li
-        key={i}
-        data-item-index={i}
-        onClick={() => onClickItemList(item) }
-      > {/****** плохАААААААААА!!! *****//*}
-        <span>{item.code}</span>
-        <span>{item.name}</span>
-      </li>
-    );
-    return (
-      <div className={classes.list}>
-        {items.length
-          ? <ul>{items}</ul>
-          : <div className='not-found'>НІЧОГО НЕ ЗНАЙДЕНО</div>
-        }
-      </div>
-    );
-  }
-  
-  export default List;
-  */

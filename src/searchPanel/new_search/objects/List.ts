@@ -1,6 +1,5 @@
-// import { IItem } from './Item';
-import { IItem } from './items';
-import itemsData from './items';
+import { IItem } from '../../data/Item';
+import itemsDataNew from '../../data/items.json';
 
 export interface IList {
     onChange: (callback: (getState: () => IItem[] | null) => void) => void;
@@ -14,7 +13,7 @@ class List implements IList {
     private _itemsData: IItem[];
     
     constructor() {
-        this._itemsData = itemsData;
+        this._itemsData = itemsDataNew as unknown as IItem[];
         this.getItems = this.getItems.bind(this);
         this.setFilter = this.setFilter.bind(this);
     }
@@ -39,39 +38,10 @@ class List implements IList {
 
     private _search(filter: string) {
         this._items = this._itemsData.filter(
-            item => item.name.toUpperCase().includes(filter.toUpperCase())
+            item => item.searchIndex.toUpperCase().includes(filter.toUpperCase())
         );
     }
 
 }
 
 export default List;
-
-// import { IItem } from './Item';
-// // import itemsData from './data/items';
-// import items from '../data.structure/data/items.json';
-
-// export interface IList {
-//     onChange: (callback: (getState: () => IItem[] | null) => void) => void;
-//     getItems: () => IItem[] | null;
-//     setFilter: (filter: string) => void;
-// }
-
-// class List implements IList {
-//     private _callbackOnChange?: (getState: () => IItem[] | null) => void;
-//     private _items: IItem[] | null = null;
-//     private _itemsData: IItem[] = [];
-    
-//     constructor() {
-//         this.getItems = this.getItems.bind(this);
-//         this.setFilter = this.setFilter.bind(this);
-//         this._itemsData = items as unknown as IItem[];
-//     }
-
-//     private _search(filter: string) {
-//         this._items = this._itemsData.filter(
-//             item => item.searchIndex.toUpperCase().includes(filter)
-//         );
-//     }
-
-
