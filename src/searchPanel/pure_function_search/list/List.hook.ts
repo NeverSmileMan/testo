@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { IItem } from '../../data/Item';
-import itemsDataNew from '../../data/items.json';
-import { Props } from '../components/List';
+import { IItem } from '../../../data/Item';
+import itemsDataNew from '../../../data/items.json';
+import { Props } from './List';
 
 interface IState {
     items: IItem[] | null;

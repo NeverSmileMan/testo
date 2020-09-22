@@ -1,8 +1,8 @@
 import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
-import styles from '../styles/List';
-import { IItem } from '../../data/Item';
-import useList from '../hooks/List';
+import styles from './List.styles';
+import { IItem } from '../../../data/Item';
+import useList from './List.hook';
 
 export type Props = {
     filter: string;
