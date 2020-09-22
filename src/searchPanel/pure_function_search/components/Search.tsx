@@ -1,7 +1,7 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/Search';
-import { IItem } from '../objects/items';
+import { IItem } from '../../data/Item';
 import useSearch from '../hooks/Search';
 import List from './List';
 

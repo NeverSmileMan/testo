@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/List';
-import { IItem } from '../objects/items';
+import { IItem } from '../../data/Item';
 import useList from '../hooks/List';
 
 export type Props = {
@@ -16,8 +16,8 @@ function List(props: Props) {
     
     const items = itemsArray.map((item, i) =>
         <li key={i} data-item-index={i}>
-            <span>{item.code}</span>
-            <span>{item.name}</span>
+            <span>{item.plu}</span>
+            <span>{item.searchIndex}</span>
         </li>
     );
 

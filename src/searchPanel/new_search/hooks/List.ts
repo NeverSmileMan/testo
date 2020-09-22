@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import List, { IList } from '../objects/List';
-// import { IItem } from '../data/Item';
-import { IItem } from '../objects/items';
+import { IItem } from '../../data/Item';
 
 const changeState = (
     list: IList,
