@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
-import Button from './button';
-import { Numeric, Key, Servise } from './interfaces';
-import { useStylesNumeric } from './styles';
+import Button from '../button/button';
+import { Numeric, Key, Service } from '../keyboard.main/keyboard.interfaces';
+import { useStylesNumeric } from './keyboard.numeric.styles';
 
 interface Props {
 	options: Numeric;
-	service: Servise;
+	service: Service;
 }
 
 export default function GroupNumericButtons({ options, service }: Props): ReactElement {

@@ -1,9 +1,9 @@
 import React, { useState, ReactElement } from 'react';
-import GroupAlphabetButtons from './group.alphabet.buttons';
-import GroupNumericButtons from './group.numeric.buttons';
-import GroupSpecialButtons from './group.special.buttons';
-import { Servise, IKeyboard } from './interfaces';
-import { useStylesKeyboard } from './styles';
+import KeyboardAlphabet from '../keyboard.alphabet/keyboard.alphabet';
+import KeyboardNumeric from '../keyboard.numeric/keyboard.numeric';
+import KeyboardSpecial from '../keyboard.special/keyboard.special';
+import { Service, IKeyboard } from './keyboard.interfaces';
+import { useStylesKeyboard } from './keyboard.styles';
 
 export enum Lang {
 	EN = 'en',
@@ -21,11 +21,11 @@ function getDefaultLayout<T, K extends keyof T>(obj: T) {
 	return Object.keys(obj)[0] as K;
 }
 interface Props {
-	service: Servise;
+	service: Service;
 	keyboardLayout: IKeyboard;
 }
 
-export default function Keyboard({ service, keyboardLayout }: Props): ReactElement {
+export default function KeyboardMain({ service, keyboardLayout }: Props): ReactElement {
 	const [layoutName, setLayoutName] = useState<Lang>(getDefaultLayout(keyboardLayout.alphabet.keys));
 	const classes = useStylesKeyboard();
 
@@ -36,17 +36,17 @@ export default function Keyboard({ service, keyboardLayout }: Props): ReactEleme
 			>
 				{keyboardLayout.alphabet ? (
 					<div className={classes.alphabet}>
-						<GroupAlphabetButtons opts={keyboardLayout.alphabet} service={service} />
+						<KeyboardAlphabet opts={keyboardLayout.alphabet} service={service} />
 					</div>
 				) : null}
 				{keyboardLayout.numeric ? (
 					<div className={classes.numeric}>
-						<GroupNumericButtons options={keyboardLayout.numeric} service={service} />
+						<KeyboardNumeric options={keyboardLayout.numeric} service={service} />
 					</div>
 				) : null}
 				{keyboardLayout.special ? (
 					<div className={classes.special}>
-						<GroupSpecialButtons options={keyboardLayout.special} service={service} />
+						<KeyboardSpecial options={keyboardLayout.special} service={service} />
 					</div>
 				) : null}
 			</LayoutContext.Provider>

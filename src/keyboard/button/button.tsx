@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback, ReactNode } from 'react';
-import { Key } from './interfaces';
-import { useStylesButton } from './styles';
+import { Key } from '../keyboard.main/keyboard.interfaces';
+import { useStylesButton } from './button.styles';
 
 interface Props {
 	callback: Function;

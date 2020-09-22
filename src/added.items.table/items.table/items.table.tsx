@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
-import { useStylesTable } from './styles';
-import SingleItem from './single.item';
+import { useStylesTable } from './items.table.styles';
+import SingleItem from '../single.item/single.item';
 import { Item } from './interfaces';
 
 interface Props {

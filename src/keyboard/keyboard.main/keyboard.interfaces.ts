@@ -1,4 +1,4 @@
-import { Lang } from './keyboard.flex';
+import { Lang } from './keyboard.main';
 
 type SpicialKey = string | undefined | JSX.Element | SpecialValue;
 
@@ -14,7 +14,7 @@ type UnsetActive = (func: React.Dispatch<React.SetStateAction<string>>) => void;
 
 export type Actions = Add | Delete | Clear | SetActive | UnsetActive;
 
-export interface Servise {
+export interface Service {
 	add: Add;
 	delete: Delete;
 	clear: Clear;
@@ -30,7 +30,7 @@ export type Keys = {
 export interface SpecialKey {
 	name?: string;
 	value: SpicialKey;
-	action: keyof Servise | 'none';
+	action: keyof Service | 'none';
 }
 
 interface Options {
@@ -42,12 +42,12 @@ export type OptionsAlphabet = {
 };
 export interface Alphabet {
 	keys: Keys;
-	action: keyof Servise;
+	action: keyof Service;
 	options: Options | OptionsAlphabet;
 }
 export interface Numeric {
 	keys: Key[];
-	action: keyof Servise;
+	action: keyof Service;
 	options: Options;
 }
 export interface Special {

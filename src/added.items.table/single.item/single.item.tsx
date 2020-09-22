@@ -1,6 +1,6 @@
 import React, { ReactElement, useCallback } from 'react';
-import { useStylesSinleItem } from './styles';
-import { Item } from './interfaces';
+import { useStylesSingleItem } from './single.item.styles';
+import { Item } from '../items.table/interfaces';
 
 interface Props {
 	item: Item;
@@ -28,7 +28,7 @@ export default function SingleItem({
 	active,
 	onClick,
 }: Props): ReactElement {
-	const classes = useStylesSinleItem();
+	const classes = useStylesSingleItem();
 
 	const onClick_ = useCallback(() => {
 		if (active === item) {
