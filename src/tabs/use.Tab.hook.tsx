@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {ActiveInputService} from '../services/ActiveInputService';
-import {Hints, MAX_NUMBER_OF_TABS} from '../custom/variables';
+import React, { useCallback, useEffect, useState } from 'react';
+import { ActiveInputService } from '../services/ActiveInputService';
+import { Hints } from '../custom/variables';
 
 
 export interface TabItems {
@@ -14,19 +14,23 @@ enum ItemTypes {
 	weights = 'weighed',
 	piece = 'pieced',
 }
+
 interface Defaults {
 	tara: number;
 	pieces_per_package: number;
 }
+
 interface Lifetime {
 	shelf_life_1: number;
 }
+
 interface Texts {
 	article: string;
 	full_title: string;
 	shop: string;
 	short_title: string;
 }
+
 export interface Item {
 	defaults: Defaults;
 	id: string;
@@ -49,7 +53,7 @@ export interface ArgAddItemFunc {
 }
 
 export function useTabs(
-	setHint: (str: Hints, likeError?: boolean) => void,
+	setHint: ( str: Hints, likeError?: boolean ) => void,
 	scaleService: any,
 	calcValue: number,
 ): [
@@ -58,51 +62,52 @@ export function useTabs(
 		AddedItem | null,
 	React.Dispatch<React.SetStateAction<number>>,
 	React.Dispatch<React.SetStateAction<AddedItem | null>>,
-	({item, calcValue}: ArgAddItemFunc) => boolean,
+	( { item, calcValue }: ArgAddItemFunc ) => boolean,
 	() => void,
 	() => void,
 	() => void,
-	(tara: number) => void, // setTara
+	( tara: number ) => void, // setTara
 	() => void, // print
 	() => number // getTara
 ] {
-	const [tabItems, setTabItems] = useState<TabItems[]>([{tabNumber: 1, tara: 0, items: []}] as TabItems[]);
-	const [activeTab, setActiveTab] = useState<number>(0);
-	const [activeItem, setActiveItem] = useState<AddedItem | null>(null);
-	const [freeTabNumbers, setFreeTabNumbers] = useState<Array<boolean>>(() => {
-		const arr = Array(MAX_NUMBER_OF_TABS).fill(false);
-		arr[0] = true;
-		return arr;
-	});
 
-	const setTara = useCallback((tara) => {
-		if (scaleService.checkStable()) {
-			scaleService.setTara(tara / 1000)
-			scaleService.setWeight(-tara / 1000)
-		}
+
+	const _apiBase = `http://10.13.16.80:4445`;
+
+	const [ tabs, setTabs ] = useState<Array<string>>( [] )
+
+	useEffect( () => {
+		fetch( `${ _apiBase }/tab/list` )
+		.then( ( res ) => res.json() )
+		.then( value => setTabs( value ) )
+	}, [] )
+
+	const [ tabItems, setTabItems ] = useState<TabItems[]>( [ { tabNumber: 1, tara: 0, items: [] } ] as TabItems[] );
+	const [ activeTab, setActiveTab ] = useState<number>( 0 );
+	const [ activeItem, setActiveItem ] = useState<AddedItem | null>( null );
+
+	const setTara = useCallback( ( tara ) => {
 		tabItems[activeTab].tara = tara;
-		setTabItems([...tabItems]);
-	}, [tabItems, activeTab]);
-
-	const getTara = useCallback(() => {
+		setTabItems( [ ...tabItems ] );
+	}, [ tabItems, activeTab ] );
+	const getTara = useCallback( () => {
 		return (tabItems[activeTab].tara) / 1000
-	}, [tabItems, activeTab]);
-
+	}, [ tabItems, activeTab ] );
 	const addItem = useCallback(
-		({item, calcValue}: ArgAddItemFunc) => {
-			if (scaleService.checkStable()) {
-				const addedItem = {...item} as AddedItem;
-				scaleService.setTitle(item.texts.full_title);
-				scaleService.setPrice(item.price);
+		( { item, calcValue }: ArgAddItemFunc ) => {
+			if ( scaleService.checkStable() ) {
+				const addedItem = { ...item } as AddedItem;
+				scaleService.setTitle( item.texts.full_title );
+				scaleService.setPrice( item.price );
 				const weightScale = scaleService.getItemWeight();
-				if (weightScale >= (40 / 1000)) {
-					switch (item.type) {
+				if ( weightScale >= (40 / 1000) ) {
+					switch ( item.type ) {
 						case ItemTypes.piece:
-							if (calcValue) {
+							if ( calcValue ) {
 								addedItem.amount = calcValue;
 								addedItem.cost = addedItem.amount * item.price;
 							} else {
-								setHint(Hints.PickItemsQty);
+								setHint( Hints.PickItemsQty );
 								return false;
 							}
 							break;
@@ -111,85 +116,74 @@ export function useTabs(
 							addedItem.cost = scaleService.getItemCost();
 							break;
 						default:
-							setHint(Hints.IncorrectItemType, true);
+							setHint( Hints.IncorrectItemType, true );
 							return false;
 					}
 				} else {
-					setHint(Hints.MinWeight, true);
+					setHint( Hints.MinWeight, true );
 					return false;
 				}
-				tabItems[activeTab].items.push(addedItem);
-				setTabItems([...tabItems]);
+				tabItems[activeTab].items.push( addedItem );
+				setTabItems( [ ...tabItems ] );
 				ActiveInputService.clear();
 				return true;
 			}
 			return false;
 		}
 		,
-		[tabItems, activeTab],
+		[ tabItems, activeTab ],
 	);
+	const deleteItem = useCallback( () => {
+		tabItems[activeTab].items = tabItems[activeTab].items.filter( ( item ) => item !== activeItem );
+		setTabItems( [ ...tabItems ] );
+		setActiveItem( null );
+	}, [ tabItems, activeItem ] );
 
-	const deleteItem = useCallback(() => {
-		tabItems[activeTab].items = tabItems[activeTab].items.filter((item) => item !== activeItem);
-		setTabItems([...tabItems]);
-		setActiveItem(null);
-	}, [tabItems, activeItem]);
+	const print = useCallback( () => {
+		console.log( '-------------------------' )
+		console.log( 'print', tabItems[activeTab].items )
+		console.log( '-------------------------' )
+	}, [ activeTab, tabItems ] );
 
-	// const createOrder = useCallback(() => {}, []);
-	// const closeOrder = useCallback(() => {}, []);
+	const createTab = useCallback( () => {
+		fetch( `${ _apiBase }/create-tab`, {
+			method: 'POST'
+		} )
+		.then( ( res ) => res.json() )
+		.then( ( tabId: any ) => setTabs( prevState => {
+			if ( !tabId.id ) return prevState
+			return [ ...prevState, tabId.id ]
+		} ) )
+	}, [] )
 
-	useEffect(() => {
-		const tara = getTara()
-		scaleService.setTara(tara)
-		if (tara < scaleService.getItemWeight) {
-			setHint(Hints.MinWeight, true)
-		}
-	}, [activeTab])
+	const deleteTab = useCallback( () => {
+		const id = 2
 
-	const print = useCallback(() => {
-		console.log('-------------------------')
-		console.log('print', tabItems[activeTab].items)
-		console.log('-------------------------')
-	}, [activeTab, tabItems]);
-
-	const createTab = useCallback(() => {
-		const num = freeTabNumbers.findIndex(item => !item) + 1
-		setFreeTabNumbers((prevState) => {
-			prevState[num - 1] = true;
-			return prevState
-		})
-		setTabItems((prevState) => [...prevState, {
-			tabNumber: num,
-			tara: 0,
-			items: [],
-		}])
-		setActiveTab(tabItems.length)
-	}, [tabItems, freeTabNumbers])
-
-	const deleteTab = useCallback(() => {
-		if (tabItems.length === 1) {
-			if (tabItems[0].tabNumber === 1) {
-				tabItems[0].items = []
-				return
-			} else {
-				setFreeTabNumbers((prevState) => {
-					prevState[0] = true;
-					return prevState
-				})
-				setTabItems((prevState) => [...prevState, {
-					tabNumber: 1,
-					tara: 0,
-					items: [],
-				}])
+		fetch( `${ _apiBase }/delete-tab`, {
+			method: 'DELETE',
+			body: JSON.stringify( { "id": `${ id }` } ),
+			headers: { 'Content-type': 'application/json' }
+		} )
+		.then( ( res ) => res.json() )
+		.then( ( res: any ) => setTabs( prevState => {
+			console.log( res )
+			if ( !res.affected ) {
+				return prevState
 			}
-		}
-		setFreeTabNumbers((prevState) => {
-			prevState[tabItems[activeTab].tabNumber - 1] = false;
+
+			let zzz =  prevState.map( ( num ) => {
+				console.log( num )
+			} )
+
+			console.log(zzz)
 			return prevState
-		})
-		setTabItems((prevState) => prevState.filter((value, index) => index !== activeTab));
-		setActiveTab((prevTabNum) => prevTabNum ? prevTabNum - 1 : 0);
-	}, [tabItems, activeTab])
+		} ) )
+	}, [] )
+
+	useEffect( () => {
+		console.log( tabs )
+	}, [ tabs ] )
+
 
 	return [
 		tabItems,

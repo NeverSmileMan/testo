@@ -64,15 +64,12 @@ const useStyles = makeStyles((theme: Theme) =>
 export const MainContext = createContext({
 	modalType: '' as string | null,
 	setType: (val: string | null): any => {},
-	// deleteTab: () => {},
 	confirmClose: () => {},
 	addItem: (item: any) => true as boolean,
 	print: () => {},
 	changeHint: (str: Hints, likeError?: boolean) => {},
 	submitValueCalc: (num: number) => {},
 	setSelectedItem: (() => {}) as React.Dispatch<React.SetStateAction<IItem>>,
-	// setCalcValue: (() => {}) as React.Dispatch<React.SetStateAction<number>>,
-	// calcValue: 0 as number,
 	selectedItem: {} as IItem,
 });
 
