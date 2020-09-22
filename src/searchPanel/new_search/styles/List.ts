@@ -1,9 +1,10 @@
+import { Hidden } from '@material-ui/core';
 import { createStyles, Theme } from '@material-ui/core/styles';
 
 const styles = createStyles((theme: Theme) => ({
     'list': {
         backgroundColor: theme.palette.primary.light,
-        // border: 'solid 3px ' + theme.palette.primary.main,
+        border: 'solid 3px ' + theme.palette.primary.main,
         borderTop: 'none',
         borderRight: 'none',
         position: 'absolute',
@@ -18,10 +19,13 @@ const styles = createStyles((theme: Theme) => ({
             padding: '0px',
         },
         '& li': {
-            fontSize: '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            height: '2.5rem',
+            fontSize: '1.1rem',
             borderBottom: 'solid 1px ' + theme.palette.secondary.dark,
             paddingLeft: '2rem',
-            paddingRight: '2rem',
+            paddingRight: '5rem',
             backgroundColor: 'white',
             '&:first-child': {
                 borderTop: 'solid 1px ' + theme.palette.secondary.dark,
@@ -29,12 +33,19 @@ const styles = createStyles((theme: Theme) => ({
         },
         '& span': { 
             display: 'inline-block',
+            overflow: 'hidden',
+            height: '1.5rem',
             '&:first-child': {
-                width: '10%',
+                width: '7%',
                 marginRight: '2rem',
+                textAlign: 'right',
             },
             '&:nth-child(2)': {
                 width: '55%',
+            },
+            '&:nth-child(3)': {
+                flex: '1 0 0',
+                textAlign: 'right',
             },
         },
         '& .not-found': {

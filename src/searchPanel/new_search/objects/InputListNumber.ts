@@ -14,10 +14,8 @@ export class InputList extends Input<string, IItem> implements IInputList {
 
     _onSelect(item: IItem) {
         if (!item) return;
-        if (this._callbackOnSelect) {
+        if (this._callbackOnSelect)
             this._callbackOnSelect(item);
-            alert("ADD ITEM");
-        }
     }
 }
 

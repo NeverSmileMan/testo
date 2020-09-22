@@ -94,7 +94,7 @@ export class Input<V extends string | number = string, S extends string | number
     }
 
     setValue(value: string = '') {
-        this._value = value;
+        this._value = value.toUpperCase();
         this._onChange();
     }
 

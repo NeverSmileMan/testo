@@ -2,15 +2,18 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { IItem } from '../../data/Item';
 import itemsDataNew from '../../data/items.json';
 import { Props } from './List';
+import {getItemsBySearchIndex} from '../../data/search.request';
 
 interface IState {
     items: IItem[] | null;
     itemsData: IItem[];
+    filter: string;
 }
 
 const getState = (): IState => ({
     items: null,
     itemsData: itemsDataNew as unknown as IItem[],
+    filter: '',
 });
 
 const getMethods = (
@@ -18,23 +21,36 @@ const getMethods = (
     onSelect: (item: IItem) => void,   
 ) => {
 
-    const search = (filter: string, state: IState) => {
-        const items = state.itemsData.filter(
-            item => item.searchIndex.toUpperCase().includes(filter.toUpperCase()) ||
-            String(item.plu).includes(filter)
+    const staticSearch = (filter: string, state: IState) => {
+        return state.itemsData.filter(
+            item => item.searchIndex.toUpperCase().includes(filter)
         );
-        return items;
+    }
+
+    const search = (filter: string, state: IState) => {
+        return getItemsBySearchIndex(filter)
+            .then(result => {
+                if (result) return result;
+                return staticSearch(filter, state);
+            })
+            .catch(console.log);
     };
 
     const setFilter = (filter: string) => {
-        setState(state => {
-            let items;
-            if (!filter) items = null;
-            else items = search(filter, state);
-            return { ...state, items: items };
-        });
+        
+        if (!filter) return setState(state => ({ ...state, items: null, filter: '' }));
+        
+        let currentState: IState = {} as IState;
+        setState(state => { currentState = state; return { ...state, filter } });
+        
+        search(filter, currentState)
+            .then(items => 
+                setState(state =>
+                    (state.filter === filter && { ...state, items }) || state
+                )
+            );
     };
-    
+
     const onItemSelect = (event: React.MouseEvent<HTMLDivElement>, items: IItem[] | null) => {
         const target = event.target as HTMLElement;
         const itemElem: HTMLElement | null = target.closest('[data-item-index]');
