@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import itemsData, { IItem } from './itemsData';
 import { MainContext } from '../../main/main';
-
+import {ModalContext} from '../../modal.context';
+import ModalQtyGoods from '../../functional-buttons/modal.wind/modal.qty.goods'
 
 const useStyles = makeStyles((theme: Theme) => ({
   'list': {
@@ -43,7 +44,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 function List({ input }: { input: string }) {
   const classes = useStyles();
   const [{ filter, data = null }, setState] = useState({ filter: input } as { filter: string, data: IItem[] | null });
-  const { addItem, setType, setSelectedItem } = useContext(MainContext);
+  const { addItem, setSelectedItem } = useContext(MainContext);
+  const {setModalContent} = useContext(ModalContext);
 
   useEffect(() => {
     if (!input) {
@@ -60,7 +62,7 @@ function List({ input }: { input: string }) {
     if (item.type==='weighed') {
       addItem({item:item})
     } else {
-      setType('qtyGoods')();
+      setModalContent(<ModalQtyGoods modalClose={()=>setModalContent(null)}/>);
       setSelectedItem(item)
     }
   }

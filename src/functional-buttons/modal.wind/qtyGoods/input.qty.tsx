@@ -22,10 +22,13 @@ const useStyle = makeStyles({
 
 const NameCalc = 'Кількість'
 
-const InputQty = () => {
+interface Prop {
+  modalClose: ()=>any;
+}
+const InputQty = ({modalClose}:Prop) => {
   const { inputContainer, keyboardContainer } = useStyle();
   const [qtyGoods, setqtyGoods] = useState(0)
-  const { setType, selectedItem, addItem } = useContext(MainContext);
+  const { selectedItem, addItem } = useContext(MainContext);
   const getQty = useCallback((num: number): any => () => {
     setqtyGoods(qtyGoods * 10 + num)
   }, [setqtyGoods, qtyGoods])
@@ -38,14 +41,15 @@ const InputQty = () => {
     delete: deleteQty,
     submit: useCallback(() => {
       if (qtyGoods > 0) {
-        setType(null)();
+        modalClose();
         addItem({ item: selectedItem, calcValue: qtyGoods })
       };
-    }, [qtyGoods, setType, addItem, selectedItem]),
+    }, [qtyGoods, modalClose, addItem, selectedItem]),
   }
   return (
     <div className={inputContainer}>
       <HeadInput
+        modalClose={modalClose}
         inputValue={qtyGoods}
         inputName={NameCalc} />
       <div className={keyboardContainer}>

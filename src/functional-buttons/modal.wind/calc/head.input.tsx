@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import {MainContext} from '../../../main/main';
+
 const useStyle = makeStyles((theme: Theme) => createStyles({
     input: {
         backgroundColor: '#fff',
@@ -28,18 +28,18 @@ const useStyle = makeStyles((theme: Theme) => createStyles({
 interface Prop {
     inputValue: string | number;
     inputName: string;
+    modalClose: ()=>any;
 }
 
-const HeadInput = ({inputName, inputValue}:Prop) => {
+const HeadInput = ({inputName, inputValue, modalClose}:Prop) => {
     const { inputHead, head, input, weigh } = useStyle();
-  const { setType } = useContext(MainContext);
 
     return (
         <div className={inputHead}>
             <div className={head}>
                 <div>{inputName}</div>
                 <div
-                    onClick={setType(null)}>
+                    onClick={modalClose}>
                     &#10005;
           </div>
             </div>

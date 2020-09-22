@@ -6,7 +6,7 @@ import GroupBtn from '../functional-buttons/groupBtn';
 import AddedItemsTable from '../added.items.table/items.table/items.table';
 import Search from '../searchPanel/pure_function_search/search/Search';
 import OrderInfo from '../searchPanel/pure_function_search/orderInfo/OrderInfo';
-import ModalWindow from '../functional-buttons/modal.wind/modal.wind';
+import { ModalWindowProvider } from '../modal.context'
 import { useTabs } from '../tabs/use.Tab.hook';
 import { IItem } from '../searchPanel/search/itemsData';
 import { useStyles } from './main.styles'
@@ -14,25 +14,18 @@ import { useStyles } from './main.styles'
 import { ScalePlug } from '../plugs/scale';
 //-----------------------------
 
-export const MainContext = createContext( {
-	modalType: '' as string | null,
-	setType: ( val: string | null ): any => {},
-	confirmClose: () => {},
-	addItem: ( item: any ) => true as boolean,
-	print: () => {},
-	// changeHint: ( str: Hints, likeError?: boolean ) => {},
-	submitValueCalc: ( num: number ) => {},
-	setSelectedItem: (() => {}) as React.Dispatch<React.SetStateAction<IItem>>,
-	// setCalcValue: (() => {}) as React.Dispatch<React.SetStateAction<number>>,
-	// calcValue: 0 as number,
+export const MainContext = createContext({
+	confirmClose: () => { },
+	addItem: (item: any) => true as boolean,
+	print: () => { },
+	submitValueCalc: (num: number) => { },
+	setSelectedItem: (() => { }) as React.Dispatch<React.SetStateAction<IItem>>,
 	selectedItem: {} as IItem,
-} );
+});
 
 export default function Main() {
 	const { tab, sideButtons, info, bodyWrap, body, header, searchPanel } = useStyles();
-		const [ modalType, setModalType ] = useState( null as string | null );
 	const [ selectedItem, setSelectedItem ] = useState( {} as IItem );
-	const setType = ( type: string | null ): any => () => setModalType( type );
 	const [ calcValue, setCalcValue ] = useState( 0 );
 
 	const [
@@ -52,20 +45,16 @@ export default function Main() {
 	const submitValueCalc = useCallback(
 		( val: number ) => {
 			setCalcValue( val );
-			setType( null )();
 			setTara( val );
 		},
-		[ calcValue, tabItems, activeTab ],
+		[calcValue, tabItems, activeTab],
 	);
 
-	const confirmClose = useCallback( () => {
-		setType( null )();
+	const confirmClose = useCallback(() => {
 		deleteTab();
-	}, [ setType, deleteTab ] );
+	}, [deleteTab]);
 
 	const context = {
-		modalType,
-		setType,
 		confirmClose,
 		addItem,
 		print,
@@ -73,13 +62,12 @@ export default function Main() {
 		submitValueCalc,
 		setSelectedItem,
 		selectedItem,
-		// calcValue, //---------
-		// setCalcValue, //---------
 		// deleteTab, //---------
 	};
 
 	return (
 		<>
+		<ModalWindowProvider>
 			<div className={ header }>
 				<div className={ tab }>
 					<Tabs tabs={ tabItems } activeTab={ activeTab } createTab={ createTab } setActiveTab={ setActiveTab }/>
@@ -103,9 +91,9 @@ export default function Main() {
 					<div className={ sideButtons }>
 						<GroupBtn/>{/**  confirmClose print modalType setType, selectedItem, addItem  changeHint, submitValueCalc  */ }
 					</div>
-					{ modalType && <ModalWindow/> }
 				</MainContext.Provider>
 			</div>
+			</ModalWindowProvider>
 		</>
 	);
 }

@@ -4,7 +4,7 @@ import { createStyles, Theme } from "@material-ui/core/styles";
 interface ButtonProp {
   nameButton: string;
   buttonIcon: () => any;
-  click: any,
+  click: ()=>any,
   backgroundColor?: string;
   color?: string;
   fontSize?: string;

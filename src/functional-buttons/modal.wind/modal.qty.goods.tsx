@@ -1,5 +1,4 @@
 import React from 'react';
-import FixedBtn from './calc/fixed.btn';
 import {makeStyles} from '@material-ui/styles';
 import InputQty from './qtyGoods/input.qty';
 
@@ -12,12 +11,15 @@ const useStyles = makeStyles({
         fontSize: '40px',
     }
 })
-
-const ModalQtyGoods = () =>{
+interface Prop {
+    modalClose: ()=>any;
+}
+const ModalQtyGoods = ({modalClose}:Prop) =>{
     const {container} = useStyles()
+    
     return (
         <div className={container}>
-            <InputQty />
+            <InputQty modalClose={modalClose}/>
         </div>
     )
 }
