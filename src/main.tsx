@@ -166,6 +166,7 @@ export default function Main() {
 	};
 
 	return (
+			<Provider>
 		<>
 		<div className={header}>
 				<div className={tab}>
@@ -194,11 +195,10 @@ export default function Main() {
 					<GroupBtn />
 				</div>
 				{modalType && <ModalWindow />}
-					<Provider>
               <FillFormButton/>
-            </Provider> 
 					</MainContext.Provider>
 			</div>
 			</>
+            </Provider> 
 	);
 }

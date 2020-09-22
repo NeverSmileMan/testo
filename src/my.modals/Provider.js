@@ -58,11 +58,12 @@ export const Provider = ({children}) => {
     />
   ));
 
+  const child = useMemo(() => React.Children.only(children), [children]);
 
   return (
       <>
     <DialogContext.Provider value={context}>
-      {children}
+      {child}
         {ReactDOM.createPortal(Component, document.body)}
     </DialogContext.Provider>
       </>
