@@ -6,13 +6,6 @@ export enum Hints {
 	MaxWeight = 'Вага не має перевищувати 5кг',
 	PositiveWeight = 'Вага має бути більшою за нуль',
 }
-export enum ItemTypes {
-	weights = 'ваговий',
-	piece = 'штучний',
-}
-export enum Lang {
-	EN = 'en',
-	RU = 'ru',
-	UA = 'uk',
-}
+
+
 export const MAX_NUMBER_OF_TABS = 6;

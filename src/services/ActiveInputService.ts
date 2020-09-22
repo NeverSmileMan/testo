@@ -17,7 +17,7 @@ export const ActiveInputService : ActiveInputService = {
     if (activeInput) activeInput((prevState: string)  => prevState.substring(0, prevState.length - val));
   }, 
   clear() {
-    if (activeInput) activeInput('');
+    if (activeInput) activeInput((prevState: string)  => '');
   },
   setActive(func: React.Dispatch<React.SetStateAction<string>>) {
     activeInput = func;
