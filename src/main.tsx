@@ -95,7 +95,7 @@ export default function Main() {
 		setActiveItem,
 		addItem,
 		deleteItem,
-		addTab,
+		createTab,
 		deleteTab,
 		setTara,
 		print,
@@ -134,7 +134,7 @@ export default function Main() {
 		<>
 			<div className={ header }>
 				<div className={ tab }>
-					<Tabs tabs={ tabItems } activeTab={ activeTab } addTab={ addTab } setActiveTab={ setActiveTab }/>
+					<Tabs tabs={ tabItems } activeTab={ activeTab } createTab={ createTab } setActiveTab={ setActiveTab }/>
 				</div>
 				<div className={ info }>
 					<Hint hint={ hint }
