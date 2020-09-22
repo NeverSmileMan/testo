@@ -1,137 +1,102 @@
+import { Dispatch } from 'react';
 import { IItem } from '../../data/Item';
-import IObject from './data/objects';
-import { IMessage, MessageCode } from './data/Message';
 
-export interface IStateInput<V = string> {
+export interface IStateInput {
+    value: string;
     isFocus: boolean;
-    value: V;
-    valueHTML: string;
+    callbackOnSelect: (item: IItem) => void;
 }
 
-export interface IInput<
-    V extends string | number = string,
-    S extends string | number | IItem = string>
-    extends IObject<IStateInput<V>>    
-{
-    setFocus: () => void;
-    blurFocus: () => void;
-    pressKey: (key: string) => void;
+export const getStateInput = (): IStateInput => ({
+    value: '',
+    isFocus: false,
+    callbackOnSelect: (item: IItem) => {},
+});
+
+export interface IMethodsInput {
     setValue: (value: string) => void;
-    getValue: () => V;
-    getValueHTML: () => string;
-    onMessage: (message: IMessage) => void;
-    onSelect: (callback: (value: S) => void) => void;
-    ifFocus: () => boolean;
+    getValueHTML: (state: IStateInput) => string;
+    pressKey: (key: string) => void;
+    onSelect: (callbac: (item: IItem) => void) => void;
+    _onSelect: (item: IItem) => void;
+    // setFocus: () => void;
+    // blurFocus: () => void;
 }
 
-export class Input<V extends string | number = string, S extends string | number | IItem = string> implements IInput<V, S> {
-    protected _value: string = '';
-    protected _callbackOnChange?: (getState: () => IStateInput<V>) => void;
-    protected _callbackOnSelect?: (value: S) => void;
-    private _isFocus: boolean = false;
-    private _message?: IMessage;
+export const getMethodsInput = (
+    setState: Dispatch<(state: IStateInput) => IStateInput>,
+): IMethodsInput => {
 
-    constructor() {
-        this.getStateObject = this.getStateObject.bind(this);
-        this._onSelect = this._onSelect.bind(this);
-    }
+    const setValue = (value: string = '') => setState(state => ({
+        ...state, value: value.toUpperCase(),
+    }));
 
-    getStateObject() {
-        return {
-            isFocus: this.ifFocus(),
-            value: this.getValue() as V,
-            valueHTML: `${this.getValueHTML()}`,
-        };
-    }
+    const getValueHTML = (state: IStateInput) =>
+        (' ' + state.value.replace(/ /g, '&nbsp;'));
 
-    onChange(callback: (getState: () => IStateInput<V>) => void) {
-        this._callbackOnChange = callback;
-    }
+    const addSymbol = (value: string) => setState(state => ({
+        ...state,
+        value: state.value += value,
+    }));
+    
+    const delSymbol = () => setState(state => ({
+        ...state,
+        value: state.value.substring(0, state.value.length - 1),
+    }));
 
-    setFocus() {
-        this._isFocus = true;
-        this._onChange();
-    }
-
-    blurFocus() {
-        this._isFocus = false;
-        this._onChange();
-    }
-
-    pressKey(key: string) {
-        const currentValue = this._value;
+    const pressKey = (key: string) => setState(state => {
+        const currentValue = state.value;
         try {
             switch(key) {
                 case "SPACE":
-                    this._addSymbol(' ');
+                    addSymbol(' ');
                     break;
                 case "BACKSPACE":
-                    this._delSymbol();
+                    delSymbol();
                     break;
                 case "CLEAR":
-                    this.setValue('');
+                    setValue('');
                     break;
                 case "ENTER":
-                    this._onSelect();
-                    break;             
+                    // onSelect(?);
+                    break;         
                 default:
-                    this._addSymbol(key);
+                    addSymbol(key);
             }
         } catch(e) {
-            this._value = currentValue;
-            this._throwMessage(MessageCode.INTERNAL_ERROR, 'НЕДОПУСТИМИЙ СИМВОЛ!');
+            setState(state => ({
+                ...state,
+                value: currentValue,
+            }));
+            // throwMessage
         }
-    }
+        return state;
+    });
 
-    protected _addSymbol(value: string) {
-        this._value += value;
-        this._onChange();
-    }
+    const onSelect = (callback: (item: IItem) => void) => setState(state => ({
+        ...state,
+        callbackOnSelect: callback,
+    }));
 
-    protected _delSymbol() {
-        this._value = this._value.substring(0, this._value.length - 1);
-        this._onChange();
-    }
+    const _onSelect = (item: IItem) => setState(state => {
+            console.log('ADD ITEM: ', item);
+            alert('ADD ITEM: ' + item.searchIndex);
+            // state.callbackOnSelect(item);
+            return state;
+    });
 
-    setValue(value: string = '') {
-        this._value = value;
-        this._onChange();
-    }
+    const setFocus = () => setState(state => ({
+        ...state,
+        isFocus: true,
+    }));
 
-    getValue() {
-        return this._value as V;
-    }
+    const blurFocus = () => setState(state => ({
+        ...state,
+        isFocus: false,
+    }));
 
-    getValueHTML() {
-        return (' ' + this.getValue()).replace(/ /g, '&nbsp;');
-    }
-
-    onMessage(message: IMessage) {
-        this._message = message;
-    }
-
-    onSelect(callback: (value: S) => void) {
-        console.log('NEW CALLBACKS');
-        this._callbackOnSelect = callback;
-    }
-
-    ifFocus() {
-        return this._isFocus;
-    }
-
-    protected _throwMessage(code: MessageCode, text?: string) {
-        this._message?.sendMessage(code);
-    }
-
-    protected _onChange() {
-        if (this._callbackOnChange)
-            this._callbackOnChange(this.getStateObject);
-    }
-
-    protected _onSelect(value?: any) {
-        if (this._callbackOnSelect)
-            this._callbackOnSelect(value || this.getValue());
-    }
-
-}
-
+    return { 
+        setValue, getValueHTML, pressKey,
+        onSelect, _onSelect,
+    };
+};

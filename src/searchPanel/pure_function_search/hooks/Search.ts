@@ -5,7 +5,7 @@ import {
 import { ActiveInputService } from '../../../services/ActiveInputService';
 import { MainContext } from '../../../main';
 import { IItem, ItemType } from '../../data/Item';
-import { getStateInput, IStateInput, getMethodsInput } from '../objects/InputNew';
+import { getStateInput, IStateInput, getMethodsInput } from '../objects/Input';
 
 interface ICallbacksNew {
     addItem: (item: any) => boolean;
@@ -22,7 +22,7 @@ const createMethods = (
 
     const setNewValue = (getNewValue: SetStateAction<string>) => setState(state => {
         if (typeof getNewValue === 'function')
-            return { ...state, value: getNewValue(state.value) };
+            return { ...state, value: getNewValue(state.value).toUpperCase() };
         return state;
     });
 
