@@ -52,6 +52,10 @@ export interface ArgAddItemFunc {
 	calcValue?: number
 }
 
+interface TabId {
+	id: number;
+}
+
 export function useTabs(
 	setHint: ( str: Hints, likeError?: boolean ) => void,
 	scaleService: any,
@@ -71,10 +75,10 @@ export function useTabs(
 	() => number // getTara
 ] {
 
-
 	const _apiBase = `http://10.13.16.80:4445`;
 
-	const [ tabs, setTabs ] = useState<Array<string>>( [] )
+
+	const [ tabs, setTabs ] = useState<Array<TabId>>( [] )
 
 	useEffect( () => {
 		fetch( `${ _apiBase }/tab/list` )
@@ -158,32 +162,24 @@ export function useTabs(
 
 	const deleteTab = useCallback( () => {
 		const id = 2
-
 		fetch( `${ _apiBase }/delete-tab`, {
 			method: 'DELETE',
 			body: JSON.stringify( { "id": `${ id }` } ),
 			headers: { 'Content-type': 'application/json' }
 		} )
 		.then( ( res ) => res.json() )
-		.then( ( res: any ) => setTabs( prevState => {
+		.then( ( res: any ) => setTabs( ( prevState ) => {
 			console.log( res )
 			if ( !res.affected ) {
 				return prevState
 			}
-
-			let zzz =  prevState.map( ( num ) => {
-				console.log( num )
-			} )
-
-			console.log(zzz)
-			return prevState
+			return prevState.filter( ( num ) => num.id !== id )
 		} ) )
 	}, [] )
 
 	useEffect( () => {
 		console.log( tabs )
 	}, [ tabs ] )
-
 
 	return [
 		tabItems,
