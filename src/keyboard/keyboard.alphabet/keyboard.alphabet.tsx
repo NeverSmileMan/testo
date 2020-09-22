@@ -1,12 +1,12 @@
 import React, { useContext, ReactElement } from 'react';
-import { LayoutContext } from './keyboard.flex';
-import { Alphabet, Servise, Key } from './interfaces';
-import Button from './button';
-import { useStylesAlphabet } from './styles';
+import { LayoutContext } from '../keyboard.main/keyboard.main';
+import { Alphabet, Service, Key } from '../keyboard.main/keyboard.interfaces';
+import Button from '../button/button';
+import { useStylesAlphabet } from './keyboard.alphabet.styles';
 
 interface Props {
 	opts: Alphabet;
-	service: Servise;
+	service: Service;
 }
 
 export default function GroupAlphabetButtons({ opts, service }: Props): ReactElement {
@@ -28,7 +28,8 @@ export default function GroupAlphabetButtons({ opts, service }: Props): ReactEle
 									className={item === ' ' ? classes.space : ''}
 								/>
 							))}
-							{!(i % 2) ? <div key={`${i}o`} className={classes.offset} /> : null}
+							{layout.name ==='en' ? null : !(i % 2) ?   <div key={`${i}o`} className={classes.offset} /> : null }
+							{layout.name ==='en' && (i % 2) ? <div key={`${i}o`} className={classes.offset} /> : null }
 						</div>
 						{i < opts.keys[layout.name].length - 1 ? <div key={`${i}z`} className={classes.spacer}></div> : null}
 					</React.Fragment>

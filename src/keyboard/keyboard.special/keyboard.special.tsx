@@ -1,12 +1,12 @@
 import React, { ReactElement, useContext, useCallback } from 'react';
-import Button from './button';
-import { Special, SpecialValue, SpecialKey, Servise } from './interfaces';
-import { LayoutContext } from './keyboard.flex';
-import { useStylesSpecial } from './styles';
+import Button from '../button/button';
+import { Special, SpecialValue, SpecialKey, Service } from '../keyboard.main/keyboard.interfaces';
+import { LayoutContext } from '../keyboard.main/keyboard.main';
+import { useStylesSpecial } from './keyboard.special.styles';
 
 interface Props {
 	options: Special;
-	service: Servise;
+	service: Service;
 }
 
 export default function GroupSpecialButtons({ options, service }: Props): ReactElement {
@@ -33,7 +33,7 @@ export default function GroupSpecialButtons({ options, service }: Props): ReactE
 				) : (
 					<Button
 						key={id}
-						callback={service[item.action as keyof Servise]}
+						callback={service[item.action as keyof Service]}
 						className={`${classes.btnSpecial} skey_${id} ${item.value === 'CLEAR' ? classes.clearBtn : ''}`}
 					>
 						<>{item.value}</>

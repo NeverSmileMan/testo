@@ -4,7 +4,7 @@ import Tabs from './tabs/Tabs';
 import Hint from './tabs/hint/Hint';
 import HomeButton from './tabs/homeButton/HomeButton';
 import GroupBtn from './functional-buttons/groupBtn';
-import AddedItemsTable from './added.items.table/added.items.table';
+import AddedItemsTable from './added.items.table/items.table/items.table';
 import Search from './searchPanel/pure_function_search/search/Search';
 import OrderInfo from './searchPanel/pure_function_search/orderInfo/OrderInfo';
 import ModalWindow from './functional-buttons/modal.wind/modal.wind';
