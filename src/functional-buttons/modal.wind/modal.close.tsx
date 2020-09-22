@@ -49,11 +49,13 @@ const ModalClose = ({ title = titleModal, confirm = modalConfirm, reject = modal
   const clss = useStyles();
   const {setType, confirmClose} = useContext(MainContext)
 
-const onClick = () => {
+const onClick = React.useCallback(() => {
   apply();
   close();
   console.log('qqqqqqqqqqqqqq');
-}
+  console.log( apply, );
+  console.log( close);
+},  [close, apply]);
 
   return (
     <div className={clss.modal}>
