@@ -4,7 +4,7 @@ import ModalTara from './modal.tara';
 import ModalPrint from './modal.print';
 import ModalClose from './modal.close';
 import ModalQtyGoods from './modal.qty.goods';
-import {MainContext} from '../../main';
+import {MainContext} from '../../main/main';
 
 
 

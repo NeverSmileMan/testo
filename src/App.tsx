@@ -3,7 +3,7 @@ import { makeStyles, ThemeProvider, createMuiTheme, Theme } from '@material-ui/c
 import { ActiveInputService } from './services/ActiveInputService';
 import KeyboardMain from './keyboard/keyboard.main/keyboard.main';
 import { keyboardSettings } from './keyboard/keyboard.main/keyboard.settings';
-import Main from './main';
+import Main from './main/main';
 
 //-----
 import Tablo from './plugs/Tablo';

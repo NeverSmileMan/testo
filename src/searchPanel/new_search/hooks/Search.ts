@@ -6,7 +6,7 @@ import { ActiveInputService } from '../../../services/ActiveInputService';
 import { InputList, IInputList, IStateInput } from '../objects/InputListNumber';
 import { Props } from '../components//Search';
 
-import { MainContext } from '../../../main';
+import { MainContext } from '../../../main/main';
 import { IItem, ItemType } from '../../data/Item';
 
 interface IcallbacksNew {

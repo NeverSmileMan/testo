@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import {MainContext} from '../../../main';
+import {MainContext} from '../../../main/main';
 const useStyle = makeStyles((theme: Theme) => createStyles({
     input: {
         backgroundColor: '#fff',

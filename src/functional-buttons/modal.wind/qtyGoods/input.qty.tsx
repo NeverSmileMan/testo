@@ -1,6 +1,6 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { MainContext } from '../../../main';
+import { MainContext } from '../../../main/main';
 import NumberKeyboard from '../calc/numder.keyboard';
 import ControlKeyboard from '../calc/control.keyboard';
 import HeadInput from '../calc/head.input';

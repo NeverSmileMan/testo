@@ -4,7 +4,7 @@ import Speed from '@material-ui/icons/Speed';
 import Print from '@material-ui/icons/Print';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import { makeStyles } from '@material-ui/styles';
-import { MainContext } from '../main';
+import { MainContext } from '../main/main';
 
 const buttons = [
   {

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import {MainContext} from '../../main'
+import {MainContext} from '../../main/main'
 
 const useStyles = makeStyles({
   modal: {

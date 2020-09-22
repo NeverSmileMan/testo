@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import itemsData, { IItem } from './itemsData';
-import { MainContext } from '../../main';
+import { MainContext } from '../../main/main';
 
 
 const useStyles = makeStyles((theme: Theme) => ({

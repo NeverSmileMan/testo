@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import KeyboardBtn from './keyboard.btn';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
-import { MainContext } from '../../../main'
+import { MainContext } from '../../../main/main'
 
 const useStyle = makeStyles({
   btnContainer: {
