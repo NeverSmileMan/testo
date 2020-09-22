@@ -1,6 +1,6 @@
 export enum ItemType {
     WEIGHT = 'weighed',
-    PIECE = 'piece',
+    PIECE = 'pieced',
 }
 
 export interface IItem {
