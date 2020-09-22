@@ -17,7 +17,8 @@ function List(props: Props) {
     const items = itemsArray.map((item, i) =>
         <li key={i} data-item-index={i}>
             <span>{item.plu}</span>
-            <span>{item.searchIndex}</span>
+            <span>{item.texts.full_title}</span>
+            <span>{item.price.toFixed(2)} грн</span>
         </li>
     );
 
