@@ -1,5 +1,4 @@
-// import { IItem } from './Item';
-import { IItem } from './items';
+import { IItem } from '../../data/Item';
 import IObject from './data/objects';
 import { IMessage, MessageCode } from './data/Message';
 
@@ -112,7 +111,6 @@ export class Input<V extends string | number = string, S extends string | number
     }
 
     onSelect(callback: (value: S) => void) {
-        console.log('NEW CALLBACKS');
         this._callbackOnSelect = callback;
     }
 
@@ -135,4 +133,3 @@ export class Input<V extends string | number = string, S extends string | number
     }
 
 }
-

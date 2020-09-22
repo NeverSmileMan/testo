@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
-// import { IItem } from '../data.structure/Item';
-import { IItem } from '../objects/items';
-import itemsData from '../objects/items';
+import { IItem } from '../../data/Item';
+import itemsDataNew from '../../data/items.json';
 import { Props } from '../components/List';
-// import List, { IList } from '../objects/List';
 
 interface IState {
     items: IItem[] | null;
@@ -12,7 +10,7 @@ interface IState {
 
 const getState = (): IState => ({
     items: null,
-    itemsData: itemsData,
+    itemsData: itemsDataNew as unknown as IItem[],
 });
 
 const getMethods = (
@@ -22,7 +20,7 @@ const getMethods = (
 
     const search = (filter: string, state: IState) => {
         const items = state.itemsData.filter(
-            item => item.name.toUpperCase().includes(filter)
+            item => item.searchIndex.toUpperCase().includes(filter.toUpperCase())
         );
         return items;
     };

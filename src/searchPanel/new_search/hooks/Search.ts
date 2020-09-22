@@ -2,35 +2,27 @@ import {
     useState, useRef, useEffect, useContext,
     SetStateAction, Dispatch, RefObject,
 } from 'react';
-// import ActiveInputService from '../services/ActiveInputService';
 import { ActiveInputService } from '../../../services/ActiveInputService';
 import { InputList, IInputList, IStateInput } from '../objects/InputListNumber';
 import { Props } from '../components//Search';
 
 import { MainContext } from '../../../main';
-import { IItem } from '../objects/items';
+import { IItem, ItemType } from '../../data/Item';
 
 interface IcallbacksNew {
     addItem: (item: any) => boolean;
     setType: (val: string | null) => any;
-    setSelectedItem: Dispatch<SetStateAction<IItem>>;
+    setSelectedItem: Dispatch<SetStateAction<any>>; //IItem
 }
 
 const changeState = (
     input: IInputList,
     setState: Dispatch<() => IStateInput<string>>,
     ref: RefObject<HTMLDivElement>,
-    callbacks: IcallbacksNew, // Props['callbacks'],
+    callbacks: IcallbacksNew,
 ) => {
-    // const activeInputService = ActiveInputService.getInstance();
     input.onChange(setState);
-    // input.onSelect(callbacks.onSelect);
-    // callbacks.resetSearch(() => input.setValue(''));
     const onListSelect = input._onSelect;
-    // const attachInput = () => {
-    //     activeInputService.setActiveInput(input);
-    //     return () => activeInputService.delActiveInput(input);
-    // };
     const setValue = (getNewValue: SetStateAction<string>) => {
         if (typeof getNewValue === 'function')
             input.setValue(getNewValue(input.getValue()));
@@ -47,7 +39,7 @@ const changeState = (
 
 const changeCallbacksNew = (input: IInputList, callbacks: IcallbacksNew) => {
     const onSelectNew = (item: IItem) => {
-        if (item.type === 'ваговий') {
+        if (item.type === ItemType.WEIGHT) {
             callbacks.addItem({ item });
             return;
         }

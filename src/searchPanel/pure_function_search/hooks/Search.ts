@@ -4,13 +4,13 @@ import {
 } from 'react';
 import { ActiveInputService } from '../../../services/ActiveInputService';
 import { MainContext } from '../../../main';
-import { IItem } from '../objects/items';
-import { getStateInput, IStateInput, getMethodsInput } from '../objects/InputNew';
+import { IItem, ItemType } from '../../data/Item';
+import { getStateInput, IStateInput, getMethodsInput } from '../objects/Input';
 
 interface ICallbacksNew {
     addItem: (item: any) => boolean;
     setType: (val: string | null) => any;
-    setSelectedItem: Dispatch<SetStateAction<IItem>>;
+    setSelectedItem: Dispatch<SetStateAction<any>>; //IItem
 }
 
 const createMethods = (
@@ -22,7 +22,7 @@ const createMethods = (
 
     const setNewValue = (getNewValue: SetStateAction<string>) => setState(state => {
         if (typeof getNewValue === 'function')
-            return { ...state, value: getNewValue(state.value) };
+            return { ...state, value: getNewValue(state.value).toUpperCase() };
         return state;
     });
 
@@ -39,7 +39,7 @@ const createMethods = (
 }
 
 const getNewOnSelect = (callbacksNew: ICallbacksNew) => (item: IItem) => {
-        if (item.type === 'ваговий') {
+        if (item.type === ItemType.WEIGHT) {
             callbacksNew.addItem({ item });
             return;
         }

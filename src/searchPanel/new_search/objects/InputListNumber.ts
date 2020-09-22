@@ -1,6 +1,5 @@
 import { Input, IInput } from './Input';
-// import { IItem } from './Item';
-import { IItem } from './items';
+import { IItem } from '../../data/Item';
 import { MessageCode } from './data/Message';
 
 export interface IInputList extends IInput<string, IItem> {
@@ -15,7 +14,10 @@ export class InputList extends Input<string, IItem> implements IInputList {
 
     _onSelect(item: IItem) {
         if (!item) return;
-        if (this._callbackOnSelect) this._callbackOnSelect(item);
+        if (this._callbackOnSelect) {
+            this._callbackOnSelect(item);
+            alert("ADD ITEM");
+        }
     }
 }
 

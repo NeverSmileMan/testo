@@ -2,7 +2,6 @@ import React from 'react';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/OrderInfo';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';    
-// import { OrderControlContext } from '../order.control/OrderControl';
 import { AddedItem } from '../../../tabs/use.Tab.hook';
 
 type Props = {
@@ -20,8 +19,6 @@ function OrderInfo({
     activeItem: isSelected,
     onClick }: Props
     ) {
-    
-    // const { isSelected, total } = useContext(OrderControlContext);
 
     const total = getTotal(orderItems, 'cost');
 
