@@ -80,8 +80,8 @@ export const getMethodsInput = (
 
     const _onSelect = (item: IItem) => setState(state => {
             console.log('ADD ITEM: ', item);
-            alert('ADD ITEM: ' + item.searchIndex);
-            // state.callbackOnSelect(item);
+            // alert('ADD ITEM: ' + item.searchIndex);
+            state.callbackOnSelect(item);
             return state;
     });
 

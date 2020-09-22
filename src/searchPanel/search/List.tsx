@@ -51,13 +51,13 @@ function List({ input }: { input: string }) {
       return;
     }
     if (input === filter) return;
-    const data = itemsData.filter(item => item.name.toUpperCase().includes(input.toUpperCase()));
+    const data = itemsData.filter(item => item.searchIndex.toUpperCase().includes(input.toUpperCase()));
     setState(() => ({ filter: input, data }));
   }, [input]);
 
   if (!data) return null;
   const onClickItemList = (item:IItem) => {
-    if (item.type==='ваговий') {
+    if (item.type==='weighed') {
       addItem({item:item})
     } else {
       setType('qtyGoods')();
@@ -70,8 +70,8 @@ function List({ input }: { input: string }) {
       data-item-index={i}
       onClick={() => onClickItemList(item) }
     > {/****** плохАААААААААА!!! *****/}
-      <span>{item.code}</span>
-      <span>{item.name}</span>
+      <span>{item.plu}</span>
+      <span>{item.searchIndex}</span>
     </li>
   );
   return (
