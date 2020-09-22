@@ -10,7 +10,7 @@ type Props = {
 } & WithStyles;
 
 function List({ classes, filter, onSelect }: Props) {
-    console.log(filter);
+
     const { itemsArray, onItemSelect } = useList(filter, onSelect);
 
     if (!itemsArray) return null;

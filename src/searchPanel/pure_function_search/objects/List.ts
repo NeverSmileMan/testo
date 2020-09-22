@@ -1,6 +1,5 @@
-// import { IItem } from './Item';
-import { IItem } from './items';
-import itemsData from './items';
+import { IItem } from '../../data/Item';
+import itemsDataNew from '../../data/items';
 
 export interface IList {
     onChange: (callback: (getState: () => IItem[] | null) => void) => void;
@@ -14,7 +13,7 @@ class List implements IList {
     private _itemsData: IItem[];
     
     constructor() {
-        this._itemsData = itemsData;
+        this._itemsData = itemsDataNew as unknown as IItem[];
         this.getItems = this.getItems.bind(this);
         this.setFilter = this.setFilter.bind(this);
     }
@@ -39,7 +38,7 @@ class List implements IList {
 
     private _search(filter: string) {
         this._items = this._itemsData.filter(
-            item => item.name.toUpperCase().includes(filter.toUpperCase())
+            item => item.searchIndex.toUpperCase().includes(filter.toUpperCase())
         );
     }
 

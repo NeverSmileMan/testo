@@ -1,5 +1,4 @@
-// import { IItem } from './Item';
-import { IItem } from './items';
+import { IItem } from '../../data/Item';
 import IObject from './data/objects';
 import { IMessage, MessageCode } from './data/Message';
 

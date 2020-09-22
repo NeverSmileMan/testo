@@ -1,5 +1,5 @@
 import { Dispatch } from 'react';
-import { IItem } from './items';
+import { IItem } from '../../data/Item';
 
 export interface IStateInput {
     value: string;
@@ -79,7 +79,9 @@ export const getMethodsInput = (
     }));
 
     const _onSelect = (item: IItem) => setState(state => {
-            state.callbackOnSelect(item);
+            console.log('ADD ITEM: ', item);
+            alert('ADD ITEM: ' + item.searchIndex);
+            // state.callbackOnSelect(item);
             return state;
     });
 
