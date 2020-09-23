@@ -1,5 +1,5 @@
 import React, { createContext, FC, useState, useMemo } from 'react';
-import ModalWindow from './modal.wind'
+import ModalWindow from './modal.window/modal.window'
 
 interface ContextProp {
   modalContent: JSX.Element | null,

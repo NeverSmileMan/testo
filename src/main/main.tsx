@@ -2,11 +2,11 @@ import React, { ReactElement, createContext, useCallback, useState } from 'react
 import Tabs from '../tabs/Tabs';
 import Hint from '../tabs/hint/Hint';
 import HomeButton from '../tabs/homeButton/HomeButton';
-import GroupBtn from '../functional-buttons/groupBtn';
+import GroupBtn from '../components/functional-buttons/group.btn';
 import AddedItemsTable from '../components/added.items.table/items.table/items.table';
 import Search from '../searchPanel/pure_function_search/search/Search';
 import OrderInfo from '../searchPanel/pure_function_search/orderInfo/OrderInfo';
-import { ModalWindowProvider } from '../modal.wind/modal.context'
+import { ModalWindowProvider } from '../components/modal.wind/modal.context'
 import { useTabs } from '../tabs/use.Tab.hook';
 import { IItem } from '../searchPanel/search/itemsData';
 import { useStyles } from './main.styles'
