@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import { makeStyles, ThemeProvider, createMuiTheme, Theme } from '@material-ui/core/styles';
 import { ActiveInputService } from './services/ActiveInputService';
-import KeyboardMain from './keyboard/keyboard.main/keyboard.main';
-import { keyboardSettings } from './keyboard/keyboard.main/keyboard.settings';
+import KeyboardMain from './components/keyboard/keyboard.main/keyboard.main';
+import { keyboardSettings } from './components/keyboard/keyboard.main/keyboard.settings';
 import Main from './main/main';
 import HintsProvider from './tabs/hint/hint.provider';
 
