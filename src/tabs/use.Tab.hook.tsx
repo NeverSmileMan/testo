@@ -52,29 +52,34 @@ export function useTabs(): [
 	React.Dispatch<React.SetStateAction<number>>,
 ] {
 
-	const _apiBase = `http://10.13.16.80:4445`;
+	function requestTab( url: string, method: string, body?: any ) {
+		return fetch( `http://10.13.16.80:4445/${ url }`, {
+			method: method,
+			body: body,
+			headers: { 'Content-type': 'application/json' }
+		} )
+		.then( ( res ) => res.json() )
+	}
 
 	const [ tabs, setTabs ] = useState<Array<TabId>>( [] )
 	const [ activeTab, setActiveTab ] = useState<number>( () => {
-		if ( !tabs[0].id ) return 0;
+		if ( !tabs.length ) return 0;
 		return tabs[0].id
 	} )
 
 	useEffect( () => {
-		fetch( `${ _apiBase }/tab/list` )
-		.then( ( res ) => res.json() )
+		requestTab('tab/list','GET')
 		.then( ( value ) => {
 			setTabs( value )
-			setActiveTab( tabs[tabs.length - 1].id )
+			setActiveTab( () => {
+				if ( !value.length ) return 0;
+				return value[value.length - 1].id
+			} )
 		} )
 	}, [] )
 
-
 	const createTab = useCallback( () => {
-		fetch( `${ _apiBase }/create-tab`, {
-			method: 'POST'
-		} )
-		.then( ( res ) => res.json() )
+		requestTab( 'create-tab', 'POST' )
 		.then( ( tabId: any ) => setTabs( prevState => {
 			if ( !tabId.id ) return prevState
 			const newState = [ ...prevState, tabId.id ]
@@ -84,12 +89,8 @@ export function useTabs(): [
 	}, [ activeTab, tabs ] )
 
 	const deleteTab = useCallback( () => {
-		fetch( `${ _apiBase }/delete-tab`, {
-			method: 'DELETE',
-			body: JSON.stringify( { "id": `${ activeTab }` } ),
-			headers: { 'Content-type': 'application/json' }
-		} )
-		.then( ( res ) => res.json() )
+		const body = JSON.stringify( { "id": `${ activeTab }`})
+		requestTab('delete-tab', 'DELETE', body)
 		.then( ( res: any ) => setTabs( ( prevState ) => {
 			console.log( 'deleteTab', res )
 			if ( !res.affected ) {
@@ -97,16 +98,12 @@ export function useTabs(): [
 			}
 			const newState = prevState.filter( ( num ) => num.id !== activeTab )
 			setActiveTab( () => {
-				if ( !newState[0] ) return 0;
+				if ( !newState.length ) return 0;
 				return newState[0].id
 			} )
 			return newState
 		} ) )
 	}, [ activeTab, tabs ] )
-
-	useEffect( () => {
-		console.log( 'tabs', tabs )
-	}, [ tabs, activeTab ] )
 
 	return [
 		tabs,
