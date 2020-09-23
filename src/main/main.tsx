@@ -58,11 +58,9 @@ export default function Main() {
 		confirmClose,
 		addItem,
 		print,
-		// changeHint,
 		submitValueCalc,
 		setSelectedItem,
 		selectedItem,
-		// deleteTab, //---------
 	};
 
 	return (
@@ -80,7 +78,7 @@ export default function Main() {
 				<div className={ body }>
 					<div className={ searchPanel }>
 						<MainContext.Provider value={ context }>
-							<Search/>{/* addItem, setType, setSelectedItem  */ }
+							<Search/>{/* addItem,  setSelectedItem  */ }
 						</MainContext.Provider>
 						<OrderInfo value={ tabItems[activeTab].items } activeItem={ activeItem } onClick={ deleteItem }/>
 					</div>
@@ -88,7 +86,7 @@ export default function Main() {
 				</div>
 				<MainContext.Provider value={ context }>
 					<div className={ sideButtons }>
-						<GroupBtn/>{/**  confirmClose print modalType setType, selectedItem, addItem  changeHint, submitValueCalc  */ }
+						<GroupBtn/>{/*  confirmClose print  selectedItem, addItem  submitValueCalc  */ }
 					</div>
 				</MainContext.Provider>
 			</div>
