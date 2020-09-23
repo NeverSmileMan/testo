@@ -155,9 +155,7 @@ export default function Main() {
 				<MainContext.Provider value={context}>
 					<div className={sideButtons}>
 						<GroupBtn />{/**  confirmClose print modalType setType, selectedItem, addItem  changeHint, submitValueCalc  */}
-						<button onClick={()=>changeHint(Hints.MaxWeight)}>qweqw</button>
-						<button onClick={()=>changeHint(Hints.PickItemsQty)}>QQQQQQQQ</button>
-					</div>
+						</div>
 					{modalType && <ModalWindow />}
 				</MainContext.Provider>
 			</div>
