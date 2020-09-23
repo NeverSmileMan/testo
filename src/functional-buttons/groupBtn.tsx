@@ -1,11 +1,11 @@
 import React, { useContext, useMemo } from 'react';
-import { ModalContext } from '../modal.context';
+import { ModalContext } from '../modal.wind/modal.context';
 import Button from './button/button';
 import Speed from '@material-ui/icons/Speed';
 import Print from '@material-ui/icons/Print';
-import ModalTara from './modal.wind/modal.tara';
-import ModalClose from './modal.wind/modal.close';
-import ModalPrint from './modal.wind/modal.print';
+import ModalTara from '../modal.wind/modal.tara';
+import ModalClose from '../modal.wind/modal.close';
+import ModalPrint from '../modal.wind/modal.print';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import { makeStyles } from '@material-ui/styles';
 import { MainContext } from '../main/main';
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 const GroupBtn = () => {
   const cls = useStyles();
   const { setModalContent } = useContext(ModalContext);
-  const { submitValueCalc, confirmClose, print } = useContext(MainContext);
+  const { submitValueCalc, deleteTab, print } = useContext(MainContext);
 
   const buttons = useMemo(()=>[
     {
@@ -40,9 +40,9 @@ const GroupBtn = () => {
       type: 'close',
       text: 'закрити',
       renderIcon: () => (<CheckCircle />),
-      modalContent: <ModalClose confirmClose={confirmClose} modalClose={() => setModalContent(null)}/>,
+      modalContent: <ModalClose deleteTab={deleteTab} modalClose={() => setModalContent(null)}/>,
     }
-  ],[submitValueCalc, confirmClose, setModalContent, print])
+  ],[submitValueCalc, deleteTab, setModalContent, print])
 
   return (
     <div className={cls.btns}>

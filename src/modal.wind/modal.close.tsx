@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
@@ -39,7 +39,7 @@ interface CloseProp {
   confirm?: string;
   reject?: string;
   modalClose: () => any;
-  confirmClose: () => any;
+  deleteTab: () => void;
   submitValueCalc?: (num: number) => void;
 }
 
@@ -51,20 +51,20 @@ const ModalClose = ({
   title = titleModal,
   confirm = modalConfirm,
   reject = modalReject,
-  confirmClose,
+  deleteTab,
   modalClose }: CloseProp) => {
 
   const clss = useStyles();
-  const close = () => {
-    console.log(typeof confirmClose)
-    confirmClose();
+  const confirmClose = useCallback(() => {
+    deleteTab();
     modalClose();
-  }
+  },[deleteTab,modalClose])
+  
   return (
     <div className={clss.modal}>
       <div className={clss.title}>{title}</div>
       <div className={clss.btns}>
-        <div onClick={close} className={clss.btn}>{confirm}</div>
+        <div onClick={confirmClose} className={clss.btn}>{confirm}</div>
         <div onClick={modalClose} className={clss.btn}>{reject}</div>
       </div>
     </div>

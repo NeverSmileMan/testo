@@ -51,7 +51,6 @@ export interface ArgAddItemFunc {
 
 export function useTabs(
 	scaleService: any,
-	calcValue: number,
 ): [
 	TabItems[],
 	number,

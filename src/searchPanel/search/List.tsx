@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import itemsData, { IItem } from './itemsData';
 import { MainContext } from '../../main/main';
-import {ModalContext} from '../../modal.context';
-import ModalQtyGoods from '../../functional-buttons/modal.wind/modal.qty.goods'
+import {ModalContext} from '../../modal.wind/modal.context';
+import ModalQtyGoods from '../../modal.wind/modal.qty.goods'
 
 const useStyles = makeStyles((theme: Theme) => ({
   'list': {
