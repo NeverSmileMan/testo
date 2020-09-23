@@ -3,18 +3,17 @@ import { TabItems } from "./use.Tab.hook";
 import { styles } from "./Tabs.styles";
 
 interface TabProps {
-	tab: TabItems;
+	tabId: number;
 	setActive: (val: number) => void;
 	active: boolean
-	index: number
 }
 
-const Tab: FC<TabProps> = ({tab, setActive, active, index}) => {
+const Tab: FC<TabProps> = ({tabId, setActive, active}) => {
 	const {tab_style, tab_active} = styles()
-	return <div id={index.toString()}
-	            onClick={() => setActive(index)}
+	return <div id={tabId.toString()}
+	            onClick={() => setActive(tabId)}
 	            className={`${tab_style} ${active ? tab_active : ''}`}>
-		{tab.tabNumber}
+		{tabId}
 	</div>
 }
 export default Tab;

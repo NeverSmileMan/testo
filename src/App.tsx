@@ -6,7 +6,6 @@ import { keyboardSettings } from './keyboard/keyboard.main/keyboard.settings';
 import Main from './main';
 
 //-----
-import Tablo from './plugs/Tablo';
 //-----
 
 const useStyles = makeStyles({
@@ -133,7 +132,7 @@ function App() {
             <button style={{ display: 'inlie-block' }} onClick={() => setTheme(themes.silpo)}>SILPO</button>
             <button style={{ display: 'inlie-block' }} onClick={() => setTheme(themes.fora)}>FORA</button>
           </div>
-          <Tablo />
+          {/*<Tablo />*/}
         </div>
         <div className={classes.mainWrap}>
           <div className={`${classes.main}`}>

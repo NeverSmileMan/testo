@@ -1,11 +1,11 @@
 import React, { FC, useEffect } from "react";
 import Tab from "./Tab";
-import { TabItems } from './use.Tab.hook';
+import { TabId, TabItems } from './use.Tab.hook';
 import { MAX_NUMBER_OF_TABS } from "../custom/variables";
 import { styles } from "./Tabs.styles";
 
 interface TabsProps {
-	tabs: TabItems[]
+	tabs: Array<TabId>
 	activeTab: number,
 	createTab: ( e: React.MouseEvent<HTMLDivElement> ) => void,
 	setActiveTab: ( val: number ) => void,
@@ -13,14 +13,12 @@ interface TabsProps {
 
 const Tabs: FC<TabsProps> = ( { tabs, createTab, activeTab, setActiveTab } ) => {
 	const { header_tabs, tab_style } = styles()
-
 	return (
 		<div className={ header_tabs }>
-			{ tabs.map( ( tab: TabItems, index: number ) => <Tab setActive={ setActiveTab }
-			                                                     tab={ tab }
-			                                                     index={ index }
-			                                                     active={ activeTab === index }
-			                                                     key={ index }/>
+			{ tabs.map( ( tab: TabId ) => <Tab setActive={ setActiveTab }
+			                                   tabId={ tab.id }
+			                                   active={ activeTab === tab.id }
+			                                   key={ tab.id }/>
 			) }
 			{ tabs.length < MAX_NUMBER_OF_TABS ?
 				<div className={ tab_style } onClick={ createTab }>+</div>
