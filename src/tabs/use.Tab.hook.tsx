@@ -54,8 +54,11 @@ export function useTabs(): [
 
 	const _apiBase = `http://10.13.16.80:4445`;
 
-	const [ tabs, setTabs ] = useState<Array<TabId>>( [ { id: 1 } ] )
-	const [ activeTab, setActiveTab ] = useState<number>( tabs[0].id )
+	const [ tabs, setTabs ] = useState<Array<TabId>>( [] )
+	const [ activeTab, setActiveTab ] = useState<number>( () => {
+		if ( !tabs[0].id ) return 0;
+		return tabs[0].id
+	} )
 
 	useEffect( () => {
 		fetch( `${ _apiBase }/tab/list` )
@@ -81,8 +84,6 @@ export function useTabs(): [
 	}, [ activeTab, tabs ] )
 
 	const deleteTab = useCallback( () => {
-		// if ( tabs.length <= 1 && tabs[tabs.length - 1].id === 1 ) return
-		if ( tabs.length <= 1 && tabs[tabs.length - 1].id <= 1 ) return
 		fetch( `${ _apiBase }/delete-tab`, {
 			method: 'DELETE',
 			body: JSON.stringify( { "id": `${ activeTab }` } ),
@@ -95,7 +96,10 @@ export function useTabs(): [
 				return prevState
 			}
 			const newState = prevState.filter( ( num ) => num.id !== activeTab )
-			setActiveTab( newState[0].id )
+			setActiveTab( () => {
+				if ( !newState[0] ) return 0;
+				return newState[0].id
+			} )
 			return newState
 		} ) )
 	}, [ activeTab, tabs ] )
