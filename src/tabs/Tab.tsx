@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { TabItems } from "./use.Tab.hook";
 import { styles } from "./Tabs.styles";
 
 interface TabProps {

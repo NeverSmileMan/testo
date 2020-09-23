@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import Tab from "./Tab";
-import { TabId, TabItems } from './use.Tab.hook';
+import { TabId, TabItems } from './useTabs';
 import { MAX_NUMBER_OF_TABS } from "../custom/variables";
 import { styles } from "./Tabs.styles";
 

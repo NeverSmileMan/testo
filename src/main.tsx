@@ -3,7 +3,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Tabs from './tabs/Tabs';
 import Hint from './tabs/hint/Hint';
 import HomeButton from './tabs/homeButton/HomeButton';
-import { useTabs } from './tabs/use.Tab.hook';
+import { useTabs } from './tabs/useTabs';
 import { useHints } from './custom/hooks';
 
 const useStyles = makeStyles( ( theme: Theme ) =>
@@ -50,7 +50,6 @@ const useStyles = makeStyles( ( theme: Theme ) =>
 		},
 	} ),
 );
-
 
 export default function Main() {
 	const { tab, sideButtons, info, bodyWrap, body, header, searchPanel } = useStyles();

@@ -52,7 +52,13 @@ export function useTabs(): [
 	React.Dispatch<React.SetStateAction<number>>,
 ] {
 
-	function requestTab( url: string, method: string, body?: any ) {
+	const [ tabs, setTabs ] = useState<TabId[]>( [] )
+	const [ activeTab, setActiveTab ] = useState<number>( () => {
+		if ( !tabs.length ) return 0;
+		return tabs[0].id
+	} )
+
+	const requestTab = ( url: string, method: string, body?: string ) => {
 		return fetch( `http://10.13.16.80:4445/${ url }`, {
 			method: method,
 			body: body,
@@ -61,19 +67,13 @@ export function useTabs(): [
 		.then( ( res ) => res.json() )
 	}
 
-	const [ tabs, setTabs ] = useState<Array<TabId>>( [] )
-	const [ activeTab, setActiveTab ] = useState<number>( () => {
-		if ( !tabs.length ) return 0;
-		return tabs[0].id
-	} )
-
 	useEffect( () => {
-		requestTab('tab/list','GET')
-		.then( ( value ) => {
-			setTabs( value )
+		requestTab( 'tab/list', 'GET' )
+		.then( ( arrTabs ) => {
+			setTabs( arrTabs )
 			setActiveTab( () => {
-				if ( !value.length ) return 0;
-				return value[value.length - 1].id
+				if ( !arrTabs.length ) return 0;
+				return arrTabs[arrTabs.length - 1].id
 			} )
 		} )
 	}, [] )
@@ -89,13 +89,10 @@ export function useTabs(): [
 	}, [ activeTab, tabs ] )
 
 	const deleteTab = useCallback( () => {
-		const body = JSON.stringify( { "id": `${ activeTab }`})
-		requestTab('delete-tab', 'DELETE', body)
+		const body = JSON.stringify( { "id": `${ activeTab }` } )
+		requestTab( 'delete-tab', 'DELETE', body )
 		.then( ( res: any ) => setTabs( ( prevState ) => {
-			console.log( 'deleteTab', res )
-			if ( !res.affected ) {
-				return prevState
-			}
+			if ( !res.affected ) return prevState
 			const newState = prevState.filter( ( num ) => num.id !== activeTab )
 			setActiveTab( () => {
 				if ( !newState.length ) return 0;
