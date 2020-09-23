@@ -24,6 +24,7 @@ const getMethods = (
     const staticSearch = (filter: string, state: IState) => {
         return state.itemsData.filter(
             item => item.searchIndex.toUpperCase().includes(filter)
+            || String(item.plu).includes(filter)
         );
     }
 
@@ -37,9 +38,17 @@ const getMethods = (
     };
 
     const setFilter = (filter: string) => {
-        
+
         if (!filter) return setState(state => ({ ...state, items: null, filter: '' }));
         
+        setState(state => ({
+            ...state,
+            filter,
+            items: staticSearch(filter, state),
+        }));
+
+        return;
+
         let currentState: IState = {} as IState;
         setState(state => { currentState = state; return { ...state, filter } });
         
