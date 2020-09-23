@@ -8,6 +8,8 @@ import Main from './main';
 //-----
 import Tablo from './plugs/Tablo';
 import {PopUpProvider} from './modal/provider';
+import HintsProvider from './tabs/hint/hints.provider';
+
 //-----
 
 const useStyles = makeStyles({
@@ -127,6 +129,7 @@ function App() {
 
   return (
     <PopUpProvider>
+      <HintsProvider>
     <div className={classes.appWrap} onKeyDown={onKey} tabIndex={-1}>
       <ThemeProvider theme={theme}>
         <div className={classes.scale}>
@@ -148,6 +151,7 @@ function App() {
         </div>
       </ThemeProvider>
     </div>
+    </HintsProvider>
     </PopUpProvider>
   );
 }

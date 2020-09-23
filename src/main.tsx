@@ -10,8 +10,8 @@ import OrderInfo from './searchPanel/pure_function_search/orderInfo/OrderInfo';
 import ModalWindow from './functional-buttons/modal.wind/modal.wind';
 import { useTabs } from './tabs/use.Tab.hook';
 import { IItem } from './searchPanel/search/itemsData';
-import { Hints } from './custom/variables';
-import { useHints } from './custom/hooks';
+import { Hints } from './tabs/hint/hint.settintgs';
+import { useHints } from './tabs/hint/hints.provider';
 //---------plugs---------------
 import { ScalePlug } from './plugs/scale';
 //-----------------------------
@@ -78,7 +78,7 @@ export const MainContext = createContext({
 
 export default function Main() {
 	const { tab, sideButtons, info, bodyWrap, body, header, searchPanel } = useStyles();
-	const [hint, error, changeHint] = useHints();
+	const { changeHint, Hints} = useHints();
 
 	const [modalType, setModalType] = useState(null as string | null);
 	const [selectedItem, setSelectedItem] = useState({} as IItem);
@@ -97,7 +97,7 @@ export default function Main() {
 		deleteTab,
 		setTara,
 		print,
-	] = useTabs(changeHint, ScalePlug, calcValue);
+	] = useTabs(ScalePlug, calcValue);
 
 	const submitValueCalc = useCallback(
 		(val: number) => {
@@ -137,7 +137,8 @@ export default function Main() {
 					</MainContext.Provider>
 				</div>
 				<div className={info}>
-					<Hint hint={hint} error={error} />
+					<Hint  />
+					{/* <Hint hint={hint} error={error} /> */}
 					<HomeButton />
 				</div>
 			</div>
@@ -154,6 +155,8 @@ export default function Main() {
 				<MainContext.Provider value={context}>
 					<div className={sideButtons}>
 						<GroupBtn />{/**  confirmClose print modalType setType, selectedItem, addItem  changeHint, submitValueCalc  */}
+						<button onClick={()=>changeHint(Hints.MaxWeight)}>qweqw</button>
+						<button onClick={()=>changeHint(Hints.PickItemsQty)}>QQQQQQQQ</button>
 					</div>
 					{modalType && <ModalWindow />}
 				</MainContext.Provider>

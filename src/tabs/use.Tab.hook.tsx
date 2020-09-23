@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {ActiveInputService} from '../services/ActiveInputService';
-import {Hints, MAX_NUMBER_OF_TABS} from '../custom/variables';
-
+import { MAX_NUMBER_OF_TABS} from '../custom/variables';
+import {useHints} from './hint/hints.provider'
 
 export interface TabItems {
 	tabNumber: number;
@@ -49,7 +49,6 @@ export interface ArgAddItemFunc {
 }
 
 export function useTabs(
-	setHint: (str: Hints, likeError?: boolean) => void,
 	scaleService: any,
 	calcValue: number,
 ): [
@@ -66,6 +65,7 @@ export function useTabs(
 	() => void, // print
 	() => number // getTara
 ] {
+	const { changeHint, Hints } = useHints();
 	const [tabItems, setTabItems] = useState<TabItems[]>([{tabNumber: 1, tara: 0, items: []}] as TabItems[]);
 	const [activeTab, setActiveTab] = useState<number>(0);
 	const [activeItem, setActiveItem] = useState<AddedItem | null>(null);
@@ -102,7 +102,7 @@ export function useTabs(
 								addedItem.amount = calcValue;
 								addedItem.cost = addedItem.amount * item.price;
 							} else {
-								setHint(Hints.PickItemsQty);
+								changeHint(Hints.PickItemsQty);
 								return false;
 							}
 							break;
@@ -111,11 +111,11 @@ export function useTabs(
 							addedItem.cost = scaleService.getItemCost();
 							break;
 						default:
-							setHint(Hints.IncorrectItemType, true);
+							changeHint(Hints.IncorrectItemType, true);
 							return false;
 					}
 				} else {
-					setHint(Hints.MinWeight, true);
+					changeHint(Hints.MinWeight, true);
 					return false;
 				}
 				tabItems[activeTab].items.push(addedItem);
@@ -142,7 +142,7 @@ export function useTabs(
 		const tara = getTara()
 		scaleService.setTara(tara)
 		if (tara < scaleService.getItemWeight) {
-			setHint(Hints.MinWeight, true)
+			changeHint(Hints.MinWeight, true)
 		}
 	}, [activeTab])
 
