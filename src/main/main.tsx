@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, { ReactElement, createContext, useCallback, useState } from 'react';
 import Tabs from '../tabs/Tabs';
 import Hint from '../tabs/hint/Hint';
 import HomeButton from '../tabs/homeButton/HomeButton';
@@ -23,7 +23,7 @@ export const MainContext = createContext({
 	selectedItem: {} as IItem,
 });
 
-export default function Main() {
+export default function Main() : ReactElement {
 	const { tab, sideButtons, info, bodyWrap, body, header, searchPanel } = useStyles();
 	const [ selectedItem, setSelectedItem ] = useState( {} as IItem );
 	const [ calcValue, setCalcValue ] = useState( 0 );
