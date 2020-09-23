@@ -66,7 +66,6 @@ export default function Main() {
 	};
 
 	return (
-		<>
 		<ModalWindowProvider>
 			<div className={ header }>
 				<div className={ tab }>
@@ -94,6 +93,5 @@ export default function Main() {
 				</MainContext.Provider>
 			</div>
 			</ModalWindowProvider>
-		</>
 	);
 }
