@@ -1,20 +1,9 @@
 import React, { useCallback } from 'react';
-import KeyboardBtn from './keyboard.btn';
-import { makeStyles, useTheme } from '@material-ui/styles';
+import KeyboardBtn from '../keyboard.btn/keyboard.btn';
+import { useTheme } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import {useStyle} from './fixed.btn.style';
 
-const useStyle = makeStyles({
-  btnContainer: {
-    display: 'grid',
-    backgroundColor: '#f5f5f5',
-    borderRadius: '10px',
-    gridTemplateColumns: 'repeat(3, 95px)',
-    gridTemplateRows: 'repeat(3, 95px)',
-    gridColumnGap: '15px',
-    gridRowGap: '15px',
-    padding: '15px',
-  }
-})
 interface Prop {
   strNumber: number;
   step: number;

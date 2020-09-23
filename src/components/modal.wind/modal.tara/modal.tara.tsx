@@ -1,17 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/styles';
-import FixedBtn from './calc/fixed.btn';
-import InputWeight from './tara/input.weight';
+import FixedBtn from '../calc/fixed.btn/fixed.btn';
+import InputWeight from './input.tara/input.weight';
+import { useStyles } from './modal.tara.style';
 
-const useStyles = makeStyles({
-    container: {
-        display: 'flex',
-        justifyContent: 'center',
-        transform: 'translateY(50%)',
-        color: '#fff',
-        fontSize: '40px',
-    }
-})
 interface Prop {
     modalClose: () => any;
     submitValueCalc: (num: number) => void;
@@ -26,8 +17,8 @@ const ModalTara = ({ modalClose, submitValueCalc }: Prop) => {
 
     return (
         <div className={cls.container}>
-            <InputWeight 
-                submitValueCalc={submitValueCalc} 
+            <InputWeight
+                submitValueCalc={submitValueCalc}
                 modalClose={modalClose} />
             <FixedBtn
                 submitValueCalc={submitValueCalc}

@@ -1,41 +1,26 @@
 import React, { useState, useContext, useCallback } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import { MainContext } from '../../main/main';
-import NumberKeyboard from '../calc/numder.keyboard';
-import ControlKeyboard from '../calc/control.keyboard';
-import HeadInput from '../calc/head.input';
+import { MainContext } from '../../../../main/main';
+import NumberKeyboard from '../../calc/number.keyboard/numder.keyboard';
+import ControlKeyboard from '../../calc/control.keyboard/control.keyboard';
+import HeadInput from '../../calc/head.input/head.input';
+import {useStyle} from './input.qty.style';
 
-
-const useStyle = makeStyles({
-  inputContainer: {
-    width: '310px',
-    marginRight: '12px',
-    backgroundColor: '#f5f5f5',
-    borderRadius: '10px',
-  },
-  keyboardContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  }
-})
-
-const NameCalc = 'Кількість'
+const NameCalc = 'Кількість';
 
 interface Prop {
   modalClose: ()=>any;
 }
 const InputQty = ({modalClose}:Prop) => {
   const { inputContainer, keyboardContainer } = useStyle();
-  const [qtyGoods, setqtyGoods] = useState(0)
+  const [qtyGoods, setqtyGoods] = useState(0);
   const { selectedItem, addItem } = useContext(MainContext);
   const getQty = useCallback((num: number): any => () => {
     setqtyGoods(qtyGoods * 10 + num)
-  }, [setqtyGoods, qtyGoods])
+  }, [setqtyGoods, qtyGoods]);
 
   const deleteQty = useCallback(() => {
-    setqtyGoods(Math.trunc(qtyGoods / 10))
-  }, [setqtyGoods, qtyGoods])
+    setqtyGoods(Math.trunc(qtyGoods / 10));
+  }, [setqtyGoods, qtyGoods]);
 
   const controlOnclick = {
     delete: deleteQty,

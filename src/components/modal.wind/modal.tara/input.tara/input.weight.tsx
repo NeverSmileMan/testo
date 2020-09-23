@@ -1,24 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { makeStyles } from '@material-ui/styles';
-import NumberKeyboard from '../calc/numder.keyboard';
-import ControlKeyboard from '../calc/control.keyboard';
-import HeadInput from '../calc/head.input';
-import {useHints} from '../../tabs/hint/hint.provider'
+import NumberKeyboard from '../../calc/number.keyboard/numder.keyboard';
+import ControlKeyboard from '../../calc/control.keyboard/control.keyboard';
+import HeadInput from '../../calc/head.input/head.input';
+import {useHints} from '../../../../tabs/hint/hint.provider';
+import {useStyle} from './input.weight.style';
 
-
-const useStyle = makeStyles({
-  inputContainer: {
-    width: '310px',
-    marginRight: '12px',
-    backgroundColor: '#f5f5f5',
-    borderRadius: '10px',
-  },
-  keyboardContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  }
-})
 interface Prop {
   submitValueCalc: (num:number) => void;
   modalClose: ()=>any;

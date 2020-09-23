@@ -1,18 +1,8 @@
 import React, { useCallback } from 'react';
-import KeyboardBtn from './keyboard.btn';
+import KeyboardBtn from '../keyboard.btn/keyboard.btn';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
-
-const useStyle = makeStyles({
-  controlContainer: {
-    display: 'grid',
-    gridTemplateColumns: '50px',
-    gridTemplateRows: 'repeat(2, 105px)',
-    gridRowGap: '10px',
-    padding: '5px',
-    fontSize: '50px',
-  }
-})
+import { useStyle } from './control.keyboard.style';
 
 interface Prop {
   onClick: {
@@ -30,7 +20,7 @@ const ControlKeyboard = ({ onClick, inputValue }: Prop) => {
     (index === 1 && inputValue <= 0)
       ? 'backLigth'
       : '',
-  [inputValue])
+    [inputValue])
 
   return (
     <div className={controlContainer}>
