@@ -1,17 +1,17 @@
-import {
+import React, {
     useState, useRef, useEffect, useContext,
     SetStateAction, Dispatch, RefObject,
 } from 'react';
 import { ActiveInputService } from '../../../services/ActiveInputService';
 import { InputList, IInputList, IStateInput } from '../objects/InputListNumber';
-import { Props } from '../components//Search';
-
+import { Props } from '../components/Search';
+import {ModalContext} from '../../../modal.context';
 import { MainContext } from '../../../main/main';
 import { IItem, ItemType } from '../../data/Item';
+import ModalQtyGoods from '../../../functional-buttons/modal.wind/modal.qty.goods'
 
 interface IcallbacksNew {
     addItem: (item: any) => boolean;
-    setType: (val: string | null) => any;
     setSelectedItem: Dispatch<SetStateAction<any>>; //IItem
 }
 
@@ -37,14 +37,14 @@ const changeState = (
     return { onListSelect, attachInput, refreshInput };
 }
 
-const changeCallbacksNew = (input: IInputList, callbacks: IcallbacksNew) => {
+const changeCallbacksNew = (input: IInputList, callbacks: IcallbacksNew, setModalType:Function) => {
     const onSelectNew = (item: IItem) => {
         if (item.type === ItemType.WEIGHT) {
             callbacks.addItem({ item });
             return;
-        }
-        callbacks.setType('qtyGoods')();
-        callbacks.setSelectedItem(item);
+        } else {
+            setModalType()
+        callbacks.setSelectedItem(item);}
     }
     input.onSelect(onSelectNew);
 }
@@ -54,15 +54,20 @@ const useSearch = (callbacks: Props['callbacks']) => {
     const [{ isFocus, value, valueHTML }, setState] = useState(input.getStateObject);
     const ref = useRef(null);
     const callbacksNew = useContext(MainContext);
+    const {setModalContent} = useContext(ModalContext);
+
     const [{
         attachInput, refreshInput, onListSelect,
     }] = useState(() => changeState(input, setState, ref, callbacksNew));
+    const ModalType = () => setModalContent (<ModalQtyGoods modalClose={()=>setModalContent(null)}/>)
+    
     useEffect(() => {
-        changeCallbacksNew(input, callbacksNew);
+        changeCallbacksNew(input, callbacksNew, ModalType);
         input.setValue('');
     }, [input, callbacksNew]);
     useEffect(() => refreshInput(valueHTML), [refreshInput, valueHTML]);
     useEffect(attachInput, [attachInput]);
+
     return { isFocus, value, ref, onListSelect };
 };
 

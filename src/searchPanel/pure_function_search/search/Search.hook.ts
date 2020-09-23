@@ -9,7 +9,7 @@ import { getStateInput, IStateInput, getMethodsInput } from './Input.object';
 
 interface ICallbacksNew {
     addItem: (item: any) => boolean;
-    setType: (val: string | null) => any;
+    // setType: (val: string | null) => any;
     setSelectedItem: Dispatch<SetStateAction<any>>; //IItem
 }
 
@@ -43,7 +43,7 @@ const getNewOnSelect = (callbacksNew: ICallbacksNew) => (item: IItem) => {
             callbacksNew.addItem({ item });
             return;
         }
-        callbacksNew.setType('qtyGoods')();
+        // callbacksNew.setType('qtyGoods')();
         callbacksNew.setSelectedItem(item);
     };
 

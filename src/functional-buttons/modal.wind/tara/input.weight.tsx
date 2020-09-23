@@ -1,6 +1,5 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { makeStyles } from '@material-ui/styles';
-import { MainContext } from '../../../main/main';
 import NumberKeyboard from '../calc/numder.keyboard';
 import ControlKeyboard from '../calc/control.keyboard';
 import HeadInput from '../calc/head.input';
@@ -20,11 +19,13 @@ const useStyle = makeStyles({
     justifyContent: 'center',
   }
 })
-
+interface Prop {
+  submitValueCalc: (num:number) => void;
+  modalClose: ()=>any;
+}
 const NameCalc = 'Тара'
-const InputWeight = () => {
+const InputWeight = ({modalClose, submitValueCalc}:Prop) => {
   const { inputContainer, keyboardContainer } = useStyle();
-  const { submitValueCalc } = useContext(MainContext);
   const { changeHint, Hints } = useHints();
   const [inputValue, setWeihghtTara] = useState(0)
 
@@ -42,13 +43,15 @@ const InputWeight = () => {
     submit: useCallback(() => {
       if (inputValue > 0) {
         submitValueCalc(inputValue)
+        modalClose()
       }
-    }, [inputValue, submitValueCalc]),
+    }, [modalClose,inputValue, submitValueCalc]),
   };
 
   return (
     <div className={inputContainer}>
       <HeadInput
+        modalClose={modalClose}
         inputValue={(inputValue / 1000).toFixed(3)}
         inputName={NameCalc} />
       <div className={keyboardContainer}>
