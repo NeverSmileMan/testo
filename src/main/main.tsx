@@ -9,8 +9,6 @@ import OrderInfo from '../searchPanel/pure_function_search/orderInfo/OrderInfo';
 import ModalWindow from '../functional-buttons/modal.wind/modal.wind';
 import { useTabs } from '../tabs/use.Tab.hook';
 import { IItem } from '../searchPanel/search/itemsData';
-import { Hints } from '../custom/variables';
-import { useHints } from '../custom/hooks';
 import { useStyles } from './main.styles'
 //---------plugs---------------
 import { ScalePlug } from '../plugs/scale';
@@ -22,7 +20,7 @@ export const MainContext = createContext( {
 	confirmClose: () => {},
 	addItem: ( item: any ) => true as boolean,
 	print: () => {},
-	changeHint: ( str: Hints, likeError?: boolean ) => {},
+	// changeHint: ( str: Hints, likeError?: boolean ) => {},
 	submitValueCalc: ( num: number ) => {},
 	setSelectedItem: (() => {}) as React.Dispatch<React.SetStateAction<IItem>>,
 	// setCalcValue: (() => {}) as React.Dispatch<React.SetStateAction<number>>,
@@ -32,9 +30,7 @@ export const MainContext = createContext( {
 
 export default function Main() {
 	const { tab, sideButtons, info, bodyWrap, body, header, searchPanel } = useStyles();
-	const [ hint, error, changeHint ] = useHints();
-
-	const [ modalType, setModalType ] = useState( null as string | null );
+		const [ modalType, setModalType ] = useState( null as string | null );
 	const [ selectedItem, setSelectedItem ] = useState( {} as IItem );
 	const setType = ( type: string | null ): any => () => setModalType( type );
 	const [ calcValue, setCalcValue ] = useState( 0 );
@@ -51,7 +47,7 @@ export default function Main() {
 		deleteTab,
 		setTara,
 		print,
-	] = useTabs( changeHint, ScalePlug, calcValue );
+	] = useTabs( ScalePlug, calcValue );
 
 	const submitValueCalc = useCallback(
 		( val: number ) => {
@@ -73,7 +69,7 @@ export default function Main() {
 		confirmClose,
 		addItem,
 		print,
-		changeHint,
+		// changeHint,
 		submitValueCalc,
 		setSelectedItem,
 		selectedItem,
@@ -89,7 +85,7 @@ export default function Main() {
 					<Tabs tabs={ tabItems } activeTab={ activeTab } createTab={ createTab } setActiveTab={ setActiveTab }/>
 				</div>
 				<div className={ info }>
-					<Hint hint={ hint } error={ error }/>
+					<Hint/>
 					<HomeButton/>
 				</div>
 			</div>
@@ -113,8 +109,3 @@ export default function Main() {
 		</>
 	);
 }
-// const context = {
-// 	deleteTab,
-// 	setCalcValue,
-// 	calcValue,
-// };

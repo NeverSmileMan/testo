@@ -4,7 +4,7 @@ import { MainContext } from '../../../main/main';
 import NumberKeyboard from '../calc/numder.keyboard';
 import ControlKeyboard from '../calc/control.keyboard';
 import HeadInput from '../calc/head.input';
-import { Hints } from '../../../custom/variables';
+import {useHints} from '../../../tabs/hint/hint.provider'
 
 
 const useStyle = makeStyles({
@@ -24,7 +24,8 @@ const useStyle = makeStyles({
 const NameCalc = 'Тара'
 const InputWeight = () => {
   const { inputContainer, keyboardContainer } = useStyle();
-  const { changeHint, submitValueCalc} = useContext(MainContext);
+  const { submitValueCalc } = useContext(MainContext);
+  const { changeHint, Hints } = useHints();
   const [inputValue, setWeihghtTara] = useState(0)
 
   const getWeight = useCallback((num: number): any => () => {
