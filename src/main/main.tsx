@@ -6,7 +6,7 @@ import GroupBtn from '../functional-buttons/groupBtn';
 import AddedItemsTable from '../components/added.items.table/items.table/items.table';
 import Search from '../searchPanel/pure_function_search/search/Search';
 import OrderInfo from '../searchPanel/pure_function_search/orderInfo/OrderInfo';
-import { ModalWindowProvider } from '../modal.context'
+import { ModalWindowProvider } from '../modal.wind/modal.context'
 import { useTabs } from '../tabs/use.Tab.hook';
 import { IItem } from '../searchPanel/search/itemsData';
 import { useStyles } from './main.styles'
@@ -15,7 +15,7 @@ import { ScalePlug } from '../plugs/scale';
 //-----------------------------
 
 export const MainContext = createContext({
-	confirmClose: () => { },
+	deleteTab: () => { },
 	addItem: (item: any) => true as boolean,
 	print: () => { },
 	submitValueCalc: (num: number) => { },
@@ -40,7 +40,7 @@ export default function Main() : ReactElement {
 		deleteTab,
 		setTara,
 		print,
-	] = useTabs( ScalePlug, calcValue );
+	] = useTabs( ScalePlug );
 
 	const submitValueCalc = useCallback(
 		( val: number ) => {
@@ -50,12 +50,8 @@ export default function Main() : ReactElement {
 		[calcValue, tabItems, activeTab],
 	);
 
-	const confirmClose = useCallback(() => {
-		deleteTab();
-	}, [deleteTab]);
-
 	const context = {
-		confirmClose,
+		deleteTab,
 		addItem,
 		print,
 		submitValueCalc,

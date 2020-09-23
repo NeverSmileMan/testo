@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/styles';
 import NumberKeyboard from '../calc/numder.keyboard';
 import ControlKeyboard from '../calc/control.keyboard';
 import HeadInput from '../calc/head.input';
-import {useHints} from '../../../tabs/hint/hint.provider'
+import {useHints} from '../../tabs/hint/hint.provider'
 
 
 const useStyle = makeStyles({

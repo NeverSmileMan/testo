@@ -1,5 +1,5 @@
-import React, { createContext, Dispatch, FC, SetStateAction, useState, useMemo, useCallback } from 'react';
-import ModalWindow from './functional-buttons/modal.wind/modal.wind'
+import React, { createContext, FC, useState, useMemo } from 'react';
+import ModalWindow from './modal.wind'
 
 interface ContextProp {
   modalContent: JSX.Element | null,
