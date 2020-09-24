@@ -1,15 +1,16 @@
 import React, { ReactElement, useCallback, ReactNode } from 'react';
 import { Key } from '../keyboard.main/keyboard.interfaces';
 import { useStylesButton } from './button.styles';
+import {Actions} from '../keyboard.main/keyboard.interfaces'
 
 interface Props {
-	callback: Function;
+	callback: Actions;
 	value?: Key;
 	children?: ReactNode;
 	className: string;
 }
 
-export default function Button({ callback, value, children, className }: Props): ReactElement {
+export default function Button({ callback, value = '', children, className }: Props): ReactElement {
 	const classes = useStylesButton();
 
 	const onClick = useCallback(() => {

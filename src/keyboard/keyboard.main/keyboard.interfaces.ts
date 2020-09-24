@@ -7,12 +7,12 @@ export type SpecialValue = {
 };
 
 type Add = (str: string) => void;
-type Delete = (number: number) => void;
+type Delete = (str: string) => void;
 type Clear = () => void;
 type SetActive = (func: React.Dispatch<React.SetStateAction<string>>) => void;
 type UnsetActive = (func: React.Dispatch<React.SetStateAction<string>>) => void;
 
-export type Actions = Add | Delete | Clear | SetActive | UnsetActive;
+export type Actions = Add | Delete | Clear;
 
 export interface Service {
 	add: Add;
@@ -21,6 +21,7 @@ export interface Service {
 	setActive: SetActive;
 	unsetActive: UnsetActive;
 }
+
 
 export type Key = string;
 

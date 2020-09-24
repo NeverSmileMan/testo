@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import Button from '../button/button';
-import { Numeric, Key, Service } from '../keyboard.main/keyboard.interfaces';
+import { Numeric, Key, Service, Actions } from '../keyboard.main/keyboard.interfaces';
 import { useStylesNumeric } from './keyboard.numeric.styles';
 
 interface Props {
@@ -17,7 +17,7 @@ export default function GroupNumericButtons({ options, service }: Props): ReactE
 				<Button
 					key={id}
 					value={item}
-					callback={service[options.action]}
+					callback={service[options.action] as Actions}
 					className={`${(classes as any)[`nkey_${id}`]} ${classes.btnNumeric}`}
 				/>
 			))}

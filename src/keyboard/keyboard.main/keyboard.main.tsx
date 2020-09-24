@@ -4,6 +4,7 @@ import KeyboardNumeric from '../keyboard.numeric/keyboard.numeric';
 import KeyboardSpecial from '../keyboard.special/keyboard.special';
 import { Service, IKeyboard } from './keyboard.interfaces';
 import { useStylesKeyboard } from './keyboard.styles';
+import { LayoutContext } from './context';
 
 export enum Lang {
 	EN = 'en',
@@ -11,11 +12,6 @@ export enum Lang {
 	UA = 'uk',
 }
 
-export const LayoutContext = React.createContext({
-	name: '' as Lang,
-	setName: (val: Lang) => {},
-	names: [] as Lang[],
-});
 
 function getDefaultLayout<T, K extends keyof T>(obj: T) {
 	return Object.keys(obj)[0] as K;
