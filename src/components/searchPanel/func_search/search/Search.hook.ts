@@ -8,7 +8,7 @@ import { IItem, ItemType } from '../../data/Item';
 import { getStateInput, IStateInput, getMethodsInput } from './Input.object';
 
 interface ICallbacksNew {
-    addItem: (item: any) => boolean;
+    addItem: (item: { item: IItem }) => boolean;
     // setType: (val: string | null) => any;
     setSelectedItem: Dispatch<SetStateAction<any>>; //IItem
 }
