@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node src/searchPanel/data/server.js"
+    "server": "node src/components/searchPanel/data/server.js"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -2,6 +2,8 @@ import { IItem } from '../../data/Item';
 import itemsDataNew from '../../data/items.json';
 import {getItemsBySearchIndex} from '../../data/search.request';
 
+const config = { server: false };
+
 export interface IList {
     onChange: (callback: (getState: () => IItem[] | null) => void) => void;
     getItems: () => IItem[] | null;
@@ -24,13 +26,35 @@ class List implements IList {
         this._filter = filter;
         if (!filter) {
             this._items = null;
-            this._onChange()
+            this._onChange();
         } else {
             this._search(filter)
-                .then(() => this._filter === filter && this._onChange());
+                .then((result) =>
+                    this._filter === filter
+                    && (this._items = result)
+                    && this._onChange());
         }
     }
     
+    private _staticSearch = (filter: string) => {
+        return this._itemsData.filter(
+            item => item.searchIndex.toUpperCase().includes(filter)
+                || String(item.plu).includes(filter)
+        );
+    }
+
+    private _search(filter: string) {
+        if (config.server) {
+            return getItemsBySearchIndex(filter)
+                .then(result => {
+                    if (result) return result;
+                    else return this._staticSearch(filter);
+                })
+                .catch(console.log);
+        }
+        return Promise.resolve(this._staticSearch(filter));
+    }
+
     getItems() {
         return this._items;
     }
@@ -41,21 +65,6 @@ class List implements IList {
 
     private _onChange() {
         if (this._callbackOnChange) this._callbackOnChange(this.getItems);  
-    }
-
-    private _search(filter: string) {
-        const staticSearch = (filter: string) => {
-            this._items = this._itemsData.filter(
-                item => item.searchIndex.toUpperCase().includes(filter)
-            );
-        }
-
-        return getItemsBySearchIndex(filter)
-            .then(result => {
-                if (result) this._items = result;
-                else staticSearch(filter);
-            })
-            .catch(console.log);
     }
 
 }

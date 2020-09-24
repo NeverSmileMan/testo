@@ -4,6 +4,8 @@ import itemsDataNew from '../../data/items.json';
 import { Props } from './List';
 import {getItemsBySearchIndex} from '../../data/search.request';
 
+const config = { server: false };
+
 interface IState {
     items: IItem[] | null;
     itemsData: IItem[];
@@ -21,7 +23,7 @@ const getMethods = (
     onSelect: (item: IItem) => void,   
 ) => {
 
-    const staticSearch = (filter: string, state: IState) => {
+    const _staticSearch = (filter: string, state: IState) => {
         return state.itemsData.filter(
             item => item.searchIndex.toUpperCase().includes(filter)
             || String(item.plu).includes(filter)
@@ -29,25 +31,29 @@ const getMethods = (
     }
 
     const search = (filter: string, state: IState) => {
-        return getItemsBySearchIndex(filter)
+        if (config.server) {
+            return getItemsBySearchIndex(filter)
             .then(result => {
                 if (result) return result;
-                return staticSearch(filter, state);
+                return _staticSearch(filter, state);
             })
             .catch(console.log);
+        }
+        return Promise.resolve(_staticSearch(filter, state));
     };
 
     const setFilter = (filter: string) => {
 
         if (!filter) return setState(state => ({ ...state, items: null, filter: '' }));
         
-        setState(state => ({
-            ...state,
-            filter,
-            items: staticSearch(filter, state),
-        }));
-
-        return;
+        if (!config.server) {
+            setState(state => ({
+                ...state,
+                filter,
+                items: _staticSearch(filter, state),
+            }));
+            return;
+        }
 
         let currentState: IState = {} as IState;
         setState(state => { currentState = state; return { ...state, filter } });

@@ -36,7 +36,7 @@ export const getMethodsInput = (
 
     const addSymbol = (value: string) => setState(state => ({
         ...state,
-        value: state.value += value,
+        value: state.value += value.toUpperCase(),
     }));
     
     const delSymbol = () => setState(state => ({
