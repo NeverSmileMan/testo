@@ -4,8 +4,8 @@ import Hint from '../tabs/hint/Hint';
 import HomeButton from '../tabs/homeButton/HomeButton';
 import GroupBtn from '../components/functional-buttons/group.btn';
 import AddedItemsTable from '../components/added.items.table/items.table/items.table';
-import Search from '../components/searchPanel/pure_function_search/search/Search';
-import OrderInfo from '../components/searchPanel/pure_function_search/orderInfo/OrderInfo';
+import Search from '../components/searchPanel/func_search/search/Search';
+import OrderInfo from '../components/searchPanel/func_search/orderInfo/OrderInfo';
 import { ModalWindowProvider } from '../components/modal.wind/modal.context'
 import { useTabs } from '../tabs/use.Tab.hook';
 import { IItem } from '../components/searchPanel/data/itemsData';
