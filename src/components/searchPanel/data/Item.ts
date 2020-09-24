@@ -3,25 +3,29 @@ export enum ItemType {
     PIECE = 'pieced',
 }
 
+interface Defaults {
+	tara: number;
+	pieces_per_package: number;
+}
+interface Lifetime {
+	shelf_life_1: number;
+}
+interface Texts {
+	article: string;
+	full_title: string;
+	shop: string;
+	short_title: string;
+}
+
 export interface IItem {
-    id: string; // "5dd75571-995a-099a-e1f8-bd7827b50976",
-    plu: number; // 5842
-    searchIndex: string; //"Печінка свиняча (Сиров)\r\n#41#Печень свиная(Сырье)",
-    price: number; // 15.2,
-    type: ItemType; // "weighed",
-    defaults: {
-        tara: number; // 0,
-        pieces_per_package: number; // 0
-    };
-    lifetime: {
-        shelf_life_1: number; // 0
-    };
-    texts: {
-        article: number; // "34583",
-        shop: string; // "Сильпо Винница",
-        short_title: string; // "Печiнка свиняча (Сир",
-        full_title: string; //"Печінка свиняча (Сиров)"
-    };
+	defaults: Defaults;
+	id: string;
+	lifetime: Lifetime;
+	plu: number;
+	price: number;
+	searchIndex: string;
+	texts: Texts;
+	type: ItemType;
 }
 
 export class Item implements IItem {
@@ -40,7 +44,7 @@ export class Item implements IItem {
             shelf_life_1: 0, // 0
         },
         public texts = {
-            article: 0, // "34583",
+            article: '', // "34583",
             shop: 'Сильпо Винница', // "Сильпо Винница",
             short_title: '', // "Печiнка свиняча (Сир",
             full_title: '', //"Печінка свиняча (Сиров)"
@@ -71,6 +75,29 @@ export class ItemAmount implements IItemAmount{
         else this.quantity = amount;
     }
 }
+
+/*
+export interface IItem {
+    id: string; // "5dd75571-995a-099a-e1f8-bd7827b50976",
+    plu: number; // 5842
+    searchIndex: string; //"Печінка свиняча (Сиров)\r\n#41#Печень свиная(Сырье)",
+    price: number; // 15.2,
+    type: ItemType; // "weighed",
+    defaults: {
+        tara: number; // 0,
+        pieces_per_package: number; // 0
+    };
+    lifetime: {
+        shelf_life_1: number; // 0
+    };
+    texts: {
+        article: number; // "34583",
+        shop: string; // "Сильпо Винница",
+        short_title: string; // "Печiнка свиняча (Сир",
+        full_title: string; //"Печінка свиняча (Сиров)"
+    };
+}
+*/
 
 /*
 [{
