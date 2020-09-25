@@ -3,7 +3,7 @@ import Tab from "./Tab";
 import { TabItems } from './use.Tab.hook';
 import { styles } from "./Tabs.styles";
 
-const MAX_NUMBER_OF_TABS = 6;
+export const MAX_NUMBER_OF_TABS = 6;
 
 interface TabsProps {
 	tabs: TabItems[]

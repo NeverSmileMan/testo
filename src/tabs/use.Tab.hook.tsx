@@ -1,8 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {ActiveInputService} from '../services/ActiveInputService';
 import {useHints} from '../tabs/hint/hint.provider'
-
-const MAX_NUMBER_OF_TABS = 6;
+import { MAX_NUMBER_OF_TABS } from './Tabs'
 
 export interface TabItems {
 	tabNumber: number;

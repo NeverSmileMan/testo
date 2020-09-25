@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/styles";
-import { MAX_NUMBER_OF_TABS } from "../custom/variables";
+import { MAX_NUMBER_OF_TABS } from "./Tabs";
 import { createStyles, Theme } from "@material-ui/core";
 
 export const styles = makeStyles( ( theme: Theme ) => createStyles( {
