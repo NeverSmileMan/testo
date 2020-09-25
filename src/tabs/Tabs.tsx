@@ -8,7 +8,7 @@ export const MAX_NUMBER_OF_TABS = 6;
 interface TabsProps {
 	tabs: TabItems[]
 	activeTab: number,
-	createTab: ( e: React.MouseEvent<HTMLDivElement> ) => void,
+	createTab: ( e: React.MouseEvent<HTMLButtonElement> ) => void,
 	setActiveTab: ( val: number ) => void,
 }
 
@@ -23,7 +23,7 @@ const Tabs: FC<TabsProps> = ( { tabs, createTab, activeTab, setActiveTab } ) => 
 			                                                     key={ index }/>
 			) }
 			{ tabs.length < MAX_NUMBER_OF_TABS ?
-				<div className={ tab_style } onClick={ createTab }>+</div>
+				<button className={ tab_style } onClick={ createTab }>+</button>
 				: null }
 		</div>
 	)

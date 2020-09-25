@@ -16,6 +16,7 @@ export const styles = makeStyles( ( theme: Theme ) => createStyles( {
 		backgroundColor: '#e4e4e4',
 		color: '#333',
 		border: 'none',
+		padding: 0
 	},
 	tab_active: {
 		backgroundColor: theme.palette.primary.main,
