@@ -7,26 +7,33 @@ import AddedItemsTable from '../components/added.items.table/items.table/items.t
 import Search from '../components/searchPanel/func_search/search/Search';
 import OrderInfo from '../components/searchPanel/func_search/orderInfo/OrderInfo';
 import { ModalWindowProvider } from '../components/modal.wind/modal.context'
-import { useTabs } from '../tabs/use.Tab.hook';
+import { useTabs, ArgAddItemFunc } from '../tabs/use.Tab.hook';
 import { IItem } from '../components/searchPanel/data/itemsData';
 import { useStyles } from './main.styles'
 //---------plugs---------------
 import { ScalePlug } from '../plugs/scale';
 //-----------------------------
+interface Context {
+  deleteTab: () => void;
+  addItem: ({item, calcValue}: ArgAddItemFunc) => boolean;
+  print: () => void;
+  submitValueCalc: (num: number) => void;
+  setSelectedItem: React.Dispatch<React.SetStateAction<IItem>>;
+  selectedItem: IItem;
+}
 
 export const MainContext = createContext({
 	deleteTab: () => { },
-	addItem: (item: any) => true as boolean,
+	addItem: () => true,
 	print: () => { },
-	submitValueCalc: (num: number) => { },
-	setSelectedItem: (() => { }) as React.Dispatch<React.SetStateAction<IItem>>,
+	submitValueCalc: () => { },
+	setSelectedItem: () => { },
 	selectedItem: {} as IItem,
-});
+} as Context);
 
 export default function Main() : ReactElement {
 	const { tab, sideButtons, info, bodyWrap, body, header, searchPanel } = useStyles();
 	const [ selectedItem, setSelectedItem ] = useState( {} as IItem );
-	const [ calcValue, setCalcValue ] = useState( 0 );
 
 	const [
 		tabItems,
@@ -44,10 +51,9 @@ export default function Main() : ReactElement {
 
 	const submitValueCalc = useCallback(
 		( val: number ) => {
-			setCalcValue( val );
 			setTara( val );
 		},
-		[calcValue, tabItems, activeTab],
+		[setTara],
 	);
 
 	const context = {
@@ -73,7 +79,7 @@ export default function Main() : ReactElement {
 			<div className={ bodyWrap }>
 				<div className={ body }>
 					<div className={ searchPanel }>
-						<MainContext.Provider value={ context }>
+						<MainContext.Provider value={ context as Context }>
 							<Search/>{/* addItem,  setSelectedItem  */ }
 						</MainContext.Provider>
 						<OrderInfo value={ tabItems[activeTab].items } activeItem={ activeItem } onClick={ deleteItem }/>
