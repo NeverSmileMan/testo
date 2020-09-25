@@ -25,9 +25,6 @@ export default function Button({
     <div
       className={`${className} ${classes.btn}`}
       onClick={onClick}
-      role="button"
-      tabIndex={-1}
-      aria-hidden="true"
     >
       {children ?? value}
     </div>

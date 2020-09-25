@@ -19,7 +19,7 @@ const OnKeyDownHandler: FC<{}> = ({ children }) => {
 
 	const onKey = useCallback((e: React.KeyboardEvent) => {
 		if (e.key === 'Backspace') {
-			ActiveInputService.delete(1);
+			ActiveInputService.delete('1');
 		} else if (set_symb.has(e.key)) {
 			e.preventDefault();
 		} else {

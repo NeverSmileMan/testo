@@ -1,7 +1,7 @@
 
 export interface ActiveInputService {
 	add: (str: string) => void;
-	delete: (number: number) => void;
+	delete: (str: string) => void;
 	clear: () => void;
 	setActive: (func: React.Dispatch<React.SetStateAction<string>>) => void;
 	unsetActive: (func: React.Dispatch<React.SetStateAction<string>>) => void;
@@ -13,8 +13,8 @@ export const ActiveInputService : ActiveInputService = {
   add(str: string) {
     if (activeInput) activeInput((prevState: string)  => prevState+str);
   },
-  delete(val: number = 1) {
-    if (activeInput) activeInput((prevState: string)  => prevState.substring(0, prevState.length - val));
+  delete(val: string = '1') {
+    if (activeInput) activeInput((prevState: string)  => prevState.substring(0, prevState.length - +val));
   }, 
   clear() {
     if (activeInput) activeInput((prevState: string)  => '');
