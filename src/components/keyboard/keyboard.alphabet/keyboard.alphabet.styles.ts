@@ -20,6 +20,6 @@ export const useStylesAlphabet = makeStyles({
     width: '30%',
   },
   space: {
-    width: '300%',
+    width: '320%',
   },
 });

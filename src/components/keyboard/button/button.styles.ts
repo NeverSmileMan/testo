@@ -16,6 +16,7 @@ export const useStylesButton = makeStyles((theme: Theme) =>
       marginLeft: '0.15em',
       marginRight: '0.15em',
       border: 'none',
+      padding: '0',
     },
   }),
 );
