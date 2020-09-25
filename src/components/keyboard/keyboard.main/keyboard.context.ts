@@ -1,5 +1,5 @@
 import React from 'react';
-import { Lang } from './keyboard.interfaces';
+import { Lang } from "./keyboard.main";
 
 const LayoutContext = React.createContext({
   name: '' as Lang,
