@@ -7,7 +7,7 @@ import ModalTara from '../modal.wind/modal.tara/modal.tara';
 import ModalClose from '../modal.wind/modal.close/modal.close';
 import ModalPrint from '../modal.wind/modal.print/modal.print';
 import CheckCircle from '@material-ui/icons/CheckCircle';
-import { MainContext } from '../../main/main';
+import { MainContext } from '../../entries/components/main/main';
 import { useStyles } from './group.btn.style';
 
 

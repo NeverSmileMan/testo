@@ -1,5 +1,5 @@
 import React, { useState, useContext, useCallback } from 'react';
-import { MainContext } from '../../../../main/main';
+import { MainContext } from '../../../../entries/components/main/main';
 import NumberKeyboard from '../../calc/number.keyboard/numder.keyboard';
 import ControlKeyboard from '../../calc/control.keyboard/control.keyboard';
 import HeadInput from '../../calc/head.input/head.input';

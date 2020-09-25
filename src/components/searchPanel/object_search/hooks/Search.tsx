@@ -6,7 +6,7 @@ import { ActiveInputService } from '../../../../services/ActiveInputService';
 import { InputList, IInputList, IStateInput } from '../objects/InputListNumber';
 import { Props } from '../components/Search';
 import {ModalContext} from '../../../modal.wind/modal.context';
-import { MainContext } from '../../../../main/main';
+import { MainContext } from '../../../../entries/components/main/main';
 import { IItem, ItemType } from '../../data/Item';
 import ModalQtyGoods from '../../../modal.wind/modal.qty.goods/modal.qty.goods'
 
