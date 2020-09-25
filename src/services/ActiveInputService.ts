@@ -13,8 +13,8 @@ export const ActiveInputService : ActiveInputService = {
   add(str: string) {
     if (activeInput) activeInput((prevState: string)  => prevState+str);
   },
-  delete(val: string = '1') {
-    if (activeInput) activeInput((prevState: string)  => prevState.substring(0, prevState.length - +val));
+  delete(val = '1') {
+    if (activeInput)  activeInput((prevState: string)  =>  prevState.substring(0, prevState.length - +val));
   }, 
   clear() {
     if (activeInput) activeInput((prevState: string)  => '');
@@ -30,7 +30,12 @@ export const ActiveInputService : ActiveInputService = {
 }
 
 
-
+// delete(val: string = '1') {
+//   if (activeInput) {console.log('+val', typeof +val); activeInput((prevState: string)  => {
+//     console.log('+val', typeof(prevState.length - +val), prevState.length - +val);
+//     const x = prevState.length - +val;
+//     return prevState.substring(0, x)})};
+// }, 
 
 
 

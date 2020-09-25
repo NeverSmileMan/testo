@@ -57,7 +57,8 @@ export const keyboardSettings: IKeyboard = {
         name: 'icon',
         id: 1,
         action: 'delete',
-        value: <ArrowBackIcon />,
+        value: '1',
+        icon: <ArrowBackIcon />,
       },
       {
         value: 'CLEAR',
@@ -68,7 +69,8 @@ export const keyboardSettings: IKeyboard = {
         name: 'layout',
         action: 'none',
         id: 3,
-        value: {
+        value: '',
+        layouts: {
           en: 'EN',
           ru: 'RU',
           uk: 'UA',

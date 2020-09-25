@@ -3,7 +3,7 @@ export enum Lang {
   RU = 'ru',
   UA = 'uk',
 }
-type SpicialKey = string | undefined | JSX.Element | SpecialValue;
+type SpicialKey = string;
 
 export type SpecialValue = {
   [K in Lang]: string;
@@ -35,6 +35,8 @@ export interface SpecialKey {
   value: SpicialKey;
   action: keyof Service | 'none';
   id: number;
+  icon?: JSX.Element;
+  layouts?: SpecialValue;
 }
 
 interface Options {

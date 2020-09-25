@@ -1,12 +1,6 @@
 import React, { ReactElement, useContext, useCallback } from 'react';
 import Button from '../button/button';
-import {
-  Special,
-  SpecialValue,
-  SpecialKey,
-  Service,
-  Actions,
-} from '../keyboard.main/keyboard.interfaces';
+import { Special, SpecialKey, Service, Actions } from '../keyboard.main/keyboard.interfaces';
 import LayoutContext from '../keyboard.main/keyboard.context';
 import { useStylesSpecial } from './keyboard.special.styles';
 
@@ -33,18 +27,24 @@ export default function GroupSpecialButtons({ options, service }: Props): ReactE
     <div className={`${classes.keyboardSpecial} ${classes.keyboardSpecialGrid}`}>
       {options.keys.map((item: SpecialKey, id) =>
         item.name === 'layout' ? (
-          <Button key={item.id} callback={changeLayout} className={classes.btnSpecial}>
-            <>{item.value ? (item.value as SpecialValue)[layout.name] : null}</>
+          <Button
+            key={item.id}
+            callback={changeLayout}
+            className={classes.btnSpecial}
+            value={item.value}
+          >
+            <>{item.layouts ? item.layouts[layout.name] : null}</>
           </Button>
         ) : (
           <Button
             key={item.id}
             callback={service[item.action as keyof Actions]}
+            value={item.value}
             className={`${classes.btnSpecial} skey_${id} ${
               item.value === 'CLEAR' ? classes.clearBtn : ''
             }`}
           >
-            <>{item.value}</>
+            {item.icon ?? null}
           </Button>
         ),
       )}

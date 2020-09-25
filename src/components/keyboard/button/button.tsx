@@ -4,14 +4,14 @@ import { useStylesButton } from './button.styles';
 
 interface Props {
   callback: Actions;
-  value?: Key;
+  value: Key;
   children?: ReactNode;
   className: string;
 }
 
 export default function Button({
   callback,
-  value = '',
+  value,
   children = null,
   className,
 }: Props): ReactElement {
@@ -29,6 +29,5 @@ export default function Button({
 }
 
 Button.defaultProps = {
-  value: '',
   children: null,
 };
