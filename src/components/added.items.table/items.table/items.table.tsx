@@ -13,7 +13,7 @@ export default function AddedItemsTable({ values, onClick, active }: Props): Rea
 	const classes = useStylesTable();
 
 	return (
-		<div className={classes.bodyContainer}>
+		<ul className={classes.bodyContainer}>
 			{values.map((item: Item, i: number) => (
 				<SingleItem
 					item={item}
@@ -28,6 +28,6 @@ export default function AddedItemsTable({ values, onClick, active }: Props): Rea
 					onClick={onClick}
 				/>
 			))}
-		</div>
+		</ul>
 	);
 }

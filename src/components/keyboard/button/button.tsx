@@ -12,7 +12,7 @@ interface Props {
 export default function Button({
   callback,
   value = '',
-  children = {},
+  children = null,
   className,
 }: Props): ReactElement {
   const classes = useStylesButton();
@@ -22,16 +22,13 @@ export default function Button({
   }, [value, callback]);
 
   return (
-    <div
-      className={`${className} ${classes.btn}`}
-      onClick={onClick}
-    >
+    <button className={`${className} ${classes.btn}`} type="button" onClick={onClick}>
       {children ?? value}
-    </div>
+    </button>
   );
 }
 
 Button.defaultProps = {
   value: '',
-  children: {},
+  children: null,
 };

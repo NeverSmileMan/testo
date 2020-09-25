@@ -15,6 +15,7 @@ export const useStylesButton = makeStyles((theme: Theme) =>
       width: '100%',
       marginLeft: '0.15em',
       marginRight: '0.15em',
+      border: 'none',
     },
   }),
 );
