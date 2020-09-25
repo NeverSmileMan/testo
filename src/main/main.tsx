@@ -10,7 +10,7 @@ import { ModalWindowProvider } from '../components/modal.wind/modal.context'
 import { useTabs, ArgAddItemFunc } from '../tabs/use.Tab.hook';
 import { IItem } from '../components/searchPanel/data/itemsData';
 import { useStyles } from './main.styles'
-//---------plugs---------------
+// ---------plugs---------------
 import { ScalePlug } from '../plugs/scale';
 //-----------------------------
 interface Context {
@@ -80,7 +80,7 @@ export default function Main() : ReactElement {
 				<div className={ body }>
 					<div className={ searchPanel }>
 						<MainContext.Provider value={ context as Context }>
-							<Search/>{/* addItem,  setSelectedItem  */ }
+							<Search/>
 						</MainContext.Provider>
 						<OrderInfo value={ tabItems[activeTab].items } activeItem={ activeItem } onClick={ deleteItem }/>
 					</div>
@@ -88,7 +88,7 @@ export default function Main() : ReactElement {
 				</div>
 				<MainContext.Provider value={ context }>
 					<div className={ sideButtons }>
-						<GroupBtn/>{/*  confirmClose print  selectedItem, addItem  submitValueCalc  */ }
+						<GroupBtn/>
 					</div>
 				</MainContext.Provider>
 			</div>
