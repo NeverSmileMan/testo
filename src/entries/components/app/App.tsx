@@ -8,6 +8,8 @@ import OnKeyDownHandler from '../../../components/on.key.down.handler/on.key.dow
 import { ThemeProvider } from '@material-ui/core/styles';
 import { useStylesApp } from './app.styles';
 import { themes } from './app.themes';
+import '../../../enum/i18n.init';
+import { useTranslation } from 'react-i18next';
 //-----
 import Tablo from '../../../plugs/Tablo';
 //-----
@@ -15,7 +17,7 @@ import Tablo from '../../../plugs/Tablo';
 function App() {
 	const classes = useStylesApp();
 	const [theme, setTheme] = useState(themes.default);
-
+    const { t } = useTranslation();
 	return (
 		<OnKeyDownHandler>
 			<ThemeProvider theme={theme}>
@@ -23,13 +25,13 @@ function App() {
 					<div className={classes.scale}>
 						<div style={{ display: 'inlie-block' }}>
 							<button style={{ display: 'inlie-block' }} onClick={() => setTheme(themes.default)}>
-								DEFAULT
+								{t('DEFAULT')}
 							</button>
 							<button style={{ display: 'inlie-block' }} onClick={() => setTheme(themes.silpo)}>
-								SILPO
+                                {t('SILPO')}
 							</button>
 							<button style={{ display: 'inlie-block' }} onClick={() => setTheme(themes.fora)}>
-								FORA
+								{t('FORA')}
 							</button>
 						</div>
 						<Tablo />
