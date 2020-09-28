@@ -149,18 +149,22 @@ export function useTabs( scaleService: any, ): Params {
 	}, [ activeTab, tabItems ] );
 
 	const createTab = useCallback( () => {
-		const num = freeTabNumbers.findIndex( item => !item ) + 1
+		const num = freeTabNumbers.findIndex( ( item ) => !item ) + 1;
 		setFreeTabNumbers( ( prevState ) => {
-			prevState[num - 1] = true;  //это что такое?
-			return prevState
-		} )
-		setTabItems( ( prevState ) => [ ...prevState, {
-			tabNumber: num,
-			tara: 0,
-			items: [],
-		} ] )
-		setActiveTab( tabItems.length )
-	}, [ tabItems, freeTabNumbers ] )
+			const arrBool = prevState;
+			arrBool[num - 1] = true;
+			return arrBool;
+		} );
+		setTabItems( ( prevState ) => [
+			...prevState,
+			{
+				tabNumber: num,
+				tara: 0,
+				items: [],
+			},
+		] );
+		setActiveTab( tabItems.length );
+	}, [ tabItems, freeTabNumbers ] );
 
 	const deleteTab = useCallback( ( id ) => {
 		setFreeTabNumbers( ( prevState ) => {

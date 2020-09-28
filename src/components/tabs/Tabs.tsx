@@ -11,19 +11,26 @@ interface TabsProps {
 	setActiveTab: ( val: number ) => void,
 }
 
-export const Tabs: FC<TabsProps> = ( { tabs, createTab, activeTab, setActiveTab } ) => {
-	const classes = styles()
+export const Tabs: FC<TabsProps> = ({ tabs, createTab, activeTab, setActiveTab }) => {
+	const classes = styles();
 	return (
-		<div className={ classes.header_tabs }>
-			{ tabs ? tabs.map( ( tab: TabItems, index: number ) => <Tab setActive={ setActiveTab }
-			                                                            tab={ tab }
-			                                                            index={ index }
-			                                                            active={ activeTab === index }
-			                                                            key={ index }/>
-			) : null }
-			{ tabs && tabs.length < MAX_NUMBER_OF_TABS ?
-				<button className={ classes.tab_style } onClick={ createTab }>+</button>
-				: null }
+		<div className={classes.headerTabs}>
+			{tabs
+				? tabs.map((tab: TabItems, index: number) => (
+					<Tab
+						setActive={setActiveTab}
+						tab={tab}
+						index={index}
+						active={activeTab === index}
+						key={tab.tabNumber}
+					/>
+				))
+				: null}
+			{tabs && tabs.length < MAX_NUMBER_OF_TABS ? (
+				<button type="button" className={classes.tabStyle} onClick={createTab}>
+					+
+				</button>
+			) : null}
 		</div>
-	)
-}
+	);
+};

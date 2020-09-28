@@ -3,7 +3,7 @@ import { createStyles, Theme } from "@material-ui/core";
 import { MAX_NUMBER_OF_TABS } from "../../enum/variables";
 
 export const styles = makeStyles( ( theme: Theme ) => createStyles( {
-	tab_style: {
+	tabStyle: {
 		marginRight: '.2rem',
 		width: `calc((100% - 1.6rem) / ${ MAX_NUMBER_OF_TABS })`,
 		height: '100%',
@@ -18,12 +18,12 @@ export const styles = makeStyles( ( theme: Theme ) => createStyles( {
 		border: 'none',
 		padding: 0
 	},
-	tab_active: {
+	tabActive: {
 		backgroundColor: theme.palette.primary.main,
 		color: '#fff',
 		outline: 'none',
 	},
-	header_tabs: {
+	headerTabs: {
 		display: 'flex',
 		width: '100%',
 		paddingTop: '.4rem',

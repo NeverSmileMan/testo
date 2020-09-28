@@ -9,11 +9,16 @@ interface TabProps {
 	index: number
 }
 
-export const Tab: FC<TabProps> = ({tab, setActive, active, index}) => {
-	const classes = styles()
-	return <button id={index.toString()}
-	            onClick={() => setActive(index)}
-	            className={`${classes.tab_style} ${active ? classes.tab_active : ''}`}>
-		{tab.tabNumber}
-	</button>
-}
+export const Tab: FC<TabProps> = ({ tab, setActive, active, index }) => {
+	const classes = styles();
+	return (
+		<button
+			type="button"
+			id={index.toString()}
+			onClick={() => setActive(index)}
+			className={`${classes.tabStyle} ${active ? classes.tabActive : ''}`}
+		>
+			{tab.tabNumber}
+		</button>
+	);
+};

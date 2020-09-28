@@ -2,12 +2,9 @@ import React, { FC, useEffect, useState } from 'react';
 import { styles } from "./Hint.styles";
 import { useHints } from './hint.provider';
 import { Hints } from './hint.settings';
-export interface HintsProps {
-	hint: Hints;
-	error: boolean;
-}
 
-export const Hint: FC<{}> = () => {
+
+export const Hint: FC = () => {
 	const classes = styles();
 	const {hint, error} = useHints();
 	const [classError, setClassError] = useState<string>(error ? `${classes.hints_messages} ${classes.hints_error}` : classes.hints_messages);
