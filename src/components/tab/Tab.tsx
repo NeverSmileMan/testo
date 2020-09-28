@@ -9,7 +9,7 @@ interface TabProps {
 	index: number
 }
 
-const Tab: FC<TabProps> = ({tab, setActive, active, index}) => {
+export const Tab: FC<TabProps> = ({tab, setActive, active, index}) => {
 	const {tab_style, tab_active} = styles()
 	return <button id={index.toString()}
 	            onClick={() => setActive(index)}
@@ -17,4 +17,3 @@ const Tab: FC<TabProps> = ({tab, setActive, active, index}) => {
 		{tab.tabNumber}
 	</button>
 }
-export default Tab;

@@ -1,7 +1,7 @@
 import React, { ReactElement, createContext, useCallback, useState } from 'react';
-import Tabs from '../../../components/tabs/Tabs';
-import Hint from '../../../components/hint/Hint';
-import HomeButton from '../../../components/homeButton/HomeButton';
+import { Tabs } from '../../../components/tabs/Tabs';
+import { Hint } from '../../../components/hint/Hint';
+import { HomeButton } from '../../../components/homeButton/HomeButton';
 import GroupBtn from '../../../components/functional-buttons/group.btn';
 import AddedItemsTable from '../../../components/added.items.table/items.table/items.table';
 import Search from '../../../components/searchPanel/func_search/search/Search';

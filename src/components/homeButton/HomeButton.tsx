@@ -5,7 +5,7 @@ import { styles } from "./HomeButton.styles";
 interface OwnProps {
 }
 
-const HomeButton: FC<OwnProps> = () => {
+export const HomeButton: FC<OwnProps> = () => {
 	const click = ( e: React.MouseEvent<HTMLDivElement> ) => {
 		console.log( 'home', e.target )
 	}
@@ -18,5 +18,3 @@ const HomeButton: FC<OwnProps> = () => {
 		</div>
 	);
 };
-
-export default React.memo( HomeButton );
