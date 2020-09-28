@@ -12,26 +12,29 @@ import { IItem } from '../../../components/searchPanel/data/itemsData';
 import { useStyles } from './main.styles'
 // ---------plugs---------------
 import { ScalePlug } from '../../../plugs/scale';
+
 //-----------------------------
 interface Context {
-  deleteTab: () => void;
-  addItem: ({item, calcValue}: ArgAddItemFunc) => boolean;
-  print: () => void;
-  submitValueCalc: (num: number) => void;
-  setSelectedItem: React.Dispatch<React.SetStateAction<IItem>>;
-  selectedItem: IItem;
+	deleteTab: () => void;
+	addItem: ( { item, calcValue }: ArgAddItemFunc ) => boolean;
+	print: () => void;
+	submitValueCalc: ( num: number ) => void;
+	setSelectedItem: React.Dispatch<React.SetStateAction<IItem>>;
+	selectedItem: IItem;
+	activeTab: number | null;
 }
 
-export const MainContext = createContext({
+export const MainContext = createContext( {
 	deleteTab: () => { },
 	addItem: () => true,
 	print: () => { },
 	submitValueCalc: () => { },
 	setSelectedItem: () => { },
 	selectedItem: {} as IItem,
-} as Context);
+	activeTab: null,
+} as Context );
 
-export default function Main() : ReactElement {
+export default function Main(): ReactElement {
 	const { tab, sideButtons, info, bodyWrap, body, header, searchPanel } = useStyles();
 	const [ selectedItem, setSelectedItem ] = useState( {} as IItem );
 
@@ -53,7 +56,7 @@ export default function Main() : ReactElement {
 		( val: number ) => {
 			setTara( val );
 		},
-		[setTara],
+		[ setTara ],
 	);
 
 	const context = {
@@ -63,6 +66,7 @@ export default function Main() : ReactElement {
 		submitValueCalc,
 		setSelectedItem,
 		selectedItem,
+		activeTab
 	};
 
 	return (
@@ -86,12 +90,12 @@ export default function Main() : ReactElement {
 					</div>
 					<AddedItemsTable values={ tabItems[activeTab].items } onClick={ setActiveItem } active={ activeItem }/>
 				</div>
-				<MainContext.Provider value={ context }>
+				<MainContext.Provider value={ context as Context}>
 					<div className={ sideButtons }>
 						<GroupBtn/>
 					</div>
 				</MainContext.Provider>
 			</div>
-			</ModalWindowProvider>
+		</ModalWindowProvider>
 	);
 }

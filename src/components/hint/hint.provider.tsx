@@ -15,9 +15,6 @@ export const HintsProvider: React.FC<{}> = ({ children }) => {
 		setHint(str);
 		likeError ? setError(true) : setError(false);
   }, []);
-  
-  
-  // const child = React.useMemo(() => React.Children.only(children), [children]);
 
 	return <HintsContext.Provider value={{ hint, error, changeHint }}>{children}</HintsContext.Provider>;
 };
