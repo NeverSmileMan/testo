@@ -1,7 +1,7 @@
 import React, { ReactElement, useContext, useCallback } from 'react';
-import Button from '../button/button';
+import { Button } from '../button/button';
 import { Special, SpecialKey, Service, Actions } from '../keyboard.main/keyboard.interfaces';
-import LayoutContext from '../keyboard.main/keyboard.context';
+import { LayoutContext } from '../keyboard.main/keyboard.context';
 import { useStylesSpecial } from './keyboard.special.styles';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   service: Service;
 }
 
-export default function GroupSpecialButtons({ options, service }: Props): ReactElement {
+export function KeyboardSpecial({ options, service }: Props): ReactElement {
   const layout = useContext(LayoutContext);
   const classes = useStylesSpecial();
 

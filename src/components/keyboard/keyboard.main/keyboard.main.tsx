@@ -1,22 +1,23 @@
 import React, { useState, ReactElement } from 'react';
-import KeyboardAlphabet from '../keyboard.alphabet/keyboard.alphabet';
-import KeyboardNumeric from '../keyboard.numeric/keyboard.numeric';
-import KeyboardSpecial from '../keyboard.special/keyboard.special';
+import { KeyboardAlphabet } from '../keyboard.alphabet/keyboard.alphabet';
+import { KeyboardNumeric } from '../keyboard.numeric/keyboard.numeric';
+import { KeyboardSpecial } from '../keyboard.special/keyboard.special';
 import { Service, IKeyboard, Lang } from './keyboard.interfaces';
 import { useStylesKeyboard } from './keyboard.styles';
-import LayoutContext from './keyboard.context';
+import { LayoutContext } from './keyboard.context';
 
-function getDefaultLayout<T, K extends keyof T>(obj: T) {
-  return Object.keys(obj)[0] as K;
+function getDefaultLayout<T>(obj: T) {
+  return Object.keys(obj)[0];
 }
+
 interface Props {
   service: Service;
   keyboardLayout: IKeyboard;
 }
 
 export default function KeyboardMain({ service, keyboardLayout }: Props): ReactElement {
-  const [layoutName, setLayoutName] = useState<Lang>(
-    getDefaultLayout(keyboardLayout.alphabet.keys),
+  const [layoutName, setLayoutName] = useState(
+    getDefaultLayout(keyboardLayout.alphabet.keys) as Lang,
   );
   const classes = useStylesKeyboard();
 

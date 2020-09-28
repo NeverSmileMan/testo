@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import Button from '../button/button';
+import { Button } from '../button/button';
 import { Numeric, Key, Service, Actions } from '../keyboard.main/keyboard.interfaces';
 import { useStylesNumeric } from './keyboard.numeric.styles';
 
@@ -19,7 +19,7 @@ type BtnClass =
   | 'nkey_8'
   | 'nkey_9';
 
-export default function GroupNumericButtons({ options, service }: Props): ReactElement {
+export function KeyboardNumeric({ options, service }: Props): ReactElement {
   const classes = useStylesNumeric();
 
   return (

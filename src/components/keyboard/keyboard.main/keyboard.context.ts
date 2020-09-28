@@ -1,13 +1,11 @@
 import React from 'react';
 import { Lang } from './keyboard.interfaces';
 
-const LayoutContext = React.createContext({
-  name: '' as Lang,
+export const LayoutContext = React.createContext<Context>({
+  name: 'en',
   setName: () => {},
-  names: [] as Lang[],
+  names: [],
 } as Context);
-
-export default LayoutContext;
 
 interface Context {
   name: Lang;

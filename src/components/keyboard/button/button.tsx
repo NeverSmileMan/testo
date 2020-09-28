@@ -1,20 +1,14 @@
-import React, { ReactElement, useCallback, ReactNode } from 'react';
+import React, { useCallback, FC } from 'react';
 import { Key, Actions } from '../keyboard.main/keyboard.interfaces';
 import { useStylesButton } from './button.styles';
 
 interface Props {
   callback: Actions;
   value: Key;
-  children?: ReactNode;
   className: string;
 }
 
-export default function Button({
-  callback,
-  value,
-  children = null,
-  className,
-}: Props): ReactElement {
+export const Button: FC<Props> = ({ callback, value, children = null, className }) => {
   const classes = useStylesButton();
 
   const onClick = useCallback(() => {
@@ -26,8 +20,4 @@ export default function Button({
       {children ?? value}
     </button>
   );
-}
-
-Button.defaultProps = {
-  children: null,
 };

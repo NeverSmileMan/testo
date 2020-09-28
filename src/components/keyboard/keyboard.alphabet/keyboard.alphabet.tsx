@@ -1,7 +1,7 @@
 import React, { useContext, ReactElement } from 'react';
-import LayoutContext from '../keyboard.main/keyboard.context';
+import { LayoutContext } from '../keyboard.main/keyboard.context';
 import { Alphabet, Service, Key, Actions } from '../keyboard.main/keyboard.interfaces';
-import Button from '../button/button';
+import { Button } from '../button/button';
 import { useStylesAlphabet } from './keyboard.alphabet.styles';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   service: Service;
 }
 
-export default function GroupAlphabetButtons({ opts, service }: Props): ReactElement {
+export function KeyboardAlphabet({ opts, service }: Props): ReactElement {
   const layout = useContext(LayoutContext);
   const classes = useStylesAlphabet();
 
