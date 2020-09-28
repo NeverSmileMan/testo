@@ -35,10 +35,10 @@ export const MainContext = createContext( {
 } as Context );
 
 export default function Main(): ReactElement {
-	const { tab, sideButtons, info, bodyWrap, body, header, searchPanel } = useStyles();
+	const classes = useStyles();
 	const [ selectedItem, setSelectedItem ] = useState( {} as IItem );
 
-	const [
+	const {
 		tabItems,
 		activeTab,
 		activeItem,
@@ -50,7 +50,7 @@ export default function Main(): ReactElement {
 		deleteTab,
 		setTara,
 		print,
-	] = useTabs( ScalePlug );
+	} = useTabs( ScalePlug );
 
 	const submitValueCalc = useCallback(
 		( val: number ) => {
@@ -71,27 +71,27 @@ export default function Main(): ReactElement {
 
 	return (
 		<ModalWindowProvider>
-			<div className={ header }>
-				<div className={ tab }>
+			<div className={ classes.header }>
+				<div className={ classes.tab }>
 					<Tabs tabs={ tabItems } activeTab={ activeTab } createTab={ createTab } setActiveTab={ setActiveTab }/>
 				</div>
-				<div className={ info }>
+				<div className={ classes.info }>
 					<Hint/>
 					<HomeButton/>
 				</div>
 			</div>
-			<div className={ bodyWrap }>
-				<div className={ body }>
-					<div className={ searchPanel }>
+			<div className={ classes.bodyWrap }>
+				<div className={ classes.body }>
+					<div className={ classes.searchPanel }>
 						<MainContext.Provider value={ context as Context }>
 							<Search/>
 						</MainContext.Provider>
-						<OrderInfo value={ tabItems[activeTab].items } activeItem={ activeItem } onClick={ deleteItem }/>
+						{/*<OrderInfo value={tabItems[activeTab].items} activeItem={ activeItem } onClick={ deleteItem }/>*/}
 					</div>
-					<AddedItemsTable values={ tabItems[activeTab].items } onClick={ setActiveItem } active={ activeItem }/>
+					{/*<AddedItemsTable values={ tabItems[activeTab].items } onClick={ setActiveItem } active={ activeItem }/>*/}
 				</div>
 				<MainContext.Provider value={ context as Context}>
-					<div className={ sideButtons }>
+					<div className={ classes.sideButtons }>
 						<GroupBtn/>
 					</div>
 				</MainContext.Provider>

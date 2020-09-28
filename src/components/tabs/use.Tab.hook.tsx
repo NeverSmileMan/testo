@@ -51,35 +51,27 @@ export interface ArgAddItemFunc {
 	calcValue?: number
 }
 
+interface Params {
+	tabItems: Array<TabItems>
+	activeTab: number,
+	activeItem: AddedItem | null,
+	setActiveTab: React.Dispatch<React.SetStateAction<number>>,
+	setActiveItem: React.Dispatch<React.SetStateAction<AddedItem | null>>,
+	addItem: ( { item, calcValue }: ArgAddItemFunc ) => boolean,
+	deleteItem: () => void,
+	createTab: () => void,
+	deleteTab: ( id: number ) => void,
+	setTara: ( tara: number ) => void,
+	print: () => void,
+	getTara: () => number | null,
+}
 
-//используй обьект вместо массива, не понятно что это за куча функций () =>
-// с обьектом после деструктуризации хотя бы понятно будет
-
-export function useTabs(
-	scaleService: any,
-): [
-	TabItems[],
-	number,
-		AddedItem | null,
-	React.Dispatch<React.SetStateAction<number>>,
-	React.Dispatch<React.SetStateAction<AddedItem | null>>,
-	( { item, calcValue }: ArgAddItemFunc ) => boolean,
-	() => void,
-	() => void,
-	( id: number ) => void,
-	( tara: number ) => void, // setTara
-	() => void, // print
-	() => number // getTara
-] {
+export function useTabs( scaleService: any, ): Params {
 	const { changeHint, Hints } = useHints();
-	const [ tabItems, setTabItems ] = useState<TabItems[]>( [ { tabNumber: 1, tara: 0, items: [] } ] as TabItems[] );
+	const [ tabItems, setTabItems ] = useState<TabItems[]>( [] );
 	const [ activeTab, setActiveTab ] = useState<number>( 0 );
 	const [ activeItem, setActiveItem ] = useState<AddedItem | null>( null );
-	const [ freeTabNumbers, setFreeTabNumbers ] = useState<Array<boolean>>( () => {
-		const arr = Array( MAX_NUMBER_OF_TABS ).fill( false );
-		arr[0] = true;
-		return arr;
-	} );
+	const [ freeTabNumbers, setFreeTabNumbers ] = useState<Array<boolean>>( () => Array( MAX_NUMBER_OF_TABS ).fill( false ) );
 
 	const setTara = useCallback( ( tara ) => {
 		if ( scaleService.checkStable() ) {
@@ -88,10 +80,14 @@ export function useTabs(
 		}
 		tabItems[activeTab].tara = tara;
 		setTabItems( [ ...tabItems ] );
+
 	}, [ tabItems, activeTab ] );
 
 	const getTara = useCallback( () => {
-		return (tabItems[activeTab].tara) / 1000
+		if ( !!tabItems.length ) {
+			return (tabItems[activeTab].tara) / 1000
+		}
+		return null
 	}, [ tabItems, activeTab ] );
 
 	const addItem = useCallback(
@@ -131,8 +127,7 @@ export function useTabs(
 			}
 			return false;
 		}
-		,
-		[ tabItems, activeTab ],
+		, [ tabItems, activeTab ],
 	);
 
 	const deleteItem = useCallback( () => {
@@ -144,7 +139,7 @@ export function useTabs(
 	useEffect( () => {
 		const tara = getTara()
 		scaleService.setTara( tara )
-		if ( tara < scaleService.getItemWeight ) {
+		if ( tara && tara < scaleService.getItemWeight ) {
 			changeHint( Hints.MinWeight, true )
 		}
 	}, [ activeTab ] )
@@ -167,29 +162,7 @@ export function useTabs(
 		setActiveTab( tabItems.length )
 	}, [ tabItems, freeTabNumbers ] )
 
-	// переделать
-	// принимаешь айди таба, удаляешь его из массива
 	const deleteTab = useCallback( ( id ) => {
-
-		if ( tabItems.length === 1 ) {
-			if ( tabItems[0].tabNumber === 1 ) {
-				tabItems[0].items = [];
-				return;
-			}
-			setFreeTabNumbers( ( prevState ) => {
-				const arrBool = prevState;
-				arrBool[0] = true;
-				return arrBool;
-			} );
-			setTabItems( ( prevState ) => [
-				...prevState,
-				{
-					tabNumber: 1,
-					tara: 0,
-					items: [],
-				},
-			] );
-		}
 		setFreeTabNumbers( ( prevState ) => {
 			const arrBool = prevState;
 			const freeTabNum = tabItems[id].tabNumber - 1;
@@ -200,7 +173,7 @@ export function useTabs(
 		setActiveTab( ( prevTabNum ) => (prevTabNum ? prevTabNum - 1 : 0) );
 	}, [ tabItems ] );
 
-	return [
+	return {
 		tabItems,
 		activeTab,
 		activeItem,
@@ -213,5 +186,5 @@ export function useTabs(
 		setTara,
 		print,
 		getTara
-	];
+	}
 }
