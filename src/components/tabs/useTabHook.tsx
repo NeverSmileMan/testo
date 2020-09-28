@@ -66,12 +66,45 @@ interface Params {
 	getTara: () => number | null,
 }
 
+
+const defaultIdTabs = [
+	{ id: 3 },
+	{ id: 5 },
+	{ id: 1 }
+]
+
+
 export function useTabs( scaleService: any, ): Params {
 	const { changeHint, Hints } = useHints();
 	const [ tabItems, setTabItems ] = useState<TabItems[]>( [] );
 	const [ activeTab, setActiveTab ] = useState<number>( 0 );
 	const [ activeItem, setActiveItem ] = useState<AddedItem | null>( null );
-	const [ freeTabNumbers, setFreeTabNumbers ] = useState<Array<boolean>>( () => Array( MAX_NUMBER_OF_TABS ).fill( false ) );
+// ================================================================================================================
+	const [ defaultTab, setDefaultTab ] = useState( defaultIdTabs )
+
+	useEffect( () => {
+		defaultTab.map( ( value ) => {
+			setTabItems( ( prevState ) => [
+				...prevState,
+				{
+					tabNumber: value.id,
+					tara: 0,
+					items: [],
+				},
+			] );
+		} )
+
+	}, [] )
+
+
+	const createRand = (): number => {
+		let randCount = Math.floor( (Math.random() * 6) + 1 );
+		const hasId = ( element: any ) => element.id === randCount;
+		if ( defaultTab.some( (hasId) ) ) return createRand();
+		return randCount;
+	}
+
+// ================================================================================================================
 
 	const setTara = useCallback( ( tara ) => {
 		if ( scaleService.checkStable() ) {
@@ -149,12 +182,9 @@ export function useTabs( scaleService: any, ): Params {
 	}, [ activeTab, tabItems ] );
 
 	const createTab = useCallback( () => {
-		const num = freeTabNumbers.findIndex( ( item ) => !item ) + 1;
-		setFreeTabNumbers( ( prevState ) => {
-			const arrBool = prevState;
-			arrBool[num - 1] = true;
-			return arrBool;
-		} );
+		const num = createRand()
+
+		setDefaultTab( ( prevState ) => [ ...prevState, { id: num } ] )
 		setTabItems( ( prevState ) => [
 			...prevState,
 			{
@@ -164,22 +194,19 @@ export function useTabs( scaleService: any, ): Params {
 			},
 		] );
 		setActiveTab( tabItems.length );
-	}, [ tabItems ] );
+	}, [ tabItems, defaultTab ] );
 
 	const deleteTab = useCallback( ( id: number ) => {
-		setFreeTabNumbers( ( prevState ) => {
-			const arrBool = prevState;
-			const freeTabNum = tabItems[id].tabNumber - 1;
-			arrBool[freeTabNum] = false;
-			return arrBool;
-		} );
+
+		setDefaultTab( ( prevState ) => prevState.filter( ( value ) => value.id !== id ) );
+		console.log( defaultTab )
 		setTabItems( ( prevState ) => prevState.filter( ( value, index ) => index !== id ) );
 		setActiveTab( ( prevTabNum ) => (prevTabNum ? prevTabNum - 1 : 0) );
-	}, [ tabItems ] );
+	}, [ tabItems, defaultTab ] );
 
-	useEffect(()=>{
-		console.log(tabItems)
-	},[tabItems])
+	useEffect( () => {
+		console.log( tabItems )
+	}, [ tabItems, defaultTab ] )
 
 	return {
 		tabItems,
