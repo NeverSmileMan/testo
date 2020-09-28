@@ -11,7 +11,6 @@ interface Props {
 
 export default function AddedItemsTable({ values, onClick, active }: Props): ReactElement {
 	const classes = useStylesTable();
-console.log(values);
 
 	return (
 		<ul className={classes.bodyContainer}>
