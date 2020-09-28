@@ -30,7 +30,7 @@ export default function SingleItem({
 }: Props): ReactElement {
 	const classes = useStylesSingleItem();
 
-	const onClick_ = useCallback(() => {
+	const selectItem = useCallback(() => {
 		if (active === item) {
 			onClick(null);
 		} else {
@@ -39,13 +39,15 @@ export default function SingleItem({
 	}, [item, active, onClick]);
 
 	return (
-		<div onClick={onClick_} className={`${classes.row} ${active === item ? classes.active : ''}`}>
-			{columns.map((i: keyof Item, index) => (
-				<div key={index} className={`${classes.font} ${index ? classes.nthCol : classes.firstCol}`}>
-					{/* значение */ changeRule[i] ? <span>{changeRule[i]}</span> : <span>{item[i]}</span>}
-					{/*ед. измерения*/ addUnits[i] ? <span>{addUnits[i]}</span> : null}
-				</div>
-			))}
-		</div>
+		<li className={`${classes.row} ${active === item ? classes.active : ''}`}>
+			<div onClick={selectItem} aria-hidden="true" className={classes.wrap}>
+				{columns.map((i: keyof Item, index) => (
+					<div key={i} className={`${classes.font} ${index ? classes.nthCol : classes.firstCol}`}>
+						{changeRule[i] ? <span>{changeRule[i]}</span> : <span>{item[i]}</span>}
+						{addUnits[i] ? <span>{addUnits[i]}</span> : null}
+					</div>
+				))}
+			</div>
+		</li>
 	);
 }

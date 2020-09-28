@@ -7,7 +7,7 @@ const HintsContext = React.createContext({
 	changeHint: (str: Hints, likeError?: boolean) => {},
 });
 
-const HintsProvider: React.FC<{}> = ({ children }) => {
+export const HintsProvider: React.FC<{}> = ({ children }) => {
 	const [hint, setHint] = React.useState<Hints>(Hints.PutItems);
 	const [error, setError] = React.useState<boolean>(false);
 
@@ -15,9 +15,6 @@ const HintsProvider: React.FC<{}> = ({ children }) => {
 		setHint(str);
 		likeError ? setError(true) : setError(false);
   }, []);
-  
-  
-  // const child = React.useMemo(() => React.Children.only(children), [children]);
 
 	return <HintsContext.Provider value={{ hint, error, changeHint }}>{children}</HintsContext.Provider>;
 };
@@ -26,5 +23,3 @@ export function useHints() {
 	const { hint, error, changeHint } = React.useContext(HintsContext);
 	return { hint, error, changeHint, Hints };
 }
-
-export default HintsProvider;

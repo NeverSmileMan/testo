@@ -19,14 +19,23 @@ export const useStylesSingleItem = makeStyles((theme: Theme) =>
 			background: theme.palette.grey[400],
 		},
 		firstCol: {
+			display: 'flex',
 			minWidth: '6em',
 			textAlign: 'start',
 			flexGrow: 1,
 		},
 		nthCol: {
+			display: 'flex',
 			width: '6em',
-			textAlign: 'right',
+			justifyContent: 'flex-end',
 			paddingRight: '2em',
+			alignContent: 'center'
+		},
+		wrap: {
+			display: 'flex',
+			height: '100%',
+			flexGrow: 1,
+			alignItems: 'center',
 		},
 		font: {
 			fontFamily: theme.typography.fontFamily,

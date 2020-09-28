@@ -3,7 +3,7 @@ import { withStyles, WithStyles } from '@material-ui/core/styles';
 import styles from '../styles/OrderInfo';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';    
 // import { OrderControlContext } from '../order.control/OrderControl';
-import { AddedItem } from '../../../../tabs/use.Tab.hook';
+import { AddedItem } from '../../../tabs/use.Tab.hook';
 
 type Props = {
     value: AddedItem[];

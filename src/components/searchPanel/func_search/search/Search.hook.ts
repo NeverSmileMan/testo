@@ -3,7 +3,7 @@ import {
     SetStateAction, Dispatch, RefObject,
 } from 'react';
 import { ActiveInputService } from '../../../../services/ActiveInputService';
-import { MainContext } from '../../../../main/main';
+import { MainContext } from '../../../../entries/components/main/main';
 import { IItem, ItemType } from '../../data/Item';
 import { getStateInput, IStateInput, getMethodsInput } from './Input.object';
 

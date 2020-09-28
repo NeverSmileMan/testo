@@ -1,24 +1,23 @@
-import React, { ReactElement, useCallback, ReactNode } from 'react';
-import { Key } from '../keyboard.main/keyboard.interfaces';
+import React, { useCallback, FC } from 'react';
+import { Key, Actions } from '../keyboard.main/keyboard.interfaces';
 import { useStylesButton } from './button.styles';
 
 interface Props {
-	callback: Function;
-	value?: Key;
-	children?: ReactNode;
-	className: string;
+  callback: Actions;
+  value: Key;
+  className: string;
 }
 
-export default function Button({ callback, value, children, className }: Props): ReactElement {
-	const classes = useStylesButton();
+export const Button: FC<Props> = ({ callback, value, children = null, className }) => {
+  const classes = useStylesButton();
 
-	const onClick = useCallback(() => {
-		callback(value);
-	}, [value, callback]);
+  const onClick = useCallback(() => {
+    callback(value);
+  }, [value, callback]);
 
-	return (
-		<div className={`${className} ${classes.btn}`} onClick={onClick}>
-			{children ?? value}
-		</div>
-	);
-}
+  return (
+    <button className={`${className} ${classes.btn}`} type="button" onClick={onClick}>
+      {children ?? value}
+    </button>
+  );
+};

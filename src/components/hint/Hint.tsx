@@ -7,7 +7,7 @@ export interface HintsProps {
 	error: boolean;
 }
 
-const Hint: FC<{}> = () => {
+export const Hint: FC<{}> = () => {
 	const {hints, hints_messages, hints_error} = styles();
 	const {hint, error} = useHints();
 	const [classError, setClassError] = useState<string>(error ? `${hints_messages} ${hints_error}` : hints_messages);
@@ -29,5 +29,3 @@ const Hint: FC<{}> = () => {
 		</div>
 	);
 };
-
-export default React.memo(Hint);
