@@ -10,10 +10,10 @@ export const HomeButton: FC<OwnProps> = () => {
 		console.log( 'home', e.target )
 	}
 
-	const { home } = styles()
+	const classes = styles()
 
 	return (
-		<div className={ home } onClick={ click }>
+		<div className={ classes.home } onClick={ click }>
 			<HomeIcon fontSize="small"/>
 		</div>
 	);

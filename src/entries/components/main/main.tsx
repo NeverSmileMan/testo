@@ -7,7 +7,7 @@ import AddedItemsTable from '../../../components/added.items.table/items.table/i
 import { SearchStyled } from '../../../components/search/Search';
 import { TabInfoStyled } from '../../../components/tabInfo/TabInfo';
 import { ModalWindowProvider } from '../../../components/modal.wind/modal.context'
-import { useTabs, ArgAddItemFunc } from '../../../components/tabs/use.Tab.hook';
+import { useTabs, ArgAddItemFunc } from '../../../components/tabs/useTabHook';
 import { IItem } from '../../../components/searchPanel/data/itemsData';
 import { useStyles } from './main.styles'
 // ---------plugs---------------

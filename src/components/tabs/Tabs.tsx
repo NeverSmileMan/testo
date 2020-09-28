@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Tab } from "../tab/Tab";
-import { TabItems } from './use.Tab.hook';
+import { TabItems } from './useTabHook';
 import { styles } from "./Tabs.styles";
 import { MAX_NUMBER_OF_TABS } from "../../enum/variables";
 
@@ -12,9 +12,9 @@ interface TabsProps {
 }
 
 export const Tabs: FC<TabsProps> = ( { tabs, createTab, activeTab, setActiveTab } ) => {
-	const { header_tabs, tab_style } = styles()
+	const classes = styles()
 	return (
-		<div className={ header_tabs }>
+		<div className={ classes.header_tabs }>
 			{ tabs ? tabs.map( ( tab: TabItems, index: number ) => <Tab setActive={ setActiveTab }
 			                                                            tab={ tab }
 			                                                            index={ index }
@@ -22,7 +22,7 @@ export const Tabs: FC<TabsProps> = ( { tabs, createTab, activeTab, setActiveTab 
 			                                                            key={ index }/>
 			) : null }
 			{ tabs && tabs.length < MAX_NUMBER_OF_TABS ?
-				<button className={ tab_style } onClick={ createTab }>+</button>
+				<button className={ classes.tab_style } onClick={ createTab }>+</button>
 				: null }
 		</div>
 	)

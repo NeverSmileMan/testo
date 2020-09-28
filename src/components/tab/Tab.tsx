@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { TabItems } from "../tabs/use.Tab.hook";
+import { TabItems } from "../tabs/useTabHook";
 import { styles } from "../tabs/Tabs.styles";
 
 interface TabProps {
@@ -10,10 +10,10 @@ interface TabProps {
 }
 
 export const Tab: FC<TabProps> = ({tab, setActive, active, index}) => {
-	const {tab_style, tab_active} = styles()
+	const classes = styles()
 	return <button id={index.toString()}
 	            onClick={() => setActive(index)}
-	            className={`${tab_style} ${active ? tab_active : ''}`}>
+	            className={`${classes.tab_style} ${active ? classes.tab_active : ''}`}>
 		{tab.tabNumber}
 	</button>
 }
