@@ -164,9 +164,9 @@ export function useTabs( scaleService: any, ): Params {
 			},
 		] );
 		setActiveTab( tabItems.length );
-	}, [ tabItems, freeTabNumbers ] );
+	}, [ tabItems ] );
 
-	const deleteTab = useCallback( ( id ) => {
+	const deleteTab = useCallback( ( id: number ) => {
 		setFreeTabNumbers( ( prevState ) => {
 			const arrBool = prevState;
 			const freeTabNum = tabItems[id].tabNumber - 1;
@@ -176,6 +176,10 @@ export function useTabs( scaleService: any, ): Params {
 		setTabItems( ( prevState ) => prevState.filter( ( value, index ) => index !== id ) );
 		setActiveTab( ( prevTabNum ) => (prevTabNum ? prevTabNum - 1 : 0) );
 	}, [ tabItems ] );
+
+	useEffect(()=>{
+		console.log(tabItems)
+	},[tabItems])
 
 	return {
 		tabItems,
