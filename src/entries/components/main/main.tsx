@@ -4,8 +4,8 @@ import { Hint } from '../../../components/hint/Hint';
 import { HomeButton } from '../../../components/homeButton/HomeButton';
 import GroupBtn from '../../../components/functional-buttons/group.btn';
 import AddedItemsTable from '../../../components/added.items.table/items.table/items.table';
-import Search from '../../../components/searchPanel/func_search/search/Search';
-import OrderInfo from '../../../components/searchPanel/func_search/orderInfo/OrderInfo';
+import { SearchStyled } from '../../../components/search/Search';
+import { TabInfoStyled } from '../../../components/tabInfo/TabInfo';
 import { ModalWindowProvider } from '../../../components/modal.wind/modal.context'
 import { useTabs, ArgAddItemFunc } from '../../../components/tabs/use.Tab.hook';
 import { IItem } from '../../../components/searchPanel/data/itemsData';
@@ -84,9 +84,9 @@ export default function Main(): ReactElement {
 				<div className={ classes.body }>
 					<div className={ classes.searchPanel }>
 						<MainContext.Provider value={ context as Context }>
-							<Search/>
+							<SearchStyled />
 						</MainContext.Provider>
-						{/* <OrderInfo value={tabItems[activeTab]?.items} activeItem={ activeItem } onClick={ deleteItem }/> */}
+						<TabInfoStyled value={tabItems[activeTab]?.items} activeItem={ activeItem } onClick={ deleteItem } />
 					</div>
 					<AddedItemsTable values={ tabItems[activeTab]?.items} onClick={ setActiveItem } active={ activeItem }/>
 				</div>
