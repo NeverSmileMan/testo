@@ -3,7 +3,7 @@ import { ActiveInputService } from '../../../services/ActiveInputService';
 import KeyboardMain from '../../../components/keyboard/keyboard.main/keyboard.main';
 import { keyboardSettings } from '../../../components/keyboard/keyboard.main/keyboard.settings';
 import Main from '../main/main';
-import HintsProvider from '../../../tabs/hint/hint.provider';
+import { HintsProvider } from '../../../components/hint/hint.provider';
 import OnKeyDownHandler from '../../../components/on.key.down.handler/on.key.down.handler';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { useStylesApp } from './app.styles';

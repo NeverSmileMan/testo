@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
-import { MAX_NUMBER_OF_TABS } from "./Tabs";
 import { createStyles, Theme } from "@material-ui/core";
+import { MAX_NUMBER_OF_TABS } from "../../enum/variables";
 
 export const styles = makeStyles( ( theme: Theme ) => createStyles( {
 	tab_style: {
@@ -16,6 +16,7 @@ export const styles = makeStyles( ( theme: Theme ) => createStyles( {
 		backgroundColor: '#e4e4e4',
 		color: '#333',
 		border: 'none',
+		padding: 0
 	},
 	tab_active: {
 		backgroundColor: theme.palette.primary.main,

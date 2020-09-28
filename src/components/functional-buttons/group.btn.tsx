@@ -12,43 +12,45 @@ import { useStyles } from './group.btn.style';
 
 
 const GroupBtn = () => {
-  const cls = useStyles();
-  const { setModalContent } = useContext(ModalContext);
-  const { submitValueCalc, deleteTab, print } = useContext(MainContext);
+	const cls = useStyles();
+	const { setModalContent } = useContext( ModalContext );
+	const { submitValueCalc, deleteTab, activeTab, print } = useContext( MainContext );
 
-  const buttons = useMemo(() => [
-    {
-      type: 'tara',
-      text: 'тара',
-      renderIcon: () => (<Speed />),
-      modalContent: <ModalTara submitValueCalc={submitValueCalc} modalClose={() => setModalContent(null)} />
-    },
-    {
-      type: 'print',
-      text: 'друк',
-      renderIcon: () => (<Print />),
-      modalContent: <ModalPrint print={print} />,
-    },
-    {
-      type: 'close',
-      text: 'закрити',
-      renderIcon: () => (<CheckCircle />),
-      modalContent: <ModalClose deleteTab={deleteTab} modalClose={() => setModalContent(null)} />,
-    }
-  ], [submitValueCalc, deleteTab, setModalContent, print])
+	const buttons = useMemo( () => [
+		{
+			type: 'tara',
+			text: 'тара',
+			renderIcon: () => (<Speed/>),
+			modalContent: <ModalTara submitValueCalc={ submitValueCalc } modalClose={ () => setModalContent( null ) }/>
+		},
+		{
+			type: 'print',
+			text: 'друк',
+			renderIcon: () => (<Print/>),
+			modalContent: <ModalPrint print={ print }/>,
+		},
+		{
+			type: 'close',
+			text: 'закрити',
+			renderIcon: () => (<CheckCircle/>),
+			modalContent: <ModalClose deleteTab={ deleteTab }
+			                          activeTab={ activeTab }
+			                          modalClose={ () => setModalContent( null ) }/>,
+		}
+	], [ submitValueCalc, deleteTab, setModalContent, print ] )
 
-  return (
-    <div className={cls.btns}>
-      {buttons.map(({ text, modalContent, renderIcon }) =>
-        <Button
-          key={text}
-          click={() => setModalContent(modalContent)}
-          nameButton={text}
-          buttonIcon={renderIcon}
-        />
-      )}
-    </div>
-  )
+	return (
+		<div className={ cls.btns }>
+			{ buttons.map( ( { text, modalContent, renderIcon } ) =>
+				<Button
+					key={ text }
+					click={ () => setModalContent( modalContent ) }
+					nameButton={ text }
+					buttonIcon={ renderIcon }
+				/>
+			) }
+		</div>
+	)
 }
 
 export default GroupBtn;

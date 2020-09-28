@@ -1,18 +1,17 @@
 import React, { FC } from "react";
-import Tab from "./Tab";
+import { Tab } from "../tab/Tab";
 import { TabItems } from './use.Tab.hook';
 import { styles } from "./Tabs.styles";
-
-export const MAX_NUMBER_OF_TABS = 6;
+import { MAX_NUMBER_OF_TABS } from "../../enum/variables";
 
 interface TabsProps {
 	tabs: TabItems[]
 	activeTab: number,
-	createTab: ( e: React.MouseEvent<HTMLDivElement> ) => void,
+	createTab: ( e: React.MouseEvent<HTMLButtonElement> ) => void,
 	setActiveTab: ( val: number ) => void,
 }
 
-const Tabs: FC<TabsProps> = ( { tabs, createTab, activeTab, setActiveTab } ) => {
+export const Tabs: FC<TabsProps> = ( { tabs, createTab, activeTab, setActiveTab } ) => {
 	const { header_tabs, tab_style } = styles()
 	return (
 		<div className={ header_tabs }>
@@ -23,10 +22,8 @@ const Tabs: FC<TabsProps> = ( { tabs, createTab, activeTab, setActiveTab } ) => 
 			                                                     key={ index }/>
 			) }
 			{ tabs.length < MAX_NUMBER_OF_TABS ?
-				<div className={ tab_style } onClick={ createTab }>+</div>
+				<button className={ tab_style } onClick={ createTab }>+</button>
 				: null }
 		</div>
 	)
 }
-
-export default Tabs;
