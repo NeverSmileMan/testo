@@ -11,10 +11,11 @@ interface Props {
 
 export default function AddedItemsTable({ values, onClick, active }: Props): ReactElement {
 	const classes = useStylesTable();
+console.log(values);
 
 	return (
 		<ul className={classes.bodyContainer}>
-			{values.map((item: Item, i: number) => (
+			{values ? values.map((item: Item, i: number) => (
 				<SingleItem
 					item={item}
 					changeRule={{
@@ -27,7 +28,7 @@ export default function AddedItemsTable({ values, onClick, active }: Props): Rea
 					key={i}
 					onClick={onClick}
 				/>
-			))}
+			)) : null}
 		</ul>
 	);
 }

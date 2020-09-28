@@ -86,9 +86,9 @@ export default function Main(): ReactElement {
 						<MainContext.Provider value={ context as Context }>
 							<Search/>
 						</MainContext.Provider>
-						{/*<OrderInfo value={tabItems[activeTab].items} activeItem={ activeItem } onClick={ deleteItem }/>*/}
+						{/* <OrderInfo value={tabItems[activeTab]?.items} activeItem={ activeItem } onClick={ deleteItem }/> */}
 					</div>
-					{/*<AddedItemsTable values={ tabItems[activeTab].items } onClick={ setActiveItem } active={ activeItem }/>*/}
+					<AddedItemsTable values={ tabItems[activeTab]?.items} onClick={ setActiveItem } active={ activeItem }/>
 				</div>
 				<MainContext.Provider value={ context as Context}>
 					<div className={ classes.sideButtons }>
