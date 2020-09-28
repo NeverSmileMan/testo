@@ -8,7 +8,7 @@ import { SearchStyled } from '../../../components/search/Search';
 import { TabInfoStyled } from '../../../components/tabInfo/TabInfo';
 import { ModalWindowProvider } from '../../../components/modal.wind/modal.context'
 import { useTabs, ArgAddItemFunc } from '../../../components/tabs/useTabHook';
-import { IItem } from '../../../components/searchPanel/data/itemsData';
+import { IItem } from '../../../components/search.list/Item';
 import { useStyles } from './main.styles'
 // ---------plugs---------------
 import { ScalePlug } from '../../../plugs/scale';
