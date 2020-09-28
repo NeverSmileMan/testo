@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import NumberKeyboard from '../../calc/number.keyboard/numder.keyboard';
 import ControlKeyboard from '../../calc/control.keyboard/control.keyboard';
 import HeadInput from '../../calc/head.input/head.input';
-import {useHints} from '../../../../tabs/hint/hint.provider';
+import {useHints} from '../../../hint/hint.provider';
 import {useStyle} from './input.weight.style';
 
 interface Prop {

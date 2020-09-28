@@ -1,13 +1,13 @@
 import React, { ReactElement, createContext, useCallback, useState } from 'react';
-import Tabs from '../../../tabs/Tabs';
-import Hint from '../../../tabs/hint/Hint';
-import HomeButton from '../../../tabs/homeButton/HomeButton';
+import Tabs from '../../../components/tabs/Tabs';
+import Hint from '../../../components/hint/Hint';
+import HomeButton from '../../../components/homeButton/HomeButton';
 import GroupBtn from '../../../components/functional-buttons/group.btn';
 import AddedItemsTable from '../../../components/added.items.table/items.table/items.table';
 import Search from '../../../components/searchPanel/func_search/search/Search';
 import OrderInfo from '../../../components/searchPanel/func_search/orderInfo/OrderInfo';
 import { ModalWindowProvider } from '../../../components/modal.wind/modal.context'
-import { useTabs, ArgAddItemFunc } from '../../../tabs/use.Tab.hook';
+import { useTabs, ArgAddItemFunc } from '../../../components/tabs/use.Tab.hook';
 import { IItem } from '../../../components/searchPanel/data/itemsData';
 import { useStyles } from './main.styles'
 // ---------plugs---------------

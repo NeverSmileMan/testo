@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { TabItems } from "./use.Tab.hook";
-import { styles } from "./Tabs.styles";
+import { TabItems } from "../tabs/use.Tab.hook";
+import { styles } from "../tabs/Tabs.styles";
 
 interface TabProps {
 	tab: TabItems;
