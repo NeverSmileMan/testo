@@ -1,7 +1,8 @@
-import { Dispatch, SetStateAction, RefObject } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { IItem, ItemType } from '../search.list/Item';
 // eslint-disable-next-line import/extensions
-import { ActiveInputService } from '../../services/ActiveInputService';
+// import { ActiveInputService } from '../../services/ActiveInputService';
+import { IInputService } from '../input.service/InputService';
 
 export interface IStateInput {
   value: string;
@@ -16,7 +17,7 @@ export const getStateInput = (): IStateInput => ({
 });
 
 export interface IMethodsInput {
-  setValue: (newValue: SetStateAction<string>) => void;
+  setValue: (newValue?: SetStateAction<string>) => void;
   setCallbacks: (callbacks: ICallbacks) => void;
   attachInput: () => void;
   pressKey: (key: string) => void;
@@ -30,13 +31,15 @@ export interface ICallbacks {
 }
 
 export const getMethodsInput = (
-  setState: Dispatch<(state: IStateInput) => IStateInput>,
+  setState: Dispatch<SetStateAction<IStateInput>>,
+  props: { inputService?: IInputService },
 ): IMethodsInput => {
-  const setValue = (newValue: SetStateAction<string> = '') =>
+  const setValue = (newValue?: SetStateAction<string>) =>
     setState((state) => {
-      if (typeof newValue === 'function')
+      if (typeof newValue === 'function') {
         return { ...state, value: newValue(state.value).toUpperCase() };
-      return { ...state, value: newValue.toUpperCase() };
+      }
+      return { ...state, value: newValue ? newValue.toUpperCase() : '' };
     });
 
   const addSymbol = (value: string) =>
@@ -108,8 +111,10 @@ export const getMethodsInput = (
   };
 
   const attachInput = () => {
-    ActiveInputService.setActive(setValue);
-    return () => ActiveInputService.unsetActive(setValue);
+    const { inputService } = props;
+    if (!inputService) return undefined;
+    inputService.setActive(setValue);
+    return () => inputService.unsetActive(setValue);
   };
 
   //   const setFocus = () =>

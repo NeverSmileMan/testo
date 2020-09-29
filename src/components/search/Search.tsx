@@ -1,6 +1,7 @@
-import React from 'react';
-import { useSearch } from './search.hook';
+import React, { ReactElement } from 'react';
+import { useSearch, PropsSearch } from './search.hook';
 import { ListStyled } from '../search.list/List';
+import { InputService } from '../input.service/InputService';
 
 // export type PropsSearch = {
 //   callbacks?: {
@@ -9,8 +10,8 @@ import { ListStyled } from '../search.list/List';
 //   };
 // } & WithStyles;
 
-export function Search() {
-  const { classes, value, selectItem } = useSearch();
+export function SearchComp(props: PropsSearch): ReactElement {
+  const { classes, value, selectItem } = useSearch(props);
 
   return (
     <div className={classes.wrapper}>
@@ -18,4 +19,8 @@ export function Search() {
       <ListStyled filter={value} onSelect={selectItem} />
     </div>
   );
+}
+
+export function Search(): ReactElement {
+  return <InputService>{SearchComp}</InputService>;
 }
