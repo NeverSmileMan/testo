@@ -7,17 +7,14 @@ interface Prop {
     modalClose: () => any;
 }
 
-const HeadInput = ({ inputName, inputValue, modalClose }: Prop) => {
-    const { inputHead, head, input, weigh } = useStyle();
+export const HeadInput = ({ inputName, inputValue, modalClose }: Prop) => {
+    const { inputHead, head, input, weigh, closeBtn } = useStyle();
 
     return (
         <div className={inputHead}>
             <div className={head}>
                 <div>{inputName}</div>
-                <div
-                    onClick={modalClose}>
-                    &#10005;
-          </div>
+                <button onClick={modalClose} className={closeBtn}>&#10005;</button>
             </div>
             <div className={input}>
                 <div className={weigh}>{inputValue}</div>
@@ -26,4 +23,3 @@ const HeadInput = ({ inputName, inputValue, modalClose }: Prop) => {
         </div>
     )
 }
-export default HeadInput;

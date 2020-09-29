@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface StyleProp {
     borderColor?: string;
     colorBtn?: string;
@@ -5,7 +7,8 @@ export interface StyleProp {
 }
 
 export interface Prop extends StyleProp {
-    btnName?: string | any;
+    // btnName?: JSX.Element;
     nameClass?: string | undefined;
-    onClick: ()=>any;
+    onClick: ()=>void;
+    // children: React.ReactNode
 }

@@ -1,14 +1,13 @@
 import React from 'react';
-import KeyboardBtn from '../keyboard.btn/keyboard.btn';
+import { KeyboardBtn } from '../keyboard.btn/keyboard.btn';
 import { useStyle } from './number.keyboard.style';
-
-const numbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
+import { numbers } from '../../../enum/enum.number.keyboard'
 
 interface Prop {
   onClick: (num: number) => any,
 }
 
-const NumberKeyboard = ({ onClick }: Prop) => {
+export const NumberKeyboard = ({ onClick }: Prop) => {
   const { numberKeyboard } = useStyle();
 
   return (
@@ -17,10 +16,12 @@ const NumberKeyboard = ({ onClick }: Prop) => {
         <KeyboardBtn
           onClick={onClick(val)}
           nameClass={val === 0 ? 'btn0' : ''}
-          key={val} btnName={val}
-        />
+          key={val} 
+          // btnName={<>{val}</>}
+        >
+          {val}
+        </KeyboardBtn>
       )}
     </div>
   )
 }
-export default NumberKeyboard;

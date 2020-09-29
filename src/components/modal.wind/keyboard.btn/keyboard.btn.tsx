@@ -1,22 +1,21 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {useStyles} from './keyboard.btn.style';
 import {Prop} from './keyboard.btn.interface';
 
-const KeyboardBtn = ({
-    btnName, 
-    borderColor = 'none', 
+export const KeyboardBtn: FC<Prop> = ({
+    children,
+    borderColor, 
     textColor = '#000', 
     colorBtn = '#e4e4e4', 
     nameClass, 
-    onClick }: Prop) => {
+    onClick,
+}) => {
     const cls: Record<string, string> = useStyles({ borderColor, colorBtn, textColor });
     const namedClass = nameClass && cls[nameClass]
         ? `${cls.btn} ${cls[nameClass]}`
         : `${cls.btn}`
         
     return (
-        <div onClick={onClick} className={namedClass}>{btnName}</div>
+        <button onClick={onClick} className={namedClass}>{children}</button>
     )
 }
-
-export default KeyboardBtn;
