@@ -1,23 +1,23 @@
 import React, { useState, useCallback } from 'react';
-import NumberKeyboard from '../../calc/number.keyboard/numder.keyboard';
-import ControlKeyboard from '../../calc/control.keyboard/control.keyboard';
-import HeadInput from '../../calc/head.input/head.input';
+import {NumberKeyboard} from '../../number.keyboard/numder.keyboard';
+import {ControlKeyboard} from '../../control.keyboard/control.keyboard';
+import {HeadInput} from '../../head.input/head.input';
 import {useHints} from '../../../hint/hint.provider';
 import {useStyle} from './input.weight.style';
 
 interface Prop {
   submitValueCalc: (num:number) => void;
-  modalClose: ()=>any;
+  modalClose: ()=>void;
 }
 const NameCalc = 'Тара'
-const InputWeight = ({modalClose, submitValueCalc}:Prop) => {
+export const InputWeight = ({modalClose, submitValueCalc}:Prop) => {
   const { inputContainer, keyboardContainer } = useStyle();
   const { changeHint, Hints } = useHints();
   const [inputValue, setWeihghtTara] = useState(0)
 
   const getWeight = useCallback((num: number): any => () => {
     const weitght = inputValue * 10 + num;
-    weitght >= 5000 ? changeHint(Hints.MaxWeight, true) : setWeihghtTara(weitght)
+    return weitght >= 5000 ? changeHint(Hints.MaxWeight, true) : setWeihghtTara(weitght)
   }, [setWeihghtTara, inputValue, changeHint])
 
   const deleteWeight = useCallback(() => {
@@ -48,4 +48,3 @@ const InputWeight = ({modalClose, submitValueCalc}:Prop) => {
   )
 }
 
-export default InputWeight;

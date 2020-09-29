@@ -1,11 +1,11 @@
 import React from 'react';
-import InputQty from './input.qty/input.qty';
+import { InputQty } from './input.qty/input.qty';
 import { useStyles } from './modal.qty.goods.style';
 
 interface Prop {
     modalClose: () => any;
 }
-const ModalQtyGoods = ({ modalClose }: Prop) => {
+export const ModalQtyGoods = ({ modalClose }: Prop) => {
     const { container } = useStyles()
 
     return (
@@ -14,5 +14,3 @@ const ModalQtyGoods = ({ modalClose }: Prop) => {
         </div>
     )
 }
-
-export default ModalQtyGoods;

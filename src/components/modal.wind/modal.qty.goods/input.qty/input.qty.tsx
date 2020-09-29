@@ -1,8 +1,8 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { MainContext } from '../../../../entries/components/main/main';
-import NumberKeyboard from '../../calc/number.keyboard/numder.keyboard';
-import ControlKeyboard from '../../calc/control.keyboard/control.keyboard';
-import HeadInput from '../../calc/head.input/head.input';
+import {NumberKeyboard} from '../../number.keyboard/numder.keyboard';
+import {ControlKeyboard} from '../../control.keyboard/control.keyboard';
+import {HeadInput} from '../../head.input/head.input';
 import {useStyle} from './input.qty.style';
 
 const NameCalc = 'Кількість';
@@ -10,7 +10,7 @@ const NameCalc = 'Кількість';
 interface Prop {
   modalClose: ()=>any;
 }
-const InputQty = ({modalClose}:Prop) => {
+export const InputQty = ({modalClose}:Prop) => {
   const { inputContainer, keyboardContainer } = useStyle();
   const [qtyGoods, setqtyGoods] = useState(0);
   const { selectedItem, addItem } = useContext(MainContext);
@@ -44,5 +44,3 @@ const InputQty = ({modalClose}:Prop) => {
     </div>
   )
 }
-
-export default InputQty;
