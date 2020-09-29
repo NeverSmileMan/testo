@@ -46,7 +46,7 @@ const useStyles = makeStyles({
 });
 
 
-export default function Tablo() {
+export function Tablo() {
 	const classes = useStyles();
 
 	const [tara, setTara] = React.useState((0).toFixed(2));
