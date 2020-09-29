@@ -19,7 +19,7 @@ interface Props {
 export default function KeyboardMain({ service, keyboardLayout }: Props): ReactElement {
 	const [layoutName, setLayoutName] = useState(getDefaultLayout(keyboardLayout.alphabet.keys) as Lang);
 	const classes = useStylesKeyboard();
-	const classesNumeric = useStylesNumeric();
+	const classesNumeric = useStylesNumeric( {gridColumn_9 : '1 / 4'});
 	return (
 		<div className={`${classes.keyboard} ${classes.grid}`}>
 			<LayoutContext.Provider
