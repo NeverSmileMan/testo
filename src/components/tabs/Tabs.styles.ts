@@ -4,11 +4,11 @@ import { MAX_NUMBER_OF_TABS } from "../../enum/variables";
 
 export const styles = makeStyles( ( theme: Theme ) => createStyles( {
 	tabStyle: {
-		marginRight: '.2rem',
-		width: `calc((100% - 1.6rem) / ${ MAX_NUMBER_OF_TABS })`,
+		marginRight: '5px',
+		width: `calc((100% - 30px) / ${ MAX_NUMBER_OF_TABS })`,
 		height: '100%',
-		borderRadius: '.3rem .3rem 0 0',
-		fontSize: '1.2em',
+		borderRadius: '10px 10px 0 0',
+		fontSize: '30px',
 		fontWeight: 'bolder',
 		display: 'flex',
 		alignItems: 'center',
@@ -26,7 +26,7 @@ export const styles = makeStyles( ( theme: Theme ) => createStyles( {
 	headerTabs: {
 		display: 'flex',
 		width: '100%',
-		paddingTop: '.4rem',
+		paddingTop: '8px',
 		boxSizing: 'border-box',
 		height: '100%',
 	}
