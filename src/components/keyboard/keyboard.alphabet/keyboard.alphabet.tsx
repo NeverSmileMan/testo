@@ -10,7 +10,7 @@ interface Props {
   service: KeyboardService;
 }
 
-export const KeyboardAlphabet : FC<Props> = (props) => {
+export const KeyboardAlphabet: FC<Props> = (props) => {
   const { opts, service } = props;
   const layout = useContext(LayoutContext);
   const classes = useStylesAlphabet();
@@ -21,7 +21,7 @@ export const KeyboardAlphabet : FC<Props> = (props) => {
         return (
           <React.Fragment key={keys[0]}>
             <div key={`${keys[0]}x`} className={classes.row}>
-              <Offset condition={i % 2} key={`${keys[0]}i`}/>
+              <Offset condition={i % 2} key={`${keys[0]}i`} />
               {keys.map((item: Key) => (
                 <Button
                   key={item}
@@ -30,12 +30,12 @@ export const KeyboardAlphabet : FC<Props> = (props) => {
                   className={item === ' ' ? classes.space : ''}
                 />
               ))}
-              <Offset  condition={layout.name !== 'en' && !(i % 2)} key={`${keys[0]}o`}/>
-              <Offset  condition={layout.name === 'en' && i % 2} key={`${keys[0]}j`}/>
+              <Offset condition={layout.name !== 'en' && !(i % 2)} key={`${keys[0]}o`} />
+              <Offset condition={layout.name === 'en' && i % 2} key={`${keys[0]}j`} />
             </div>
           </React.Fragment>
         );
       })}
     </div>
   );
-}
+};
