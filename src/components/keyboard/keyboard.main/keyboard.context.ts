@@ -1,14 +1,14 @@
 import React from 'react';
 import { Lang } from "./keyboard.interfaces";
 
-export const LayoutContext = React.createContext<Context>({
+export const LayoutContext = React.createContext<Context<Lang>>({
   name: 'en',
   setName: () => {},
   names: [],
-} as Context);
+});
 
-interface Context {
-  name: Lang;
-  setName: (val: Lang) => void;
-  names: Lang[];
+export interface Context<T> {
+  name: T;
+  setName: (val: T) => void;
+  names: T[];
 }

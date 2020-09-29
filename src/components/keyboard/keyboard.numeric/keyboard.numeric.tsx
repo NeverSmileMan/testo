@@ -22,7 +22,7 @@ type BtnClass =
 
 export const KeyboardNumeric: FC<Props<string>> = (props) => {
   const { options, onClick, classes } = props;
-  
+
 	return (
 		<div className={classes.keyboardNumeric}>
 			{options.keys.map((item: Key, id: number) => (

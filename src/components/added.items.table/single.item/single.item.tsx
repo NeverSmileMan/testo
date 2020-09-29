@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useStylesSingleItem } from './single.item.styles';
 import { Item } from '../items.table/interfaces';
 
@@ -20,14 +20,8 @@ type AddUnits = {
 	[K in keyof Partial<Item>]: string;
 };
 
-export default function SingleItem({
-	item,
-	columns,
-	changeRule = {},
-	addUnits = {},
-	active,
-	onClick,
-}: Props): ReactElement {
+export const SingleItem: FC<Props> = (props) => {
+	const { item, columns, changeRule = {}, addUnits = {}, active, onClick } = props;
 	const classes = useStylesSingleItem();
 
 	const selectItem = useCallback(() => {
@@ -50,4 +44,4 @@ export default function SingleItem({
 			</div>
 		</li>
 	);
-}
+};
