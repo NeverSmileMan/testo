@@ -66,13 +66,15 @@ interface Params {
 	getTara: () => number | null,
 }
 
+interface TabId {
+	id: number
+}
 
-const defaultIdTabs = [
+const defaultIdTabsFromServer: Array<TabId> = [
 	{ id: 3 },
-	{ id: 5 },
+	{ id: 4 },
 	{ id: 1 }
 ]
-
 
 export function useTabs( scaleService: any, ): Params {
 	const { changeHint, Hints } = useHints();
@@ -80,7 +82,7 @@ export function useTabs( scaleService: any, ): Params {
 	const [ activeTab, setActiveTab ] = useState<number>( 0 );
 	const [ activeItem, setActiveItem ] = useState<AddedItem | null>( null );
 // ================================================================================================================
-	const [ defaultTab, setDefaultTab ] = useState( defaultIdTabs )
+	const [ defaultTab, setDefaultTab ] = useState<Array<TabId>>( defaultIdTabsFromServer )
 
 	useEffect( () => {
 		defaultTab.map( ( value ) => {
@@ -96,14 +98,13 @@ export function useTabs( scaleService: any, ): Params {
 
 	}, [] )
 
-
-	const createRand = (): number => {
-		let randCount = Math.floor( (Math.random() * 6) + 1 );
+//================================ delete ========================================
+	const createRand = useCallback( (): number => {
+		let randCount = Math.floor( (Math.random() * MAX_NUMBER_OF_TABS) + 1 );
 		const hasId = ( element: any ) => element.id === randCount;
 		if ( defaultTab.some( (hasId) ) ) return createRand();
 		return randCount;
-	}
-
+	}, [ defaultTab ] )
 // ================================================================================================================
 
 	const setTara = useCallback( ( tara ) => {
@@ -183,7 +184,6 @@ export function useTabs( scaleService: any, ): Params {
 
 	const createTab = useCallback( () => {
 		const num = createRand()
-
 		setDefaultTab( ( prevState ) => [ ...prevState, { id: num } ] )
 		setTabItems( ( prevState ) => [
 			...prevState,
@@ -194,19 +194,13 @@ export function useTabs( scaleService: any, ): Params {
 			},
 		] );
 		setActiveTab( tabItems.length );
-	}, [ tabItems, defaultTab ] );
+	}, [ tabItems ] );
 
 	const deleteTab = useCallback( ( id: number ) => {
-
-		setDefaultTab( ( prevState ) => prevState.filter( ( value ) => value.id !== id ) );
-		console.log( defaultTab )
+		setDefaultTab( ( prevState ) => prevState.filter( ( value, index ) => index !== id ) );
 		setTabItems( ( prevState ) => prevState.filter( ( value, index ) => index !== id ) );
 		setActiveTab( ( prevTabNum ) => (prevTabNum ? prevTabNum - 1 : 0) );
-	}, [ tabItems, defaultTab ] );
-
-	useEffect( () => {
-		console.log( tabItems )
-	}, [ tabItems, defaultTab ] )
+	}, [ tabItems ] );
 
 	return {
 		tabItems,
