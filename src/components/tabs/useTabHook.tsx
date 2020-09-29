@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ActiveInputService } from '../../enum/ActiveInputService';
 import { useHints } from '../hint/hint.provider'
 import { MAX_NUMBER_OF_TABS } from "../../enum/variables";
+import { ApiTabs } from "./apiTabs";
 
 export interface TabItems {
 	tabNumber: number;
@@ -76,48 +77,36 @@ const defaultIdTabsFromServer: Array<TabId> = [
 	{ id: 1 }
 ]
 
+const serv = new ApiTabs();
+
 export function useTabs( scaleService: any, ): Params {
 	const { changeHint, Hints } = useHints();
 	const [ tabItems, setTabItems ] = useState<TabItems[]>( [] );
-	const [ activeTab, setActiveTab ] = useState<number>( 0 );
 	const [ activeItem, setActiveItem ] = useState<AddedItem | null>( null );
-// ================================================================================================================
-	const [ defaultTab, setDefaultTab ] = useState<Array<TabId>>( defaultIdTabsFromServer )
+	const [ defaultTab, setDefaultTab ] = useState<Array<TabId>>( [] )
+	const [ activeTab, setActiveTab ] = useState<number>( () => {
+		if ( !defaultTab.length ) return 0;
+		return defaultTab[0].id
+	} );
 
+	// serv.requestTab( 'create-tab', 'POST' )
+	//     .then( ( tabId: any ) => setDefaultTab( prevState => {
+	// 	    if ( !tabId.id ) return prevState
+	// 	    const newState = [ ...prevState, tabId.id ]
+	// 	    setActiveTab( newState[newState.length - 1].id )
+	// 	    return newState
+	//     } ) )
 
-
-	// const requestTab = ( url: string, method: string, body?: string ) => {
-	// 	return fetch( `http://10.13.16.80:4445/${ url }`, {
-	// 		method: method,
-	// 		body: body,
-	// 		headers: { 'Content-type': 'application/json' }
-	// 	} )
-	// 	.then( ( res ) => res.json() )
-	// }
-	//
-	// useEffect( () => {
-	// 	requestTab( 'tab/list', 'GET' )
-	// 	.then( ( arrTabs ) => {
-	// 		setTabs( arrTabs )
-	// 		setActiveTab( () => {
-	// 			if ( !arrTabs.length ) return 0;
-	// 			return arrTabs[arrTabs.length - 1].id
-	// 		} )
-	// 	} )
-	// }, [] )
-
-
-
-
-
-
-
-
-
-
-
-
-
+	useEffect( () => {
+		serv.requestTab( 'tab/list', 'GET' )
+		    .then( ( arrTabs ) => {
+			    setDefaultTab( arrTabs )
+			    setActiveTab( () => {
+				    if ( !arrTabs.length ) return 0;
+				    return arrTabs[arrTabs.length - 1].id
+			    } )
+		    } )
+	}, [] )
 
 	useEffect( () => {
 		defaultTab.map( ( value ) => {
@@ -131,7 +120,7 @@ export function useTabs( scaleService: any, ): Params {
 			] );
 		} )
 
-	}, [] )
+	}, [ defaultTab ] )
 
 //================================ delete ========================================
 	const createRand = useCallback( (): number => {
@@ -205,13 +194,13 @@ export function useTabs( scaleService: any, ): Params {
 		setActiveItem( null );
 	}, [ tabItems, activeItem ] );
 
-	useEffect( () => {
-		const tara = getTara()
-		scaleService.setTara( tara )
-		if ( tara && tara < scaleService.getItemWeight ) {
-			changeHint( Hints.MinWeight, true )
-		}
-	}, [ activeTab ] )
+	// useEffect( () => {
+	// 	const tara = getTara()
+	// 	scaleService.setTara( tara )
+	// 	if ( tara && tara < scaleService.getItemWeight ) {
+	// 		changeHint( Hints.MinWeight, true )
+	// 	}
+	// }, [ activeTab ] )
 
 	const print = useCallback( () => {
 		console.log( 'print', tabItems[activeTab].items )
@@ -252,55 +241,3 @@ export function useTabs( scaleService: any, ): Params {
 		getTara
 	}
 }
-
-/*
-const [ tabs, setTabs ] = useState<TabId[]>( [] )
-const [ activeTab, setActiveTab ] = useState<number>( () => {
-	if ( !tabs.length ) return 0;
-	return tabs[0].id
-} )
-
-const requestTab = ( url: string, method: string, body?: string ) => {
-	return fetch( `http://10.13.16.80:4445/${ url }`, {
-		method: method,
-		body: body,
-		headers: { 'Content-type': 'application/json' }
-	} )
-	.then( ( res ) => res.json() )
-}
-
-useEffect( () => {
-	requestTab( 'tab/list', 'GET' )
-	.then( ( arrTabs ) => {
-		setTabs( arrTabs )
-		setActiveTab( () => {
-			if ( !arrTabs.length ) return 0;
-			return arrTabs[arrTabs.length - 1].id
-		} )
-	} )
-}, [] )
-
-const createTab = useCallback( () => {
-	requestTab( 'create-tab', 'POST' )
-	.then( ( tabId: any ) => setTabs( prevState => {
-		if ( !tabId.id ) return prevState
-		const newState = [ ...prevState, tabId.id ]
-		setActiveTab( newState[newState.length - 1].id )
-		return newState
-	} ) )
-}, [ activeTab, tabs ] )
-
-const deleteTab = useCallback( () => {
-	const body = JSON.stringify( { "id": `${ activeTab }` } )
-	requestTab( 'delete-tab', 'DELETE', body )
-	.then( ( res: any ) => setTabs( ( prevState ) => {
-		if ( !res.affected ) return prevState
-		const newState = prevState.filter( ( num ) => num.id !== activeTab )
-		setActiveTab( () => {
-			if ( !newState.length ) return 0;
-			return newState[0].id
-		} )
-		return newState
-	} ) )
-}, [ activeTab, tabs ] )
-*/
