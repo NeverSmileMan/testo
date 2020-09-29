@@ -31,7 +31,7 @@ export type Keys = {
 export interface SpecialKey {
   name?: string;
   value: SpicialKey;
-  action: keyof Service | 'none';
+  action: keyof KeyboardService | 'none';
   id: number;
   icon?: JSX.Element;
   layouts?: SpecialValue;
