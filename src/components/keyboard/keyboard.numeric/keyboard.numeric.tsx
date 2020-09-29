@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
 import { Button } from '../button/button';
-import { Numeric, Key, Service, Actions } from '../keyboard.main/keyboard.interfaces';
-import { useStylesNumeric } from './keyboard.numeric.styles';
+import { Numeric, Key, Actions } from '../keyboard.main/keyboard.interfaces';
 
 interface Props {
   options: Numeric;
-  service: Service;
+  onClick: Actions;
+  classes: any;
 }
 type BtnClass =
   | 'nkey_0'
@@ -19,16 +19,15 @@ type BtnClass =
   | 'nkey_8'
   | 'nkey_9';
 
-export function KeyboardNumeric({ options, service }: Props): ReactElement {
-  const classes = useStylesNumeric();
-
+export function KeyboardNumeric({ options, onClick, classes }: Props): ReactElement {
+  
   return (
     <div className={classes.keyboardNumeric}>
       {options.keys.map((item: Key, id: number) => (
         <Button
           key={item}
           value={item}
-          callback={service[options.action] as Actions}
+          callback={onClick}
           className={`${classes[`nkey_${id}` as BtnClass]} ${classes.btnNumeric}`}
         />
       ))}
