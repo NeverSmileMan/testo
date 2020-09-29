@@ -7,7 +7,7 @@ import {
   Dispatch,
   RefObject,
 } from 'react';
-import { ActiveInputService } from '../../services/ActiveInputService';
+import { ActiveInputService } from '../../enum/ActiveInputService';
 import { MainContext } from '../../entries/components/main/main';
 import { IItem, ItemType } from '../search.list/Item';
 import { getStateInput, IStateInput, getMethodsInput } from './search.state';

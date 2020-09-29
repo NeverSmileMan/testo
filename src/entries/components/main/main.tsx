@@ -11,7 +11,7 @@ import { useTabs, ArgAddItemFunc } from '../../../components/tabs/useTabHook';
 import { IItem } from '../../../components/search.list/Item';
 import { useStyles } from './main.styles'
 // ---------plugs---------------
-import { ScalePlug } from '../../../plugs/scale';
+import { ScalePlug } from '../../../enum/scale';
 
 //-----------------------------
 interface Context {
