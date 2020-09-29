@@ -11,17 +11,18 @@ interface TabsProps {
 	setActiveTab: ( val: number ) => void,
 }
 
-export const Tabs: FC<TabsProps> = ({ tabs, createTab, activeTab, setActiveTab }) => {
+export const Tabs: FC<TabsProps> = (props) => {
+
+	const { tabs, createTab, activeTab, setActiveTab } = props;
 	const classes = styles();
 	return (
 		<div className={classes.headerTabs}>
 			{tabs
-				? tabs.map((tab: TabItems, index: number) => (
+				? tabs.map((tab: TabItems) => (
 					<Tab
 						setActive={setActiveTab}
 						tab={tab}
-						index={index}
-						active={activeTab === index}
+						active={activeTab === tab.tabNumber}
 						key={tab.tabNumber}
 					/>
 				))

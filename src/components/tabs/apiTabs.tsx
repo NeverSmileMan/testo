@@ -1,11 +1,5 @@
 export class ApiTabs{
 
-// const [ tabs, setTabs ] = useState<TabId[]>( [] )
-// const [ activeTab, setActiveTab ] = useState<number>( () => {
-// 	if ( !tabs.length ) return 0;
-// 	return tabs[0].id
-// } )
-
 requestTab = ( url: string, method: string, body?: string ) => {
 	return fetch( `http://10.13.16.80:4445/${ url }`, {
 		method: method,
@@ -14,41 +8,12 @@ requestTab = ( url: string, method: string, body?: string ) => {
 	} )
 	.then( ( res ) => res.json() )
 }
-//
-// useEffect( () => {
-// 	requestTab( 'tab/list', 'GET' )
-// 	.then( ( arrTabs ) => {
-// 		setTabs( arrTabs )
-// 		setActiveTab( () => {
-// 			if ( !arrTabs.length ) return 0;
-// 			return arrTabs[arrTabs.length - 1].id
-// 		} )
-// 	} )
-// }, [] )
-//
-// const createTab = useCallback( () => {
-// 	requestTab( 'create-tab', 'POST' )
-// 	.then( ( tabId: any ) => setTabs( prevState => {
-// 		if ( !tabId.id ) return prevState
-// 		const newState = [ ...prevState, tabId.id ]
-// 		setActiveTab( newState[newState.length - 1].id )
-// 		return newState
-// 	} ) )
-// }, [ activeTab, tabs ] )
-//
-// const deleteTab = useCallback( () => {
-// 	const body = JSON.stringify( { "id": `${ activeTab }` } )
-// 	requestTab( 'delete-tab', 'DELETE', body )
-// 	.then( ( res: any ) => setTabs( ( prevState ) => {
-// 		if ( !res.affected ) return prevState
-// 		const newState = prevState.filter( ( num ) => num.id !== activeTab )
-// 		setActiveTab( () => {
-// 			if ( !newState.length ) return 0;
-// 			return newState[0].id
-// 		} )
-// 		return newState
-// 	} ) )
-// }, [ activeTab, tabs ] )
 
-
+// 	1. POST /create-tab -> возвращает id таба или ошибку если их уже 6
+// 	2. DELETE /delete-tab на вход в бади ожидает айди таба { id: `<id>` }
+// 3. POST /create-order-row на вход в бади ожидает айди таба { id: `<id>` }
+// 4. PATCH /update-order-row в бади ожидает айди ордера и в свойстве дата обновленный обьект товара { id: `<id>`, data: `<data>` }
+// 5. DELETE /delete-order-row на вход в бади ожидает айди ордера { id: `<id>` }
+// 6. GET /tab/:id получить все товары в табе по айди в параметрах
+// 7. GET /tab/list -> получить все табы
 }
