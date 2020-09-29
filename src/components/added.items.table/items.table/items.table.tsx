@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { useStylesTable } from './items.table.styles';
 import SingleItem from '../single.item/single.item';
 import { Item } from './interfaces';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
 	active: Item | null;
@@ -11,7 +12,7 @@ interface Props {
 
 export default function AddedItemsTable({ values, onClick, active }: Props): ReactElement {
 	const classes = useStylesTable();
-
+	const { t } = useTranslation();
 	return (
 		<ul className={classes.bodyContainer}>
 			{values ? values.map((item: Item, i: number) => (
@@ -22,7 +23,7 @@ export default function AddedItemsTable({ values, onClick, active }: Props): Rea
 						texts: item.plu + ' ' + item.texts.full_title,
 					}}
 					columns={['texts', 'amount', 'cost']}
-					addUnits={{ amount: item.type === 'weighed' ? 'г.' : 'шт.' }}
+					addUnits={{ amount: item.type === 'weighed' ? t('units', { context: 'gramme' }) :  t('units', { context: 'qty' }) }}
 					active={active}
 					key={i}
 					onClick={onClick}

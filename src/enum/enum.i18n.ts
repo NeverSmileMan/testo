@@ -7,6 +7,9 @@ export const resources = {
       DEFAULT: 'ОСНОВНА',
       SILPO: 'СІЛЬПО',
       FORA: 'ФОРА',
+      "units": "units",
+      "units_gramme": "г.",
+      "units_qty": "шт.",
     },
   },
 };
