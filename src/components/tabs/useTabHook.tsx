@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActiveInputService } from '../../services/ActiveInputService';
+import { ActiveInputService } from '../../enum/ActiveInputService';
 import { useHints } from '../hint/hint.provider'
 import { MAX_NUMBER_OF_TABS } from "../../enum/variables";
 
