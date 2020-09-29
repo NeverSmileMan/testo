@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import KeyboardBtn from '../keyboard.btn/keyboard.btn';
-import { makeStyles, useTheme } from '@material-ui/styles';
+import {KeyboardBtn} from '../keyboard.btn/keyboard.btn';
+import { useTheme } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { useStyle } from './control.keyboard.style';
 
@@ -12,7 +12,7 @@ interface Prop {
   inputValue: number
 }
 
-const ControlKeyboard = ({ onClick, inputValue }: Prop) => {
+export const ControlKeyboard = ({ onClick, inputValue }: Prop) => {
   const theme = useTheme<Theme>();
   const control = [<span>&#8592;</span>, <span>&#10003;</span>];
   const { controlContainer } = useStyle();
@@ -28,13 +28,15 @@ const ControlKeyboard = ({ onClick, inputValue }: Prop) => {
         <KeyboardBtn
           onClick={index === control.length - 1 ? () => onClick.submit() : () => onClick.delete()}
           key={index}
-          btnName={val}
+          // btnName={val}
           textColor='#fff'
           colorBtn={theme.palette.primary.main}
-          nameClass={controlBtnClass(index)} />)
+          nameClass={controlBtnClass(index)} 
+        >
+          {val}
+        </KeyboardBtn>
+        )
       )}
     </div>
   )
 }
-
-export default ControlKeyboard;

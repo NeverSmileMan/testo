@@ -7,10 +7,11 @@ export const useStyles = makeStyles((theme: Theme) => createStyles({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: colorBtn,
-        border: `2px solid ${borderColor}`,
+        border: borderColor ? `2px solid ${borderColor}`: 'none',
         borderRadius: '10px',
         color: textColor,
-        fontSize: '35px'
+        fontSize: '30px',
+        outline: 'none',
     }),
     btn0: {
         gridColumnStart: '1',
