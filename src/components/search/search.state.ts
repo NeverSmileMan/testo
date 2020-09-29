@@ -1,5 +1,7 @@
-import { Dispatch } from 'react';
-import { IItem } from '../search.list/Item';
+import { Dispatch, SetStateAction, RefObject } from 'react';
+import { IItem, ItemType } from '../search.list/Item';
+// eslint-disable-next-line import/extensions
+import { ActiveInputService } from '../../services/ActiveInputService';
 
 export interface IStateInput {
   value: string;
@@ -9,31 +11,33 @@ export interface IStateInput {
 
 export const getStateInput = (): IStateInput => ({
   value: '',
-  isFocus: false,
-  // eslint-disable-next-line no-console
-  callbackOnSelect: (item: IItem) => console.log(item),
+  isFocus: true,
+  callbackOnSelect: (item: IItem) => item,
 });
 
 export interface IMethodsInput {
-  setValue: (value: string) => void;
-  getValueHTML: (state: IStateInput) => string;
+  setValue: (newValue: SetStateAction<string>) => void;
+  setCallbacks: (callbacks: ICallbacks) => void;
+  attachInput: () => void;
   pressKey: (key: string) => void;
   onSelect: (callback: (item: IItem) => void) => void;
   selectItem: (item: IItem) => void;
-  // setFocus: () => void;
-  // blurFocus: () => void;
+}
+
+export interface ICallbacks {
+  addItem: (item: { item: IItem }) => boolean;
+  setSelectedItem: Dispatch<SetStateAction<IItem>>;
 }
 
 export const getMethodsInput = (
   setState: Dispatch<(state: IStateInput) => IStateInput>,
 ): IMethodsInput => {
-  const setValue = (value = '') =>
-    setState((state) => ({
-      ...state,
-      value: value.toUpperCase(),
-    }));
-
-  const getValueHTML = (state: IStateInput) => `&nbsp;${state.value.replace(/ /g, '&nbsp;')}`;
+  const setValue = (newValue: SetStateAction<string> = '') =>
+    setState((state) => {
+      if (typeof newValue === 'function')
+        return { ...state, value: newValue(state.value).toUpperCase() };
+      return { ...state, value: newValue.toUpperCase() };
+    });
 
   const addSymbol = (value: string) =>
     setState((state) => {
@@ -62,7 +66,7 @@ export const getMethodsInput = (
             setValue('');
             break;
           case 'ENTER':
-            // onSelect(?);
+            // selectItem();
             break;
           default:
             addSymbol(key);
@@ -72,7 +76,7 @@ export const getMethodsInput = (
           ...state,
           value: currentValue,
         };
-        // throwMessage
+        // throw new Error();
       }
       return state;
     });
@@ -85,13 +89,28 @@ export const getMethodsInput = (
 
   const selectItem = (item: IItem) =>
     setState((state) => {
-    try {
-      state.callbackOnSelect(item);
-    } catch {
+      try {
+        state.callbackOnSelect(item);
+      } catch {
         return state;
-    }
+      }
       return state;
     });
+
+  const setCallbacks = (callbacksNew: ICallbacks) => {
+    onSelect((item: IItem) => {
+      if (item.type === ItemType.WEIGHT) {
+        callbacksNew.addItem({ item });
+        return;
+      }
+      callbacksNew.setSelectedItem(item);
+    });
+  };
+
+  const attachInput = () => {
+    ActiveInputService.setActive(setValue);
+    return () => ActiveInputService.unsetActive(setValue);
+  };
 
   //   const setFocus = () =>
   //     setState((state) => ({
@@ -107,7 +126,8 @@ export const getMethodsInput = (
 
   return {
     setValue,
-    getValueHTML,
+    setCallbacks,
+    attachInput,
     pressKey,
     onSelect,
     selectItem,

@@ -4,7 +4,7 @@ import { Hint } from '../../../components/hint/Hint';
 import { HomeButton } from '../../../components/homeButton/HomeButton';
 import GroupBtn from '../../../components/functional-buttons/group.btn';
 import AddedItemsTable from '../../../components/added.items.table/items.table/items.table';
-import { SearchStyled } from '../../../components/search/Search';
+import { Search } from '../../../components/search/Search';
 import { TabInfoStyled } from '../../../components/tabInfo/TabInfo';
 import { ModalWindowProvider } from '../../../components/modal.wind/modal.context'
 import { useTabs, ArgAddItemFunc } from '../../../components/tabs/useTabHook';
@@ -84,7 +84,7 @@ export default function Main(): ReactElement {
 				<div className={ classes.body }>
 					<div className={ classes.searchPanel }>
 						<MainContext.Provider value={ context as Context }>
-							<SearchStyled />
+							<Search />
 						</MainContext.Provider>
 						<TabInfoStyled value={tabItems[activeTab]?.items} activeItem={ activeItem } onClick={ deleteItem } />
 					</div>
