@@ -15,9 +15,9 @@ export const useStylesButton = makeStyles((theme: Theme) =>
       marginLeft: '0.15em',
       marginRight: '0.15em',
       padding: '0',
-      background: (props: any ) => props.background ?? `${theme.palette.grey[300]}`,
-      border: (props: any ) => props.border ?? 'none',
-      color: (props: any ) => props.textColor ?? 'black',
+      background: (props: Record<string, string> ) => props.background ?? `${theme.palette.grey[300]}`,
+      border: (props: Record<string, string> ) => props.border ?? 'none',
+      color: (props: Record<string, string> ) => props.textColor ?? 'black',
     },
   }),
 );
