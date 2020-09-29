@@ -63,5 +63,5 @@ export interface Special {
 export interface IKeyboard {
   alphabet: Alphabet;
   numeric: Numeric;
-  special?: Special;
+  special: Special;
 }
