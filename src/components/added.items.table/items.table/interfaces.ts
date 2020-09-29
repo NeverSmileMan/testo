@@ -19,7 +19,7 @@ export interface Item {
 	price: number;
 	searchIndex: string;
 	texts: Texts;
-	type: 'weighed' | 'pieced';
+	type: 'weighed' | 'counted';
 	cost: number;
 	amount: number;
 }

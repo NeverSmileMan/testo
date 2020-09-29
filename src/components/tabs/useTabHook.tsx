@@ -11,7 +11,7 @@ export interface TabItems {
 
 enum ItemTypes {
 	weights = 'weighed',
-	piece = 'pieced',
+	counted = 'counted',
 }
 
 interface Defaults {
@@ -38,7 +38,7 @@ export interface Item {
 	price: number;
 	searchIndex: string;
 	texts: Texts;
-	type: 'pieced' | 'weighed';
+	type: 'counted' | 'weighed';
 }
 
 export interface AddedItem extends Item {
@@ -99,7 +99,7 @@ export function useTabs( scaleService: any, ): Params {
 				const weightScale = scaleService.getItemWeight();
 				if ( weightScale >= (40 / 1000) ) {
 					switch ( item.type ) {
-						case ItemTypes.piece:
+						case ItemTypes.counted:
 							if ( calcValue ) {
 								addedItem.amount = calcValue;
 								addedItem.cost = addedItem.amount * item.price;

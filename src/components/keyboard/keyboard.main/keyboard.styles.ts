@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStylesKeyboard = makeStyles({
   keyboard: {
-    padding: '0.5em',
+    padding: '0.2em',
     backgroundColor: '#fff',
     boxSizing: 'border-box',
     justifyContent: 'space-between',

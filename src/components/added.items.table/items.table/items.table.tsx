@@ -3,11 +3,20 @@ import { useStylesTable } from './items.table.styles';
 import { SingleItem } from '../single.item/single.item';
 import { Item } from './interfaces';
 import { useTranslation } from 'react-i18next';
+import { TFunction } from 'i18next';
 
 interface Props {
 	active: Item | null;
 	onClick: React.Dispatch<React.SetStateAction<Item | null>>;
 	values: Item[];
+}
+
+function getUnits(type: string, t: TFunction) : string {
+	if (type === 'weighed') {
+		return t('units', { context: 'gramme' });
+	} else {
+		return t('units', { context: 'qty' });
+	}
 }
 
 export const AddedItemsTable : FC<Props> = (props) => {
@@ -21,10 +30,10 @@ export const AddedItemsTable : FC<Props> = (props) => {
 					item={item}
 					changeRule={{
 						cost: item.cost.toFixed(2),
-						texts: item.plu + ' ' + item.texts.full_title,
+						texts: `${item.plu} ${item.texts.full_title}`,
 					}}
 					columns={['texts', 'amount', 'cost']}
-					addUnits={{ amount: item.type === 'weighed' ? t('units', { context: 'gramme' }) :  t('units', { context: 'qty' }) }}
+					addUnits={{ amount: getUnits(item.type, t) }}
 					active={active}
 					key={i}
 					onClick={onClick}

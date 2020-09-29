@@ -15,6 +15,7 @@ export const useStylesNumeric = makeStyles((theme: Theme) =>
       gridTemplateRows: 'repeat(4, 1fr)',
       height: '100%',
       boxSizing: 'border-box',
+      padding: '0.15em 0em',
     },
     nkey_0: {
       gridColumn: (props: any ) => props.gridColumn_0 ?? '1',

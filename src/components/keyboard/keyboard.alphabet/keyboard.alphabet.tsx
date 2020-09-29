@@ -3,7 +3,7 @@ import { LayoutContext } from '../keyboard.main/keyboard.context';
 import { Alphabet, KeyboardService, Key } from '../keyboard.main/keyboard.interfaces';
 import { Button } from '../button/button';
 import { useStylesAlphabet } from './keyboard.alphabet.styles';
-import { Offset } from './offset';
+import { Offset } from './keyboard.alfabet.offset';
 
 interface Props {
   opts: Alphabet;
@@ -33,9 +33,6 @@ export const KeyboardAlphabet : FC<Props> = (props) => {
               <Offset  condition={layout.name !== 'en' && !(i % 2)} key={`${keys[0]}o`}/>
               <Offset  condition={layout.name === 'en' && i % 2} key={`${keys[0]}j`}/>
             </div>
-            {i < opts.keys[layout.name].length - 1 ? (
-              <div key={`${keys[0]}z`} className={classes.spacer} />
-            ) : null}
           </React.Fragment>
         );
       })}
