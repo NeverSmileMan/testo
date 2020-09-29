@@ -1,35 +1,36 @@
-import React, { useState, ReactElement } from 'react';
+import React, { useState, FC } from 'react';
 import { KeyboardAlphabet } from '../keyboard.alphabet/keyboard.alphabet';
 import { KeyboardNumeric } from '../keyboard.numeric/keyboard.numeric';
 import { KeyboardSpecial } from '../keyboard.special/keyboard.special';
 import { IKeyboard, KeyboardService, Lang } from './keyboard.interfaces';
 import { useStylesKeyboard } from './keyboard.styles';
-import { LayoutContext, Context  } from './keyboard.context';
+import { LayoutContext, Context } from './keyboard.context';
 import { useStylesNumeric } from '../keyboard.numeric/keyboard.numeric.styles';
 
-function getDefaultLayout<T>(obj: T)  {
+function getDefaultLayout<T>(obj: T) {
 	return Object.keys(obj)[0];
 }
-
-
 
 interface Props {
 	service: KeyboardService;
 	keyboardLayout: IKeyboard;
 }
 
-export default function KeyboardMain({ service, keyboardLayout }: Props): ReactElement {
+export const KeyboardMain: FC<Props> = (props) => {
+	const { service, keyboardLayout } = props;
 	const [layoutName, setLayoutName] = useState(getDefaultLayout(keyboardLayout.alphabet.keys));
 	const classes = useStylesKeyboard();
 	const classesNumeric = useStylesNumeric();
 	return (
 		<div className={`${classes.keyboard} ${classes.grid}`}>
 			<LayoutContext.Provider
-				value={{
-					name: layoutName,
-					setName: setLayoutName,
-					names: Object.keys(keyboardLayout.alphabet.keys),
-				} as Context<Lang>}
+				value={
+					{
+						name: layoutName,
+						setName: setLayoutName,
+						names: Object.keys(keyboardLayout.alphabet.keys),
+					} as Context<Lang>
+				}
 			>
 				<div className={classes.alphabet}>
 					<KeyboardAlphabet opts={keyboardLayout.alphabet} service={service} />
@@ -47,4 +48,4 @@ export default function KeyboardMain({ service, keyboardLayout }: Props): ReactE
 			</LayoutContext.Provider>
 		</div>
 	);
-}
+};

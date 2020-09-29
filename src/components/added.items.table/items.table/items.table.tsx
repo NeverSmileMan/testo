@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
+import React, { FC } from 'react';
 import { useStylesTable } from './items.table.styles';
-import SingleItem from '../single.item/single.item';
+import { SingleItem } from '../single.item/single.item';
 import { Item } from './interfaces';
 import { useTranslation } from 'react-i18next';
 
@@ -10,7 +10,8 @@ interface Props {
 	values: Item[];
 }
 
-export default function AddedItemsTable({ values, onClick, active }: Props): ReactElement {
+export const AddedItemsTable : FC<Props> = (props) => {
+	const { values, onClick, active } = props;
 	const classes = useStylesTable();
 	const { t } = useTranslation();
 	return (
