@@ -1,8 +1,4 @@
-export enum Lang {
-  EN = 'en',
-  RU = 'ru',
-  UA = 'uk',
-}
+export type Lang =  'en' | 'ru' | 'uk';
 type SpicialKey = string;
 
 export type SpecialValue = {
@@ -16,6 +12,8 @@ type SetActive = (func: React.Dispatch<React.SetStateAction<string>>) => void;
 type UnsetActive = (func: React.Dispatch<React.SetStateAction<string>>) => void;
 
 export type Actions = Add | Delete | Clear;
+
+export type KeyboardService = Pick<Service, 'add' | 'clear' | 'delete'>
 
 export interface Service {
   add: Add;
@@ -33,7 +31,7 @@ export type Keys = {
 export interface SpecialKey {
   name?: string;
   value: SpicialKey;
-  action: keyof Service | 'none';
+  action: keyof KeyboardService | 'none';
   id: number;
   icon?: JSX.Element;
   layouts?: SpecialValue;
@@ -48,12 +46,12 @@ export type OptionsAlphabet = {
 };
 export interface Alphabet {
   keys: Keys;
-  action: keyof Service;
+  action: keyof KeyboardService;
   options: Options | OptionsAlphabet;
 }
 export interface Numeric {
   keys: Key[];
-  action: keyof Service;
+  action: keyof KeyboardService;
   options: Options;
 }
 export interface Special {
@@ -63,5 +61,5 @@ export interface Special {
 export interface IKeyboard {
   alphabet: Alphabet;
   numeric: Numeric;
-  special?: Special;
+  special: Special;
 }

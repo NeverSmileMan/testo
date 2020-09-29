@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { ActiveInputService } from '../../../services/ActiveInputService';
-import KeyboardMain from '../../../components/keyboard/keyboard.main/keyboard.main';
+import { ActiveInputService } from '../../../enum/ActiveInputService';
+import { KeyboardMain } from '../../../components/keyboard/keyboard.main/keyboard.main';
 import { keyboardSettings } from '../../../components/keyboard/keyboard.main/keyboard.settings';
 import Main from '../main/main';
 import { HintsProvider } from '../../../components/hint/hint.provider';
@@ -11,7 +11,7 @@ import { themes } from './app.themes';
 import '../../../enum/i18n.init';
 import { useTranslation } from 'react-i18next';
 //-----
-import Tablo from '../../../plugs/Tablo';
+import { Tablo } from '../../../enum/Tablo';
 //-----
 
 function App() {

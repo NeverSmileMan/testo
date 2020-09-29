@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ActiveInputService } from '../../services/ActiveInputService';
+import { ActiveInputService } from '../../enum/ActiveInputService';
 import { useHints } from '../hint/hint.provider'
 import { MAX_NUMBER_OF_TABS } from "../../enum/variables";
 
@@ -11,7 +11,7 @@ export interface TabItems {
 
 enum ItemTypes {
 	weights = 'weighed',
-	piece = 'pieced',
+	counted = 'counted',
 }
 
 interface Defaults {
@@ -38,7 +38,7 @@ export interface Item {
 	price: number;
 	searchIndex: string;
 	texts: Texts;
-	type: 'pieced' | 'weighed';
+	type: 'counted' | 'weighed';
 }
 
 export interface AddedItem extends Item {
@@ -99,7 +99,7 @@ export function useTabs( scaleService: any, ): Params {
 				const weightScale = scaleService.getItemWeight();
 				if ( weightScale >= (40 / 1000) ) {
 					switch ( item.type ) {
-						case ItemTypes.piece:
+						case ItemTypes.counted:
 							if ( calcValue ) {
 								addedItem.amount = calcValue;
 								addedItem.cost = addedItem.amount * item.price;
@@ -149,20 +149,24 @@ export function useTabs( scaleService: any, ): Params {
 	}, [ activeTab, tabItems ] );
 
 	const createTab = useCallback( () => {
-		const num = freeTabNumbers.findIndex( item => !item ) + 1
+		const num = freeTabNumbers.findIndex( ( item ) => !item ) + 1;
 		setFreeTabNumbers( ( prevState ) => {
-			prevState[num - 1] = true;  //это что такое?
-			return prevState
-		} )
-		setTabItems( ( prevState ) => [ ...prevState, {
-			tabNumber: num,
-			tara: 0,
-			items: [],
-		} ] )
-		setActiveTab( tabItems.length )
-	}, [ tabItems, freeTabNumbers ] )
+			const arrBool = prevState;
+			arrBool[num - 1] = true;
+			return arrBool;
+		} );
+		setTabItems( ( prevState ) => [
+			...prevState,
+			{
+				tabNumber: num,
+				tara: 0,
+				items: [],
+			},
+		] );
+		setActiveTab( tabItems.length );
+	}, [ tabItems ] );
 
-	const deleteTab = useCallback( ( id ) => {
+	const deleteTab = useCallback( ( id: number ) => {
 		setFreeTabNumbers( ( prevState ) => {
 			const arrBool = prevState;
 			const freeTabNum = tabItems[id].tabNumber - 1;
@@ -172,6 +176,10 @@ export function useTabs( scaleService: any, ): Params {
 		setTabItems( ( prevState ) => prevState.filter( ( value, index ) => index !== id ) );
 		setActiveTab( ( prevTabNum ) => (prevTabNum ? prevTabNum - 1 : 0) );
 	}, [ tabItems ] );
+
+	useEffect(()=>{
+		console.log(tabItems)
+	},[tabItems])
 
 	return {
 		tabItems,

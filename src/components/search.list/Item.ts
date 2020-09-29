@@ -1,6 +1,6 @@
 export enum ItemType {
   WEIGHT = 'weighed',
-  PIECE = 'pieced',
+  PIECE = 'counted',
 }
 
 interface Defaults {

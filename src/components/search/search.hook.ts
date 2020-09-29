@@ -1,5 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
-// eslint-disable-next-line import/extensions
+import {
+  useState,
+  useEffect,
+  useContext,
+} from 'react';
+import { ActiveInputService } from '../../enum/ActiveInputService';
 import { MainContext } from '../../entries/components/main/main';
 import { IItem } from '../search.list/Item';
 import { getStateInput, IStateInput, getMethodsInput, ICallbacks } from './search.state';

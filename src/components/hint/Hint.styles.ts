@@ -11,8 +11,8 @@ export const styles = makeStyles( {
 		hints_messages: {
 			width: '100%',
 			height: '80%',
-			borderRadius: '.4rem',
-			fontSize: '.6em',
+			borderRadius: '20px',
+			fontSize: '14px',
 			border: '1px solid #797979',
 			display: 'flex',
 			justifyContent: 'center',
