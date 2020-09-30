@@ -12,6 +12,7 @@ export const useStylesAlphabet = makeStyles({
     display: 'flex',
     flexGrow: 1,
     boxSizing: 'border-box',
+    padding: '0.15em 0px',
   },
   spacer: {
     margin: '0.2em',

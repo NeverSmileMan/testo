@@ -6,6 +6,7 @@ export const useStylesSpecial = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     boxSizing: 'border-box',
+    padding: '0.15em 0em',
   },
   keyboardSpecialGrid: {
     display: 'grid',

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Tab } from "../tab/Tab";
 import { TabItems } from './useTabHook';
-import { styles } from "./Tabs.styles";
+import { useStyles } from "./Tabs.styles";
 import { MAX_NUMBER_OF_TABS } from "../../enum/variables";
 
 interface TabsProps {
@@ -14,7 +14,7 @@ interface TabsProps {
 export const Tabs: FC<TabsProps> = (props) => {
 
 	const { tabs, createTab, activeTab, setActiveTab } = props;
-	const classes = styles();
+	const classes = useStyles();
 	return (
 		<div className={classes.headerTabs}>
 			{tabs

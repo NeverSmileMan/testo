@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import HomeIcon from '@material-ui/icons/Home';
-import { styles } from "./HomeButton.styles";
+import { useStyles } from "./HomeButton.styles";
 
 interface OwnProps {
 }
@@ -10,7 +10,7 @@ export const HomeButton: FC<OwnProps> = () => {
 		console.log( 'home', e.target )
 	}
 
-	const classes = styles()
+	const classes = useStyles()
 
 	return (
 		<div className={ classes.home } onClick={ click }>

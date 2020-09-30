@@ -3,8 +3,8 @@ import { Tabs } from '../../../components/tabs/Tabs';
 import { Hint } from '../../../components/hint/Hint';
 import { HomeButton } from '../../../components/homeButton/HomeButton';
 import GroupBtn from '../../../components/functional-buttons/group.btn';
-import { AddedItemsTable } from '../../../components/added.items.table/items.table/items.table';
-import { SearchStyled } from '../../../components/search/Search';
+import { AddedItemsTable } from '../../../components/items.table/items.table';
+import { Search } from '../../../components/search/Search';
 import { TabInfoStyled } from '../../../components/tabInfo/TabInfo';
 import { ModalWindowProvider } from '../../../components/modal.wind/modal.context'
 import { useTabs, ArgAddItemFunc } from '../../../components/tabs/useTabHook';
@@ -76,7 +76,7 @@ export default function Main(): ReactElement {
 					<Tabs tabs={ tabItems } activeTab={ activeTab } createTab={ createTab } setActiveTab={ setActiveTab }/>
 				</div>
 				<div className={ classes.info }>
-					<Hint/>
+					<Hint />
 					<HomeButton/>
 				</div>
 			</div>
@@ -84,11 +84,11 @@ export default function Main(): ReactElement {
 				<div className={ classes.body }>
 					<div className={ classes.searchPanel }>
 						<MainContext.Provider value={ context as Context }>
-							<SearchStyled />
+							<Search />
 						</MainContext.Provider>
 						<TabInfoStyled value={tabItems[activeTab]?.items} activeItem={ activeItem } onClick={ deleteItem } />
 					</div>
-					<AddedItemsTable values={ tabItems[activeTab]?.items} onClick={ setActiveItem } active={ activeItem }/>
+					{/*<AddedItemsTable values={ tabItems[activeTab]?.items} onClick={ setActiveItem } active={ activeItem }/>*/}
 				</div>
 				<MainContext.Provider value={ context as Context}>
 					<div className={ classes.sideButtons }>

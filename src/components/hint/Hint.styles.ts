@@ -1,6 +1,9 @@
 import { makeStyles } from "@material-ui/styles";
-
-export const styles = makeStyles( {
+export interface IError {
+	color?:string,
+	background?: string
+}
+export const useStyles = makeStyles( {
 		hints: {
 			width: '400px',
 			display: 'flex',
@@ -8,7 +11,7 @@ export const styles = makeStyles( {
 			alignItems: 'center',
 			height: '100%',
 		},
-		hints_messages: {
+		hints_messages: ( props: IError ) => ({
 			width: '100%',
 			height: '80%',
 			borderRadius: '20px',
@@ -17,10 +20,12 @@ export const styles = makeStyles( {
 			display: 'flex',
 			justifyContent: 'center',
 			alignItems: 'center',
-		},
-		hints_error: {
-			color: 'white',
-			background: 'red',
-		},
+			color: props.color,
+			background: props.background,
+		}),
+		// hints_error: ( props: IError ) => ({
+		// 	color: props.color,
+		// 	background: props.background,
+		// }),
 	}
 )

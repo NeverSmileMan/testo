@@ -1,28 +1,32 @@
 import React, { FC, useEffect, useState } from 'react';
-import { styles } from "./Hint.styles";
+import { IError, useStyles } from "./Hint.styles";
 import { useHints } from './hint.provider';
-import { Hints } from './hint.settings';
 
 
 export const Hint: FC = () => {
-	const classes = styles();
-	const {hint, error} = useHints();
-	const [classError, setClassError] = useState<string>(error ? `${classes.hints_messages} ${classes.hints_error}` : classes.hints_messages);
+
+
+	let props: IError | null = null;
+	const classes: Record<string, string> = useStyles( props );
+	const { hint, error } = useHints();
+	const [ classError, setClassError ] = useState<string>();
 
 	let timeout: NodeJS.Timeout
-	useEffect(() => {
-		if (error) {
-			setClassError(`${classes.hints_messages} ${classes.hints_error}`)
-			timeout = setTimeout(() => { setClassError(classes.hints_messages) }, 300)
+	useEffect( () => {
+		if ( error ) {
+			props = { background: 'red', color: 'white' }
+			setClassError( `${ classes.hints_messages } ${ classes.hints_error }` )
+			timeout = setTimeout( () => { setClassError( classes.hints_messages ) }, 300 )
 		} else {
-			setClassError(classes.hints_messages)
+			setClassError( classes.hints_messages )
+			props = null
 		}
-		return () => clearTimeout(timeout)
-	}, [error])
+		return () => clearTimeout( timeout )
+	}, [ error ] )
 
 	return (
-		<div className={classes.hints}>
-			<div className={classError}>{hint}</div>
+		<div className={ classes.hints }>
+			<div className={ classError }>{ hint }</div>
 		</div>
 	);
 };

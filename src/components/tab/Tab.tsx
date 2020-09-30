@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { TabItems } from "../tabs/useTabHook";
-import { styles } from "../tabs/Tabs.styles";
+import { useStyles } from "./Tab.styles";
 
 interface TabProps {
 	tab: TabItems;
@@ -9,7 +9,7 @@ interface TabProps {
 }
 
 export const Tab: FC<TabProps> = ({ tab, setActive, active }) => {
-	const classes = styles();
+	const classes = useStyles();
 	return (
 		<button
 			type="button"

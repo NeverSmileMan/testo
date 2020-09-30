@@ -1,26 +1,26 @@
-import React from 'react';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
-import { styles } from './search.styles';
-import { IItem } from '../search.list/Item';
-import { useSearch } from './search.hook';
-import { ListStyled } from '../search.list/List';
+import React, { ReactElement } from 'react';
+import { useSearch, PropsSearch } from './search.hook';
+import { List } from '../search.list/List';
+import { Services } from '../services/Services';
 
-export type PropsSearch = {
-  callbacks?: {
-    onSelect?: (item: IItem) => void;
-    resetSearch?: (callback: () => void) => void;
-  };
-} & WithStyles;
+// export type PropsSearch = {
+//   callbacks?: {
+//     onSelect?: (item: IItem) => void;
+//     resetSearch?: (callback: () => void) => void;
+//   };
+// } & WithStyles;
 
-function Search({ classes }: PropsSearch) {
-  const { isFocus, value, ref, selectItem } = useSearch();
+export function SearchComp(props: PropsSearch): ReactElement {
+  const { classes, value, selectItem, searchService } = useSearch(props);
 
   return (
     <div className={classes.wrapper}>
-      <div ref={ref} className={`input ${isFocus ? 'focus' : 'focus'}`} />
-      <ListStyled filter={value} onSelect={selectItem} />
+      <div className="input">&nbsp;{value}</div>
+      <List filter={value} onSelect={selectItem} searchService={searchService} />
     </div>
   );
 }
 
-export const SearchStyled = withStyles(styles)(Search);
+export function Search(): ReactElement {
+  return <Services>{SearchComp}</Services>;
+}

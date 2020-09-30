@@ -1,4 +1,3 @@
-/*
 const express = require("express");
 const cors = require("cors");
 const fetch = require("node-fetch");
@@ -16,7 +15,7 @@ app.get('/list', (req, res) => {
     .then((response) => response.json())
     .then((result) => res.json(result))
     .then(() => res.end())
-    // eslint-disable-next-line no-console
+    // -disable-next-line no-console
     .catch((e) => console.log(e));
 });
 
@@ -29,8 +28,7 @@ app.get('/search', (req, res) => {
     .catch((e) => console.log(e));
 });
 
-app.listen(9000);
-*/
+app.listen(4444);
 
 /*
 POST /create-tab -> возвращает id таба или ошибку если их уже 6

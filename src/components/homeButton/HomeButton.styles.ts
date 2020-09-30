@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/styles";
 
-export const styles = makeStyles( {
+export const useStyles = makeStyles( {
 		home: {
 			display: 'flex',
 			alignItems: 'center',
