@@ -1,28 +1,26 @@
 import React, { FC, useEffect, useState } from 'react';
-import { styles } from "./Hint.styles";
+import { useStyles } from './Hint.styles';
 import { useHints } from './hint.provider';
-import { Hints } from './hint.settings';
-
 
 export const Hint: FC = () => {
-	const classes = styles();
-	const {hint, error} = useHints();
-	const [classError, setClassError] = useState<string>(error ? `${classes.hints_messages} ${classes.hints_error}` : classes.hints_messages);
+	const { hint, error } = useHints();
+	const [showError, setShowError] = useState<boolean>(false);
+	const classes = useStyles(showError);
 
-	let timeout: NodeJS.Timeout
+	let timeout: NodeJS.Timeout;
 	useEffect(() => {
 		if (error) {
-			setClassError(`${classes.hints_messages} ${classes.hints_error}`)
-			timeout = setTimeout(() => { setClassError(classes.hints_messages) }, 300)
-		} else {
-			setClassError(classes.hints_messages)
+			setShowError(true);
+			timeout = setTimeout(() => {
+				setShowError(false);
+			}, 300);
 		}
-		return () => clearTimeout(timeout)
-	}, [error])
+		return () => clearTimeout(timeout);
+	}, [error]);
 
 	return (
 		<div className={classes.hints}>
-			<div className={classError}>{hint}</div>
+			<div className={classes.hintsMessages}>{hint}</div>
 		</div>
 	);
 };
