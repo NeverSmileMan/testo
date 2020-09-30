@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ActiveInputService } from '../../enum/ActiveInputService';
 import { useHints } from '../hint/hint.provider'
-import { ApiTabs } from "./apiTabs";
-import { act } from "react-dom/test-utils";
 
 export interface TabItems {
 	tabNumber: number;
@@ -67,7 +65,14 @@ interface Params {
 	getTara: () => number | null,
 }
 
-const serv = new ApiTabs();
+const requestTab = ( url: string, method: string, body?: string ) => {
+	return fetch( `http://10.13.16.80:4445/${ url }`, {
+		method: method,
+		body: body,
+		headers: { 'Content-type': 'application/json' }
+	} )
+	.then( ( res ) => res.json() )
+}
 
 export function useTabs( scaleService: any, ): Params {
 	const { changeHint, Hints } = useHints();
@@ -76,20 +81,20 @@ export function useTabs( scaleService: any, ): Params {
 	const [ activeTab, setActiveTab ] = useState<number>( 0 )
 
 	useEffect( () => {
-		serv.requestTab( 'tab/list', 'GET' )
-		    .then( ( arrTabs ) => {
-			    arrTabs.map( ( value: any ) => {
-				    setTabItems( ( prevState ) => [
-					    ...prevState,
-					    {
-						    tabNumber: value.id,
-						    tara: 0,
-						    items: [],
-					    },
-				    ] );
-				    setActiveTab( arrTabs[arrTabs.length - 1].id )
-			    } )
-		    } )
+		requestTab( 'tab/list', 'GET' )
+		       .then( ( arrTabs ) => {
+			       arrTabs.map( ( value: any ) => {
+				       setTabItems( ( prevState ) => [
+					       ...prevState,
+					       {
+						       tabNumber: value.id,
+						       tara: 0,
+						       items: [],
+					       },
+				       ] );
+				       setActiveTab( arrTabs[arrTabs.length - 1].id )
+			       } )
+		       } )
 	}, [] )
 
 	const setTara = useCallback( ( tara ) => {
@@ -97,14 +102,20 @@ export function useTabs( scaleService: any, ): Params {
 			scaleService.setTara( tara / 1000 )
 			scaleService.setWeight( -tara / 1000 )
 		}
-		tabItems[activeTab].tara = tara;
+		const activeTabItem = tabItems.find( value => value.tabNumber === activeTab )
+		if ( activeTabItem ) {
+			activeTabItem.tara = tara;
+		}
 		setTabItems( [ ...tabItems ] );
 
 	}, [ tabItems, activeTab ] );
 
 	const getTara = useCallback( () => {
 		if ( !!tabItems.length ) {
-			return (tabItems[activeTab].tara) / 1000
+			const activeTabItem = tabItems.find( value => value.tabNumber === activeTab )
+			if ( activeTabItem ) {
+				return activeTabItem.tara / 1000
+			}
 		}
 		return null
 	}, [ tabItems, activeTab ] );
@@ -139,77 +150,85 @@ export function useTabs( scaleService: any, ): Params {
 					changeHint( Hints.MinWeight, true );
 					return false;
 				}
-
-				tabItems.forEach( ( value ) => {
-						if ( value.tabNumber === activeTab ) {
-							value.items.push( addedItem );
-						}
-					}
-				)
-				setTabItems( [ ...tabItems ] );
+				const activeTabItem = tabItems.find( value => value.tabNumber === activeTab )
+				if ( activeTabItem ) {
+					activeTabItem.items.push( addedItem );
+					setTabItems( [ ...tabItems ] );
+				}
 				ActiveInputService.clear();
 				return true;
 			}
 			return false;
 		}
-		, [ tabItems, activeTab ],
+		, [ tabItems, activeTab, ],
 	);
 
 	const deleteItem = useCallback( () => {
-		tabItems[activeTab].items = tabItems[activeTab].items.filter( ( item ) => item !== activeItem );
+		const activeTabItem = tabItems.find( value => value.tabNumber === activeTab )
+		if ( activeTabItem ) {
+			activeTabItem.items = activeTabItem.items.filter( ( item ) => item !== activeItem );
+		}
 		setTabItems( [ ...tabItems ] );
 		setActiveItem( null );
 	}, [ tabItems, activeItem ] );
 
-	// useEffect( () => {
-	// 	const tara = getTara()
-	// 	scaleService.setTara( tara )
-	// 	if ( tara && tara < scaleService.getItemWeight ) {
-	// 		changeHint( Hints.MinWeight, true )
-	// 	}
-	// }, [ activeTab ] )
+	useEffect( () => {
+		const tara = getTara()
+		scaleService.setTara( tara )
+		if ( tara && tara < scaleService.getItemWeight ) {
+			changeHint( Hints.MinWeight, true )
+		}
+	}, [ activeTab ] )
 
 	const print = useCallback( () => {
 		console.log( 'print', tabItems[activeTab].items )
 	}, [ activeTab, tabItems ] );
 
 	const createTab = useCallback( () => {
-		serv.requestTab( 'create-tab', 'POST' )
-		    .then( ( tabId: any ) => {
-			    setTabItems( ( prevState ) => {
-				    if ( !tabId.id ) return prevState
-				    return [
-					    ...prevState,
-					    {
-						    tabNumber: tabId.id.id,
-						    tara: 0,
-						    items: [],
-					    },
-				    ]
-			    } );
-			    setActiveTab( tabId.id.id )
-		    } )
+		requestTab( 'create-tab', 'POST' )
+		       .then( ( tabId: any ) => {
+			       setTabItems( ( prevState ) => {
+				       if ( !tabId.id ) return prevState
+				       return [
+					       ...prevState,
+					       {
+						       tabNumber: tabId.id.id,
+						       tara: 0,
+						       items: [],
+					       },
+				       ]
+			       } );
+			       setActiveTab( tabId.id.id )
+		       } )
 	}, [ tabItems, activeTab ] );
 
 	const deleteTab = useCallback( ( id: number ) => {
 		const body = JSON.stringify( { "id": `${ id }` } )
-		serv.requestTab( 'delete-tab', 'DELETE', body )
-		    .then( ( res: any ) => {
-			    setTabItems( ( prevState ) => {
-				    if ( !res.affected ) return prevState
-				    return prevState.filter( ( value, index ) => value.tabNumber !== id )
-			    } )
-		    } )
+		requestTab( 'delete-tab', 'DELETE', body )
+		       .then( ( res: any ) => {
+			       setTabItems( ( prevState ) => {
+				       if ( !res.affected ) return prevState
+				       return prevState.filter( ( value ) => value.tabNumber !== id )
+			       } )
+		       } )
 		setActiveTab( () => {
-			if ( !tabItems.length ) return tabItems[tabItems.length - 1].tabNumber
+			console.log( tabItems )
+			const actTab = tabItems[tabItems.length - 1].tabNumber;
+			console.log(actTab)
+
+
+			if ( !(tabItems.length - 1) ) return 0
+
 			return tabItems[0].tabNumber
 		} );
-	}, [ tabItems, activeTab ] );
+	}, [ tabItems, activeTab ]);
 
 
 	useEffect( () => {
-		console.log( tabItems )
-		console.log( activeTab )
+		// const tara = tabItems.find( value => value.tabNumber === activeTab )
+		// console.log( tara )
+		// console.log( tabItems )
+		// console.log( activeTab )
 	}, [ activeTab, tabItems ] )
 
 	return {
