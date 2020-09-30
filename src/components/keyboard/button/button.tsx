@@ -7,7 +7,7 @@ interface Props<T> {
   className: T;
 }
 
-export const Button: FC<Props<string>> = (props) => {
+export const Button = <T,>(props:React.PropsWithChildren<Props<T>>) => {
   const { callback, value, children = null, className } = props;
   const classes = useStylesButton();
 
