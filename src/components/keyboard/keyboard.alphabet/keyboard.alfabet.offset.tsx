@@ -9,7 +9,7 @@ export const Offset: FC<Props> = (props) => {
   const { condition } = props;
   const classes = useStylesAlphabet();
   if (condition) {
-    return <div className={classes.offset}></div>;
+    return <div className={classes.offset} />;
   }
   return <></>;
 };
