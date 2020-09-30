@@ -33,15 +33,13 @@ export const SingleTableItem: FC<Props> = (props) => {
   }, [item, active, onClick]);
 
   return (
-    <li className={`${classes.row} ${active === item ? classes.active : ''}`}>
-      <div onClick={selectItem} aria-hidden="true" className={classes.wrap}>
+    <li className={`${classes.row} ${active === item ? classes.active : ''}`} onClick={selectItem} aria-hidden="true" >
         {columns.map((i: keyof Item, index) => (
           <div key={i} className={`${classes.font} ${index ? classes.nthCol : classes.firstCol}`}>
             {changeRule[i] ? <span>{changeRule[i]}</span> : <span>{item[i]}</span>}
             {addUnits[i] ? <span>{addUnits[i]}</span> : null}
           </div>
         ))}
-      </div>
     </li>
   );
 };

@@ -31,12 +31,6 @@ export const useStylesSingleItem = makeStyles((theme: Theme) =>
       paddingRight: '2em',
       alignContent: 'center',
     },
-    wrap: {
-      display: 'flex',
-      height: '100%',
-      flexGrow: 1,
-      alignItems: 'center',
-    },
     font: {
       fontFamily: theme.typography.fontFamily,
       fontWeight: theme.typography.fontWeightRegular,
