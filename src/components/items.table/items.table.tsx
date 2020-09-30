@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
-import { useStylesTable } from './items.table.styles';
-import { SingleItem } from '../single.item/single.item';
-import { Item } from './interfaces';
-import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { useStylesTable } from './items.table.styles';
+import { SingleTableItem } from '../single.table.item/single.item';
+import { Item } from './interfaces';
 import { ItemTypes } from '../../enum/item.types';
+
 interface Props {
   active: Item | null;
   onClick: React.Dispatch<React.SetStateAction<Item | null>>;
@@ -14,9 +15,8 @@ interface Props {
 function getUnits(type: string, t: TFunction): string {
   if (type === ItemTypes.WEIGHED) {
     return t('units', { context: 'gramme' });
-  } else {
-    return t('units', { context: 'qty' });
   }
+  return t('units', { context: 'qty' });
 }
 
 export const AddedItemsTable: FC<Props> = (props) => {
@@ -26,8 +26,8 @@ export const AddedItemsTable: FC<Props> = (props) => {
   return (
     <ul className={classes.bodyContainer}>
       {values
-        ? values.map((item: Item, i: number) => (
-            <SingleItem
+        ? values.map((item: Item) => (
+            <SingleTableItem
               item={item}
               changeRule={{
                 cost: item.cost.toFixed(2),
@@ -36,7 +36,7 @@ export const AddedItemsTable: FC<Props> = (props) => {
               columns={['texts', 'amount', 'cost']}
               addUnits={{ amount: getUnits(item.type, t) }}
               active={active}
-              key={i}
+              key={item.id}
               onClick={onClick}
             />
           ))

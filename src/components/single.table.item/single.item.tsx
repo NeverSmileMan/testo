@@ -20,7 +20,7 @@ type AddUnits = {
   [K in keyof Partial<Item>]: string;
 };
 
-export const SingleItem: FC<Props> = (props) => {
+export const SingleTableItem: FC<Props> = (props) => {
   const { item, columns, changeRule = {}, addUnits = {}, active, onClick } = props;
   const classes = useStylesSingleItem();
 
