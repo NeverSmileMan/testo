@@ -1,3 +1,5 @@
+import { ItemTypes } from '../../enum/item.types';
+
 interface Defaults {
   tara: number;
   pieces_per_package: number;
@@ -19,7 +21,7 @@ export interface Item {
   price: number;
   searchIndex: string;
   texts: Texts;
-  type: 'weighed' | 'counted';
+  type: ItemTypes;
   cost: number;
   amount: number;
 }

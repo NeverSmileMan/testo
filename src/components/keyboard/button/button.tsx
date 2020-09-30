@@ -1,4 +1,4 @@
-import React, { useCallback, FC } from 'react';
+import React, { useCallback, ReactElement } from 'react';
 import { useStylesButton } from './button.styles';
 
 interface Props<T> {
@@ -7,7 +7,7 @@ interface Props<T> {
   className: T;
 }
 
-export const Button = <T,>(props:React.PropsWithChildren<Props<T>>) => {
+export const Button = <T,>(props:React.PropsWithChildren<Props<T>>) : ReactElement => {
   const { callback, value, children = null, className } = props;
   const classes = useStylesButton();
 
