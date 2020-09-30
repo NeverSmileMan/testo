@@ -1,7 +1,10 @@
-import { IItem } from '../../../components/search.list/Item';
+import { IItem } from '../Item';
+import itemsDataJSON from '../../../enum/items.json';
 // import Config from '../data/config';
 
-const hostName = 'http://localhost:9000'; // Config.host;
+const online = true; // Config.server4444;
+const hostName = 'http://localhost'; // Config.host;
+const itemsData = itemsDataJSON as IItem[];
 
 const allItems = `${hostName}:4444/list`;
 const itemsBySearchIndex = `${hostName}:4444/list?searchIndex=`;
@@ -27,12 +30,24 @@ export function getAllItems(): Promise<IItem[]> {
 }
 
 export function getItemsBySearchIndex(searchIndex: string): Promise<IItem[]> {
+  if (!online) {
+    const items = itemsData.filter(
+      (item) =>
+        item.searchIndex.toUpperCase().includes(searchIndex) ||
+        String(item.plu).includes(searchIndex),
+    );
+    return Promise.resolve(items);
+  }
   return request(`${itemsBySearchIndex}${searchIndex}`);
 }
 
 export function getItemById(id: string): Promise<IItem> {
   return request(`${itemById}${id}`);
 }
+
+export const SearchService = {
+  getItemsBySearchIndex,
+};
 
 /* post create-order-row
 {

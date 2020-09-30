@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useSearch, PropsSearch } from './search.hook';
-import { ListStyled } from '../search.list/List';
-import { InputService } from '../input.service/InputService';
+import { List } from '../search.list/List';
+import { Services } from '../services/Services';
 
 // export type PropsSearch = {
 //   callbacks?: {
@@ -11,16 +11,16 @@ import { InputService } from '../input.service/InputService';
 // } & WithStyles;
 
 export function SearchComp(props: PropsSearch): ReactElement {
-  const { classes, value, selectItem } = useSearch(props);
+  const { classes, value, selectItem, searchService } = useSearch(props);
 
   return (
     <div className={classes.wrapper}>
       <div className="input">&nbsp;{value}</div>
-      <ListStyled filter={value} onSelect={selectItem} />
+      <List filter={value} onSelect={selectItem} searchService={searchService} />
     </div>
   );
 }
 
 export function Search(): ReactElement {
-  return <InputService>{SearchComp}</InputService>;
+  return <Services>{SearchComp}</Services>;
 }

@@ -1,8 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import { IItem, ItemType } from '../search.list/Item';
-// eslint-disable-next-line import/extensions
-// import { ActiveInputService } from '../../services/ActiveInputService';
-import { IInputService } from '../input.service/InputService';
+import { IInputService, ISearchService } from '../services/Services';
 
 export interface IStateInput {
   value: string;
@@ -20,9 +18,10 @@ export interface IMethodsInput {
   setValue: (newValue?: SetStateAction<string>) => void;
   setCallbacks: (callbacks: ICallbacks) => void;
   attachInput: () => void;
+  selectItem: (item: IItem) => void;
+  searchService: ISearchService;
   pressKey: (key: string) => void;
   onSelect: (callback: (item: IItem) => void) => void;
-  selectItem: (item: IItem) => void;
 }
 
 export interface ICallbacks {
@@ -32,8 +31,13 @@ export interface ICallbacks {
 
 export const getMethodsInput = (
   setState: Dispatch<SetStateAction<IStateInput>>,
-  props: { inputService?: IInputService },
+  props: {
+    inputService?: IInputService;
+    searchService: ISearchService;
+  },
 ): IMethodsInput => {
+  const { inputService, searchService } = props;
+
   const setValue = (newValue?: SetStateAction<string>) =>
     setState((state) => {
       if (typeof newValue === 'function') {
@@ -54,35 +58,28 @@ export const getMethodsInput = (
       value: state.value.substring(0, state.value.length - 1),
     }));
 
-  const pressKey = (key: string) =>
-    setState((state) => {
-      const currentValue = state.value;
-      try {
-        switch (key) {
-          case 'SPACE':
-            addSymbol(' ');
-            break;
-          case 'BACKSPACE':
-            delSymbol();
-            break;
-          case 'CLEAR':
-            setValue('');
-            break;
-          case 'ENTER':
-            // selectItem();
-            break;
-          default:
-            addSymbol(key);
-        }
-      } catch (e) {
-        return {
-          ...state,
-          value: currentValue,
-        };
-        // throw new Error();
+  const pressKey = (key: string) => {
+    try {
+      switch (key) {
+        case 'SPACE':
+          addSymbol(' ');
+          break;
+        case 'BACKSPACE':
+          delSymbol();
+          break;
+        case 'CLEAR':
+          setValue('');
+          break;
+        case 'ENTER':
+          // selectItem();
+          break;
+        default:
+          addSymbol(key);
       }
-      return state;
-    });
+    } catch (e) {
+      // throw new Error();
+    }
+  };
 
   const onSelect = (callback: (item: IItem) => void) =>
     setState((state) => ({
@@ -90,7 +87,8 @@ export const getMethodsInput = (
       callbackOnSelect: callback,
     }));
 
-  const selectItem = (item: IItem) =>
+  const selectItem = (item: IItem) => {
+      console.log(item);
     setState((state) => {
       try {
         state.callbackOnSelect(item);
@@ -99,19 +97,19 @@ export const getMethodsInput = (
       }
       return state;
     });
+  };
 
-  const setCallbacks = (callbacksNew: ICallbacks) => {
+  const setCallbacks = (callbacks: ICallbacks) => {
     onSelect((item: IItem) => {
       if (item.type === ItemType.WEIGHT) {
-        callbacksNew.addItem({ item });
+        callbacks.addItem({ item });
         return;
       }
-      callbacksNew.setSelectedItem(item);
+      callbacks.setSelectedItem(item);
     });
   };
 
   const attachInput = () => {
-    const { inputService } = props;
     if (!inputService) return undefined;
     inputService.setActive(setValue);
     return () => inputService.unsetActive(setValue);
@@ -133,8 +131,9 @@ export const getMethodsInput = (
     setValue,
     setCallbacks,
     attachInput,
+    selectItem,
+    searchService,
     pressKey,
     onSelect,
-    selectItem,
   };
 };
