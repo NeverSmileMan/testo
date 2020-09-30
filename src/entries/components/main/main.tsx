@@ -21,22 +21,22 @@ interface Context {
 	submitValueCalc: ( num: number ) => void;
 	setSelectedItem: React.Dispatch<React.SetStateAction<IItem>>;
 	selectedItem: IItem;
-	activeTab: number | null;
+	activeTab: number;
 }
 
-export const MainContext = createContext( {
+export const MainContext = createContext<Context>( {
 	deleteTab: () => { },
 	addItem: () => true,
 	print: () => { },
 	submitValueCalc: () => { },
 	setSelectedItem: () => { },
-	selectedItem: {} as IItem,
-	activeTab: null,
-} as Context );
+	selectedItem: {} as IItem,    // ! убрать как??????
+	activeTab: 0,
+});
 
 export default function Main(): ReactElement {
 	const classes = useStyles();
-	const [ selectedItem, setSelectedItem ] = useState( {} as IItem );
+	const [ selectedItem, setSelectedItem ] = useState<IItem>();
 
 	const {
 		tabItems,
@@ -59,7 +59,7 @@ export default function Main(): ReactElement {
 		[ setTara ],
 	);
 
-	const context = {
+	const context : Context = {
 		deleteTab,
 		addItem,
 		print,
@@ -67,7 +67,7 @@ export default function Main(): ReactElement {
 		setSelectedItem,
 		selectedItem,
 		activeTab
-	};
+	} as Context;  // ! убрать ( пофиксить делит таб и модалку клоз)
 
 	return (
 		<ModalWindowProvider>
@@ -83,14 +83,14 @@ export default function Main(): ReactElement {
 			<div className={ classes.bodyWrap }>
 				<div className={ classes.body }>
 					<div className={ classes.searchPanel }>
-						<MainContext.Provider value={ context as Context }>
+						<MainContext.Provider value={ context  }>
 							<Search />
 						</MainContext.Provider>
 						<TabInfoStyled value={tabItems[activeTab]?.items} activeItem={ activeItem } onClick={ deleteItem } />
 					</div>
 					<AddedItemsTable values={ tabItems[activeTab]?.items} onClick={ setActiveItem } active={ activeItem }/>
 				</div>
-				<MainContext.Provider value={ context as Context}>
+				<MainContext.Provider value={ context}>
 					<div className={ classes.sideButtons }>
 						<GroupBtn/>
 					</div>
