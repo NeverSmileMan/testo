@@ -1,4 +1,4 @@
-export type Lang =  'en' | 'ru' | 'uk';
+export type Lang = 'en' | 'ru' | 'uk';
 type SpicialKey = string;
 
 export type SpecialValue = {
@@ -13,7 +13,7 @@ type UnsetActive = (func: React.Dispatch<React.SetStateAction<string>>) => void;
 
 export type Actions = Add | Delete | Clear;
 
-export type KeyboardService = Pick<Service, 'add' | 'clear' | 'delete'>
+export type KeyboardService = Pick<Service, 'add' | 'clear' | 'delete'>;
 
 export interface Service {
   add: Add;
