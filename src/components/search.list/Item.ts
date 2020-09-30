@@ -1,8 +1,4 @@
-export enum ItemType {
-  WEIGHT = 'weighed',
-  PIECE = 'counted',
-}
-
+import { ItemTypes } from '../../enum/item.types';
 interface Defaults {
   tara: number;
   pieces_per_package: number;
@@ -27,7 +23,7 @@ export interface IItem {
   price: number;
   searchIndex: string;
   texts: Texts;
-  type: ItemType;
+  type: ItemTypes;
 }
 
 export class Item implements IItem {
@@ -36,7 +32,7 @@ export class Item implements IItem {
     public plu = 0, // 5842
     public searchIndex = '', // "Печінка свиняча (Сиров)\r\n#41#Печень свиная(Сырье)",
     public price = 0, // 15.2,
-    public type = ItemType.WEIGHT, // "weighed",
+    public type = ItemTypes.WEIGHED, // "weighed",
     public defaults = {
       tara: 0, // 0,
       pieces_per_package: 0, // 0

@@ -3,7 +3,7 @@ import { Tabs } from '../../../components/tabs/Tabs';
 import { Hint } from '../../../components/hint/Hint';
 import { HomeButton } from '../../../components/homeButton/HomeButton';
 import GroupBtn from '../../../components/functional-buttons/group.btn';
-import { AddedItemsTable } from '../../../components/added.items.table/items.table/items.table';
+import { AddedItemsTable } from '../../../components/items.table/items.table';
 import { Search } from '../../../components/search/Search';
 import { TabInfoStyled } from '../../../components/tabInfo/TabInfo';
 import { ModalWindowProvider } from '../../../components/modal.wind/modal.context'

@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
-import { IItem, ItemType } from '../search.list/Item';
+import { IItem } from '../search.list/Item';
+import { ItemTypes } from '../../enum/item.types';
 import { IInputService, ISearchService } from '../services/Services';
 
 export interface IStateInput {
@@ -101,7 +102,7 @@ export const getMethodsInput = (
 
   const setCallbacks = (callbacks: ICallbacks) => {
     onSelect((item: IItem) => {
-      if (item.type === ItemType.WEIGHT) {
+      if (item.type === ItemTypes.WEIGHED) {
         callbacks.addItem({ item });
         return;
       }

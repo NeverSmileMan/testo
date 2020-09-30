@@ -2,16 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ActiveInputService } from '../../enum/ActiveInputService';
 import { useHints } from '../hint/hint.provider'
 import { MAX_NUMBER_OF_TABS } from "../../enum/variables";
+import { ItemTypes } from '../../enum/item.types';
 
 export interface TabItems {
 	tabNumber: number;
 	tara: number;
 	items: AddedItem[];
-}
-
-enum ItemTypes {
-	weights = 'weighed',
-	counted = 'counted',
 }
 
 interface Defaults {
@@ -38,7 +34,7 @@ export interface Item {
 	price: number;
 	searchIndex: string;
 	texts: Texts;
-	type: 'counted' | 'weighed';
+	type: ItemTypes;
 }
 
 export interface AddedItem extends Item {
@@ -99,7 +95,7 @@ export function useTabs( scaleService: any, ): Params {
 				const weightScale = scaleService.getItemWeight();
 				if ( weightScale >= (40 / 1000) ) {
 					switch ( item.type ) {
-						case ItemTypes.counted:
+						case ItemTypes.COUNTED:
 							if ( calcValue ) {
 								addedItem.amount = calcValue;
 								addedItem.cost = addedItem.amount * item.price;
@@ -108,7 +104,7 @@ export function useTabs( scaleService: any, ): Params {
 								return false;
 							}
 							break;
-						case ItemTypes.weights:
+						case ItemTypes.WEIGHED:
 							addedItem.amount = weightScale;
 							addedItem.cost = scaleService.getItemCost();
 							break;

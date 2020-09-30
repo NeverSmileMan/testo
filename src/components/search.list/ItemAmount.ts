@@ -1,4 +1,5 @@
-import { IItem, ItemType } from './Item';
+import { IItem } from './Item';
+import { ItemTypes } from '../../enum/item.types';
 
 export interface IItemAmount {
   item: IItem;
@@ -13,7 +14,7 @@ export class ItemAmount implements IItemAmount {
   quantity?: number;
 
   constructor(public item: IItem, public sum: number = 0, amount = 0) {
-    if (item.type === ItemType.WEIGHT) this.weights = amount;
+    if (item.type === ItemTypes.WEIGHED) this.weights = amount;
     else this.quantity = amount;
   }
 }

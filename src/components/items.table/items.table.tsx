@@ -4,7 +4,7 @@ import { SingleItem } from '../single.item/single.item';
 import { Item } from './interfaces';
 import { useTranslation } from 'react-i18next';
 import { TFunction } from 'i18next';
-
+import { ItemTypes } from '../../enum/item.types';
 interface Props {
   active: Item | null;
   onClick: React.Dispatch<React.SetStateAction<Item | null>>;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 function getUnits(type: string, t: TFunction): string {
-  if (type === 'weighed') {
+  if (type === ItemTypes.WEIGHED) {
     return t('units', { context: 'gramme' });
   } else {
     return t('units', { context: 'qty' });

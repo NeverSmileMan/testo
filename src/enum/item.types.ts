@@ -1,4 +1,4 @@
-export const enum ItemTypes {
-  weighed = 'weighed',
-  counted = 'counted',
+export enum ItemTypes {
+  WEIGHED = 'weighed',
+  COUNTED = 'counted',
 }
