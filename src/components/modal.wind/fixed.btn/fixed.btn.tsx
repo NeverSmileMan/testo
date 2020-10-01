@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import { Button } from '../../keyboard/button/button'
-// import { KeyboardBtn } from '../keyboard.btn/keyboard.btn';
 import { useTheme } from '@material-ui/styles';
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import { useStyle } from './fixed.btn.style';
