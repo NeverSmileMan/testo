@@ -1,21 +1,24 @@
 import React, { useState, useContext, useCallback } from 'react';
 import { MainContext } from '../../../../entries/components/main/main';
-import NumberKeyboard from '../../calc/number.keyboard/numder.keyboard';
-import ControlKeyboard from '../../calc/control.keyboard/control.keyboard';
-import HeadInput from '../../calc/head.input/head.input';
-import {useStyle} from './input.qty.style';
+import { ControlKeyboard } from '../../control.keyboard/control.keyboard';
+import { HeadInput } from '../../head.input/head.input';
+import { useStyle } from './input.qty.style';
+import { KeyboardNumeric } from '../../../keyboard/keyboard.numeric/keyboard.numeric';
+import {keyboardSettings} from '../../../keyboard/keyboard.main/keyboard.settings';
+import {useStyles} from '../../../keyboard/keyboard.numeric/keyboard.numeric.styles'
 
 const NameCalc = 'Кількість';
 
 interface Prop {
-  modalClose: ()=>any;
+  modalClose: () => any;
 }
-const InputQty = ({modalClose}:Prop) => {
+export const InputQty = ({ modalClose }: Prop) => {
   const { inputContainer, keyboardContainer } = useStyle();
   const [qtyGoods, setqtyGoods] = useState(0);
+  const classesNumeric = useStyles({gridColumn_9 : '1 / 3'});
   const { selectedItem, addItem } = useContext(MainContext);
-  const getQty = useCallback((num: number): any => () => {
-    setqtyGoods(qtyGoods * 10 + num)
+  const getQty = useCallback((num: string): void => {
+    setqtyGoods(qtyGoods * 10 + Number(num))
   }, [setqtyGoods, qtyGoods]);
 
   const deleteQty = useCallback(() => {
@@ -38,11 +41,9 @@ const InputQty = ({modalClose}:Prop) => {
         inputValue={qtyGoods}
         inputName={NameCalc} />
       <div className={keyboardContainer}>
-        <NumberKeyboard onClick={getQty} />
+        <KeyboardNumeric options={keyboardSettings.numeric} onClick={getQty} styles={classesNumeric} />
         <ControlKeyboard inputValue={qtyGoods} onClick={controlOnclick} />
       </div>
     </div>
   )
 }
-
-export default InputQty;

@@ -8,10 +8,8 @@ interface Prop {
 
 const titlePrint: string = 'Зніміть товар з вагів';
 
-const ModalPrint = ({ title = titlePrint, print }: Prop) => {
+export const ModalPrint = ({ title = titlePrint, print }: Prop) => {
 	const cls = useStyle();
 	
 	return <div className={cls.title} onClick={print}>{title}</div>
 }
-
-export default ModalPrint;

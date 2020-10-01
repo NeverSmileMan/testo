@@ -22,4 +22,11 @@ export const useStyle = makeStyles((theme: Theme) => createStyles({
         fontSize: '30px',
         paddingLeft: '10px',
     },
+    closeBtn: {
+        color: '#fff',
+        backgroundColor: '#0099FF',
+        fontSize: '30px',
+        border: 'none',
+        outline: 'none',
+    }
 }))

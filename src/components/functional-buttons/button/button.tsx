@@ -1,17 +1,16 @@
-import React from 'react';
+import React, {FC} from 'react';
 import { ButtonProp } from './button.interface';
 import { useStyles } from './button.style';
 
-const Button = (prop: ButtonProp) => {
-  const classes = useStyles(prop);
+export const Button:FC<ButtonProp> = ({children, click}) => {
+  const classes = useStyles()
   return (
-    <div
-      onClick={prop.click}
+    <button
+      onClick={click}
       className={classes.btn}>
-      {prop.buttonIcon()}
-      <div>{prop.nameButton}</div>
-    </div>
+        {children}
+      {/* {React.createElement(buttonIcon)}
+      <div>{nameButton}</div> */}
+    </button>
   )
 }
-
-export default Button;

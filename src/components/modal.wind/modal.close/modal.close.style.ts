@@ -24,6 +24,7 @@ export const useStyles = makeStyles({
         justifyContent: 'space-evenly',
     },
     btn: {
+        backgroundColor: '#fff',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -31,5 +32,6 @@ export const useStyles = makeStyles({
         width: '160px',
         border: '1px solid #000',
         borderRadius: '17px',
+        fontSize: '30px',
     }
 })

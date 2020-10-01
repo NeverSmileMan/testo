@@ -8,8 +8,9 @@ export const useStyle = makeStyles({
       borderRadius: '10px',
     },
     keyboardContainer: {
-      display: 'flex',
-      flexDirection: 'row',
+      display: 'grid',
+      gridTemplateColumns: '9fr 3fr',
+      marginLeft: '15px',
       justifyContent: 'center',
     }
   })
