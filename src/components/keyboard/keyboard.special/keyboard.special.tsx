@@ -1,12 +1,12 @@
 import React, { FC, useContext, useCallback } from 'react';
 import { Button } from '../button/button';
-import { Special, SpecialKey, KeyboardService } from '../keyboard.main/keyboard.interfaces';
+import { Special, SpecialKey, Service } from '../keyboard.main/keyboard.interfaces';
 import { LayoutContext } from '../keyboard.main/keyboard.context';
 import { useStylesSpecial } from './keyboard.special.styles';
 
 interface Props {
   options: Special;
-  service: KeyboardService;
+  service: Service;
 }
 
 export const KeyboardSpecial: FC<Props> = (props) => {

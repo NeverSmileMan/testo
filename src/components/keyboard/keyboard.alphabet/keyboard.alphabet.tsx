@@ -1,13 +1,13 @@
 import React, { useContext, FC } from 'react';
 import { LayoutContext } from '../keyboard.main/keyboard.context';
-import { Alphabet, KeyboardService, Key } from '../keyboard.main/keyboard.interfaces';
+import { Alphabet, Service, Key } from '../keyboard.main/keyboard.interfaces';
 import { Button } from '../button/button';
 import { useStylesAlphabet } from './keyboard.alphabet.styles';
 import { Offset } from './keyboard.alfabet.offset';
 
 interface Props {
   opts: Alphabet;
-  service: KeyboardService;
+  service: Service;
 }
 
 export const KeyboardAlphabet: FC<Props> = (props) => {
