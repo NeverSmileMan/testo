@@ -2,7 +2,7 @@ import React, { useState, FC } from 'react';
 import { KeyboardAlphabet } from '../keyboard.alphabet/keyboard.alphabet';
 import { KeyboardNumeric } from '../keyboard.numeric/keyboard.numeric';
 import { KeyboardSpecial } from '../keyboard.special/keyboard.special';
-import { IKeyboard, KeyboardService, Lang } from './keyboard.interfaces';
+import { IKeyboard, Service, Lang } from './keyboard.interfaces';
 import { useStylesKeyboard } from './keyboard.styles';
 import { LayoutContext, Context } from './keyboard.context';
 import { useStylesNumeric } from '../keyboard.numeric/keyboard.numeric.styles';
@@ -12,7 +12,7 @@ function getDefaultLayout<T>(obj: T) {
 }
 
 interface Props {
-  service: KeyboardService;
+  service: Service;
   keyboardLayout: IKeyboard;
 }
 
