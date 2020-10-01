@@ -15,12 +15,10 @@ const stylesDiv = {
   fontSize: '18px',
 };
 const styles = {
-  background: 'grey',
+  background: '',
   border: 'none',
   color: 'black',
   gridGap: '0.2em',
-  gridTemplateColumns: 'repeat(3, 1fr)',
-  gridTemplateRows: 'repeat(4, 1fr)',
   height: '100%',
   gridColumn_0: '1',
   gridRow_0: '1',

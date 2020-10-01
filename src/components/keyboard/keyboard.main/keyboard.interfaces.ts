@@ -38,7 +38,6 @@ export interface Alphabet {
 export interface Numeric {
   keys: Key[];
   action: keyof Service;
-  options: Options;
 }
 export interface Special {
   keys: SpecialKey[];

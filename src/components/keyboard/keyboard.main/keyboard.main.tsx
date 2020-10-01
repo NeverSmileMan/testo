@@ -37,10 +37,6 @@ export const KeyboardMain: FC<Props> = (props) => {
           <KeyboardNumeric
             options={keyboardLayout.numeric}
             onClick={service[keyboardLayout.numeric.action]}
-            styles={{
-              gridTemplateRows: `repeat(${keyboardLayout.numeric.options.row}, 1fr)`,
-              gridTemplateColumns: `repeat(${keyboardLayout.numeric.options.col}, 1fr)`,
-            }}
           />
         </div>
         <div className={classes.special}>
