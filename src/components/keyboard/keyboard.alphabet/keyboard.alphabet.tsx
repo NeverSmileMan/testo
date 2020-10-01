@@ -25,10 +25,11 @@ export const KeyboardAlphabet: FC<Props> = (props) => {
               {keys.map((item: Key) => (
                 <Button
                   key={item}
-                  value={item}
-                  callback={service[opts.action]}
+                  callback={()=>service[opts.action](item)}
                   className={item === ' ' ? classes.space : ''}
-                />
+                >
+                  {item}
+                </Button>
               ))}
               <Offset condition={layout.name !== 'en' && !(i % 2)} key={`${keys[0]}o`} />
               <Offset condition={layout.name === 'en' && i % 2} key={`${keys[0]}j`} />

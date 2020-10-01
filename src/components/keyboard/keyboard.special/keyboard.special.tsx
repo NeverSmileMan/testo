@@ -37,7 +37,6 @@ export const KeyboardSpecial: FC<Props> = (props) => {
             key={item.id}
             callback={changeLayout}
             className={classes.btnSpecial}
-            value={item.value}
           >
             <>{item.layouts ? item.layouts[layout.name] : null}</>
           </Button>
@@ -45,12 +44,11 @@ export const KeyboardSpecial: FC<Props> = (props) => {
           <Button
             key={item.id}
             callback={service[item.action as keyof Actions]}
-            value={item.value}
             className={`${classes.btnSpecial} skey_${id} ${
-              item.value === 'CLEAR' ? classes.clearBtn : ''
+              item.action === 'clear' ? classes.clearBtn : ''
             }`}
           >
-            {item.icon ?? null}
+            {item.icon ?? item.value}
           </Button>
         ),
       )}
