@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { ActiveInputService } from '../../enum/ActiveInputService';
 import { useHints } from '../hint/hint.provider'
 import { ItemTypes } from '../../enum/item.types';
-import { act } from "react-dom/test-utils";
+
+import { getAllItems } from "../search.list/request/requests";
 
 export interface TabItems {
 	tabId: number;
@@ -74,6 +75,14 @@ const requestTab = ( url: string, method: string, body?: string ) => {
 	} )
 	.then( ( res ) => res.json() )
 }
+const requestTab2 = ( url: string, method: string, body?: string ) => {
+	return fetch( `https://cors-anywhere.herokuapp.com/http://10.13.16.80:4444/${ url }`, {
+		method: method,
+		body: body,
+		headers: { 'Content-type': 'application/json' }
+	} )
+	.then( ( res ) => res.json() )
+}
 
 export function useTabs( scaleService: any, ): Params {
 	const { changeHint, Hints } = useHints();
@@ -82,8 +91,14 @@ export function useTabs( scaleService: any, ): Params {
 	const [ activeItem, setActiveItem ] = useState<AddedItem | null>( null );
 
 	useEffect( () => {
+
+		requestTab2('list', "GET")
+		.then( ( res ) => console.log( res ))
+
+
 		requestTab( 'tab/list', 'GET' )
 		.then( ( arrTabs ) => {
+			console.log(arrTabs)
 			arrTabs.map( ( value: any ) => {
 				setTabItems( ( prevState ) => [
 					...prevState,
@@ -95,7 +110,20 @@ export function useTabs( scaleService: any, ): Params {
 				] );
 			} )
 		} )
+
+
+
+
+		// fetch( `http://localhost:4445/tab/list`, {
+		// 	method: "GET",
+		// 	headers: { 'Content-type': 'application/json' }
+		// } )
+		// .then( ( res ) => res.json() )
+		// .then( ( res ) => console.log( res ))
+
+
 	}, [] )
+
 
 	const setTara = useCallback( ( tara ) => {
 		if ( scaleService.checkStable() ) {
@@ -181,7 +209,7 @@ export function useTabs( scaleService: any, ): Params {
 		setActiveTab( tabItems.length );
 	}, [ tabItems, activeTab ] );
 
-	const deleteTab = useCallback( ( id: number ) => {
+	const deleteTab = useCallback( () => {
 		const body = JSON.stringify( { "id": `${ tabItems[activeTab].tabId }` } )
 		requestTab( 'delete-tab', 'DELETE', body )
 		.then( ( res: any ) => {
