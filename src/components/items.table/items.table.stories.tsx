@@ -29,22 +29,16 @@ const item = {
   cost: 26,
   amount: 241,
 };
-const items = [{...item},item,{...item},{...item},{...item},]
-
+const items = [{ ...item }, item, { ...item }, { ...item }, { ...item }];
 
 const styles = {
   width: '1200px',
   height: '600px',
-}
+};
 
 storiesOf('AddedItemsTable', module)
   .addDecorator(withKnobs)
-.addDecorator(story => <div style={styles}>{story()}</div>)
+  .addDecorator((story) => <div style={styles}>{story()}</div>)
   .add('default', () => (
-    <AddedItemsTable
-    active={item}
-    values={items}
-    onClick={action('switch to active')}
-    />
-  ))
-
+    <AddedItemsTable active={item} values={array('arr',items as any) as any} onClick={action('switch to active')} />
+  ));
