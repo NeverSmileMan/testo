@@ -54,10 +54,9 @@ export const keyboardSettings: IKeyboard = {
   special: {
     keys: [
       {
-        name: 'icon',
         id: 1,
         action: 'delete',
-        value: '',
+        value: '1',
         icon: <ArrowBackIcon />,
       },
       {
@@ -65,18 +64,12 @@ export const keyboardSettings: IKeyboard = {
         action: 'clear',
         id: 2,
       },
-      {
-        name: 'layout',
-        action: 'none',
-        id: 3,
-        value: '',
-        layouts: {
+    ],
+    layouts: {
           en: 'EN',
           ru: 'RU',
           uk: 'UA',
-        },
-      },
-    ],
+    },
     options: {
       row: 3,
       col: 1,

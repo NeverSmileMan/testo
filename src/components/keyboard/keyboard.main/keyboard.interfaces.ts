@@ -29,12 +29,10 @@ export type Keys = {
   [K in Lang]: Key[][];
 };
 export interface SpecialKey {
-  name?: string;
   value: SpicialKey;
-  action: keyof KeyboardService | 'none';
+  action: keyof KeyboardService;
   id: number;
   icon?: JSX.Element;
-  layouts?: SpecialValue;
 }
 
 interface Options {
@@ -57,6 +55,7 @@ export interface Numeric {
 export interface Special {
   keys: SpecialKey[];
   options: Options;
+  layouts: SpecialValue;
 }
 export interface IKeyboard {
   alphabet: Alphabet;
