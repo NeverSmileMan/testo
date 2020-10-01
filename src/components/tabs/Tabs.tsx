@@ -23,7 +23,7 @@ export const Tabs: FC<TabsProps> = (props) => {
 						tab={tab}
 						index={index}
 						active={activeTab === index}
-						key={tab.tabNumber}
+						key={tab.tabId}
 					/>
 				))
 				: null}

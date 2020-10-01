@@ -20,7 +20,7 @@ export const Tab: FC<TabProps> = ( props ) => {
 			onClick={ () => setActive( index ) }
 			className={ classes.tabStyle }
 		>
-			{ tab.tabNumber }
+			{ tab.tabId }
 		</button>
 	);
 };
