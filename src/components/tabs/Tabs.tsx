@@ -1,29 +1,31 @@
-import React, { FC } from "react";
-import { Tab } from "../tab/Tab";
-import { TabItems } from './useTabHook';
-import { useStyles } from "./Tabs.styles";
-import { MAX_NUMBER_OF_TABS } from "../../enum/variables";
+
+import React, { FC } from 'react';
+import { Tab } from '../tab/Tab';
+import { TabItems } from './useTabs.hook';
+import { MAX_NUMBER_OF_TABS } from '../../enum/variables';
+import { useStyles } from './Tabs.styles';
 
 interface TabsProps {
-	tabs: TabItems[] | null
-	activeTab: number,
-	createTab: ( e: React.MouseEvent<HTMLButtonElement> ) => void,
-	setActiveTab: ( val: number ) => void,
+	tabs: TabItems[];
+	activeTab: number;
+	createTab: (e: React.MouseEvent<HTMLButtonElement>) => void;
+	setActiveTab: (val: number) => void;
 }
 
 export const Tabs: FC<TabsProps> = (props) => {
 
 	const { tabs, createTab, activeTab, setActiveTab } = props;
-	const classes = useStyles();
+	const classes = useStyles({ MAX_NUMBER_OF_TABS });
 	return (
 		<div className={classes.headerTabs}>
 			{tabs
-				? tabs.map((tab: TabItems) => (
+				? tabs.map((tab: TabItems,index) => (
 					<Tab
 						setActive={setActiveTab}
 						tab={tab}
 						active={activeTab === tab.tabNumber}
 						key={tab.tabNumber}
+						index={index}
 					/>
 				))
 				: null}

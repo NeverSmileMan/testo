@@ -101,12 +101,14 @@ export function useTabs( scaleService: any, ): Params {
 					},
 				] );
 			} )
+			setActiveTab( arrTabs.length - 1 )
+			console.log(activeTab)
 		} )
 	}, [] )
 
-	useEffect( () => {
-		setActiveTab( tabItems.length - 1 )
-	}, [ tabItems ] )
+	// useEffect( () => {
+	// 	setActiveTab( tabItems.length - 1 )
+	// }, [ tabItems ] )
 
 
 // =========================================================================================================
@@ -219,7 +221,7 @@ export function useTabs( scaleService: any, ): Params {
 
 	useEffect( () => {
 		// console.log( tabItems )
-		console.log(activeIdTab)
+		console.log( activeIdTab )
 	}, [ tabItems ] )
 
 	return {

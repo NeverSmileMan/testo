@@ -1,23 +1,28 @@
 import React, { FC } from "react";
-import { TabItems } from "../tabs/useTabHook";
-import { useStyles } from "./Tab.styles";
+
+import { TabItems } from "../tabs/useTabs.hook";
+import { useStyles } from "./Tab.style";
+import { MAX_NUMBER_OF_TABS } from "../../enum/variables";
 
 interface TabProps {
 	tab: TabItems;
-	setActive: (val: number) => void;
+	setActive: ( val: number ) => void;
 	active: boolean
+	index:number
+
 }
 
-export const Tab: FC<TabProps> = ({ tab, setActive, active }) => {
-	const classes = useStyles();
+export const Tab: FC<TabProps> = ( props ) => {
+	const { tab, setActive, active, index } = props;
+	const classes = useStyles( { active, MAX_NUMBER_OF_TABS } );
 	return (
 		<button
 			type="button"
-			id={tab.tabNumber.toString()}
-			onClick={() => setActive(tab.tabNumber)}
-			className={`${classes.tabStyle} ${active ? classes.tabActive : ''}`}
+			id={ index.toString() }
+			onClick={ () => setActive( index ) }
+			className={ classes.tabStyle }
 		>
-			{tab.tabNumber}
+			{ tab.tabNumber }
 		</button>
 	);
 };
