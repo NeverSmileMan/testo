@@ -16,7 +16,7 @@ export const KeyboardNumeric: FC<Props<string>> = (props) => {
       {options.keys.map((item: Key, id: number) => (
         <Button
           key={item}
-          callback={()=>onClick(item)}
+          onClick={()=>onClick(item)}
           className={`${classes[`nkey_${id}`]} ${classes.btn}`}
         >
         {item}

@@ -25,7 +25,7 @@ export const KeyboardAlphabet: FC<Props> = (props) => {
               {keys.map((item: Key) => (
                 <Button
                   key={item}
-                  callback={()=>service[opts.action](item)}
+                  onClick={()=>service[opts.action](item)}
                   className={item === ' ' ? classes.space : ''}
                 >
                   {item}
