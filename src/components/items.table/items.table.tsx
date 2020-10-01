@@ -29,12 +29,7 @@ export const AddedItemsTable: FC<Props> = (props) => {
         ? values.map((item: Item) => (
             <SingleTableItem
               item={item}
-              changeRule={{
-                cost: item.cost.toFixed(2),
-                texts: `${item.plu} ${item.texts.full_title}`,
-              }}
-              columns={['texts', 'amount', 'cost']}
-              addUnits={{ amount: getUnits(item.type, t) }}
+              columns={getColumns(item, t)}
               active={active}
               key={item.id}
               onClick={onClick}
@@ -44,3 +39,11 @@ export const AddedItemsTable: FC<Props> = (props) => {
     </ul>
   );
 };
+
+export function getColumns(item: Item, t: TFunction): string[] {
+  return [
+    `${item.plu} ${item.texts.full_title}`,
+    `${item.amount} ${getUnits(item.type, t)}`,
+    item.cost.toFixed(2),
+  ];
+}

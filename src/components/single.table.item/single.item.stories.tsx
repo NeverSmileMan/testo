@@ -5,20 +5,13 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { object, array } from '@storybook/addon-knobs';
 
 import { ItemTypes } from '../../enum/item.types';
-import { SingleTableItem, Options } from './single.item';
+import { SingleTableItem } from './single.item';
 import { item } from '../items.table/items.table.stories';
 
 const label = 'Item';
 const defaultValue = item;
 
 const labelColumns = 'columns';
-const defaultColumns = ['texts', 'amount', 'cost'];
-
-const labelChangeRule = 'changeRule';
-const defaultChangeRule = {
-  cost: item.cost.toFixed(2),
-  texts: `${item.plu} ${item.texts.full_title}`,
-};
 
 function getUnits(type: string): string {
   if (type === ItemTypes.WEIGHED) {
@@ -32,20 +25,24 @@ storiesOf('AddedItemsTable', module)
   .add('no active sinlge item', () => (
     <SingleTableItem
       item={object(label, defaultValue)}
-      columns={array(labelColumns, defaultColumns) as Options}
+      columns={array(labelColumns, getColumns(defaultValue))}
       active={null}
-      changeRule={object(labelChangeRule, defaultChangeRule)}
-      addUnits={{ amount: getUnits(item.type) }}
       onClick={action('switch to active')}
     />
   ))
   .add('active sinlge item', () => (
     <SingleTableItem
       item={object(label, defaultValue)}
-      columns={array(labelColumns, defaultColumns) as Options}
+      columns={array(labelColumns, getColumns(defaultValue))}
       active={object(label, defaultValue)}
-      changeRule={object(labelChangeRule, defaultChangeRule)}
-      addUnits={{ amount: getUnits(item.type) }}
-      onClick={action('switch to active')}
+      onClick={action('switch to unactive')}
     />
   ));
+
+function getColumns(item: any): string[] {//! версия без перевода
+  return [
+    `${item.plu} ${item.texts.full_title}`,
+    `${item.amount} ${getUnits(item.type)}`,
+    item.cost.toFixed(2),
+  ];
+}
