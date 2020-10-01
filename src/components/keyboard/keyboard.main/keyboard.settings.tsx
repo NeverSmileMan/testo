@@ -45,10 +45,6 @@ export const keyboardSettings: IKeyboard = {
   numeric: {
     keys: keysNum,
     action: 'add',
-    options: {
-      row: 4,
-      col: 3,
-    },
   },
 
   special: {

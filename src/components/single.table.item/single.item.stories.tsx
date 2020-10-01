@@ -5,45 +5,13 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { object, array } from '@storybook/addon-knobs';
 
 import { ItemTypes } from '../../enum/item.types';
-import { SingleTableItem, Options } from './single.item';
+import { SingleTableItem } from './single.item';
+import { item } from '../items.table/items.table.stories';
 
 const label = 'Item';
-const defaultValue = {
-  id: '734ae666-ad1c-2440-7d16-9d22debf1c99',
-  plu: 903,
-  searchIndex: 'Гриби Гливи жовті\r\n#75#Грибы Вешенки желтые',
-  price: 29.99,
-  type: ItemTypes.WEIGHED,
-  defaults: {
-    tara: 0,
-    pieces_per_package: 0,
-  },
-  lifetime: {
-    shelf_life_1: 0,
-  },
-  texts: {
-    article: '492273',
-    shop: 'Сильпо Винница',
-    short_title: 'ГрибиКгГливиЖовтi',
-    full_title: 'Гриби Гливи жовті',
-  },
-  cost: 26,
-  amount: 241,
-};
-
-
-const item = object(label, defaultValue);
+const defaultValue = item;
 
 const labelColumns = 'columns';
-const defaultColumns = ['texts', 'amount', 'cost'];
-
-const labelChangeRule = 'changeRule';
-const defaultChangeRule = { cost: item.cost.toFixed(2), texts: `${item.plu} ${item.texts.full_title}` }
-
-const labelUnits = 'changeRule';
-const defaultUnits = { amount: getUnits(item.type) }
-
-
 
 function getUnits(type: string): string {
   if (type === ItemTypes.WEIGHED) {
@@ -52,28 +20,29 @@ function getUnits(type: string): string {
   return 'шт.';
 }
 
-
-
-
-storiesOf('SingleTableItem', module)
+storiesOf('AddedItemsTable', module)
   .addDecorator(withKnobs)
-  .add('no active', () => (
+  .add('no active sinlge item', () => (
     <SingleTableItem
       item={object(label, defaultValue)}
-      columns={array(labelColumns, defaultColumns) as Options}
+      columns={array(labelColumns, getColumns(defaultValue))}
       active={null}
-      changeRule={object(labelChangeRule,defaultChangeRule)}
-      addUnits={{ amount: getUnits(item.type) }}
       onClick={action('switch to active')}
     />
   ))
-  .add('active', () => (
+  .add('active sinlge item', () => (
     <SingleTableItem
       item={object(label, defaultValue)}
-      columns={array(labelColumns, defaultColumns) as Options}
+      columns={array(labelColumns, getColumns(defaultValue))}
       active={object(label, defaultValue)}
-      changeRule={object(labelChangeRule,defaultChangeRule)}
-      addUnits={{ amount: getUnits(item.type) }}
-      onClick={action('switch to active')}
+      onClick={action('switch to unactive')}
     />
-  ))
+  ));
+
+function getColumns(item: any): string[] {//! версия без перевода
+  return [
+    `${item.plu} ${item.texts.full_title}`,
+    `${item.amount} ${getUnits(item.type)}`,
+    item.cost.toFixed(2),
+  ];
+}

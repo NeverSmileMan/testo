@@ -1,6 +1,6 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
-export const useStylesNumeric = makeStyles((theme: Theme) =>
+export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     btn: {
       background: (props: Record<string, string>) =>
@@ -11,12 +11,12 @@ export const useStylesNumeric = makeStyles((theme: Theme) =>
     },
     keyboardNumeric: {
       display: 'grid',
-      gridGap: '0.2em',
-      gridTemplateColumns: 'repeat(3, 1fr)',
-      gridTemplateRows: 'repeat(4, 1fr)',
-      height: '100%',
+      gridGap: (props: Record<string, string>) => props.gridGap ?? '0.2em',
+      gridAutoColumns: '1fr',
+      gridAutoRows: '1fr',
       boxSizing: 'border-box',
       padding: '0.15em 0em',
+      height: (props: Record<string, string>) => props.height ?? '100%',
     },
     nkey_0: {
       gridColumn: (props: Record<string, string>) => props.gridColumn_0 ?? '1',

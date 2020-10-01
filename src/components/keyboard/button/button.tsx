@@ -1,12 +1,12 @@
-import React, { ReactElement } from 'react';
+import React, { FC } from 'react';
 import { useStylesButton } from './button.styles';
 
-interface Props<T> {
+interface Props {
   onClick: () => void;
-  className: T;
+  className: string;
 }
 
-export const Button = <T,>(props:React.PropsWithChildren<Props<T>>) : ReactElement => {
+export const Button: FC<Props> = (props) => {
   const { onClick, children = null, className } = props;
   const classes = useStylesButton();
 
