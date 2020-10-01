@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, Dispatch, SetStateAction } from 'react';
-import { ActiveInputService } from '../../enum/ActiveInputService';
+import { ActiveInputService } from './ActiveInputService';
 import { IItem } from '../search.list/Item';
 // eslint-disable-next-line import/extensions
 import { SearchService } from '../search.list/request/requests';

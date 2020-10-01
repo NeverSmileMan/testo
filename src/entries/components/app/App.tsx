@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ActiveInputService } from '../../../enum/ActiveInputService';
+import { ActiveInputService } from '../../../components/services/ActiveInputService';
 import { KeyboardMain } from '../../../components/keyboard/keyboard.main/keyboard.main';
 import { keyboardSettings } from '../../../components/keyboard/keyboard.main/keyboard.settings';
 import Main from '../main/main';

@@ -5,30 +5,51 @@ const fetch = require("node-fetch");
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 
 app.get('/list', (req, res) => {
-  let query = req.query.searchIndex;
-  if (query) query = `?searchIndex=${encodeURI(query)}`;
-  else query = '';
-  fetch(`http://10.13.16.80:4444/list${query}`)
-    .then((response) => response.json())
-    .then((result) => res.json(result))
-    .then(() => res.end())
-    // -disable-next-line no-console
-    .catch((e) => console.log(e));
+	let query = req.query.searchIndex;
+	if (query) query = `?searchIndex=${encodeURI(query)}`;
+	else query = '';
+	fetch(`http://10.13.16.80:4444/list${query}`)
+	.then((response) => response.json())
+	.then((result) => res.json(result))
+	.then(() => res.end())
+	// -disable-next-line no-console
+	.catch((e) => console.log(e));
 });
 
 app.get('/search', (req, res) => {
-  fetch(`http://10.13.16.80:4444/search?id=${encodeURI(req.query.id)}`)
-    .then((response) => response.json())
-    .then((result) => res.json(result))
-    .then(() => res.end())
-    // eslint-disable-next-line no-console
-    .catch((e) => console.log(e));
+	fetch(`http://10.13.16.80:4444/search?id=${encodeURI(req.query.id)}`)
+	.then((response) => response.json())
+	.then((result) => res.json(result))
+	.then(() => res.end())
+	// eslint-disable-next-line no-console
+	.catch((e) => console.log(e));
 });
 
-app.listen(4444);
+app.get('/tab/list', (req, res) => {
+	fetch(`http://10.13.16.80:4445/tab/list`)
+	.then((response) => response.json())
+	.then((result) => res.json(result))
+	.then(() => res.end())
+	// eslint-disable-next-line no-console
+	.catch((e) => console.log(e));
+});
+
+app.post('/create-tab', (req, res) => {
+	fetch(`http://10.13.16.80:4445/create-tab`,{
+		method: "post",
+		headers: { 'Content-type': 'application/json' }
+	})
+	.then((response) => response.json())
+	.then((result) => res.json(result))
+	.then(() => res.end())
+	// eslint-disable-next-line no-console
+	.catch((e) => console.log(e));
+});
+
+app.listen(4445);
 
 /*
 POST /create-tab -> возвращает id таба или ошибку если их уже 6
