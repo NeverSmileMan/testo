@@ -5,7 +5,6 @@ import { KeyboardSpecial } from '../keyboard.special/keyboard.special';
 import { IKeyboard, Service, Lang } from './keyboard.interfaces';
 import { useStylesKeyboard } from './keyboard.styles';
 import { LayoutContext, Context } from './keyboard.context';
-import { useStylesNumeric } from '../keyboard.numeric/keyboard.numeric.styles';
 
 function getDefaultLayout<T>(obj: T) {
   return Object.keys(obj)[0];
@@ -20,7 +19,6 @@ export const KeyboardMain: FC<Props> = (props) => {
   const { service, keyboardLayout } = props;
   const [layoutName, setLayoutName] = useState(getDefaultLayout(keyboardLayout.alphabet.keys));
   const classes = useStylesKeyboard();
-  const classesNumeric = useStylesNumeric();
   return (
     <div className={`${classes.keyboard} ${classes.grid}`}>
       <LayoutContext.Provider
@@ -39,7 +37,10 @@ export const KeyboardMain: FC<Props> = (props) => {
           <KeyboardNumeric
             options={keyboardLayout.numeric}
             onClick={service[keyboardLayout.numeric.action]}
-            classes={classesNumeric}
+            styles={{
+              gridTemplateRows: `repeat(${keyboardLayout.numeric.options.row}, 1fr)`,
+              gridTemplateColumns: `repeat(${keyboardLayout.numeric.options.col}, 1fr)`,
+            }}
           />
         </div>
         <div className={classes.special}>
