@@ -1,40 +1,26 @@
 export type Lang = 'en' | 'ru' | 'uk';
 type SpicialKey = string;
 
-export type SpecialValue = {
+export type Layouts = {
   [K in Lang]: string;
 };
 
-type Add = (str: string) => void;
-type Delete = (str: string) => void;
-type Clear = () => void;
-type SetActive = (func: React.Dispatch<React.SetStateAction<string>>) => void;
-type UnsetActive = (func: React.Dispatch<React.SetStateAction<string>>) => void;
-
-export type Actions = Add | Delete | Clear;
-
-export type KeyboardService = Pick<Service, 'add' | 'clear' | 'delete'>;
-
 export interface Service {
-  add: Add;
-  delete: Delete;
-  clear: Clear;
-  setActive: SetActive;
-  unsetActive: UnsetActive;
+  add: (str: string) => void;
+  delete: (str: string) => void;
+  clear: () => void;
 }
 
 export type Key = string;
 
 export type Keys = {
-  [K in Lang]: Key[][];
+  [K in Lang]: string[][];
 };
 export interface SpecialKey {
-  name?: string;
   value: SpicialKey;
-  action: keyof KeyboardService | 'none';
+  action: keyof Service;
   id: number;
   icon?: JSX.Element;
-  layouts?: SpecialValue;
 }
 
 interface Options {
@@ -46,17 +32,18 @@ export type OptionsAlphabet = {
 };
 export interface Alphabet {
   keys: Keys;
-  action: keyof KeyboardService;
+  action: keyof Service;
   options: Options | OptionsAlphabet;
 }
 export interface Numeric {
   keys: Key[];
-  action: keyof KeyboardService;
+  action: keyof Service;
   options: Options;
 }
 export interface Special {
   keys: SpecialKey[];
   options: Options;
+  layouts: Layouts;
 }
 export interface IKeyboard {
   alphabet: Alphabet;

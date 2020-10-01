@@ -1,12 +1,11 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, text } from '@storybook/addon-knobs';
-import { Story, Meta } from '@storybook/react/types-6-0';
-import { object } from '@storybook/addon-knobs';
+import { withKnobs } from '@storybook/addon-knobs';
+import { object, array } from '@storybook/addon-knobs';
 
 import { ItemTypes } from '../../enum/item.types';
-import { SingleTableItem } from './single.item';
+import { SingleTableItem, Options } from './single.item';
 
 const label = 'Item';
 const defaultValue = {
@@ -31,17 +30,18 @@ const defaultValue = {
   cost: 26,
   amount: 241,
 };
-const groupId = 'GROUP-ID1';
-
-const item = object(label, defaultValue, groupId);
 
 
+const item = object(label, defaultValue);
 
+const labelColumns = 'columns';
+const defaultColumns = ['texts', 'amount', 'cost'];
 
+const labelChangeRule = 'changeRule';
+const defaultChangeRule = { cost: item.cost.toFixed(2), texts: `${item.plu} ${item.texts.full_title}` }
 
-
-
-
+const labelUnits = 'changeRule';
+const defaultUnits = { amount: getUnits(item.type) }
 
 
 
@@ -52,34 +52,28 @@ function getUnits(type: string): string {
   return 'шт.';
 }
 
+
+
+
 storiesOf('SingleTableItem', module)
   .addDecorator(withKnobs)
-  .add('single.item', () => (
+  .add('no active', () => (
     <SingleTableItem
-      item={item}
-      columns={['texts', 'amount', 'cost']}
+      item={object(label, defaultValue)}
+      columns={array(labelColumns, defaultColumns) as Options}
       active={null}
-      changeRule={{ cost: item.cost.toFixed(2), texts: `${item.plu} ${item.texts.full_title}` }}
+      changeRule={object(labelChangeRule,defaultChangeRule)}
       addUnits={{ amount: getUnits(item.type) }}
-      onClick={action('clicked')}
+      onClick={action('switch to active')}
     />
   ))
-
-
-
-// export default {
-//   title: 'SingleTableItem',
-//   component: SingleTableItem,
-//   argTypes: {
-//     item,
-//     changeRule: { cost: item.cost.toFixed(2), texts: `${item.plu} ${item.texts.full_title}` },
-//     columns: ['texts', 'amount', 'cost'],
-//     addUnits: { amount: getUnits(item.type) },
-//     active: {},
-//     onClick: () => {},
-//   },
-//   args: {
-//     // Now all Button stories will be primary.
-//     primary: true,
-//   },
-// } as Meta;
+  .add('active', () => (
+    <SingleTableItem
+      item={object(label, defaultValue)}
+      columns={array(labelColumns, defaultColumns) as Options}
+      active={object(label, defaultValue)}
+      changeRule={object(labelChangeRule,defaultChangeRule)}
+      addUnits={{ amount: getUnits(item.type) }}
+      onClick={action('switch to active')}
+    />
+  ))

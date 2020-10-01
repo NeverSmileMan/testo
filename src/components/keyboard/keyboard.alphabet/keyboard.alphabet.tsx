@@ -1,13 +1,13 @@
 import React, { useContext, FC } from 'react';
 import { LayoutContext } from '../keyboard.main/keyboard.context';
-import { Alphabet, KeyboardService, Key } from '../keyboard.main/keyboard.interfaces';
+import { Alphabet, Service, Key } from '../keyboard.main/keyboard.interfaces';
 import { Button } from '../button/button';
 import { useStylesAlphabet } from './keyboard.alphabet.styles';
 import { Offset } from './keyboard.alfabet.offset';
 
 interface Props {
   opts: Alphabet;
-  service: KeyboardService;
+  service: Service;
 }
 
 export const KeyboardAlphabet: FC<Props> = (props) => {
@@ -25,10 +25,11 @@ export const KeyboardAlphabet: FC<Props> = (props) => {
               {keys.map((item: Key) => (
                 <Button
                   key={item}
-                  value={item}
-                  callback={service[opts.action]}
+                  onClick={()=>service[opts.action](item)}
                   className={item === ' ' ? classes.space : ''}
-                />
+                >
+                  {item}
+                </Button>
               ))}
               <Offset condition={layout.name !== 'en' && !(i % 2)} key={`${keys[0]}o`} />
               <Offset condition={layout.name === 'en' && i % 2} key={`${keys[0]}j`} />

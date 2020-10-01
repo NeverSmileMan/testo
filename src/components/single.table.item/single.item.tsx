@@ -10,7 +10,7 @@ interface Props {
   addUnits: AddUnits;
   onClick: (val: null | Item) => void;
 }
-type Options = Array<Partial<keyof Item>>;
+export type Options = Array<Partial<keyof Item>>;
 
 type ChangeRule = {
   [K in keyof Partial<Item>]: number | string;

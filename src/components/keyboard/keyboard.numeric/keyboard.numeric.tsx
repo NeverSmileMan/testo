@@ -16,10 +16,11 @@ export const KeyboardNumeric: FC<Props<string>> = (props) => {
       {options.keys.map((item: Key, id: number) => (
         <Button
           key={item}
-          value={item}
-          callback={onClick}
+          onClick={()=>onClick(item)}
           className={`${classes[`nkey_${id}`]} ${classes.btn}`}
-        />
+        >
+        {item}
+        </Button>
       ))}
     </div>
   );
