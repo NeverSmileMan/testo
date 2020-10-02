@@ -13,12 +13,12 @@ interface Prop {
   },
   inputValue: number
 }
-interface Styles {
-  textColor?: string,
-  colorBtn?: string,
-  fontSize?: string,
-  filter?: string
-}
+// interface Styles {
+//   textColor?: string,
+//   colorBtn?: string,
+//   fontSize?: string,
+//   filter?: string
+// }
 
 export const ControlKeyboard = ({ onClick, inputValue }: Prop) => {
   const theme = useTheme<Theme>();
@@ -26,16 +26,16 @@ export const ControlKeyboard = ({ onClick, inputValue }: Prop) => {
   const { controlContainer } = useStyle();
 
 
-  const styles = {
+  const styles: Record<string, unknown> = {
     textColor: '#fff',
     colorBtn: theme.palette.primary.main,
     fontSize: '0.8em'
   }
 
-  const controlBtnClass = useCallback((index:number): Styles =>
+  const controlBtnClass = useCallback((index:number): Record<string, unknown> =>
     (index === 1 && inputValue <= 0)
-      ? styles
-      : { ...styles, filter: 'brightness(150%)' },
+      ? { ...styles, filter: 'brightness(150%)' }
+      : styles,
     [inputValue, styles])
   return (
     <div className={controlContainer}>
@@ -47,7 +47,7 @@ export const ControlKeyboard = ({ onClick, inputValue }: Prop) => {
           <Button
             onClick={() => getControlRenderOnClick(array, index)}
             key={index}
-            styles={{...controlBtnClass(index)}}
+            styles={controlBtnClass(index)}
             className=''
           >
             { val}
