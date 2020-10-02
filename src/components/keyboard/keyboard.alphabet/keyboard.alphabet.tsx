@@ -27,6 +27,7 @@ export const KeyboardAlphabet: FC<Props> = (props) => {
                   key={item}
                   onClick={()=>service[opts.action](item)}
                   className={item === ' ' ? classes.space : ''}
+                  styles={{textTransform: 'uppercase'}}
                 >
                   {item}
                 </Button>

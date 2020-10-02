@@ -1,15 +1,15 @@
 import React, { FC } from 'react';
-import { useStylesButton } from './button.styles';
+import { useStyles } from './button.styles';
 
 interface Props {
   onClick: () => void;
-  className: string;
-  styles?: {}
+  className?: string;
+  styles?: Record<string, unknown>;
 }
 
 export const Button: FC<Props> = (props) => {
-  const { onClick, children = null, className } = props;
-  const classes = useStylesButton(props.styles);
+  const { onClick, children = null, styles, className = '' } = props;
+  const classes = useStyles(styles);
 
   return (
     <button className={`${className} ${classes.btn}`} type="button" onClick={onClick}>

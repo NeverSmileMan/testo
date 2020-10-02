@@ -14,7 +14,7 @@ const styles = {
   border: '1px solid black',
 };
 
-const x = storiesOf('Button', module)
+storiesOf('Button', module)
   .addDecorator(withKnobs)
   .addDecorator((story) => <div style={styles}>{story()}</div>)
   .add('default', () => (
@@ -23,5 +23,5 @@ const x = storiesOf('Button', module)
       className={''}
       children={<>{text('children', 'text')}</>}
     />
-  ))
-  console.log(x)
+  ));
+  

@@ -47,7 +47,7 @@ export const ControlKeyboard = ({ onClick, inputValue }: Prop) => {
           <Button
             onClick={() => getControlRenderOnClick(array, index)}
             key={index}
-            styles={controlBtnClass(index)}
+            styles={{...controlBtnClass(index)}}
             className=''
           >
             { val}
