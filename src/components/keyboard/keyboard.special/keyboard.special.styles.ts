@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStylesSpecial = makeStyles({
+export const useStyles = makeStyles({
   keyboardSpecial: {
     height: '100%',
     display: 'flex',

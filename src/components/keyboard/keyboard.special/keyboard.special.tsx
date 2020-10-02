@@ -2,7 +2,7 @@ import React, { FC, useContext, useCallback } from 'react';
 import { Button } from '../button/button';
 import { Special, SpecialKey, Service } from '../keyboard.main/keyboard.interfaces';
 import { LayoutContext } from '../keyboard.main/keyboard.context';
-import { useStylesSpecial } from './keyboard.special.styles';
+import { useStyles } from './keyboard.special.styles';
 
 interface Props {
   options: Special;
@@ -12,7 +12,7 @@ interface Props {
 export const KeyboardSpecial: FC<Props> = (props) => {
   const { options, service } = props;
   const layout = useContext(LayoutContext);
-  const classes = useStylesSpecial();
+  const classes = useStyles();
 
   const changeLayout = useCallback(() => {
     const index = layout.names.indexOf(layout.name);
